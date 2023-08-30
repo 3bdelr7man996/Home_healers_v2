@@ -1,0 +1,17 @@
+{
+    "register_new_account":"Register a new account",
+    "enjoy_many_advantages":"Register your account now and enjoy the many advantages of the application",
+    "first_name":"First Name",
+    "last_name":"Last Name",
+    "email":"Email",
+    "password":"Password",
+    "confirm_password":"Confirm the password",
+    "location":"Location",
+    "gender":"Gender",
+    "male":"Male",
+    "female":"Female",
+    "job_title":"Job title",
+    "section":"Section",
+    "identification_number_residence":"Identification number/Residence",
+    "bank_account_number":"Bank account number/IBAN"
+}

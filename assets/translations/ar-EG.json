@@ -1,0 +1,17 @@
+{
+    "register_new_account":"تسجيل حساب جديد",
+    "enjoy_many_advantages":"سجل حسابك الان وتمتع بمزايا التطبيق الكثيرة",
+    "first_name":"الاسم الاول",
+    "last_name":"الاسم الثاني",
+    "email":"البريد الالكتروني",
+    "password":"الرقم السري",
+    "confirm_password":"تأكيد الرقم السري",
+    "location":"الموقع",
+    "gender":"الجنس",
+    "male":"ذكر",
+    "female":"انثى",
+    "job_title":"المسمى",
+    "section":"القسم",
+    "identification_number_residence":"رقم الهوية/الأقامة",
+    "bank_account_number":"رقم الحساب البنكي /IBAN"
+}
