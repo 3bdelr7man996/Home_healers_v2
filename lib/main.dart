@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,6 @@ import 'config/bloc_config/bloc_provider.dart';
 import 'config/themes/app_themes.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/cache_helper.dart';
-import 'features/auth/presentation/pages/sign_up_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: const SignUpScreen(),
+        home: const SelectRollForSignIn(),
       ),
     );
   }
