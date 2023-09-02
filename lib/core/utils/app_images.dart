@@ -13,4 +13,9 @@ class AppImages {
   static String personIcon = "assets/icons/person_icon.svg";
   static String phoneIcon = "assets/icons/phone_icon.svg";
   static String showPasswordIcon = "assets/icons/show_password_icon.svg";
+  static String correctIcon = "assets/icons/correct_icon.svg";
+  static String children = "assets/icons/children_icon.svg";
+  static String muscle = "assets/icons/muscle_icon.svg";
+  static String sports_muscle_injuries_icon =
+      "assets/icons/sports_muscle_injuries_icon.svg";
 }
