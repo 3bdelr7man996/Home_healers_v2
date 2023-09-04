@@ -4,7 +4,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
-import 'package:dr/doctor/features/home/presentation/pages/my_requests_screen.dart';
+import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -14,13 +14,7 @@ class TextFormFieldForSignUp extends StatelessWidget {
   final String icon;
 
   TextFormFieldForSignUp(
-      {super.key,
-      required int num,
-      required String title,
-      required String icon})
-      : this.num = num,
-        this.title = title,
-        this.icon = icon;
+      {super.key, required this.num, required this.title, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +130,8 @@ class BottomSheetForSignUP extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return num == 1
-                        ? OptionsForJobTitle()
-                        : OptionsForsection();
+                        ? const OptionsForJobTitle()
+                        : const OptionsForsection();
                   },
                 );
               },
@@ -232,7 +226,7 @@ class OptionsForsection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         height: context.height * 0.65,
         child: Center(
           child: Column(
@@ -348,13 +342,11 @@ class OptionsForsection extends StatelessWidget {
 
 class ButtonForSignUp extends StatelessWidget {
   final VoidCallback _toggleVisibility;
-  final bool _isVisible;
   ButtonForSignUp(
       {super.key,
       required VoidCallback toggleVisibility,
       required bool isVisible})
-      : this._isVisible = isVisible,
-        _toggleVisibility = toggleVisibility;
+      : _toggleVisibility = toggleVisibility;
 
   @override
   Widget build(BuildContext context) {
@@ -366,7 +358,7 @@ class ButtonForSignUp extends StatelessWidget {
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
-            side: BorderSide(color: AppColors.primaryColor),
+            side: const BorderSide(color: AppColors.primaryColor),
           ),
         ),
         backgroundColor:
@@ -383,11 +375,11 @@ class ButtonForSignUp extends StatelessWidget {
 class PopUp extends StatelessWidget {
   final VoidCallback _toggleVisibility;
   final bool _isVisible;
-  PopUp(
+  const PopUp(
       {super.key,
       required VoidCallback toggleVisibility,
       required bool isVisible})
-      : this._isVisible = isVisible,
+      : _isVisible = isVisible,
         _toggleVisibility = toggleVisibility;
 
   @override
@@ -456,7 +448,9 @@ class PopUp extends StatelessWidget {
                                       },
                                       pageBuilder: (context, animation,
                                           secondaryAnimation) {
-                                        return MyRequestScreen();
+                                        return HomeScreen(
+                                          selectedIndex: 0,
+                                        );
                                       },
                                     ),
                                   );

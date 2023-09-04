@@ -146,6 +146,28 @@ class AppConstants {
     );
   }
 
+  static customNavigation(
+      BuildContext context, Widget screen, double x, double y) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: Offset(x, y),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return screen;
+        },
+      ),
+    );
+  }
+
   static customListTile(
       {required String imgName,
       required String title,
