@@ -186,7 +186,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 },
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) {
-                                  return SignInScreen();
+                                  return SignInScreen(
+                                    rollSelected: 1,
+                                  );
                                 },
                               ),
                             );
@@ -206,6 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               PopUp(
                 toggleVisibility: _toggleVisibility,
                 isVisible: _isVisible,
+                rollSelected: 1,
               )
             ],
           ),

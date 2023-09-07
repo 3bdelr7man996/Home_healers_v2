@@ -481,18 +481,15 @@ class ButtonsForReview extends StatelessWidget {
   }
 }
 
-class BottomNavigationForDetails extends StatefulWidget {
-  const BottomNavigationForDetails({super.key});
+class CustomBottomNavigation extends StatefulWidget {
+  int selectedIndex;
+  CustomBottomNavigation({super.key, required int this.selectedIndex});
 
   @override
-  State<BottomNavigationForDetails> createState() =>
-      _BottomNavigationForDetailsState();
+  State<CustomBottomNavigation> createState() => _CustomBottomNavigationState();
 }
 
-class _BottomNavigationForDetailsState
-    extends State<BottomNavigationForDetails> {
-  late int _selectedIndex = 0;
-
+class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -503,8 +500,8 @@ class _BottomNavigationForDetailsState
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color.fromARGB(255, 108, 210, 233),
-              AppColors.secondryColor
+              Color.fromARGB(255, 103, 157, 252),
+              Color.fromARGB(255, 155, 60, 172),
             ],
           ),
         ),
@@ -543,7 +540,7 @@ class _BottomNavigationForDetailsState
               label: 'الإعدادت',
             ),
           ],
-          currentIndex: _selectedIndex,
+          currentIndex: widget.selectedIndex,
           onTap: (index) {
             AppConstants.customNavigation(
                 context,

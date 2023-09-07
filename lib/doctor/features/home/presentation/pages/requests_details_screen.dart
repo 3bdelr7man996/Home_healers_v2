@@ -11,7 +11,7 @@ class RequestsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationForDetails(),
+      bottomNavigationBar: CustomBottomNavigation(selectedIndex: 0),
       appBar: customAppBar(context, backButton: true, title: "order_details"),
       body: SingleChildScrollView(
         child: Padding(

@@ -1,3 +1,5 @@
+import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -375,11 +377,14 @@ class ButtonForSignUp extends StatelessWidget {
 class PopUp extends StatelessWidget {
   final VoidCallback _toggleVisibility;
   final bool _isVisible;
+  final int rollSelected;
   const PopUp(
       {super.key,
       required VoidCallback toggleVisibility,
+      required int rollSelected,
       required bool isVisible})
       : _isVisible = isVisible,
+        rollSelected = rollSelected,
         _toggleVisibility = toggleVisibility;
 
   @override
@@ -448,9 +453,11 @@ class PopUp extends StatelessWidget {
                                       },
                                       pageBuilder: (context, animation,
                                           secondaryAnimation) {
-                                        return HomeScreen(
-                                          selectedIndex: 0,
-                                        );
+                                        return rollSelected == 1
+                                            ? HomeScreen(
+                                                selectedIndex: 0,
+                                              )
+                                            : InjuryAreaScreen();
                                       },
                                     ),
                                   );

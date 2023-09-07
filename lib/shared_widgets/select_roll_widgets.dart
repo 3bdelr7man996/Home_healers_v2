@@ -5,7 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class NextButton extends StatelessWidget {
-  const NextButton({super.key});
+  int rollSelected;
+  NextButton({super.key, required this.rollSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class NextButton extends StatelessWidget {
                   );
                 },
                 pageBuilder: (context, animation, secondaryAnimation) {
-                  return SignInScreen();
+                  return SignInScreen(rollSelected: rollSelected);
                 },
               ),
             );
@@ -76,30 +77,27 @@ class CardIdentification extends StatelessWidget {
   Widget build(BuildContext context) {
     return Opacity(
       opacity: _opacity,
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          width: context.width * 0.32,
-          height: context.height * 0.21,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: AppColors.primaryColor,
-              width: context.width * 0.008,
-            ),
+      child: Container(
+        width: context.width * 0.32,
+        height: context.height * 0.21,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: AppColors.primaryColor,
+            width: context.width * 0.008,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(_imagePath!),
-              SizedBox(height: 10),
-              Text(
-                _title!.tr(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              )
-            ],
-          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(_imagePath!),
+            SizedBox(height: 10),
+            Text(
+              _title!.tr(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            )
+          ],
         ),
       ),
     );

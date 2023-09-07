@@ -2,6 +2,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/chats/presentation/pages/chats_screem.dart';
 import 'package:dr/doctor/features/home/presentation/pages/all_requests.dart';
 import 'package:dr/doctor/features/notification/presentation/pages/notification_screen.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Allrequests(),
       ChatsScreen(),
       NotificationScreen(),
-      Allrequests(),
+      SettingsScreen(),
     ];
   }
 
@@ -40,8 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color.fromARGB(255, 108, 210, 233),
-                AppColors.secondryColor
+                Color.fromARGB(255, 103, 157, 252),
+                Color.fromARGB(255, 155, 60, 172),
               ],
             ),
           ),

@@ -22,8 +22,8 @@ class AppBarForHome extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(158, 55, 209, 244),
-            AppColors.secondryColor,
+            Color.fromARGB(255, 103, 157, 252),
+            Color.fromARGB(255, 155, 60, 172),
           ],
         ),
       ),

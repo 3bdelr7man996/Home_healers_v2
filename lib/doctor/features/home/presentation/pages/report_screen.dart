@@ -28,7 +28,7 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: "report_template", backButton: true),
-      bottomNavigationBar: const BottomNavigationForDetails(),
+      bottomNavigationBar: CustomBottomNavigation(selectedIndex: 0),
       body: SingleChildScrollView(
         child: Stack(
           children: [

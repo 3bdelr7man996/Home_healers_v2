@@ -1,12 +1,11 @@
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/utils/app_colors.dart';
 
-PreferredSizeWidget customAppBar(
-  BuildContext context, {
-  String title = '',
-  bool backButton = true,
-}) {
+PreferredSizeWidget customAppBar(BuildContext context,
+    {String title = '', bool backButton = true, bool fromSetting = false}) {
   return AppBar(
     centerTitle: true,
     leading: backButton
@@ -23,7 +22,12 @@ PreferredSizeWidget customAppBar(
                 color: AppColors.primaryColor,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                if (fromSetting) {
+                  AppConstants.customNavigation(
+                      context, HomeScreen(selectedIndex: 3), 1, 0);
+                } else {
+                  Navigator.pop(context);
+                }
               },
             ),
           )
