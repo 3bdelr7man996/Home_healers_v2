@@ -86,5 +86,17 @@
   "choose_nationality": "اختر الجنسية :",
   "saudi": "سعودي",
   "other_than_that": "غير ذلك",
-  "injury_area": "اختار منطقة الإصابة"
+  "injury_area": "اختار منطقة الإصابة",
+  "filter_for_search": "فلتر البحث",
+  "filter_result": "نتيجة الفلترة",
+  "muscle_injuries_section": "قسم إصابات عضلية",
+  "muscle_and_joint_pain_section": "قسم الآم العضلات والمفاصل",
+  "pediatric_rehabilitation_section": "قسم تأهيل الأطفال",
+  "rehabilitation_after_surgeries": "قسم التأهيل بعد العمليات الجراحية",
+  "cardiopulmonary_rehabilitation": "قسم تأهيل قلبي رئوي",
+  "nervous_system_injuries": "قسم إصابات الجهاز العصبي",
+  "women_health_problems": "قسم مشاكل صحة المرأة",
+  "Offer": "العروض",
+  "spinal_pain_offers": "عروض الآم العمود الفقري",
+  "choose_your_reservation_date": "اختر ميعاد الحجز"
 }

@@ -1,6 +1,5 @@
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SectionsScreen extends StatefulWidget {
@@ -12,30 +11,35 @@ class SectionsScreen extends StatefulWidget {
   State<SectionsScreen> createState() => _SectionsScreenState();
 }
 
+int i = 0;
+
 class _SectionsScreenState extends State<SectionsScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Future.delayed(Duration.zero, () {
-      showModalBottomSheet(
-        context: widget.context,
-        builder: (BuildContext context) {
-          return BottomSheetForPatient();
-        },
-      );
-    });
+    if (i == 0) {
+      Future.delayed(Duration.zero, () {
+        showModalBottomSheet(
+          context: widget.context,
+          builder: (BuildContext context) {
+            return const BottomSheetForPatient();
+          },
+        );
+      });
+    }
+    i++;
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustumAppBarForPatient(),
+        const CustumAppBarForPatient(),
         10.ph,
-        SliderForPatient(),
+        const SliderForPatient(),
         10.ph,
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -47,7 +51,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
           ),
         ),
         10.ph,
-        Expanded(child: IconsForSections()),
+        const Expanded(child: IconsForSections()),
       ],
     );
   }

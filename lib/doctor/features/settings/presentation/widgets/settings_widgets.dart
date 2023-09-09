@@ -64,6 +64,7 @@ class _PersonalinfoState extends State<Personalinfo> {
   }
 }
 
+// ignore: must_be_immutable
 class OneOption extends StatelessWidget {
   String IconPath, title;
   var routeScreen;

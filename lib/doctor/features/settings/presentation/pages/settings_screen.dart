@@ -10,7 +10,6 @@ import 'package:dr/doctor/features/settings/presentation/pages/privacy_screem.da
 import 'package:dr/doctor/features/settings/presentation/pages/recruitment_policy_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/terms_and_conditions_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

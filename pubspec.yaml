@@ -3,17 +3,14 @@ description: home healers dr
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-
 version: 1.0.0+1
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
 
-
 dependencies:
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -30,17 +27,15 @@ dependencies:
   flutter_svg: ^2.0.7
   image_picker: ^1.0.4
   carousel_slider: ^4.2.1
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  
   flutter_lints: ^2.0.0
 
-
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -51,7 +46,6 @@ flutter:
     - assets/translations/
     - assets/images/
     - assets/icons/
-    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -70,7 +64,7 @@ flutter:
         - asset: assets/fonts/Tajawal/Tajawal-Regular.ttf
         - asset: assets/fonts/Tajawal/Tajawal-Medium.ttf
         - asset: assets/fonts/Tajawal/Tajawal-Bold.ttf
-   
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

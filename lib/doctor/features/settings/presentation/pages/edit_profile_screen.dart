@@ -20,8 +20,6 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    bool _isChecked = false;
-
     return Scaffold(
         appBar: customAppBar(
           context,

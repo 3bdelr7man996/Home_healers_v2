@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 final formKey = GlobalKey<FormState>();
 
+// ignore: must_be_immutable
 class SignInScreen extends StatefulWidget {
   int rollSelected;
   SignInScreen({super.key, required this.rollSelected});

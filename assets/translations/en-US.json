@@ -86,5 +86,17 @@
   "choose_nationality": "Choose nationality",
   "saudi": "Saudi",
   "other_than_that": "Other than that",
-  "injury_area": "Choose injury area"
+  "injury_area": "Choose injury area",
+  "filter_for_search": "Filter For Search",
+  "filter_result": "Filter result",
+  "muscle_injuries_section": "Muscle injuries section",
+  "muscle_and_joint_pain_section": "Muscle and joint pain Section",
+  "pediatric_rehabilitation_section": "Pediatric Rehabilitation Section",
+  "rehabilitation_after_surgeries": "Rehabilitation after surgeries Section",
+  "cardiopulmonary_rehabilitation": "Cardiopulmonary Rehabilitation Section",
+  "nervous_system_injuries": "Nervous system injuries Section",
+  "women_health_problems": "Women's health problems section",
+  "Offer": "The Offers",
+  "spinal_pain_offers": "Spinal pain offers",
+  "choose_your_reservation_date": "Choose your reservation date"
 }
