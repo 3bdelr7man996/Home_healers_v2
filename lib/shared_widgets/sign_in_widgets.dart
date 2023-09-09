@@ -27,6 +27,7 @@ class TitleForTextFormField extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class TextFormFieldForLogIn extends StatelessWidget {
   final int num;
 
@@ -36,7 +37,6 @@ class TextFormFieldForLogIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var email, password;
     return Container(
       width: context.width * 0.9,
       child: TextFormField(
@@ -53,7 +53,7 @@ class TextFormFieldForLogIn extends StatelessWidget {
               ? null
               : IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.visibility),
+                  icon: const Icon(Icons.visibility),
                 ),
           border: OutlineInputBorder(
             borderSide: BorderSide(width: context.width * 0.01),
@@ -61,22 +61,19 @@ class TextFormFieldForLogIn extends StatelessWidget {
         ),
         validator: (value) {
           if (num == 1) {
-            if (value!.isEmpty || value == null) {
+            if (value!.isEmpty) {
               return "field_is_empty".tr();
             } else if (!RegExp(r'^[\w-.]+@([\w-]+.)+[\w]{2,4}')
                 .hasMatch(value)) {
               return "email_not_correct".tr();
-            } else {
-              email = value;
-            }
+            } else {}
             return null;
           } else {
-            if (value!.isEmpty || value == null) {
+            if (value!.isEmpty) {
               return "field_is_empty".tr();
             } else if (value.length < 5) {
               return "password_must_be_more_than_5".tr();
             } else {
-              password = value;
               return null;
             }
           }

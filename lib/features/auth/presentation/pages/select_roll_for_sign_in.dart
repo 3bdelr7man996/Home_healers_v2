@@ -12,10 +12,11 @@ class SelectRollForSignIn extends StatefulWidget {
 }
 
 class _SelectRollForSignInState extends State<SelectRollForSignIn> {
+  int rollSelected = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NextButton(),
+      bottomNavigationBar: NextButton(rollSelected: rollSelected),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -33,16 +34,30 @@ class _SelectRollForSignInState extends State<SelectRollForSignIn> {
           Text("Explanation_of_logging_in_select_roll".tr(),
               style: TextStyle(fontSize: context.width * 0.04)),
           20.ph,
-          const CardIdentification(
-            imagePath: "assets/images/patient.png",
-            title: "Roll_Title_For_Patient",
-            opacity: 0.5,
+          InkWell(
+            onTap: () {
+              setState(() {
+                rollSelected = 0;
+              });
+            },
+            child: CardIdentification(
+              imagePath: "assets/images/patient.png",
+              title: "Roll_Title_For_Patient",
+              opacity: rollSelected == 0 ? 1 : 0.5,
+            ),
           ),
           20.ph,
-          const CardIdentification(
-            imagePath: "assets/images/doctor.png",
-            title: "Roll_Title_For_Doctor",
-            opacity: 1,
+          InkWell(
+            onTap: () {
+              setState(() {
+                rollSelected = 1;
+              });
+            },
+            child: CardIdentification(
+              imagePath: "assets/images/doctor.png",
+              title: "Roll_Title_For_Doctor",
+              opacity: rollSelected == 1 ? 1 : 0.5,
+            ),
           ),
         ],
       )),

@@ -1,47 +1,61 @@
-import 'package:dr/core/extensions/media_query_extension.dart';
-import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/my_requests_widgets.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class MyRequestScreen extends StatelessWidget {
-  const MyRequestScreen({super.key});
+class MyRequestsScreen extends StatefulWidget {
+  final int activeIndex;
+
+  const MyRequestsScreen({super.key, this.activeIndex = 0});
+
+  @override
+  _MyRequestsScreenState createState() => _MyRequestsScreenState();
+}
+
+class _MyRequestsScreenState extends State<MyRequestsScreen> {
+  late int activeIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    activeIndex = widget.activeIndex;
+  }
+
+  void updateActiveIndex(int newIndex) {
+    setState(() {
+      activeIndex = newIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavigationBar(),
+      appBar: customAppBar(context,
+          backButton: true, title: "muscle_and_joint_injuries_requests"),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppBarForHome(),
-          30.ph,
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "all_requests".tr(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
-                30.ph,
-                RectangleForSection(
-                    title: "muscle_and_joint_injuries",
-                    pathImage: "assets/icons/muscle_icon.svg"),
-                15.ph,
-                RectangleForSection(
-                  title: "Rehabilitation_of_children",
-                  pathImage: "assets/icons/children_icon.svg",
-                ),
-                15.ph,
-                RectangleForSection(
-                    title: "sports_muscle_injuries",
-                    pathImage: "assets/icons/sports_muscle_injuries_icon.svg"),
-              ],
-            ),
-          )
+          SizedBox(height: 20),
+          Categories(
+            categories: const [
+              "المراجعة",
+              "انتظار الدفع",
+              "تم الدفع",
+              "المنتهية",
+              "الملغية",
+            ],
+            activeIndex: activeIndex,
+            onIndexChanged: (index) {
+              updateActiveIndex(index);
+            },
+          ),
+          activeIndex == 0
+              ? const Review()
+              : activeIndex == 1
+                  ? const awaitingPayment()
+                  : activeIndex == 2
+                      ? const PaymentWasMade()
+                      : activeIndex == 3
+                          ? const Finished()
+                          : const Canceled(),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/auth/presentation/pages/sign_up_for_patient_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -9,7 +10,8 @@ import 'package:flutter/material.dart';
 final formKey = GlobalKey<FormState>();
 
 class SignInScreen extends StatefulWidget {
-  SignInScreen({super.key});
+  int rollSelected;
+  SignInScreen({super.key, required this.rollSelected});
 
   @override
   State<SignInScreen> createState() => _SignInScreen();
@@ -54,11 +56,11 @@ class _SignInScreen extends State<SignInScreen> {
                     child: Image.asset("assets/images/logIn.png"),
                   ),
                   40.ph,
-                  TitleForTextFormField(title: "email"),
+                  const TitleForTextFormField(title: "email"),
                   5.ph,
                   TextFormFieldForLogIn(num: 1),
                   20.ph,
-                  TitleForTextFormField(title: "password"),
+                  const TitleForTextFormField(title: "password"),
                   5.ph,
                   TextFormFieldForLogIn(num: 2),
                   5.ph,
@@ -103,7 +105,9 @@ class _SignInScreen extends State<SignInScreen> {
                               },
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
-                                return SignUpScreen();
+                                return widget.rollSelected == 1
+                                    ? SignUpScreen()
+                                    : SignUpForPatientScreen();
                               },
                             ),
                           );

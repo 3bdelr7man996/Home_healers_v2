@@ -1,53 +1,47 @@
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/app_font.dart';
 
-PreferredSizeWidget customAppBar(
-  BuildContext context, {
-  String title = '',
-  bool backButton = true,
-}) {
+PreferredSizeWidget customAppBar(BuildContext context,
+    {String title = '', bool backButton = true, bool fromSetting = false}) {
   return AppBar(
     centerTitle: true,
-    // automaticallyImplyLeading: true,
-    // leading: IconButton(
-    //   icon:
-    //       AppConstants.customAssetSvg(imagePath: AppImages.circleBackArrowIcon),
-    //   onPressed: () {
-    //     Navigator.pop(context);
-    //     //key.currentState?.openDrawer();
-    //   },
-    // ),
-    actions: [
-      backButton
-          ? Container(
-              margin: const EdgeInsets.all(8.0),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 199, 244, 253),
+    leading: backButton
+        ? Container(
+            margin: const EdgeInsets.all(8.0),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(255, 199, 244, 253),
+            ),
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(
+                Icons.arrow_back,
+                color: AppColors.primaryColor,
               ),
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: const Icon(
-                  Icons.arrow_forward,
-                  color: AppColors.primaryColor,
-                ),
-                // AppConstants.customAssetSvg(
-                //     imagePath: AppImages.circleBackArrowIcon),
-                onPressed: () {
+              onPressed: () {
+                if (fromSetting) {
+                  AppConstants.customNavigation(
+                      context, HomeScreen(selectedIndex: 3), 1, 0);
+                } else {
                   Navigator.pop(context);
-                  //key.currentState?.openDrawer();
-                },
-              ),
-            )
-          : const SizedBox(),
-    ],
+                }
+              },
+            ),
+          )
+        : const SizedBox(),
     backgroundColor: AppColors.backGroundColor,
-    elevation: 0,
-    //iconTheme: const IconThemeData(color: AppColors.darkPrimaryColor),
+    shadowColor: Colors.grey.withOpacity(0.5),
+    elevation: 8,
     title: Text(
-      title,
-      style: bigBlackFont().copyWith(color: AppColors.blackColor),
+      title.tr(),
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16.0,
+        color: Colors.black,
+      ),
     ),
   );
 }

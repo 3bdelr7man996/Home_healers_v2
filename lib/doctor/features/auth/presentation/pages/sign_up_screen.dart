@@ -1,7 +1,6 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/sign_up_widgets.dart';
 import 'package:dr/features/auth/presentation/pages/sign_in_screen.dart';
@@ -21,7 +20,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  @override
   bool _isVisible = false;
 
   void _toggleVisibility() {
@@ -188,7 +186,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 },
                                 pageBuilder:
                                     (context, animation, secondaryAnimation) {
-                                  return SignInScreen();
+                                  return SignInScreen(
+                                    rollSelected: 1,
+                                  );
                                 },
                               ),
                             );
@@ -208,6 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               PopUp(
                 toggleVisibility: _toggleVisibility,
                 isVisible: _isVisible,
+                rollSelected: 1,
               )
             ],
           ),
