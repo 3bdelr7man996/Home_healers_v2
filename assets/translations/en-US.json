@@ -98,5 +98,12 @@
   "women_health_problems": "Women's health problems section",
   "Offer": "The Offers",
   "spinal_pain_offers": "Spinal pain offers",
-  "choose_your_reservation_date": "Choose your reservation date"
+  "choose_your_reservation_date": "Choose your reservation date",
+  "payment_details": "Payment details",
+  "choose_card": "Choose Card",
+  "favorite": "Favorite",
+  "reports": "Reports",
+  "pdf_viewer": "PDF Viewer",
+  "my_requests": "My Requests",
+  "my_wallet": "My Wallet"
 }

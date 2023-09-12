@@ -27,8 +27,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context,
-          backButton: true, fromSetting: true, title: "change_password"),
+      appBar: customAppBar(context, backButton: true, title: "change_password"),
       body: Stack(children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),

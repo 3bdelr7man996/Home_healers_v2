@@ -60,8 +60,7 @@ class ApPBarForspecialistScreen extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Expanded(
-                      child: Align(
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       "صفحة الأخصائي",
@@ -70,7 +69,7 @@ class ApPBarForspecialistScreen extends StatelessWidget {
                           fontSize: 20.0,
                           fontWeight: FontWeight.w500),
                     ),
-                  )),
+                  ),
                 ),
                 const Spacer()
               ],

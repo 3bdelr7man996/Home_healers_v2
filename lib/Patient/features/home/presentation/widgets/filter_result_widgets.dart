@@ -9,10 +9,11 @@ import 'package:flutter_svg/svg.dart';
 // ignore: must_be_immutable
 class DoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
-  bool isVisible, fromOfferScreen;
+  bool isVisible, fromOfferScreen, fromfavorite;
   DoctorCard({
     super.key,
     required this.isVisible,
+    this.fromfavorite = false,
     this.fromOfferScreen = false,
     required VoidCallback this.toggleVisibility,
   });
@@ -44,6 +45,7 @@ class _DoctorCardState extends State<DoctorCard> {
           child: Column(
             children: [
               HeaderForDoctorCard(
+                  fromfavorite: widget.fromfavorite,
                   toggleVisibility: widget.toggleVisibility,
                   isVisible: widget.isVisible),
               10.ph,
@@ -191,10 +193,11 @@ class Stars extends StatelessWidget {
 // ignore: must_be_immutable
 class HeaderForDoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
-  bool isVisible;
+  bool isVisible, fromfavorite;
   HeaderForDoctorCard({
     super.key,
     required this.isVisible,
+    this.fromfavorite = false,
     required VoidCallback this.toggleVisibility,
   });
 
@@ -231,7 +234,9 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                   radius: 15,
                   backgroundColor: Colors.white,
                   child: Icon(
-                    widget.isVisible ? Icons.favorite : Icons.favorite_border,
+                    widget.isVisible || widget.fromfavorite
+                        ? Icons.favorite
+                        : Icons.favorite_border,
                     size: 20,
                     color: Colors.red,
                   ),

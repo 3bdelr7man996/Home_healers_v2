@@ -98,5 +98,12 @@
   "women_health_problems": "قسم مشاكل صحة المرأة",
   "Offer": "العروض",
   "spinal_pain_offers": "عروض الآم العمود الفقري",
-  "choose_your_reservation_date": "اختر ميعاد الحجز"
+  "choose_your_reservation_date": "اختر ميعاد الحجز",
+  "payment_details": "تفاصيل الدفع",
+  "choose_card": "اختر الكارد",
+  "favorite": "المفضلة",
+  "reports": "التقارير",
+  "pdf_viewer": "عارض الملفات",
+  "my_requests": "طلباتي",
+  "my_wallet": "محفظتي"
 }

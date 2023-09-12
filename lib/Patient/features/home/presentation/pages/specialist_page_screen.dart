@@ -21,7 +21,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
           Column(
             children: [
               ApPBarForspecialistScreen(),
-              Expanded(
+              Container(
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -57,11 +57,9 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    primary: AppColors
-                                        .primaryColor, // Background color
+                                    primary: AppColors.primaryColor,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // BorderRadius
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   child: Padding(
@@ -88,15 +86,14 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5), // color of the shadow
-                    spreadRadius: 5, // spread radius
-                    blurRadius: 7, // blur radius
-                    offset: Offset(0, 3), // changes position of shadow
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
                   ),
                 ],
                 color: Colors.white,
-                borderRadius:
-                    BorderRadius.circular(20.0), // Adjust the radius as desired
+                borderRadius: BorderRadius.circular(20.0),
               ),
               height: 150,
               child: PictureForSpecialist(),
