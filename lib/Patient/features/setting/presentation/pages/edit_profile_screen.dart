@@ -4,8 +4,9 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
-import 'package:dr/doctor/features/auth/presentation/widgets/sign_up_widgets.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/shared_widgets/custom_titled_text_form.dart';
+import 'package:dr/shared_widgets/gender_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -41,33 +42,30 @@ class _EditProfileScreenForPatientState
                     Row(
                       children: [
                         Expanded(
-                          child: TextFormFieldForSignUp(
-                            num: 1,
+                          child: TiteldTextFormField(
                             title: "first_name",
-                            icon: AppImages.personIcon,
+                            prefixIconPath: AppImages.personIcon,
+                            validateMsg: "required".tr(),
                           ),
                         ),
                         15.pw,
                         Expanded(
-                          child: TextFormFieldForSignUp(
-                            num: 2,
+                          child: TiteldTextFormField(
                             title: "last_name",
-                            icon: AppImages.personIcon,
+                            prefixIconPath: AppImages.personIcon,
                           ),
                         ),
                       ],
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 3,
+                    TiteldTextFormField(
                       title: "email",
-                      icon: AppImages.emailIcon,
+                      prefixIconPath: AppImages.emailIcon,
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 2,
+                    TiteldTextFormField(
                       title: "mobile_number",
-                      icon: AppImages.phoneIcon,
+                      prefixIconPath: AppImages.phoneIcon,
                     ),
                     30.ph,
                     Container(
@@ -83,18 +81,17 @@ class _EditProfileScreenForPatientState
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              GenderButton(num: 1, title: "saudi"),
-                              GenderButton(num: 2, title: "other_than_that")
+                              GenderButton(gender: "male", title: "male"),
+                              GenderButton(gender: "female", title: "female")
                             ],
                           )
                         ],
                       ),
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 6,
+                    TiteldTextFormField(
                       title: "location",
-                      icon: AppImages.locationIcon,
+                      prefixIconPath: AppImages.locationIcon,
                     ),
                     30.ph,
                     SizedBox(
