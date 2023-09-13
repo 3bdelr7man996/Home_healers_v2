@@ -1,7 +1,8 @@
+import 'package:dr/Patient/features/favorite/presentation/pages/favorite_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/sections_screen.dart';
-import 'package:dr/doctor/features/chats/presentation/pages/chats_screem.dart';
+import 'package:dr/Patient/features/offer/presentation/pages/offer_screen.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/settings_screen.dart';
 import 'package:dr/doctor/features/notification/presentation/pages/notification_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -21,11 +22,11 @@ class _HomeScreenForPatientState extends State<HomeScreenForPatient> {
   void initState() {
     super.initState();
     _widgets = [
-      ChatsScreen(),
+      OfferScreen(),
       NotificationScreen(),
       SectionsScreen(context: context),
-      SettingsScreen(),
-      SettingsScreen(),
+      FavoriteScreen(),
+      SettingsScreenForPatient(),
     ];
   }
 

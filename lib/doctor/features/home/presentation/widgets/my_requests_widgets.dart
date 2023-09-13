@@ -57,7 +57,7 @@ class _CategoriesState extends State<Categories> {
                     color: (widget.activeIndex == index)
                         ? AppColors.primaryColor
                         : AppColors.hintColor,
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -44,8 +47,6 @@ class _SliderForPatientState extends State<SliderForPatient> {
             },
           ),
           items: imageList.map((item) {
-            int index = imageList.indexOf(item);
-
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -93,9 +94,9 @@ class CustumAppBarForPatient extends StatefulWidget {
   State<CustumAppBarForPatient> createState() => _CustumAppBarForPatientState();
 }
 
-TextEditingController _searchController = TextEditingController();
-
 class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
+  TextEditingController _searchController = TextEditingController();
+
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -148,23 +149,28 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromARGB(157, 55, 209, 244),
-                        Color(0xFFB61EEF),
-                      ],
+                InkWell(
+                  onTap: () {
+                    AppConstants.customNavigation(context, FiterScreen(), 0, 0);
+                  },
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(157, 55, 209, 244),
+                          Color(0xFFB61EEF),
+                        ],
+                      ),
                     ),
-                  ),
-                  child: const Icon(
-                    Icons.filter_list,
-                    size: 25,
-                    color: Colors.white,
+                    child: const Icon(
+                      Icons.filter_list,
+                      size: 25,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 10.pw,
@@ -221,6 +227,16 @@ class _IconsForSectionsState extends State<IconsForSections> {
     'إصابات الجهاز العصبي',
     'مشاكل صحة المرأة',
   ];
+
+  final List<String> SectiondetailsTitle = [
+    'muscle_injuries_section',
+    'muscle_and_joint_pain_section',
+    'pediatric_rehabilitation_section',
+    'rehabilitation_after_surgeries',
+    'cardiopulmonary_rehabilitation',
+    'nervous_system_injuries',
+    'women_health_problems'
+  ];
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -229,15 +245,25 @@ class _IconsForSectionsState extends State<IconsForSections> {
         crossAxisCount: 3,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            SvgPicture.asset(icons[index]),
-            5.ph,
-            Text(
-              labels[index],
-              textAlign: TextAlign.center,
-            )
-          ],
+        return InkWell(
+          onTap: () {
+            AppConstants.customNavigation(
+                context,
+                SectionDetailsScreen(
+                    SectiondetailsTitle: SectiondetailsTitle[index]),
+                -1,
+                0);
+          },
+          child: Column(
+            children: [
+              SvgPicture.asset(icons[index]),
+              5.ph,
+              Text(
+                labels[index],
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
         );
       },
     );

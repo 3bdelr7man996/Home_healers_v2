@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ContactUsScreen extends StatelessWidget {
-  const ContactUsScreen({super.key});
+  bool fromPatient;
+  ContactUsScreen({super.key, this.fromPatient = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ContactUsScreen extends StatelessWidget {
         context,
         backButton: true,
         title: "contact_us",
-        fromSetting: true,
+        fromSetting: fromPatient ? false : true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),

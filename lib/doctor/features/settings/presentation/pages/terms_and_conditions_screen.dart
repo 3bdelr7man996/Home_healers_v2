@@ -1,16 +1,24 @@
+import 'package:dr/Patient/features/home/presentation/widgets/home_widgets.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/requests_details_widgets.dart';
 import 'package:flutter/material.dart';
 
 class TermsAndConditionsScreen extends StatelessWidget {
-  const TermsAndConditionsScreen({super.key});
+  bool fromPatient;
+  TermsAndConditionsScreen({super.key, this.fromPatient = false});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context,
-          backButton: true, fromSetting: true, title: "terms_and_conditions"),
-      bottomNavigationBar: CustomBottomNavigation(selectedIndex: 3),
+          backButton: true,
+          fromSetting: fromPatient ? false : true,
+          title: "terms_and_conditions"),
+      bottomNavigationBar: fromPatient
+          ? BottomNavigationForPatient(
+              selectedIndex: 4,
+            )
+          : CustomBottomNavigation(selectedIndex: 3),
       body: const SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

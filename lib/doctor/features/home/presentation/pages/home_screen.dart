@@ -1,4 +1,3 @@
-import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/chats/presentation/pages/chats_screem.dart';
 import 'package:dr/doctor/features/home/presentation/pages/all_requests.dart';
 import 'package:dr/doctor/features/notification/presentation/pages/notification_screen.dart';
