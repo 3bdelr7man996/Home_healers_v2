@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:dr/doctor/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'di_container.dart' as di;
+import 'package:bot_toast/bot_toast.dart';
 
 import 'config/bloc_config/bloc_observer.dart';
 import 'config/bloc_config/bloc_provider.dart';
@@ -11,6 +14,7 @@ import 'core/utils/cache_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.serviceLocatorInit();
   await EasyLocalization.ensureInitialized();
   await CacheHelper.init();
   Bloc.observer = MyBlocObserver();
@@ -37,7 +41,8 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: const SelectRollForSignIn(),
+        builder: BotToastInit(),
+        home: const SignUpScreen(),
       ),
     );
   }

@@ -86,5 +86,8 @@
   "choose_nationality": "Choose nationality",
   "saudi": "Saudi",
   "other_than_that": "Other than that",
-  "injury_area": "Choose injury area"
+  "injury_area": "Choose injury area",
+  "required":"Required",
+  "city":"City",
+  "select_city":"Select City"
 }

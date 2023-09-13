@@ -86,5 +86,8 @@
   "choose_nationality": "اختر الجنسية :",
   "saudi": "سعودي",
   "other_than_that": "غير ذلك",
-  "injury_area": "اختار منطقة الإصابة"
+  "injury_area": "اختار منطقة الإصابة",
+  "required":"مطلوب",
+  "city":"المدينة",
+  "select_city":"اختار المدينة"
 }

@@ -3,7 +3,9 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
-import 'package:dr/doctor/features/auth/presentation/widgets/sign_up_widgets.dart';
+import 'package:dr/doctor/features/auth/presentation/widgets/sign_up/bottom_sheet.dart';
+import 'package:dr/shared_widgets/custom_titled_text_form.dart';
+import 'package:dr/shared_widgets/gender_button.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/edit_widgets.dart';
 
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
@@ -20,19 +22,17 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    bool _isChecked = false;
-
     return Scaffold(
         appBar: customAppBar(
           context,
           backButton: true,
-          title: "edit_setting",
+          title: "edit_setting".tr(),
           fromSetting: true,
         ),
         body: Column(
           children: [
             20.ph,
-            ProfileImage(),
+            const ProfileImage(),
             20.ph,
             Expanded(
                 child: SingleChildScrollView(
@@ -43,42 +43,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Row(
                       children: [
                         Expanded(
-                          child: TextFormFieldForSignUp(
-                            num: 1,
-                            title: "first_name",
-                            icon: AppImages.personIcon,
+                          child: TiteldTextFormField(
+                            title: "first_name".tr(),
+                            prefixIconPath: AppImages.personIcon,
+                            validateMsg: "required".tr(),
                           ),
                         ),
                         15.pw,
                         Expanded(
-                          child: TextFormFieldForSignUp(
-                            num: 2,
-                            title: "last_name",
-                            icon: AppImages.personIcon,
-                          ),
+                          child: TiteldTextFormField(
+                              title: "last_name".tr(),
+                              prefixIconPath: AppImages.personIcon,
+                              validateMsg: "required".tr()),
                         ),
                       ],
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 3,
+                    TiteldTextFormField(
                       title: "email",
-                      icon: AppImages.emailIcon,
+                      prefixIconPath: AppImages.emailIcon,
+                      validateMsg: "required".tr(),
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 2,
-                      title: "mobile_number",
-                      icon: AppImages.phoneIcon,
+                    TiteldTextFormField(
+                      title: "mobile_number".tr(),
+                      prefixIconPath: AppImages.phoneIcon,
+                      keyboardType: TextInputType.phone,
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 6,
+                    TiteldTextFormField(
                       title: "location",
-                      icon: AppImages.locationIcon,
+                      prefixIconPath: AppImages.locationIcon,
                     ),
                     30.ph,
-                    Container(
+                    SizedBox(
                       width: context.width,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,34 +90,30 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              GenderButton(num: 1, title: "male"),
-                              GenderButton(num: 2, title: "female")
+                              GenderButton(gender: "male", title: "male"),
+                              GenderButton(gender: "female", title: "female")
                             ],
                           )
                         ],
                       ),
                     ),
                     30.ph,
-                    const BottomSheetForSignUP(
-                      num: 1,
-                      title: "job_title",
+                    BottomSheetForSignUP(
+                      title: "job_title".tr(),
                     ),
                     30.ph,
-                    const BottomSheetForSignUP(
-                      num: 2,
-                      title: "section",
+                    BottomSheetForSignUP(
+                      title: "section".tr(),
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 7,
-                      title: "identification_number_residence",
-                      icon: AppImages.locationIcon,
+                    TiteldTextFormField(
+                      title: "identification_number_residence".tr(),
+                      prefixIconPath: AppImages.locationIcon,
                     ),
                     30.ph,
-                    TextFormFieldForSignUp(
-                      num: 7,
-                      title: "bank_account_number",
-                      icon: AppImages.locationIcon,
+                    TiteldTextFormField(
+                      title: "bank_account_number".tr(),
+                      prefixIconPath: AppImages.locationIcon,
                     ),
                     30.ph,
                     SizedBox(

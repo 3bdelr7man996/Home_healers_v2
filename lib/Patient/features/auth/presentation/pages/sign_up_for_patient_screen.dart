@@ -4,7 +4,9 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/doctor/features/auth/presentation/widgets/sign_up_widgets.dart';
+import 'package:dr/shared_widgets/gender_button.dart';
+import 'package:dr/doctor/features/auth/presentation/widgets/sign_up/submit_button.dart';
+import 'package:dr/doctor/features/home/presentation/widgets/report_widgets.dart';
 import 'package:dr/features/auth/presentation/pages/sign_in_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -102,8 +104,11 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              GenderButton(num: 1, title: "saudi"),
-                              GenderButton(num: 2, title: "other_than_that")
+                              GenderButton(
+                                  gender: "saudi", title: "saudi"), //todo
+                              GenderButton(
+                                  gender: "other_than_that",
+                                  title: "other_than_that")
                             ],
                           )
                         ],
@@ -191,7 +196,6 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
               PopUp(
                 toggleVisibility: _toggleVisibility,
                 isVisible: _isVisible,
-                rollSelected: 0,
               )
             ],
           ),
