@@ -4,6 +4,7 @@ import 'package:dr/features/auth/presentation/pages/sign_in_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class NextButton extends StatelessWidget {
   int rollSelected;
   NextButton({super.key, required this.rollSelected});

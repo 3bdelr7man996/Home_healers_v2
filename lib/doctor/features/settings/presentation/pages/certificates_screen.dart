@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';

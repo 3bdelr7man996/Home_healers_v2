@@ -481,6 +481,7 @@ class ButtonsForReview extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class CustomBottomNavigation extends StatefulWidget {
   int selectedIndex;
   CustomBottomNavigation({super.key, required int this.selectedIndex});

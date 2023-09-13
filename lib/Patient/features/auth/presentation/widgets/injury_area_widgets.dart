@@ -1,6 +1,7 @@
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class RowForCheckbox extends StatefulWidget {
   String title1, title2;
   RowForCheckbox({super.key, required this.title1, required this.title2});
