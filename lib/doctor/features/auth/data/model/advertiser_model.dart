@@ -2,45 +2,45 @@ import 'departements_model.dart';
 
 class Advertiser {
   Advertiser({
-    required this.id,
-    required this.firstnameAr,
-    required this.firstnameEn,
-    required this.lastnameAr,
-    required this.lastnameEn,
-    required this.mobile,
-    required this.email,
-    required this.image,
-    required this.images,
-    required this.descAr,
-    required this.descEn,
+    this.id,
+    this.firstnameAr,
+    this.firstnameEn,
+    this.lastnameAr,
+    this.lastnameEn,
+    this.mobile,
+    this.email,
+    this.image,
+    this.images,
+    this.descAr,
+    this.descEn,
     this.addressAr,
     this.addressEn,
-    required this.gender,
-    required this.iban,
+    this.gender,
+    this.iban,
     this.location,
     this.bundleId,
-    required this.countryId,
-    required this.cityId,
+    this.countryId,
+    this.cityId,
     this.areaId,
     this.startfrom,
     this.endat,
-    required this.sessionPrice,
-    required this.sessionDur,
+    this.sessionPrice,
+    this.sessionDur,
     this.lat,
     this.lng,
-    required this.status,
+    this.status,
     this.centerId,
     this.fcmToken,
-    required this.isOnline,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.rating,
-    required this.nameAr,
-    required this.nameEn,
-    required this.categories,
-    required this.statusAdvisor,
+    this.isOnline,
+    this.createdAt,
+    this.updatedAt,
+    this.rating,
+    this.nameAr,
+    this.nameEn,
+    this.categories,
+    this.statusAdvisor,
   });
-  late final int id;
+  late final int? id;
   late final String? firstnameAr;
   late final String? firstnameEn;
   late final String? lastnameAr;
@@ -87,7 +87,9 @@ class Advertiser {
     mobile = json?['mobile'];
     email = json?['email'];
     image = json?['image'];
-    images = List.castFrom<dynamic, String>(json?['images']);
+    images = json?['images'] != null
+        ? List.castFrom<dynamic, String>(json?['images'])
+        : null;
     descAr = json?['desc_ar'];
     descEn = json?['desc_en'];
     addressAr = json?["address_ar"];

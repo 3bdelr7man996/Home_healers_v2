@@ -20,11 +20,11 @@ class SignUpGenderField extends StatelessWidget {
             style: bigBlackFont(fontWeight: FontWeight.w500),
           ),
           5.ph,
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              GenderButton(gender: "male", title: "male"),
-              GenderButton(gender: "female", title: "female")
+              GenderButton(gender: "male", title: "male".tr()),
+              GenderButton(gender: "female", title: "female".tr())
             ],
           )
         ],

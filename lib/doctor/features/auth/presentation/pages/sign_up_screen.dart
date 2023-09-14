@@ -28,7 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context),
-      body: const SignUpBody(),
+      body: SignUpBody(),
     );
   }
 }

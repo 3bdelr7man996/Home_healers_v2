@@ -13,6 +13,7 @@ class TiteldTextFormField extends StatelessWidget {
   final bool validate;
   final String? validateMsg;
   final void Function(String)? onChanged;
+  final void Function()? onSuffixTab;
   const TiteldTextFormField({
     super.key,
     required this.title,
@@ -23,6 +24,7 @@ class TiteldTextFormField extends StatelessWidget {
     this.validate = true,
     this.validateMsg,
     this.onChanged,
+    this.onSuffixTab,
   });
 
   @override
@@ -50,12 +52,16 @@ class TiteldTextFormField extends StatelessWidget {
           onChanged: onChanged,
           decoration: InputDecoration(
             suffixIcon: suffixIconPath != null
-                ? SizedBox(
-                    height: 18,
-                    width: 18,
-                    child: AppConstants.customAssetSvg(
-                      imagePath: suffixIconPath!, //AppImages.showPasswordIcon,
-                      fit: BoxFit.none,
+                ? InkWell(
+                    onTap: onSuffixTab,
+                    child: SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: AppConstants.customAssetSvg(
+                        imagePath:
+                            suffixIconPath!, //AppImages.showPasswordIcon,
+                        fit: BoxFit.none,
+                      ),
                     ),
                   )
                 : null,

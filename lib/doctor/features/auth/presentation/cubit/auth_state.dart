@@ -7,6 +7,7 @@ class AuthState extends Equatable {
     this.lastName,
     this.phone,
     this.description,
+    this.identification,
     this.iban,
     this.location,
     this.gender,
@@ -21,6 +22,9 @@ class AuthState extends Equatable {
     this.departemensList,
     this.statusList,
     this.citiesList,
+    this.obscurePass = true,
+    this.obscureConfPass = true,
+    this.term = false,
     this.statusState = RequestState.initial,
     this.departementState = RequestState.initial,
     this.citiesState = RequestState.initial,
@@ -32,19 +36,23 @@ class AuthState extends Equatable {
   final String? phone;
   final String? description;
   final String? iban;
+  final String? identification;
   final String? address;
   final String? gender;
   final String? password;
   final String? confPassword;
   final List<int>? selectedCategories;
   final List<int>? selectedStatus;
-  final List<int>? selectedCity;
+  final int? selectedCity;
   final File? profileImg;
   final List<File>? advertiseDocuments;
   final Location? location;
   final List<Categories>? departemensList;
   final List<StatusData>? statusList;
   final List<CityData>? citiesList;
+  final bool obscurePass;
+  final bool obscureConfPass;
+  final bool term;
   final RequestState registerState;
   final RequestState departementState;
   final RequestState statusState;
@@ -56,6 +64,7 @@ class AuthState extends Equatable {
         firstName,
         lastName,
         phone,
+        identification,
         description,
         iban,
         location,
@@ -71,6 +80,9 @@ class AuthState extends Equatable {
         departemensList,
         statusList,
         citiesList,
+        obscurePass,
+        obscureConfPass,
+        term,
         registerState,
         departementState,
         statusState,
@@ -81,6 +93,7 @@ class AuthState extends Equatable {
     String? firstName,
     String? lastName,
     String? phone,
+    String? identification,
     String? description,
     String? iban,
     String? address,
@@ -89,7 +102,7 @@ class AuthState extends Equatable {
     String? confPassword,
     List<int>? selectedCategories,
     List<int>? selectedStatus,
-    List<int>? selectedCity,
+    int? selectedCity,
     File? profileImg,
     List<File>? advertiseDocuments,
     Location? location,
@@ -97,6 +110,9 @@ class AuthState extends Equatable {
     List<Categories>? departemensList,
     List<StatusData>? statusList,
     List<CityData>? citiesList,
+    bool? obscurePass,
+    bool? obscureConfPass,
+    bool? term,
     RequestState? departementState,
     RequestState? statusState,
     RequestState? citiesState,
@@ -108,6 +124,7 @@ class AuthState extends Equatable {
         lastName: lastName ?? this.lastName,
         gender: gender ?? this.gender,
         iban: iban ?? this.iban,
+        identification: identification ?? this.identification,
         phone: phone ?? this.phone,
         selectedCategories: selectedCategories ?? this.selectedCategories,
         profileImg: profileImg ?? this.profileImg,
@@ -125,5 +142,8 @@ class AuthState extends Equatable {
         departementState: departementState ?? this.departementState,
         statusList: statusList ?? this.statusList,
         statusState: statusState ?? this.statusState,
+        obscurePass: obscurePass ?? this.obscurePass,
+        obscureConfPass: obscureConfPass ?? this.obscureConfPass,
+        term: term ?? this.term,
       );
 }

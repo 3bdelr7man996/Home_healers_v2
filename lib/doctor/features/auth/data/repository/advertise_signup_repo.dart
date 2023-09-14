@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
@@ -12,12 +13,13 @@ class SignUpAdvertiserRepo {
   SignUpAdvertiserRepo({required this.dataSource});
 
   Future<SignUpAdvertiseModel> signUP({
-    required Map<String, dynamic> body,
-    required String fileKey,
-    required List<File>? files,
-    required List<File>? documents,
-    required String? documentsKey,
+    required Map<String, String> body,
+    String? fileKey,
+    List<File>? files,
+    List<File>? documents,
+    String? documentsKey,
   }) async {
+    log("bodyyyy== $body");
     SignUpAdvertiseModel signUpResponse = SignUpAdvertiseModel.fromJson(
       await dataSource.signUp(
         body: body,
