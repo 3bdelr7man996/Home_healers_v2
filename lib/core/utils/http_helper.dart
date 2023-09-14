@@ -69,7 +69,7 @@ class ApiBaseHelper {
   ///to upload image
   Future<Map<String, dynamic>?> multiPartRequest(
     String url, {
-    required Map<String, dynamic> body,
+    required Map<String, String> body,
     required List<File>? files,
     required String fileKey,
     List<File>? documents,

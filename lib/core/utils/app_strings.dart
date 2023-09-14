@@ -18,6 +18,9 @@ class AppStrings {
   static String userToken = "USER_TOKEN";
   static String userEmail = "USER_EMAIL";
   static String userFullName = "USER_NAME";
+  static String userMobile = "USER_MOBILE";
+  static String userInfo = "USER_INFO";
+  static String isAdvertise = "IS_ADVERTISE";
 
   static String mapApiKey = "AIzaSyBL3got10NTJkmjKT9fgaDPraXxqgb33EQ";
   //Demo

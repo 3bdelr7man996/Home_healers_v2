@@ -4,19 +4,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ButtonForSignUp extends StatelessWidget {
-  final VoidCallback _toggleVisibility;
-  const ButtonForSignUp(
-      {super.key,
-      required VoidCallback toggleVisibility,
-      required bool isVisible})
-      : _toggleVisibility = toggleVisibility;
+  final void Function()? onPressed;
+
+  const ButtonForSignUp({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        _toggleVisibility();
-      },
+      onPressed: onPressed,
       style: ButtonStyle(
         shape: MaterialStateProperty.all<OutlinedBorder>(
           RoundedRectangleBorder(

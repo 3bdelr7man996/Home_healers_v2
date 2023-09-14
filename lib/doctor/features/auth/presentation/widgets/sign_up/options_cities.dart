@@ -44,20 +44,19 @@ class OptionsForCities extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(state.citiesList![index].nameAr!),
-                              Checkbox(
-                                  value: state.selectedCity != null
-                                      ? state.selectedCity?.contains(
-                                          state.citiesList![index].id)
-                                      : false,
-                                  onChanged: (checked) {
-                                    try {
-                                      context.read<AuthCubit>().onSelectCity(
-                                            state.citiesList![index].id!,
-                                          );
-                                    } catch (e) {
-                                      print(e.toString());
-                                    }
-                                  }),
+                              Radio(
+                                groupValue: state.selectedCity,
+                                value: state.citiesList![index].id,
+                                onChanged: (checked) {
+                                  try {
+                                    context.read<AuthCubit>().onSelectCity(
+                                          state.citiesList![index].id!,
+                                        );
+                                  } catch (e) {
+                                    print(e.toString());
+                                  }
+                                },
+                              ),
                             ],
                           ),
                         );

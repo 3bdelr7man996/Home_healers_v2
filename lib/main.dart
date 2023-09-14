@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         builder: BotToastInit(),
-        home: const SignUpScreen(),
+        home: const SelectRollForSignIn(),
+        // const SignUpScreen(),
       ),
     );
   }

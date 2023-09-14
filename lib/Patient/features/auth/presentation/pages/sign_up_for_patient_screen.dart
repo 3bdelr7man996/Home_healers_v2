@@ -147,8 +147,9 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                     ),
                     30.ph,
                     ButtonForSignUp(
-                      isVisible: _isVisible,
-                      toggleVisibility: _toggleVisibility,
+                      onPressed: () {
+                        //todo
+                      },
                     ),
                     30.ph,
                     Row(
