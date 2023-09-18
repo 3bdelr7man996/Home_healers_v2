@@ -1,8 +1,10 @@
 import 'package:dr/Patient/features/home/presentation/pages/date_of_session_screen.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/requests_details_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -82,7 +84,9 @@ class ApPBarForspecialistScreen extends StatelessWidget {
 }
 
 class PictureForSpecialist extends StatefulWidget {
-  const PictureForSpecialist({
+  var Data;
+  PictureForSpecialist({
+    this.Data,
     super.key,
   });
 
@@ -91,49 +95,111 @@ class PictureForSpecialist extends StatefulWidget {
 }
 
 class _PictureForSpecialistState extends State<PictureForSpecialist> {
+  List<String> names = [];
+  String selectedName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.Data["categories"]);
+    for (var item in widget.Data["categories"]) {
+      names.add(item['name_ar']);
+    }
+    selectedName = names.isNotEmpty ? names[0] : 'No names available';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Row(
         children: [
-          Container(
-            width: 150,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
-                image: AssetImage("assets/images/person2.png"),
-                fit: BoxFit.cover,
+          Expanded(
+            child: Container(
+              width: 150,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: widget.Data["image"] != null
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          "${AppStrings.baseUrl}/upload/${widget.Data["image"]}",
+                        ),
+                        fit: BoxFit.cover,
+                        onError: (exception, stackTrace) => {print(exception)},
+                      )
+                    : DecorationImage(
+                        image: AssetImage("assets/images/doctor.png"),
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ),
           10.pw,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "فارس الأسمري",
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500),
-              ),
-              5.ph,
-              const Text(
-                "أخصائي علاج طبيعي",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              5.ph,
-              const Stars(),
-              5.ph,
-              const Text(
-                " متاح الان",
-                style:
-                    TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-              )
-            ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.Data["name_ar"],
+                  style: TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500),
+                ),
+                5.ph,
+                if (names.isNotEmpty)
+                  Container(
+                    height: 20,
+                    child: DropdownButton<String>(
+                      underline: Container(), // Hide the underline
+                      // icon: const SizedBox(), // Hide the arrow icon
+                      value: selectedName,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedName = newValue!;
+                        });
+                      },
+                      items:
+                          names.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 12.0),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                5.ph,
+                const Stars(),
+                5.ph,
+                widget.Data["status"] == "on"
+                    ? const Text(
+                        " متاح الان",
+                        style: TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.bold),
+                      )
+                    : RichText(
+                        text: const TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '- غير متاح الآن ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationColor: Colors.grey,
+                                  decorationThickness: 2.0,
+                                  fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+              ],
+            ),
           )
         ],
       ),
@@ -147,7 +213,7 @@ class Stars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(
           Icons.star,
@@ -218,8 +284,29 @@ class statisticsBox extends StatelessWidget {
   }
 }
 
-class specialistInfo extends StatelessWidget {
-  const specialistInfo({super.key});
+class specialistInfo extends StatefulWidget {
+  var Data;
+  specialistInfo({super.key, this.Data});
+
+  @override
+  State<specialistInfo> createState() => _specialistInfoState();
+}
+
+class _specialistInfoState extends State<specialistInfo> {
+  List<String> names = [];
+  String selectedName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    print("Ghaith");
+    print(widget.Data);
+    print("Ghaith");
+    for (var item in widget.Data["status_advisor"]) {
+      names.add(item['name_ar']);
+    }
+    selectedName = names.isNotEmpty ? names[0] : 'No names available';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +325,7 @@ class specialistInfo extends StatelessWidget {
             ),
             statisticsBox(
               text1: "تقييم",
-              text2: "4.5",
+              text2: "${widget.Data["rating"]}",
             )
           ],
         ),
@@ -252,10 +339,28 @@ class specialistInfo extends StatelessWidget {
               height: 25,
             ),
             5.pw,
-            const Text(
-              "تخصص إصابات والآم العمود الفقري",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            )
+            names.isNotEmpty
+                ? Container(
+                    height: 25,
+                    child: DropdownButton<String>(
+                      underline: Container(), // Hide the underline
+                      // icon: const SizedBox(), // Hide the arrow icon
+                      value: selectedName,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedName = newValue!;
+                        });
+                      },
+                      items:
+                          names.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                : Text('No Data available')
           ],
         ),
         5.ph,
@@ -268,8 +373,8 @@ class specialistInfo extends StatelessWidget {
               height: 25,
             ),
             5.pw,
-            const Text(
-              "مدة الجلسة الواحدة: 30 : 60 دقيقة",
+            Text(
+              "مدة الجلسة الواحدة: ${widget.Data["session_dur"]} دقيقة",
               style: TextStyle(fontWeight: FontWeight.w500),
             )
           ],
@@ -323,8 +428,8 @@ class specialistInfo extends StatelessWidget {
               color: AppColors.primaryColor,
             ),
             10.pw,
-            const Text(
-              "الرياض - الجزيرة",
+            Text(
+              "${widget.Data["address_ar"]}",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
           ],
@@ -334,49 +439,103 @@ class specialistInfo extends StatelessWidget {
   }
 }
 
-class Certificates extends StatelessWidget {
-  const Certificates({super.key});
+class Certificates extends StatefulWidget {
+  var Data;
+  Certificates({super.key, this.Data});
+
+  @override
+  State<Certificates> createState() => _CertificatesState();
+}
+
+class _CertificatesState extends State<Certificates> {
+  List<String> imageList = [
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+    "assets/images/certificate.png",
+  ];
+  var pdfFiles;
+  @override
+  void initState() {
+    super.initState();
+
+    pdfFiles = widget.Data;
+    print("pdFiles");
+    print("${AppStrings.baseUrl}/upload/${pdfFiles[0]}");
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<String> imageList = [
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-      "assets/images/certificate.png",
-    ];
-    return Container(
-      width: context.width,
-      height: 150,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: imageList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              AppConstants.customNavigation(
-                  context, FullScreenImage(pathImage: imageList[index]), -1, 0);
-            },
-            child: Container(
-              width: 100,
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imageList[index]),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
+    return SizedBox(
+        width: context.width,
+        height: 150,
+        child: pdfFiles != null
+            ? ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: pdfFiles.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      // AppConstants.customNavigation(
+                      //     context, FullScreenImage(pathImage: imageList[index]), -1, 0);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PDFViewer(
+                              filePath:
+                                  "${AppStrings.baseUrl}/upload/${pdfFiles[index]}"),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 100,
+                      margin: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/certificate.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  );
+                  // ListTile(
+                  //   title: Text(pdfFiles[index]),
+                  //   onTap: () {
+                  //
+                },
+              )
+            //   },
+            // )
+            : SizedBox()
+        // child: ListView.builder(
+        //   scrollDirection: Axis.horizontal,
+        //   itemCount: imageList.length,
+        //   itemBuilder: (BuildContext context, int index) {
+        //     return InkWell(
+        //       onTap: () {
+        //         AppConstants.customNavigation(
+        //             context, FullScreenImage(pathImage: imageList[index]), -1, 0);
+        //       },
+        //       child: Container(
+        //         width: 100,
+        //         margin: EdgeInsets.all(8.0),
+        //         decoration: BoxDecoration(
+        //           image: DecorationImage(
+        //             image: AssetImage(imageList[index]),
+        //             fit: BoxFit.cover,
+        //           ),
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
+        );
   }
 }
 

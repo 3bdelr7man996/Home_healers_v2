@@ -87,7 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             style: bigBlackFont(fontWeight: FontWeight.w500),
                           ),
                           5.ph,
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GenderButton(gender: "male", title: "male"),

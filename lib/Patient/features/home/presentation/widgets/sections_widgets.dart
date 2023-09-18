@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
@@ -5,8 +7,13 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SliderForPatient extends StatefulWidget {
   const SliderForPatient({super.key});
@@ -94,12 +101,34 @@ class CustumAppBarForPatient extends StatefulWidget {
   State<CustumAppBarForPatient> createState() => _CustumAppBarForPatientState();
 }
 
+Future<String> getAttributeFromSharedPreferences() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String attribute = prefs.getString(AppStrings.userInfo) ?? '';
+  return attribute;
+}
+
 class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
   TextEditingController _searchController = TextEditingController();
 
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  var userInfo;
+  var jsonData;
+  String FirstName = '';
+  @override
+  void initState() {
+    super.initState();
+    getAttributeFromSharedPreferences().then((value) {
+      setState(() {
+        userInfo = value;
+        jsonData = jsonDecode(userInfo);
+        List<String> words = jsonData["name"].split(" ");
+        FirstName = words[0];
+      });
+    });
   }
 
   @override
@@ -130,16 +159,22 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "مرحبا ! \n محمد , كيف حالك !",
+                  Text(
+                    "مرحبا ! \n ${FirstName} , كيف حالك !",
                     textAlign: TextAlign.right,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Image.asset("assets/images/doctor.png"),
+                  Image.asset(
+                    jsonData != null
+                        ? jsonData["image"] ?? "assets/images/patient.png"
+                        : "assets/images/patient.png",
+                    width: 100,
+                    height: 100,
+                  ),
                 ],
               ),
             ),
@@ -209,10 +244,10 @@ class IconsForSections extends StatefulWidget {
 
 class _IconsForSectionsState extends State<IconsForSections> {
   final List<String> icons = [
-    "assets/icons/sports_muscle_injuries_icon.svg",
     "assets/icons/muscle_icon.svg",
-    "assets/icons/children_icon.svg",
+    "assets/icons/sports_muscle_injuries_icon.svg",
     "assets/icons/Post-operative_rehabilitation_icon.svg",
+    "assets/icons/children_icon.svg",
     "assets/icons/Cardiac_rehabilitation_icon.svg",
     "assets/icons/nervous_system_injuries_icon.svg",
     "assets/icons/women's_health_problems_icon.svg",
@@ -229,14 +264,20 @@ class _IconsForSectionsState extends State<IconsForSections> {
   ];
 
   final List<String> SectiondetailsTitle = [
-    'muscle_injuries_section',
     'muscle_and_joint_pain_section',
-    'pediatric_rehabilitation_section',
+    'muscle_injuries_section',
     'rehabilitation_after_surgeries',
+    'pediatric_rehabilitation_section',
     'cardiopulmonary_rehabilitation',
     'nervous_system_injuries',
     'women_health_problems'
   ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthCubit>().getAllStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -245,26 +286,35 @@ class _IconsForSectionsState extends State<IconsForSections> {
         crossAxisCount: 3,
       ),
       itemBuilder: (BuildContext context, int index) {
-        return InkWell(
-          onTap: () {
-            AppConstants.customNavigation(
-                context,
-                SectionDetailsScreen(
-                    SectiondetailsTitle: SectiondetailsTitle[index]),
-                -1,
-                0);
-          },
-          child: Column(
-            children: [
-              SvgPicture.asset(icons[index]),
-              5.ph,
-              Text(
-                labels[index],
-                textAlign: TextAlign.center,
-              )
-            ],
-          ),
-        );
+        return Builder(builder: (BuildContext context) {
+          return InkWell(
+            onTap: () {
+              AppConstants.customNavigation(
+                  context,
+                  SectionDetailsScreen(
+                      numberOfIcon: index,
+                      SectiondetailsTitle: SectiondetailsTitle[index]),
+                  -1,
+                  0);
+            },
+            child: Column(
+              children: [
+                SvgPicture.asset(icons[index]),
+                5.ph,
+                Text(
+                  context.select((AuthCubit cubit) => cubit.state.statusList) !=
+                          null
+                      ? context
+                          .select((AuthCubit cubit) =>
+                              cubit.state.statusList![index].nameAr)
+                          .toString()
+                      : "",
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ),
+          );
+        });
       },
     );
   }

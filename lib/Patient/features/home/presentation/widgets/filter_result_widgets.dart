@@ -3,6 +3,7 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -10,19 +11,46 @@ import 'package:flutter_svg/svg.dart';
 class DoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromOfferScreen, fromfavorite;
-  DoctorCard({
-    super.key,
-    required this.isVisible,
-    this.fromfavorite = false,
-    this.fromOfferScreen = false,
-    required VoidCallback this.toggleVisibility,
-  });
+  String name;
+  String address;
+  String status;
+  String? image;
+  int price;
+  var statusAdvisor;
+  var categories;
+  var Data;
+  DoctorCard(
+      {super.key,
+      required this.isVisible,
+      this.Data,
+      this.fromfavorite = false,
+      this.fromOfferScreen = false,
+      this.statusAdvisor,
+      this.categories,
+      this.price = 0,
+      this.status = "",
+      this.address = "",
+      required VoidCallback this.toggleVisibility,
+      this.image = "",
+      this.name = ""});
 
   @override
   State<DoctorCard> createState() => _DoctorCardState();
 }
 
 class _DoctorCardState extends State<DoctorCard> {
+  List<String> names = [];
+  String selectedName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    for (var item in widget.statusAdvisor) {
+      names.add(item['name_ar']);
+    }
+    selectedName = names.isNotEmpty ? names[0] : 'No names available';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,6 +73,10 @@ class _DoctorCardState extends State<DoctorCard> {
           child: Column(
             children: [
               HeaderForDoctorCard(
+                  status: widget.status,
+                  categories: widget.categories,
+                  name: widget.name,
+                  image: widget.image,
                   fromfavorite: widget.fromfavorite,
                   toggleVisibility: widget.toggleVisibility,
                   isVisible: widget.isVisible),
@@ -57,15 +89,17 @@ class _DoctorCardState extends State<DoctorCard> {
                     color: AppColors.primaryColor,
                   ),
                   10.pw,
-                  const Text(
-                    "الرياض - الجزيرة",
-                    style: TextStyle(fontWeight: FontWeight.w500),
+                  Expanded(
+                    child: Text(
+                      widget.address,
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ],
               ),
               10.ph,
               Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
                     "assets/icons/hearing_aids_icon.svg",
@@ -73,10 +107,25 @@ class _DoctorCardState extends State<DoctorCard> {
                     height: 20,
                   ),
                   10.pw,
-                  const Text(
-                    "تخصص إصابات عضلية رياضية",
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
+                  names.isNotEmpty
+                      ? DropdownButton<String>(
+                          underline: Container(), // Hide the underline
+                          // icon: const SizedBox(), // Hide the arrow icon
+                          value: selectedName,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedName = newValue!;
+                            });
+                          },
+                          items: names
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        )
+                      : Text('No Data available')
                 ],
               ),
               10.ph,
@@ -94,9 +143,9 @@ class _DoctorCardState extends State<DoctorCard> {
                           "سعر العرض : ",
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
-                        const Text(
-                          "250 SAR",
-                          style: TextStyle(
+                        Text(
+                          "${widget.price} SAR",
+                          style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
                         ),
@@ -134,8 +183,8 @@ class _DoctorCardState extends State<DoctorCard> {
                           "سعر الجلسة : ",
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
-                        const Text(
-                          "250 SAR",
+                        Text(
+                          "${widget.price} SAR",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
@@ -143,7 +192,7 @@ class _DoctorCardState extends State<DoctorCard> {
                       ],
                     ),
               20.ph,
-              const ButtonForDoctorCard()
+              ButtonForDoctorCard(Data: widget.Data)
             ],
           ),
         ),
@@ -194,18 +243,37 @@ class Stars extends StatelessWidget {
 class HeaderForDoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromfavorite;
-  HeaderForDoctorCard({
-    super.key,
-    required this.isVisible,
-    this.fromfavorite = false,
-    required VoidCallback this.toggleVisibility,
-  });
+  String name;
+  String? image;
+  String status;
+  var categories;
+  HeaderForDoctorCard(
+      {super.key,
+      required this.isVisible,
+      this.categories,
+      this.status = "",
+      this.fromfavorite = false,
+      this.image = "",
+      required VoidCallback this.toggleVisibility,
+      this.name = ""});
 
   @override
   State<HeaderForDoctorCard> createState() => _HeaderForDoctorCardState();
 }
 
 class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
+  List<String> names = [];
+  String selectedName = "";
+
+  @override
+  void initState() {
+    super.initState();
+    for (var item in widget.categories) {
+      names.add(item['name_ar']);
+    }
+    selectedName = names.isNotEmpty ? names[0] : 'No names available';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -217,10 +285,18 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               height: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: AssetImage("assets/images/person2.png"),
-                  fit: BoxFit.cover,
-                ),
+                image: widget.image != null
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          "${AppStrings.baseUrl}/upload/${widget.image}",
+                        ),
+                        fit: BoxFit.cover,
+                        onError: (exception, stackTrace) => {print(exception)},
+                      )
+                    : DecorationImage(
+                        image: AssetImage("assets/images/doctor.png"),
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             Positioned(
@@ -246,43 +322,66 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
           ],
         ),
         10.pw,
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Text(
-              "فارس الأسمري",
-              style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w500),
-            ),
-            5.ph,
-            const Stars(),
-            5.ph,
-            const Text(
-              "أخصائي علاج طبيعي",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            5.ph,
-            RichText(
-              text: const TextSpan(
-                text: '-  ',
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'متاح الآن',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: Colors.grey,
-                      decorationThickness: 2.0,
-                    ),
-                  ),
-                ],
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                widget.name,
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w500),
               ),
-            )
-          ],
+              5.ph,
+              const Stars(),
+              5.ph,
+              names.isNotEmpty
+                  ? DropdownButton<String>(
+                      underline: Container(), // Hide the underline
+                      // icon: const SizedBox(), // Hide the arrow icon
+                      value: selectedName,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedName = newValue!;
+                        });
+                      },
+                      items:
+                          names.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    )
+                  : Text('No Data available'),
+              5.ph,
+              widget.status == "on"
+                  ? Text(
+                      "متاح الآن",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.green),
+                    )
+                  : RichText(
+                      text: const TextSpan(
+                        text: '-  ',
+                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'متاح الآن',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: Colors.grey,
+                              decorationThickness: 2.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+            ],
+          ),
         )
       ],
     );
@@ -290,7 +389,8 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
 }
 
 class ButtonForDoctorCard extends StatelessWidget {
-  const ButtonForDoctorCard({super.key});
+  var Data;
+  ButtonForDoctorCard({super.key, this.Data});
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +405,8 @@ class ButtonForDoctorCard extends StatelessWidget {
       width: context.width,
       child: ElevatedButton(
         onPressed: () {
-          AppConstants.customNavigation(context, specialistpageScreen(), -1, 0);
+          AppConstants.customNavigation(
+              context, specialistpageScreen(Data: Data), -1, 0);
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.transparent,

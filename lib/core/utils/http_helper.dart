@@ -77,9 +77,7 @@ class ApiBaseHelper {
     Map<String, String>? headers,
   }) async {
     Map<String, dynamic>? responseJson;
-    Uri urlRequest = Uri.parse(
-      baseUrl + url,
-    );
+    Uri urlRequest = Uri.parse(baseUrl + url);
     log(urlRequest.toString());
     try {
       var request = http.MultipartRequest(
