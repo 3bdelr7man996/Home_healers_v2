@@ -43,6 +43,7 @@ class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
     setState(() {
       if (pickedImage != null) {
         _imageFile = File(pickedImage.path);
+        showSelectedPhoto = false;
         context.read<UpdateInfoCubit>().onimageChange(_imageFile);
         print(_imageFile);
       } else {
@@ -52,6 +53,8 @@ class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
     });
   }
 
+  bool showSelectedPhoto = true;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -60,29 +63,30 @@ class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
         Stack(
           alignment: Alignment.bottomRight,
           children: <Widget>[
-            jsonData == null && jsonData["image"] == null
-                ? CircleAvatar(
-                    radius: 80,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage:
-                        _imageFile != null && _imageFile.existsSync()
-                            ? Image.file(_imageFile).image
-                            : const AssetImage('assets/images/doctor.png'),
-                  )
-                : Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            "${AppStrings.divUrl}/upload/${jsonData["image"]}",
-                          ),
-                          fit: BoxFit.cover,
-                          onError: (exception, stackTrace) =>
-                              {print(exception)},
-                        )),
-                  ),
+            if (jsonData != null)
+              jsonData["image"] != null && showSelectedPhoto == true
+                  ? Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(80),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              "${AppStrings.divUrl}/upload/${jsonData["image"]}",
+                            ),
+                            fit: BoxFit.cover,
+                            onError: (exception, stackTrace) =>
+                                {print(exception)},
+                          )),
+                    )
+                  : CircleAvatar(
+                      radius: 80,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage:
+                          _imageFile != null && _imageFile.existsSync()
+                              ? Image.file(_imageFile).image
+                              : const AssetImage('assets/images/doctor.png'),
+                    ),
             InkWell(
               onTap: () {
                 pickImage();

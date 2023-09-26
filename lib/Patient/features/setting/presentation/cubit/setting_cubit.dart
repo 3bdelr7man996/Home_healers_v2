@@ -136,25 +136,30 @@ class UpdateInfoCubit extends Cubit<UpdateInfoState> {
     try {
       fieldsValidation();
       Map<String, String> body = {};
-      if (state.fullName != null) {
+      if (state.fullName != null && !state.fullName!.isEmpty) {
         body['name'] = state.fullName!;
       }
-      if (state.mobile != null) {
+      if (state.mobile != null && !state.mobile!.isEmpty) {
         body['mobile'] = state.mobile!;
       }
-      if (state.email != null) {
+      if (state.email != null && !state.email!.isEmpty) {
         body['email'] = state.email!;
       }
-      if (state.gender != null) {
+      if (state.gender != null && !state.gender!.isEmpty) {
         body['gender'] = state.gender!;
       }
-      if (state.cityId != null) {
+      if (state.cityId != null && !state.cityId!.isEmpty) {
         body['city_id'] = state.cityId!;
       }
 
       UpdateInfoModel response =
           await UpdateInfo.UpdateInfo(body: body, Files: images);
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
+      emit(state.copyWith(email: ""));
+      emit(state.copyWith(fullName: ""));
+      emit(state.copyWith(mobile: ""));
+      emit(state.copyWith(cityId: ""));
+      emit(state.copyWith(gender: ""));
       await cacheData(response);
       Navigator.pop(context);
       print(response);
@@ -166,19 +171,19 @@ class UpdateInfoCubit extends Cubit<UpdateInfoState> {
 
   ///validate on fields
   void fieldsValidation() {
-    if (state.fullName == null) {
+    if (state.fullName == null || state.fullName!.isEmpty) {
       throw ("ادخل الاسم الكامل");
     }
-    if (state.email == null) {
+    if (state.email == null || state.email!.isEmpty) {
       throw ("ادخل الإيميل ");
     }
-    if (state.mobile == null) {
+    if (state.mobile == null || state.mobile!.isEmpty) {
       throw ("ادخل رقم الموبايل ");
     }
-    if (state.cityId == null) {
+    if (state.cityId == null || state.cityId!.isEmpty) {
       throw ("اختر المدينة");
     }
-    if (state.gender == null) {
+    if (state.gender == null || state.gender!.isEmpty) {
       throw ("حدد جنسك");
     }
   }
