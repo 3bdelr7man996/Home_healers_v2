@@ -106,10 +106,12 @@
   "pdf_viewer": "PDF Viewer",
   "my_requests": "My Requests",
   "my_wallet": "My Wallet",
-  "required":"Required",
-  "job_title_required":"Select Job title",
-  "section_required":"Select Section",
-  "citiy_required":"Select City",
-  "gender_required":"Select Gender",
-  "accept_term":"Agree to the terms and conditions"
+  "required": "Required",
+  "job_title_required": "Select Job title",
+  "section_required": "Select Section",
+  "citiy_required": "Select City",
+  "gender_required": "Select Gender",
+  "accept_term": "Agree to the terms and conditions",
+  "search": "Search",
+  "full_name": "Full Name"
 }

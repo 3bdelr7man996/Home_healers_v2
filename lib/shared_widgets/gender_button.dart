@@ -1,4 +1,5 @@
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
@@ -10,10 +11,12 @@ class GenderButton extends StatelessWidget {
   final String title;
   final String gender;
   bool fromPatient;
+  bool fromSetting;
   GenderButton(
       {super.key,
       this.title = "",
       required this.gender,
+      this.fromSetting = false,
       this.fromPatient = false});
 
   @override
@@ -38,6 +41,8 @@ class GenderButton extends StatelessWidget {
               foregroundColor: MaterialStateProperty.all<Color>(Colors.black54),
             ),
             onPressed: () {
+              if (fromSetting)
+                context.read<UpdateInfoCubit>().onGenderChange(gender);
               fromPatient
                   ? context.read<AuthCubitForPatient>().onGenderChange(gender)
                   : context.read<AuthCubit>().onGenderChange(gender);

@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/date_of_session_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -7,6 +8,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/requests_details_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ApPBarForspecialistScreen extends StatelessWidget {
@@ -54,6 +56,9 @@ class ApPBarForspecialistScreen extends StatelessWidget {
                           color: AppColors.whiteColor,
                         ),
                         onPressed: () {
+                          context
+                              .read<ReservationCubit>()
+                              .makesessions_countOne();
                           Navigator.pop(context);
                         },
                       ),
@@ -540,7 +545,9 @@ class _CertificatesState extends State<Certificates> {
 }
 
 class ButtonWithCounter extends StatefulWidget {
-  const ButtonWithCounter({super.key});
+  var Data;
+  var status_id;
+  ButtonWithCounter({super.key, this.Data, this.status_id});
 
   @override
   State<ButtonWithCounter> createState() => _ButtonWithCounterState();
@@ -563,6 +570,7 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                 onTap: () {
                   setState(() {
                     number++;
+                    context.read<ReservationCubit>().increaseSessionsCount();
                   });
                 },
                 child: const Icon(
@@ -580,7 +588,10 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
               InkWell(
                 onTap: () {
                   setState(() {
-                    if (number > 1) number--;
+                    if (number > 1) {
+                      number--;
+                      context.read<ReservationCubit>().decraseSessionsCount();
+                    }
                   });
                 },
                 child: const Icon(
@@ -596,7 +607,11 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
             child: ElevatedButton(
               onPressed: () {
                 AppConstants.customNavigation(
-                    context, DateOfSessionScreen(), -1, 0);
+                    context,
+                    DateOfSessionScreen(
+                        Data: widget.Data, status_id: widget.status_id),
+                    -1,
+                    0);
               },
               style: ElevatedButton.styleFrom(
                 primary: AppColors.primaryColor,
@@ -604,8 +619,8 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
                 child: Text(
                   'احجز الآن',
                   style: TextStyle(fontSize: 20),

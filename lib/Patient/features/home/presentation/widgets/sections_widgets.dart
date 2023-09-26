@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/search_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -121,6 +122,7 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
   @override
   void initState() {
     super.initState();
+
     getAttributeFromSharedPreferences().then((value) {
       setState(() {
         userInfo = value;
@@ -168,12 +170,25 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Image.asset(
-                    jsonData != null
-                        ? jsonData["image"] ?? "assets/images/patient.png"
-                        : "assets/images/patient.png",
+                  Container(
                     width: 100,
                     height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      image: jsonData != null && jsonData["image"] != null
+                          ? DecorationImage(
+                              image: NetworkImage(
+                                "${AppStrings.divUrl}/upload/${jsonData["image"]}",
+                              ),
+                              fit: BoxFit.cover,
+                              onError: (exception, stackTrace) =>
+                                  {print(exception)},
+                            )
+                          : DecorationImage(
+                              image: AssetImage("assets/images/patient.png"),
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ),
                 ],
               ),
@@ -215,15 +230,29 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
                     color: Colors.white,
                   ),
                   width: context.width * 0.7,
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: "… بحث",
-                      suffixIcon: Icon(Icons.search),
-                      border: InputBorder.none,
-                    ),
+                  child: Stack(
+                    children: [
+                      TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: " بحث ...",
+                          suffixIcon: Icon(Icons.search),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          AppConstants.customNavigation(
+                              context, SearchScreen(), -1, 0);
+                        },
+                        child: Container(
+                          width: context.width,
+                          height: 50,
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ],
@@ -280,6 +309,9 @@ class _IconsForSectionsState extends State<IconsForSections> {
 
   @override
   Widget build(BuildContext context) {
+    final statusList =
+        context.select((AuthCubit cubit) => cubit.state.statusList);
+
     return GridView.builder(
       itemCount: icons.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -292,8 +324,10 @@ class _IconsForSectionsState extends State<IconsForSections> {
               AppConstants.customNavigation(
                   context,
                   SectionDetailsScreen(
-                      numberOfIcon: index,
-                      SectiondetailsTitle: SectiondetailsTitle[index]),
+                    numberOfIcon: index,
+                    SectiondetailsTitle: SectiondetailsTitle[index],
+                    status_id: statusList![index].id,
+                  ),
                   -1,
                   0);
             },

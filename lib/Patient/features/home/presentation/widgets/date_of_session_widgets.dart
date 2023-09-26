@@ -1,5 +1,8 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TableClenderForSession extends StatefulWidget {
@@ -12,15 +15,58 @@ class TableClenderForSession extends StatefulWidget {
 class _TableClenderForSessionState extends State<TableClenderForSession> {
   List<DateTime> selectedDates = [];
   DateTime today = DateTime.now();
+  DateTime lastDay = DateTime.now().add(Duration(days: 30));
+  void _onDaySelected(DateTime day, DateTime focusDay) async {
+    DateTime selectedDate = day;
 
-  void _onDaySelected(DateTime day, DateTime focusDay) {
+    // Show the date picker to select the date
+    DateTime? selectedDateResult = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: today,
+      lastDate: lastDay,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light(), // Customize the theme as needed
+          child: child!,
+        );
+      },
+    );
+
+    if (selectedDateResult == null) {
+      // User canceled the date selection
+      return;
+    }
+
+    // Show the time picker to select the time
+    TimeOfDay? selectedTimeResult = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTimeResult == null) {
+      // User canceled the time selection
+      return;
+    }
+
+    // Combine the selected date and time into a single DateTime object
+    selectedDate = DateTime(
+      selectedDateResult.year,
+      selectedDateResult.month,
+      selectedDateResult.day,
+      selectedTimeResult.hour,
+      selectedTimeResult.minute,
+    );
+
     setState(() {
-      if (selectedDates.contains(day)) {
-        selectedDates.remove(day);
-      } else {
-        selectedDates.add(day);
-      }
+      print("asdfasdfasdf");
+      selectedDates.add(selectedDate);
+      print(selectedDates);
+
+      context.read<ReservationCubit>().onChangeDays(selectedDates);
     });
+
+    print(selectedDates);
   }
 
   @override
@@ -28,7 +74,7 @@ class _TableClenderForSessionState extends State<TableClenderForSession> {
     return TableCalendar(
       locale: 'ar-EG',
       rowHeight: 43,
-      headerStyle: HeaderStyle(
+      headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
       ),
@@ -36,10 +82,10 @@ class _TableClenderForSessionState extends State<TableClenderForSession> {
       selectedDayPredicate: (day) =>
           selectedDates.any((date) => isSameDay(day, date)),
       focusedDay: today,
-      firstDay: DateTime.utc(2023, 9, 9),
-      lastDay: DateTime.utc(2024, 5, 10),
+      firstDay: today,
+      lastDay: lastDay,
       onDaySelected: _onDaySelected,
-      calendarStyle: CalendarStyle(
+      calendarStyle: const CalendarStyle(
         selectedDecoration: BoxDecoration(
           color: AppColors.primaryColor,
           shape: BoxShape.circle,

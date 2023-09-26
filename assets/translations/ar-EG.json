@@ -106,10 +106,12 @@
   "pdf_viewer": "عارض الملفات",
   "my_requests": "طلباتي",
   "my_wallet": "محفظتي",
-  "required":"مطلوب",
-  "job_title_required":"تحديد المسمى مطلوب",
-  "section_required":"تحديد القسم مطلوب",
-  "citiy_required":"حدد المدينة ",
-  "gender_required":"حدد النوع",
-  "accept_term":"وافق على الشروط والاحكام"
+  "required": "مطلوب",
+  "job_title_required": "تحديد المسمى مطلوب",
+  "section_required": "تحديد القسم مطلوب",
+  "citiy_required": "حدد المدينة ",
+  "gender_required": "حدد النوع",
+  "accept_term": "وافق على الشروط والاحكام",
+  "search": "البحث",
+  "full_name": "الاسم الكامل"
 }

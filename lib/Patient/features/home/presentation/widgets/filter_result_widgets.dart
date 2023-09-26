@@ -18,10 +18,12 @@ class DoctorCard extends StatefulWidget {
   int price;
   var statusAdvisor;
   var categories;
+  var status_id;
   var Data;
   DoctorCard(
       {super.key,
       required this.isVisible,
+      this.status_id,
       this.Data,
       this.fromfavorite = false,
       this.fromOfferScreen = false,
@@ -192,7 +194,8 @@ class _DoctorCardState extends State<DoctorCard> {
                       ],
                     ),
               20.ph,
-              ButtonForDoctorCard(Data: widget.Data)
+              ButtonForDoctorCard(
+                  Data: widget.Data, status_id: widget.status_id)
             ],
           ),
         ),
@@ -390,7 +393,8 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
 
 class ButtonForDoctorCard extends StatelessWidget {
   var Data;
-  ButtonForDoctorCard({super.key, this.Data});
+  var status_id;
+  ButtonForDoctorCard({super.key, this.Data, this.status_id});
 
   @override
   Widget build(BuildContext context) {
@@ -405,8 +409,8 @@ class ButtonForDoctorCard extends StatelessWidget {
       width: context.width,
       child: ElevatedButton(
         onPressed: () {
-          AppConstants.customNavigation(
-              context, specialistpageScreen(Data: Data), -1, 0);
+          AppConstants.customNavigation(context,
+              specialistpageScreen(Data: Data, status_id: status_id), -1, 0);
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.transparent,

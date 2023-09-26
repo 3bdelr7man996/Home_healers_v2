@@ -1,28 +1,47 @@
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/requests_details_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class underProcessing extends StatelessWidget {
   const underProcessing({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var listOfOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.ReviewingOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,
         height: context.height * 0.75,
-        child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return CardsForRequests(
-              num: 1,
-            );
-          },
-        ),
+        child: listOfOrders == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: listOfOrders.length,
+                itemBuilder: (context, index) {
+                  List<String> names = [];
+                  String selectedName = "";
+                  for (var item in listOfOrders[index].advertiser.categories) {
+                    if (item != null) names.add(item.nameAr);
+                  }
+                  selectedName =
+                      names.isNotEmpty ? names[0] : 'No names available';
+                  return CardsForRequests(
+                    listOfOrders: listOfOrders[index],
+                    categories: names,
+                    selectedName: selectedName,
+                    num: 1,
+                  );
+                },
+              ),
       ),
     );
   }
@@ -33,14 +52,25 @@ class Accepted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var listOfOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.WaitConfirmOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,
         height: context.height * 0.75,
         child: ListView.builder(
-          itemCount: 4,
+          itemCount: listOfOrders.length,
           itemBuilder: (context, index) {
+            List<String> names = [];
+            String selectedName = "";
+            for (var item in listOfOrders[index].advertiser.categories) {
+              if (item != null) names.add(item.nameAr);
+            }
+            selectedName = names.isNotEmpty ? names[0] : 'No names available';
             return CardsForRequests(
+              categories: names,
+              selectedName: selectedName,
+              listOfOrders: listOfOrders[index],
               num: 2,
             );
           },
@@ -55,18 +85,33 @@ class Confirmed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var listOfOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.ConfirmedOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,
         height: context.height * 0.75,
-        child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return CardsForRequests(
-              num: 3,
-            );
-          },
-        ),
+        child: listOfOrders.length == 0
+            ? SizedBox()
+            : ListView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  List<String> names = [];
+                  String selectedName = "";
+                  for (var item in listOfOrders[index].advertiser.categories) {
+                    if (item != null) names.add(item.nameAr);
+                  }
+                  selectedName =
+                      names.isNotEmpty ? names[0] : 'No names available';
+
+                  return CardsForRequests(
+                    categories: names,
+                    selectedName: selectedName,
+                    listOfOrders: listOfOrders[index],
+                    num: 3,
+                  );
+                },
+              ),
       ),
     );
   }
@@ -77,18 +122,32 @@ class completed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var listOfOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.CompletedOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,
         height: context.height * 0.75,
-        child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return CardsForRequests(
-              num: 4,
-            );
-          },
-        ),
+        child: listOfOrders.length == 0
+            ? SizedBox()
+            : ListView.builder(
+                itemCount: 4,
+                itemBuilder: (context, index) {
+                  List<String> names = [];
+                  String selectedName = "";
+                  for (var item in listOfOrders[index].advertiser.categories) {
+                    if (item != null) names.add(item.nameAr);
+                  }
+                  selectedName =
+                      names.isNotEmpty ? names[0] : 'No names available';
+                  return CardsForRequests(
+                    categories: names,
+                    selectedName: selectedName,
+                    listOfOrders: listOfOrders[index],
+                    num: 4,
+                  );
+                },
+              ),
       ),
     );
   }
@@ -99,27 +158,97 @@ class canceledRequests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var listOfOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.CanceledOrders);
+    print(listOfOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,
         height: context.height * 0.75,
-        child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, index) {
-            return CardsForRequests(
-              num: 5,
-            );
-          },
-        ),
+        child: listOfOrders.length == 0
+            ? SizedBox()
+            : ListView.builder(
+                itemCount: listOfOrders.length,
+                itemBuilder: (context, index) {
+                  List<String> names = [];
+                  String selectedName = "";
+                  for (var item in listOfOrders[index].advertiser.categories) {
+                    if (item != null) names.add(item.nameAr);
+                  }
+                  selectedName =
+                      names.isNotEmpty ? names[0] : 'No names available';
+                  return CardsForRequests(
+                    categories: names,
+                    selectedName: selectedName,
+                    listOfOrders: listOfOrders[index],
+                    num: 5,
+                  );
+                },
+              ),
       ),
     );
   }
 }
 
-class CardsForRequests extends StatelessWidget {
-  int num;
+class Pending extends StatelessWidget {
+  const Pending({super.key});
 
-  CardsForRequests({super.key, required this.num});
+  @override
+  Widget build(BuildContext context) {
+    var listOfOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.PendingOrders);
+    return SingleChildScrollView(
+      child: Container(
+        width: context.width,
+        height: context.height * 0.75,
+        child: listOfOrders.length == 0
+            ? SizedBox()
+            : ListView.builder(
+                itemCount: listOfOrders.length,
+                itemBuilder: (context, index) {
+                  List<String> names = [];
+                  String selectedName = "";
+                  for (var item in listOfOrders[index].advertiser.categories) {
+                    if (item != null) names.add(item.nameAr);
+                  }
+                  selectedName =
+                      names.isNotEmpty ? names[0] : 'No names available';
+                  return CardsForRequests(
+                    categories: names,
+                    selectedName: selectedName,
+                    listOfOrders: listOfOrders[index],
+                    num: 6,
+                  );
+                },
+              ),
+      ),
+    );
+  }
+}
+
+class CardsForRequests extends StatefulWidget {
+  int num;
+  var listOfOrders, categories, selectedName;
+  CardsForRequests(
+      {super.key,
+      required this.num,
+      this.listOfOrders,
+      this.selectedName,
+      this.categories});
+
+  @override
+  State<CardsForRequests> createState() => _CardsForRequestsState();
+}
+
+class _CardsForRequestsState extends State<CardsForRequests> {
+  var selectedName, categories;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedName = widget.selectedName;
+    categories = widget.categories;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,21 +281,22 @@ class CardsForRequests extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "رقم الطلب : 973",
+                            "رقم الطلب : ${widget.listOfOrders.id}",
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                           Text(
-                            "تاريخ الطلب : 11-06-2023",
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            "تاريخ الطلب : ${widget.listOfOrders.startAt}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 14),
                           )
                         ],
                       ),
-                      num == 1
+                      widget.num == 1
                           ? const Text(
                               "قيد المراجعة \nفي انتظار القبول",
                               style: TextStyle(
@@ -174,7 +304,7 @@ class CardsForRequests extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             )
-                          : num == 2
+                          : widget.num == 2
                               ? const Text(
                                   "مقبولة \nفي انتظار الدفع",
                                   style: TextStyle(
@@ -182,7 +312,7 @@ class CardsForRequests extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center,
                                 )
-                              : num == 3
+                              : widget.num == 3
                                   ? const Text(
                                       "مؤكدة \nتم الدفع",
                                       style: TextStyle(
@@ -190,7 +320,7 @@ class CardsForRequests extends StatelessWidget {
                                           fontWeight: FontWeight.bold),
                                       textAlign: TextAlign.center,
                                     )
-                                  : num == 4
+                                  : widget.num == 4
                                       ? const Text(
                                           "مكتملة \nتم إنهاء الزيارة",
                                           style: TextStyle(
@@ -198,13 +328,21 @@ class CardsForRequests extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         )
-                                      : const Text(
-                                          "ملغية \nتم الإلغاء",
-                                          style: TextStyle(
-                                              color: AppColors.redColor,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        )
+                                      : widget.num == 6
+                                          ? const Text(
+                                              "الجلسة \n قيد الانتظار",
+                                              style: TextStyle(
+                                                  color: AppColors.greenColor,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.center,
+                                            )
+                                          : const Text(
+                                              "ملغية \nتم الإلغاء",
+                                              style: TextStyle(
+                                                  color: AppColors.redColor,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.center,
+                                            )
                     ],
                   ),
                 ),
@@ -224,29 +362,55 @@ class CardsForRequests extends StatelessWidget {
                       width: 115,
                       height: 90,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/person.png'),
-                          fit: BoxFit.cover,
-                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        image: widget.listOfOrders.advertiser.image != null
+                            ? DecorationImage(
+                                image: NetworkImage(
+                                  "${AppStrings.baseUrl}/upload/${widget.listOfOrders.advertiser.image}",
+                                ),
+                                fit: BoxFit.cover,
+                                onError: (exception, stackTrace) =>
+                                    {print(exception)},
+                              )
+                            : DecorationImage(
+                                image: AssetImage("assets/images/doctor.png"),
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                     10.pw,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "فارس السيد",
+                        Text(
+                          "${widget.listOfOrders.advertiser.nameAr}",
                           style: TextStyle(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 20),
                         ),
                         10.ph,
-                        Text(
-                          "أخصائي علاج طبيعي",
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        )
+                        if (categories != null)
+                          categories.isNotEmpty
+                              ? DropdownButton<String>(
+                                  underline: Container(), // Hide the underline
+                                  // icon: const SizedBox(), // Hide the arrow icon
+                                  value: selectedName,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedName = newValue!;
+                                    });
+                                  },
+                                  items: categories
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                )
+                              : Text('No Data available'),
                       ],
                     )
                   ],
@@ -258,29 +422,30 @@ class CardsForRequests extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Row(
-                          children: [
-                            const Text(
-                              "سعر الجلسة",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                            5.pw,
-                            const Text(
-                              "250 SAR",
-                              style: TextStyle(
-                                  color: AppColors.secondryColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                      if (widget.listOfOrders.parentId == 0)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: Row(
+                            children: [
+                              const Text(
+                                "سعر الجلسة",
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              ),
+                              5.pw,
+                              Text(
+                                "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
+                                style: TextStyle(
+                                    color: AppColors.secondryColor,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       10.ph,
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
-                          "عدد الجلسات : 4",
+                          "عدد الجلسات : ${widget.listOfOrders.sessionsCount}",
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -302,21 +467,82 @@ class CardsForRequests extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          if (num == 1)
-                            AppConstants.customNavigation(context,
-                                RequestsDetailsScreenForPatient(num: 1), -1, 0);
-                          else if (num == 2)
-                            AppConstants.customNavigation(context,
-                                RequestsDetailsScreenForPatient(num: 2), -1, 0);
-                          else if (num == 3)
-                            AppConstants.customNavigation(context,
-                                RequestsDetailsScreenForPatient(num: 3), -1, 0);
-                          else if (num == 4)
-                            AppConstants.customNavigation(context,
-                                RequestsDetailsScreenForPatient(num: 4), -1, 0);
-                          else
-                            AppConstants.customNavigation(context,
-                                RequestsDetailsScreenForPatient(num: 5), -1, 0);
+                          List<String> names = [];
+                          String selectedName = "";
+                          for (var item
+                              in widget.listOfOrders.advertiser.categories) {
+                            if (item != null) names.add(item.nameAr);
+                          }
+                          selectedName = names.isNotEmpty
+                              ? names[0]
+                              : 'No names available';
+                          if (widget.num == 1) {
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreenForPatient(
+                                  listOfOrders: widget.listOfOrders,
+                                  categories: names,
+                                  selectedName: selectedName,
+                                  num: 1,
+                                ),
+                                -1,
+                                0);
+                          } else if (widget.num == 2) {
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreenForPatient(
+                                  num: 2,
+                                  listOfOrders: widget.listOfOrders,
+                                  categories: names,
+                                  selectedName: selectedName,
+                                ),
+                                -1,
+                                0);
+                          } else if (widget.num == 3) {
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreenForPatient(
+                                  num: 3,
+                                  listOfOrders: widget.listOfOrders,
+                                  categories: names,
+                                  selectedName: selectedName,
+                                ),
+                                -1,
+                                0);
+                          } else if (widget.num == 4) {
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreenForPatient(
+                                  num: 4,
+                                  listOfOrders: widget.listOfOrders,
+                                  categories: names,
+                                  selectedName: selectedName,
+                                ),
+                                -1,
+                                0);
+                          } else if (widget.num == 6) {
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreenForPatient(
+                                  num: 6,
+                                  listOfOrders: widget.listOfOrders,
+                                  categories: names,
+                                  selectedName: selectedName,
+                                ),
+                                -1,
+                                0);
+                          } else {
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreenForPatient(
+                                  num: 5,
+                                  listOfOrders: widget.listOfOrders,
+                                  categories: names,
+                                  selectedName: selectedName,
+                                ),
+                                -1,
+                                0);
+                          }
                         },
                         child: Text('order_details'.tr()),
                       ),

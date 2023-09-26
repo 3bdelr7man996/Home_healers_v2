@@ -38,7 +38,7 @@ class Success {
   late final int id;
   late final String name;
   late final String mobile;
-  late final Null image;
+  late final String? image;
   late final Null fcmToken;
   late final String email;
   late final Null emailVerifiedAt;
@@ -57,7 +57,7 @@ class Success {
     id = json?['id'];
     name = json?['name'];
     mobile = json?['mobile'];
-    image = null;
+    image = json?['image'];
     fcmToken = null;
     email = json?['email'];
     emailVerifiedAt = null;

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class specialistpageScreen extends StatefulWidget {
   var Data;
-  specialistpageScreen({super.key, this.Data});
+  var status_id;
+  specialistpageScreen({super.key, this.Data, this.status_id});
 
   @override
   State<specialistpageScreen> createState() => _specialistpageScreenState();
@@ -13,7 +14,7 @@ class specialistpageScreen extends StatefulWidget {
 
 class _specialistpageScreenState extends State<specialistpageScreen> {
   bool click = false;
-
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +49,8 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                         Certificates(Data: widget.Data['images']),
                         5.ph,
                         click
-                            ? ButtonWithCounter()
+                            ? ButtonWithCounter(
+                                Data: widget.Data, status_id: widget.status_id)
                             : Container(
                                 width: double.infinity,
                                 child: ElevatedButton(
@@ -63,8 +65,8 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(16.0),
                                     child: Text(
                                       'احجز الآن',
                                       style: TextStyle(fontSize: 20),

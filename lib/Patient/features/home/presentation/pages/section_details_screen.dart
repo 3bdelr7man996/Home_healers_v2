@@ -10,9 +10,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SectionDetailsScreen extends StatefulWidget {
   var SectiondetailsTitle;
   var numberOfIcon;
+  var status_id;
   SectionDetailsScreen(
       {super.key,
       required this.SectiondetailsTitle,
+      this.status_id,
       required this.numberOfIcon});
 
   @override
@@ -74,6 +76,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return DoctorCard(
+                                  status_id: widget.status_id,
                                   Data: data[index],
                                   name: data[index]["name_ar"],
                                   status: data[index]["status"],

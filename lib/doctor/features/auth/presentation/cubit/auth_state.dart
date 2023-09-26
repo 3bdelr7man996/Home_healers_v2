@@ -1,7 +1,7 @@
 part of 'auth_cubit.dart';
 
 class AuthState extends Equatable {
-  const AuthState({
+  AuthState({
     this.email,
     this.firstName,
     this.lastName,
@@ -21,6 +21,7 @@ class AuthState extends Equatable {
     this.address,
     this.departemensList,
     this.statusList,
+    this.areasList,
     this.citiesList,
     this.obscurePass = true,
     this.obscureConfPass = true,
@@ -33,6 +34,7 @@ class AuthState extends Equatable {
   final String? email;
   final String? firstName;
   final String? lastName;
+  var areasList;
   final String? phone;
   final String? description;
   final String? iban;
@@ -66,6 +68,7 @@ class AuthState extends Equatable {
         phone,
         identification,
         description,
+        areasList,
         iban,
         location,
         gender,
@@ -91,6 +94,7 @@ class AuthState extends Equatable {
   AuthState copyWith({
     String? email,
     String? firstName,
+    areasList,
     String? lastName,
     String? phone,
     String? identification,
@@ -122,6 +126,7 @@ class AuthState extends Equatable {
         advertiseDocuments: advertiseDocuments ?? this.advertiseDocuments,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
+        areasList: areasList ?? this.areasList,
         gender: gender ?? this.gender,
         iban: iban ?? this.iban,
         identification: identification ?? this.identification,

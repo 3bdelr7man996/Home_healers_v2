@@ -58,6 +58,7 @@ class ApiBaseHelper {
     try {
       final http.Response response = await http.post(urlRequest,
           body: body, headers: headers ?? baseHeaders);
+
       responseJson = _returnResponse(response,
           url: urlRequest.toString(), request: "POST");
     } on SocketException catch (e) {
@@ -97,6 +98,7 @@ class ApiBaseHelper {
       });
       //init file data eg,pdf,img,..
       if (files != null) {
+        print(files);
         for (int i = 0; i < files.length; i++) {
           request.files.add(
             await http.MultipartFile.fromPath(
