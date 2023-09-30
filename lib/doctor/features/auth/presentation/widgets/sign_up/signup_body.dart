@@ -179,7 +179,7 @@ class SignUpBody extends StatelessWidget {
             ),
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
-                return PopUp(
+                return PopUpDialog(
                   isVisible: state.showPopup,
                   rollSelected: 1,
                 );

@@ -19,7 +19,7 @@ class SettingsDs {
   }
 
   Future<Map<String, dynamic>?> appInfo() async {
-    Map<String, dynamic>? response = await apiHelper.get(
+    Map<String, dynamic>? response = await apiHelper.post(
       AppStrings.appInfo,
     );
     return response;

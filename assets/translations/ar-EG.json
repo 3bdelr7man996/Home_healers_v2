@@ -107,12 +107,6 @@
   "pdf_viewer": "عارض الملفات",
   "my_requests": "طلباتي",
   "my_wallet": "محفظتي",
-  "required":"مطلوب",
-  "job_title_required":"تحديد المسمى مطلوب",
-  "section_required":"تحديد القسم مطلوب",
-  "citiy_required":"حدد المدينة ",
-  "gender_required":"حدد النوع",
-  "accept_term":"وافق على الشروط والاحكام",
   "password_not_compatible":"الباسورد وتأكيد الباسورد غير متوافقين",
   "request":"طلبات",
   "confirmed":"تم الدفع",
@@ -128,5 +122,13 @@
   "report_uploaded_successfully":"تم رفع التقرير بنجاح",
   "bio":"السيرة الذاتية",
   "update_profile_success":"تم تحديث البروفايل بنجاح",
-  "add_certificate":"اضف شهادة"
+  "add_certificate":"اضف شهادة",
+  "required": "مطلوب",
+  "job_title_required": "تحديد المسمى مطلوب",
+  "section_required": "تحديد القسم مطلوب",
+  "citiy_required": "حدد المدينة ",
+  "gender_required": "حدد النوع",
+  "accept_term": "وافق على الشروط والاحكام",
+  "search": "البحث",
+  "full_name": "الاسم الكامل"
 }

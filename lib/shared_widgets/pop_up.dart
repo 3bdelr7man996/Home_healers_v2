@@ -8,10 +8,11 @@ import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class PopUp extends StatelessWidget {
+class PopUpDialog extends StatelessWidget {
   final bool _isVisible;
   final int rollSelected;
-  const PopUp({super.key, required this.rollSelected, required bool isVisible})
+  const PopUpDialog(
+      {super.key, required this.rollSelected, required bool isVisible})
       : _isVisible = isVisible;
 
   @override
@@ -57,7 +58,7 @@ class PopUp extends StatelessWidget {
                                 AppConstants.pushRemoveNavigator(
                                   context,
                                   screen: rollSelected == 1
-                                      ? HomeScreen(
+                                      ? const HomeScreen(
                                           selectedIndex: 0,
                                         )
                                       : const InjuryAreaScreen(),

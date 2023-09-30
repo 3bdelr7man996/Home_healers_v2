@@ -17,11 +17,11 @@ class AuthState extends Equatable {
     this.selectedCategories,
     this.selectedStatus,
     this.selectedCity,
-    this.profileImg,
     this.advertiseDocuments,
     this.address,
     this.departemensList,
     this.statusList,
+    this.areasList,
     this.citiesList,
     this.obscurePass = true,
     this.obscureConfPass = true,
@@ -36,6 +36,7 @@ class AuthState extends Equatable {
   final String? email;
   final String? firstName;
   final String? lastName;
+  final dynamic areasList;
   final String? phone;
   final File? imgProfile;
   final String? iban;
@@ -47,7 +48,6 @@ class AuthState extends Equatable {
   final List<int>? selectedCategories;
   final List<int>? selectedStatus;
   final int? selectedCity;
-  final File? profileImg;
   final List<File>? advertiseDocuments;
   final Location? location;
   final List<Categories>? departemensList;
@@ -65,12 +65,12 @@ class AuthState extends Equatable {
   @override
   List<Object?> get props => [
         advertiser,
+        imgProfile,
         email,
         firstName,
         lastName,
         phone,
         identification,
-        imgProfile,
         iban,
         location,
         gender,
@@ -79,7 +79,6 @@ class AuthState extends Equatable {
         selectedCategories,
         selectedStatus,
         selectedCity,
-        profileImg,
         advertiseDocuments,
         address,
         departemensList,
@@ -98,6 +97,7 @@ class AuthState extends Equatable {
     Advertiser? advertiser,
     String? email,
     String? firstName,
+    areasList,
     String? lastName,
     String? phone,
     String? identification,
@@ -131,6 +131,7 @@ class AuthState extends Equatable {
         advertiseDocuments: advertiseDocuments ?? this.advertiseDocuments,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
+        areasList: areasList ?? this.areasList,
         gender: gender ?? this.gender,
         iban: iban ?? this.iban,
         identification: identification ?? this.identification,
@@ -138,7 +139,6 @@ class AuthState extends Equatable {
         selectedCategories: selectedCategories != null
             ? selectedCategories()
             : this.selectedCategories,
-        profileImg: profileImg ?? this.profileImg,
         location: location != null ? location() : this.location,
         password: password ?? this.password,
         imgProfile: imgProfile ?? this.imgProfile,

@@ -16,8 +16,7 @@ class SettingsRepo {
   }
 
   Future<InfoData?>? appInfo() async {
-    AppInfoModel response =
-        AppInfoModel.fromJson(await dataSource.pushPullDocuments());
+    AppInfoModel response = AppInfoModel.fromJson(await dataSource.appInfo());
     return response.data;
   }
 }

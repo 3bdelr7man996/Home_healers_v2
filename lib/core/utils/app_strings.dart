@@ -1,5 +1,5 @@
 class AppStrings {
-  static String baseUrl = "http://admin.home-healers.com";
+  static String baseUrl ="http://admin.home-healers.com";
   static String divUrl = "https://dev.home-healers.com";
   static String imageUrl = "https://dev.home-healers.com/upload/";
 
@@ -17,6 +17,10 @@ class AppStrings {
   static String updateProfile = "/api/advertiser/update";
   static String advCertification = "/api/advertiser/cirtificate";
   static String appInfo = "/api/app_info";
+
+  //api url for patient
+  static String patientSignUp = "/api/user/register";
+  static String patientSignIn = "/api/user/login";
 
   //assets url
   static String appName = "Home Healers";

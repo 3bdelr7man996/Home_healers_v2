@@ -159,6 +159,8 @@ class _PDFViewerState extends State<PDFViewer> {
 
   @override
   Widget build(BuildContext context) {
+    int _totalPages = 0;
+    int _renderedPages = 0;
     return Scaffold(
       appBar: customAppBar(context, backButton: true, title: "pdf_viewer"),
       body: Stack(
@@ -168,12 +170,31 @@ class _PDFViewerState extends State<PDFViewer> {
             onRender: (pages) {
               setState(() {
                 _isLoading = false;
+                _totalPages = pages!;
               });
             },
           ),
-          _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : const SizedBox.shrink(),
+          Center(
+            child: Opacity(
+              opacity: _isLoading ? 1.0 : 0.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "الرجاء الانتظار حتى \n يتم تحميل الملف",
+                    style: TextStyle(height: 2, fontWeight: FontWeight.bold),
+                  ),
+                  20.ph,
+                  CircularProgressIndicator(),
+                  SizedBox(height: 10),
+                  Text(
+                    '$_renderedPages / $_totalPages الصفحات المحملة',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -9,8 +9,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/privacy_screem.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/recruitment_policy_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/terms_and_conditions_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -42,7 +41,8 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                 children: [
                   Text(
                     "personal_info".tr(),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   20.ph,
                   OneOptionForPatient(
@@ -91,7 +91,8 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                   OneOptionForPatient(
                     IconPath: "assets/icons/privacy_setting_icon.svg",
                     title: "الخصوصية",
-                    routeScreen: PrivacyScreen(fromPatient: true),
+                    routeScreen:
+                        const HTMLBody(typePage: 'privacy', fromPatient: true),
                   ),
                   15.ph,
                   OneOptionForPatient(

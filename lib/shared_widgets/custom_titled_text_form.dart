@@ -13,20 +13,24 @@ class TiteldTextFormField extends StatelessWidget {
   final bool validate;
   final String? validateMsg;
   final String? initialValue;
+  final bool titleWithouttr;
+  final String? hint;
   final void Function(String)? onChanged;
   final void Function()? onSuffixTab;
   const TiteldTextFormField({
     super.key,
     required this.title,
-    this.initialValue,
     this.suffixIconPath,
+    this.titleWithouttr = false,
     this.prefixIconPath,
+    this.initialValue,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
     this.validate = true,
     this.validateMsg,
     this.onChanged,
     this.onSuffixTab,
+    this.hint,
   });
 
   @override
@@ -68,7 +72,7 @@ class TiteldTextFormField extends StatelessWidget {
                     ),
                   )
                 : null,
-            hintText: title.tr(),
+            hintText: titleWithouttr ? hint : title.tr(),
             prefixIcon: prefixIconPath != null
                 ? SizedBox(
                     height: 18,

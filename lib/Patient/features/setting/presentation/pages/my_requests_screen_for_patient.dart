@@ -1,7 +1,9 @@
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/my_request_widgets_for_patient.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/my_requests_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyRequestsForPatient extends StatefulWidget {
   final int activeIndex;
@@ -19,6 +21,7 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
   void initState() {
     super.initState();
     activeIndex = widget.activeIndex;
+    context.read<MyOrdersCubit>().GetOrders(context);
   }
 
   void updateActiveIndex(int newIndex) {
@@ -41,6 +44,7 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
               "المؤكدة",
               "المكتملة",
               "الملغية",
+              "قيد الانتظار",
             ],
             activeIndex: activeIndex,
             onIndexChanged: (index) {
@@ -55,7 +59,9 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
                       ? const Confirmed()
                       : activeIndex == 3
                           ? const completed()
-                          : const canceledRequests()
+                          : activeIndex == 4
+                              ? const canceledRequests()
+                              : const Pending()
         ],
       ),
     );

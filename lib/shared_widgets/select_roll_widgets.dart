@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/auth/presentation/pages/sign_in_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/features/auth/presentation/pages/sign_in_screen.dart';
@@ -34,7 +35,9 @@ class NextButton extends StatelessWidget {
                   );
                 },
                 pageBuilder: (context, animation, secondaryAnimation) {
-                  return SignInScreen(rollSelected: rollSelected);
+                  return rollSelected != 1
+                      ? SignInScreenForPatient()
+                      : SignInScreen(rollSelected: rollSelected);
                 },
               ),
             );

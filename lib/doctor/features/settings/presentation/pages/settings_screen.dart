@@ -6,9 +6,7 @@ import 'package:dr/doctor/features/settings/presentation/pages/change_password.d
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/privacy_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/recruitment_policy_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/terms_and_conditions_screen.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -42,13 +40,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     IconPath: "assets/icons/person_setting_icon.svg",
                     title: "تعديل الحساب",
-                    routeScreen: EditProfileScreen(),
+                    routeScreen: const EditProfileScreen(),
                   ),
                   15.ph,
                   OneOption(
                     IconPath: "assets/icons/lock_setting_icon.svg",
                     title: "تغيير الرقم السري",
-                    routeScreen: ChangePassword(),
+                    routeScreen: const ChangePassword(),
                   ),
                   15.ph,
                   OneOption(
@@ -65,7 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     IconPath: "assets/icons/my_point_setting_icon.svg",
                     title: "نقاطي",
-                    routeScreen: MyPointScreen(),
+                    routeScreen: const MyPointScreen(),
                   ),
                   15.ph,
                   const Divider(thickness: 0.5),
@@ -78,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     IconPath: "assets/icons/privacy_setting_icon.svg",
                     title: "الخصوصية",
-                    routeScreen: PrivacyScreen(),
+                    routeScreen: const HTMLBody(typePage: 'privacy'),
                   ),
                   15.ph,
                   OneOption(
@@ -94,13 +92,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     IconPath: "assets/icons/rules_setting_icon.svg",
                     title: "الشروط و الأحكام",
-                    routeScreen: TermsAndConditionsScreen(),
+                    routeScreen: const HTMLBody(typePage: 'terms'),
                   ),
                   15.ph,
                   OneOption(
                     IconPath: "assets/icons/use_setting_icon.svg",
                     title: "سياسة الاستخدام",
-                    routeScreen: RecruitmentPolicyScreen(),
+                    routeScreen: const HTMLBody(typePage: 'policy'),
                   ),
                   15.ph,
                   OneOption(

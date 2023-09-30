@@ -128,6 +128,7 @@
   "report_uploaded_successfully":"The report has been uploaded successfully",
   "bio":"Bio",
   "update_profile_success":"The profile has been updated successfully",
-  "add_certificate":"Add a certificate"
-  
+  "add_certificate":"Add a certificate",
+  "search": "Search",
+  "full_name": "Full Name"
 }

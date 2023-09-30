@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 import 'app_colors.dart';
 import 'app_font.dart';
@@ -239,4 +241,9 @@ class AppConstants {
       ),
     );
   }
+
+  static launchURL(String url) async => await canLaunchUrl(Uri.parse(url))
+      ? await launchUrl(Uri.parse(url))
+      : throw 'Could not launch $url';
+  static launchMaps(String url) async => MapsLauncher.launchQuery(url);
 }
