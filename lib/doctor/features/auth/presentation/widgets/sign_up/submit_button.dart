@@ -1,13 +1,13 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ButtonForSignUp extends StatelessWidget {
   final void Function()? onPressed;
-
+  final String title;
   const ButtonForSignUp({
     super.key,
+    required this.title,
     required this.onPressed,
   });
 
@@ -28,7 +28,7 @@ class ButtonForSignUp extends StatelessWidget {
         fixedSize:
             MaterialStateProperty.all<Size>(Size(context.width * 0.8, 50)),
       ),
-      child: Text('create_account'.tr()),
+      child: Text(title),
     );
   }
 }

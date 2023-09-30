@@ -10,9 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
 class LocationInput extends StatelessWidget {
-  final control = TextEditingController();
-
-  LocationInput({super.key});
+  final TextEditingController control = TextEditingController();
+  LocationInput({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,16 @@ class LocationInput extends StatelessWidget {
         ),
         5.ph,
         BlocBuilder<AuthCubit, AuthState>(
-          buildWhen: (previous, current) => previous.address != current.address,
+          buildWhen: (previous, current) =>
+              previous.address != current.address ||
+              previous.advertiser != current.advertiser,
           builder: (context, state) {
             return TextFormField(
               key: const Key('signUpForm_locationInput_textField'),
-              controller: control,
+              controller: (control.text.isEmpty && state.advertiser != null)
+                  ? TextEditingController(text: state.advertiser?.addressAr)
+                  : control,
+              //initialValue: state.advertiser?.addressAr ?? "",
               readOnly: true,
               keyboardType: TextInputType.name,
               onTap: () {
@@ -45,6 +51,7 @@ class LocationInput extends StatelessWidget {
                           context.read<AuthCubit>().onAddressChange(
                               address: result.formattedAddress,
                               location: result.geometry.location);
+
                           control.text = result.formattedAddress ?? "";
                         }
                         Navigator.of(context).pop();

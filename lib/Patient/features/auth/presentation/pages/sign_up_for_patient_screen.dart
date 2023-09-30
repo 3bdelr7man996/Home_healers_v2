@@ -150,6 +150,7 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       onPressed: () {
                         //todo
                       },
+                      title: 'create_account'.tr(),
                     ),
                     30.ph,
                     Row(

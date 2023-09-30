@@ -15,7 +15,9 @@ import 'package:dr/doctor/features/auth/data/model/status_model.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:map_location_picker/map_location_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'auth_state.dart';
 
@@ -37,10 +39,10 @@ class AuthCubit extends Cubit<AuthState> {
 
       log("location is ${position.latitude}");
       emit(state.copyWith(
-          location: Location(
-        lat: position.latitude,
-        lng: position.longitude,
-      )));
+          location: () => Location(
+                lat: position.latitude,
+                lng: position.longitude,
+              )));
 
       // You can use latitude and longitude for your desired purpose.
       log("Latitude: ${state.location?.lat}, Longitude: ${position.longitude}");
@@ -57,7 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) {
     log("current address $address");
     emit(state.copyWith(
-      location: location,
+      location: () => location,
       address: address,
     ));
   }
@@ -71,12 +73,12 @@ class AuthCubit extends Cubit<AuthState> {
     if (!isChecked) {
       selectedCateg.add(id);
       emit(state.copyWith(
-          selectedCategories: selectedCateg, departemensList: allCateg));
+          selectedCategories: () => selectedCateg, departemensList: allCateg));
     } else {
       selectedCateg.remove(id);
       emit(
         state.copyWith(
-            selectedCategories: selectedCateg, departemensList: allCateg),
+            selectedCategories: () => selectedCateg, departemensList: allCateg),
       );
     }
   }
@@ -88,17 +90,18 @@ class AuthCubit extends Cubit<AuthState> {
     if (!isChecked) {
       selectedStatus.add(id);
       emit(state.copyWith(
-          selectedStatus: selectedStatus, statusList: allStatus));
+          selectedStatus: () => selectedStatus, statusList: allStatus));
     } else {
       selectedStatus.remove(id);
       emit(
-        state.copyWith(selectedStatus: selectedStatus, statusList: allStatus),
+        state.copyWith(
+            selectedStatus: () => selectedStatus, statusList: allStatus),
       );
     }
   }
 
   onSelectCity(int id) {
-    emit(state.copyWith(selectedCity: id));
+    emit(state.copyWith(selectedCity: () => id));
   }
 
   onFNameChange(String fname) => emit(state.copyWith(firstName: fname));
@@ -112,7 +115,7 @@ class AuthCubit extends Cubit<AuthState> {
   onPassWordChange(String password) => emit(state.copyWith(password: password));
 
   onConfPassChange(String confPassword) =>
-      emit(state.copyWith(password: confPassword));
+      emit(state.copyWith(confPassword: confPassword));
 
   showPassword() => emit(state.copyWith(obscurePass: !state.obscurePass));
 
@@ -125,6 +128,19 @@ class AuthCubit extends Cubit<AuthState> {
   onIbanChange(String iban) => emit(state.copyWith(iban: iban));
 
   onTermChange() => emit(state.copyWith(term: !state.term));
+
+  void pickImage() async {
+    final picker = ImagePicker();
+    try {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        emit(state.copyWith(imgProfile: File(pickedFile.path)));
+      }
+    } catch (e) {
+      log("Error picking image: $e");
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
 
   //?====================[  GET ALL DEPARTEMENT  ]====================
   List<Categories>? departList = [];
@@ -192,7 +208,7 @@ class AuthCubit extends Cubit<AuthState> {
   ///Register new advertiser
   Future<void> signUpAdv() async {
     try {
-      fieldsValidation();
+      fieldsValidation(true);
       Map<String, String> body = {
         "name": "${state.firstName} ${state.lastName}",
         "firstname_ar": "${state.firstName}",
@@ -211,6 +227,7 @@ class AuthCubit extends Cubit<AuthState> {
         "lat": "${state.location?.lat}",
         "location": "${state.address}",
         "address_ar": "${state.address}",
+        "address_en": "${state.address}",
         "password": "${state.password}",
         "c_password": "${state.confPassword}",
         "fcm_token": "", //todo
@@ -230,14 +247,25 @@ class AuthCubit extends Cubit<AuthState> {
         body: body,
       );
       await cacheData(response);
+      initRegisterData();
+      emit(
+          state.copyWith(registerState: RequestState.success, showPopup: true));
       log("Register Success");
     } catch (e) {
+      log("Sign up error $e");
+      emit(
+          state.copyWith(registerState: RequestState.failed, showPopup: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 
   ///validate on fields
-  void fieldsValidation() {
+  void fieldsValidation(bool isRegister) {
+    if (isRegister && state.password?.compareTo(state.confPassword!) != 0) {
+      log("Password${state.password} <===> conf pass${state.confPassword}");
+      throw Exception("password_not_compatible".tr());
+    }
+
     if (state.selectedCategories == null || state.selectedCategories!.isEmpty) {
       throw ("job_title_required".tr());
     }
@@ -250,7 +278,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (state.gender == null || state.gender!.isEmpty) {
       throw ("gender_required".tr());
     }
-    if (state.term == false) {
+    if (isRegister && state.term == false) {
       throw ("accept_term".tr());
     }
   }
@@ -260,10 +288,12 @@ class AuthCubit extends Cubit<AuthState> {
     await CacheHelper.saveData(
         key: AppStrings.userInfo,
         value: jsonEncode(response.success?.advertiser?.toJson()));
-    await CacheHelper.saveData(
-      key: AppStrings.userToken,
-      value: response.success?.token,
-    );
+    if (response.success?.token != null) {
+      await CacheHelper.saveData(
+        key: AppStrings.userToken,
+        value: response.success?.token,
+      );
+    }
     await CacheHelper.saveData(
       key: AppStrings.isAdvertise,
       value: true,
@@ -273,13 +303,15 @@ class AuthCubit extends Cubit<AuthState> {
   ///get user info from local data
   Map<String, dynamic> userInfo() {
     final String stringUser = CacheHelper.getData(key: AppStrings.userInfo);
-    print(stringUser);
+    if (kDebugMode) {
+      print(stringUser);
+    }
     Map<String, dynamic> user = jsonDecode(stringUser);
     return user;
   }
 
   ///convert user info from map to Advertiser model
-  Future<Advertiser> getAdvertiserInfo() async {
+  Advertiser getAdvertiserInfo() {
     Map<String, dynamic> info = userInfo();
     return Advertiser.fromJson(info);
   }
@@ -291,6 +323,110 @@ class AuthCubit extends Cubit<AuthState> {
       return true;
     } else {
       return false;
+    }
+  }
+
+  void initRegisterData() {
+    emit(state.copyWith(
+      email: "",
+      address: "",
+      confPassword: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      gender: "",
+      iban: "",
+      location: null,
+      phone: "",
+      selectedCategories: null,
+      selectedCity: null,
+      selectedStatus: null,
+      obscurePass: true,
+      obscureConfPass: true,
+      showPopup: false,
+      term: false,
+      identification: "",
+    ));
+  }
+
+  //?=====================[ EDIT PROFILE SECTION ]=========================
+  //?===============================[INIT PROFILE DATA ]=====================================
+  void initProfileData() {
+    Advertiser advertiser = getAdvertiserInfo();
+    emit(state.copyWith(
+      advertiser: advertiser,
+      email: advertiser.email,
+      address: advertiser.addressAr,
+      firstName: advertiser.firstnameAr,
+      lastName: advertiser.lastnameAr,
+      gender: advertiser.gender,
+      iban: advertiser.iban,
+      location: () => Location(
+          lat: double.parse(advertiser.lat ?? "0"),
+          lng: double.parse(advertiser.lng ?? "0")),
+      phone: advertiser.mobile,
+      selectedCategories: () =>
+          advertiser.categories?.map((e) => e.id).toList(),
+      selectedCity: () => advertiser.cityId,
+      selectedStatus: () => advertiser.statusAdvisor?.map((e) => e.id).toList(),
+    ));
+  }
+
+  //?============================[ UPDATE PROFILE ]===========================
+  ///Register new advertiser
+  Future<void> updateProfile() async {
+    try {
+      fieldsValidation(false);
+      Map<String, String> body = {
+        "name": "${state.firstName} ${state.lastName}",
+        "firstname_ar": "${state.firstName}",
+        "firstname_en": "${state.firstName}",
+        "lastname_en": "${state.lastName}",
+        "desc_ar": "فارغ",
+        "desc_en": "ُempty",
+        "iban": "${state.iban}",
+        "lastname_ar": "${state.lastName}",
+        "email": "${state.email}",
+        "country_id": "1",
+        "mobile": "${state.phone}",
+        "gender": "${state.gender}",
+        "city_id": "${state.selectedCity}",
+        "lng": "${state.location?.lng}",
+        "lat": "${state.location?.lat}",
+        "location": "${state.address}",
+        "address_ar": "${state.address}",
+        "address_en": "${state.address}",
+        //"fcm_token": "",
+      };
+      if (state.selectedCategories != null) {
+        for (var i = 0; i < state.selectedCategories!.length; i++) {
+          body.addAll({"category_ids[$i]": "${state.selectedCategories?[i]}"});
+        }
+      }
+      if (state.selectedStatus != null) {
+        for (var i = 0; i < state.selectedStatus!.length; i++) {
+          body.addAll({"status_ids[$i]": "${state.selectedStatus?[i]}"});
+        }
+      }
+      emit(state.copyWith(registerState: RequestState.loading));
+      SignUpAdvertiseModel response = await signUpAdverRepo.signUP(
+          body: body,
+          isUpdateProfile: true,
+          files: state.imgProfile != null ? [state.imgProfile!] : null,
+          fileKey: "image");
+
+      await cacheData(response);
+      ShowToastHelper.showToast(
+          msg: "update_profile_success".tr(), isError: false);
+      // initRegisterData();
+      emit(
+          state.copyWith(registerState: RequestState.success, showPopup: true));
+      log("update Success");
+    } catch (e) {
+      log("Sign up error $e");
+      emit(
+          state.copyWith(registerState: RequestState.failed, showPopup: false));
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 }

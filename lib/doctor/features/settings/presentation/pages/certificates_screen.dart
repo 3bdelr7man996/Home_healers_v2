@@ -1,29 +1,28 @@
-import 'dart:io';
+import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 
-class certificatesScreen extends StatefulWidget {
-  const certificatesScreen({super.key});
+class CertificatesScreen extends StatefulWidget {
+  const CertificatesScreen({super.key});
 
   @override
-  State<certificatesScreen> createState() => _certificatesScreenState();
+  State<CertificatesScreen> createState() => _CertificatesScreenState();
 }
 
-class _certificatesScreenState extends State<certificatesScreen> {
-  List<File> photos = []; // List to hold the selected photos
-
-  Future<void> pickAndShowPhotos() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        photos.add(File(pickedFile.path));
-      });
-    }
+class _CertificatesScreenState extends State<CertificatesScreen> {
+  @override
+  void initState() {
+    context.read<SettingCubit>().getAllDocuments();
+    super.initState();
   }
 
   @override
@@ -33,66 +32,90 @@ class _certificatesScreenState extends State<certificatesScreen> {
           backButton: true, fromSetting: true, title: "certificates"),
       body: Column(
         children: [
-          photos.length == 0
-              ? Expanded(
-                  child: Center(
-                      child: Image.asset("assets/images/noDocument.png")))
-              : Expanded(
+          BlocBuilder<SettingCubit, SettingState>(
+            builder: (context, state) {
+              if (state.pullStatus == RequestState.loading) {
+                return const CustomLoader(
+                  padding: 0.45,
+                );
+              } else if (state.pullStatus == RequestState.success &&
+                  state.myDocuments != null &&
+                  state.myDocuments!.isNotEmpty) {
+                return Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.all(8.0),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
-                    itemCount: photos.length,
+                    itemCount: state.myDocuments?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.file(
-                          photos[index],
-                          fit: BoxFit.cover,
-                        ),
-                      );
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: AppConstants.customNetworkImage(
+                                imagePath:
+                                    "${AppStrings.imageUrl}${state.myDocuments?[index]}"),
+                          ));
                     },
                   ),
-                ),
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            child: Container(
-              width: double.infinity,
-              child: Material(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                color:
-                    AppColors.primaryColor, // Set the background color to red
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(16.0),
-                    primary: Colors
-                        .transparent, // Make the background color transparent
-                    shadowColor: Colors.transparent, // Remove the button shadow
+                );
+              } else {
+                return Expanded(
+                  child: Center(
+                    child: Image.asset("assets/images/noDocument.png"),
                   ),
-                  onPressed: () {
-                    pickAndShowPhotos();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("إضافة شهادة"),
-                      SizedBox(width: 5),
-                      SvgPicture.asset(
-                        "assets/icons/Certificates_icon.svg",
-                        width: 25,
-                        height: 25,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                );
+              }
+            },
           ),
+          BlocBuilder<SettingCubit, SettingState>(
+            builder: (context, state) {
+              if (state.pullStatus == RequestState.loading) {
+                return const SizedBox.shrink();
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 20.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Material(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      color: AppColors
+                          .primaryColor, // Set the background color to red
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(16.0),
+                          backgroundColor: Colors
+                              .transparent, // Make the background color transparent
+                          shadowColor:
+                              Colors.transparent, // Remove the button shadow
+                        ),
+                        onPressed: () {
+                          context.read<SettingCubit>().onPickDocument();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("add_certificate".tr()),
+                            5.pw,
+                            SvgPicture.asset(
+                              "assets/icons/Certificates_icon.svg",
+                              width: 25,
+                              height: 25,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+            },
+          )
         ],
       ),
     );

@@ -2,8 +2,11 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
+import 'package:dr/shared_widgets/pop_up.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,10 +103,10 @@ class SignUpBody extends StatelessWidget {
                         return TiteldTextFormField(
                           title: "confirm_password".tr(),
                           prefixIconPath: AppImages.passwordIcon,
-                          suffixIconPath: state.obscurePass
+                          suffixIconPath: state.obscureConfPass
                               ? AppImages.showPasswordIcon
                               : AppImages.hiddenPassIcon,
-                          obscureText: state.obscurePass ? true : false,
+                          obscureText: state.obscureConfPass ? true : false,
                           validate: true,
                           validateMsg: "required".tr(),
                           onChanged: (p0) =>
@@ -150,11 +153,23 @@ class SignUpBody extends StatelessWidget {
                     30.ph,
                     const SignUpTermsField(),
                     30.ph,
-                    ButtonForSignUp(onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await context.read<AuthCubit>().signUpAdv();
-                      }
-                    }),
+                    BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        if (state.registerState == RequestState.loading) {
+                          return const CustomLoader(
+                            padding: 0,
+                          );
+                        } else {
+                          return ButtonForSignUp(
+                              title: 'create_account'.tr(),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await context.read<AuthCubit>().signUpAdv();
+                                }
+                              });
+                        }
+                      },
+                    ),
                     30.ph,
                     const SignUPHaveAccField(),
                     60.ph
@@ -162,13 +177,14 @@ class SignUpBody extends StatelessWidget {
                 ),
               ),
             ),
-            // PopUp(
-            //   toggleVisibility: () {
-            //     //todo
-            //   },
-            //   isVisible: true, //todo
-            //   rollSelected: 1,
-            // ),
+            BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                return PopUp(
+                  isVisible: state.showPopup,
+                  rollSelected: 1,
+                );
+              },
+            )
           ],
         ),
       ),

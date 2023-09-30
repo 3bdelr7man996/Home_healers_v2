@@ -9,15 +9,15 @@ class AdvertiseSignUpDS {
   AdvertiseSignUpDS({required this.apiHelper});
 
   ///REGISTER NEW ADVERTISER
-  Future<Map<String, dynamic>?> signUp({
-    required Map<String, String> body,
-    String? fileKey,
-    List<File>? files,
-    List<File>? documents,
-    String? documentsKey,
-  }) async {
+  Future<Map<String, dynamic>?> signUp(
+      {required Map<String, String> body,
+      String? fileKey,
+      List<File>? files,
+      List<File>? documents,
+      String? documentsKey,
+      bool isUpdateProfile = false}) async {
     Map<String, dynamic>? response = await apiHelper.multiPartRequest(
-      AppStrings.advertiseSignUp,
+      isUpdateProfile ? AppStrings.updateProfile : AppStrings.advertiseSignUp,
       body: body,
       fileKey: fileKey ?? "",
       files: files,

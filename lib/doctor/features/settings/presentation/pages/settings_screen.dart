@@ -6,7 +6,7 @@ import 'package:dr/doctor/features/settings/presentation/pages/change_password.d
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/privacy_screem.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/privacy_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/recruitment_policy_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/terms_and_conditions_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
@@ -59,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     IconPath: "assets/icons/certificate_setting_icon.svg",
                     title: "الشهادات و المستندات",
-                    routeScreen: certificatesScreen(),
+                    routeScreen: const CertificatesScreen(),
                   ),
                   15.ph,
                   OneOption(

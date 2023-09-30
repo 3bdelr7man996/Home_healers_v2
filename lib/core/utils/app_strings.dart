@@ -1,12 +1,22 @@
 class AppStrings {
   static String baseUrl = "http://admin.home-healers.com";
   static String divUrl = "https://dev.home-healers.com";
+  static String imageUrl = "https://dev.home-healers.com/upload/";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";
   static String advDepartments = "/api/categories";
   static String advStatus = "/api/status";
   static String advAllCities = "/api/Cities_Areas";
+  static String resOrdersStatus = "/api/reservaionGetStatus";
+  static String reservationDetails = "/api/advertiser/reservations";
+  static String advUpdateReservation = "/api/advertiser/updateReservation";
+  static String addDiagnoseReport = "/api/advertiser/addDiagnose";
+  static String diagnoseSections = "/api/diagnose_form";
+  static String addFileReport = "/api/advertiser/addReport";
+  static String updateProfile = "/api/advertiser/update";
+  static String advCertification = "/api/advertiser/cirtificate";
+  static String appInfo = "/api/app_info";
 
   //assets url
   static String appName = "Home Healers";

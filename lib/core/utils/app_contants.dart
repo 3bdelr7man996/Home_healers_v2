@@ -1,13 +1,30 @@
 import 'dart:io';
 
+import 'package:dr/doctor/features/home/data/models/tab_info.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 
 import 'app_colors.dart';
 import 'app_font.dart';
-import 'app_images.dart';
 import 'app_strings.dart';
+
+enum ResevationStep {
+  reviewing,
+  wait_confirm,
+  confirmed,
+  completed,
+  canceled,
+}
+
+List<TabInfo> reservationTabs = [
+  TabInfo(ResevationStep.reviewing, "reviewing".tr()),
+  TabInfo(ResevationStep.wait_confirm, "wait_confirm".tr()),
+  TabInfo(ResevationStep.confirmed, "confirmed".tr()),
+  TabInfo(ResevationStep.completed, "completed".tr()),
+  TabInfo(ResevationStep.canceled, "canceled".tr()),
+];
 
 class AppConstants {
   static customButton(
@@ -107,17 +124,20 @@ class AppConstants {
 
   static customNetworkImage({
     required String imagePath,
+    String placeholder = "assets/images/placeholder.png",
+    String imageError = "assets/images/logo.png",
     double? height,
     double? width,
+    BoxFit? fit = BoxFit.fill,
   }) {
     return FadeInImage.assetNetwork(
       image: imagePath,
-      fit: BoxFit.fill,
+      fit: fit,
       height: height,
       width: width,
-      placeholder: AppImages.placeholderImage,
+      placeholder: placeholder,
       imageErrorBuilder: (BuildContext context, x, u) =>
-          customAssetImage(imagePath: AppImages.logoImage),
+          customAssetImage(imagePath: imageError),
     );
   }
 
@@ -165,6 +185,28 @@ class AppConstants {
           return screen;
         },
       ),
+    );
+  }
+
+  static pushRemoveNavigator(BuildContext context, {required Widget screen}) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 500),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(3, 3),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return screen;
+        },
+      ),
+      (route) => false,
     );
   }
 

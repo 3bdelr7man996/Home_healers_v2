@@ -67,11 +67,11 @@ class _SignInScreen extends State<SignInScreen> {
                   5.ph,
                   Padding(
                     padding: EdgeInsets.only(left: context.width * 0.05),
-                    child: Container(
+                    child: SizedBox(
                       width: context.width,
                       child: Text(
                         "forget_your_password".tr(),
-                        style: TextStyle(color: Color(0xFF37D2F4)),
+                        style: const TextStyle(color: Color(0xFF37D2F4)),
                         textAlign: TextAlign.end,
                       ),
                     ),
@@ -107,8 +107,8 @@ class _SignInScreen extends State<SignInScreen> {
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
                                 return widget.rollSelected == 1
-                                    ? SignUpScreen()
-                                    : SignUpForPatientScreen();
+                                    ? const SignUpScreen()
+                                    : const SignUpForPatientScreen();
                               },
                             ),
                           );

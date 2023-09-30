@@ -18,6 +18,7 @@ class SignUpAdvertiserRepo {
     List<File>? files,
     List<File>? documents,
     String? documentsKey,
+    bool isUpdateProfile = false,
   }) async {
     log("bodyyyy== $body");
     SignUpAdvertiseModel signUpResponse = SignUpAdvertiseModel.fromJson(
@@ -27,6 +28,7 @@ class SignUpAdvertiserRepo {
         documents: documents,
         documentsKey: documentsKey,
         fileKey: fileKey,
+        isUpdateProfile: isUpdateProfile,
       ),
     );
     return signUpResponse;

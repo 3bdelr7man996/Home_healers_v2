@@ -12,11 +12,13 @@ class TiteldTextFormField extends StatelessWidget {
   final bool obscureText;
   final bool validate;
   final String? validateMsg;
+  final String? initialValue;
   final void Function(String)? onChanged;
   final void Function()? onSuffixTab;
   const TiteldTextFormField({
     super.key,
     required this.title,
+    this.initialValue,
     this.suffixIconPath,
     this.prefixIconPath,
     this.keyboardType = TextInputType.text,
@@ -38,6 +40,7 @@ class TiteldTextFormField extends StatelessWidget {
         ),
         5.ph,
         TextFormField(
+          initialValue: initialValue,
           keyboardType: keyboardType,
           obscureText: obscureText,
           validator: validate

@@ -1,3 +1,5 @@
+import 'package:dr/doctor/features/auth/data/model/status_model.dart';
+
 import 'departements_model.dart';
 
 class Advertiser {
@@ -76,7 +78,7 @@ class Advertiser {
   late final String? nameAr;
   late final String? nameEn;
   late final List<Categories>? categories;
-  late final List<dynamic>? statusAdvisor;
+  late final List<StatusData>? statusAdvisor;
 
   Advertiser.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -121,7 +123,11 @@ class Advertiser {
     categories = List.from(json?['categories'])
         .map((e) => Categories.fromJson(e))
         .toList();
-    statusAdvisor = List.castFrom<dynamic, dynamic>(json?['status_advisor']);
+    statusAdvisor = List.from(json?['status_advisor'])
+        .map((e) => StatusData.fromJson(e))
+        .toList();
+
+    List.castFrom<dynamic, dynamic>(json?['status_advisor']);
   }
 
   Map<String, dynamic> toJson() {

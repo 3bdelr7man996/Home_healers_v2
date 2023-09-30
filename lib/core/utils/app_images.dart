@@ -2,7 +2,11 @@ class AppImages {
   //Images
   static String logoImage = "assets/images/logo.png";
   static String placeholderImage = "assets/images/placeholder.png";
+  static String doctorPlaceholder = "assets/images/doctor.png";
+  static String patientImg = "assets/images/patient.png";
+  static String avatar = "assets/images/avatar.png";
   //icons
+
   static String cancelIcon = "assets/icons/cancel_icon.svg";
   static String circleBackArrowIcon = "assets/icons/circle_back_arrow_icon.svg";
   static String emailIcon = "assets/icons/email_icon.svg";

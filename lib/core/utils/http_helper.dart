@@ -17,7 +17,7 @@ class ApiBaseHelper {
   ApiBaseHelper(this.baseUrl) {
     baseHeaders = {
       'Accept': 'application/json',
-      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json; charset=UTF-8',
       'Connection': 'keep-alive',
       'Authorization': 'Bearer ${CacheHelper.getData(
         key: AppStrings.userToken,
@@ -27,7 +27,7 @@ class ApiBaseHelper {
   void updateHeader() {
     baseHeaders = {
       'Accept': 'application/json',
-      // 'Content-Type': 'application/json; charset=UTF-8',
+      'Content-Type': 'application/json; charset=UTF-8',
       'Connection': 'keep-alive',
       'Authorization': 'Bearer ${CacheHelper.getData(
         key: AppStrings.userToken,
@@ -57,7 +57,7 @@ class ApiBaseHelper {
     Uri urlRequest = Uri.parse(baseUrl + url);
     try {
       final http.Response response = await http.post(urlRequest,
-          body: body, headers: headers ?? baseHeaders);
+          body: jsonEncode(body), headers: headers ?? baseHeaders);
       responseJson = _returnResponse(response,
           url: urlRequest.toString(), request: "POST");
     } on SocketException catch (e) {
@@ -69,7 +69,7 @@ class ApiBaseHelper {
   ///to upload image
   Future<Map<String, dynamic>?> multiPartRequest(
     String url, {
-    required Map<String, String> body,
+    required Map<String, String>? body,
     required List<File>? files,
     required String fileKey,
     List<File>? documents,
@@ -94,7 +94,7 @@ class ApiBaseHelper {
       )}';
 
       //init form data eg,name,description,...
-      body.forEach((key, value) {
+      body?.forEach((key, value) {
         request.fields[key] = value;
       });
       //init file data eg,pdf,img,..
@@ -159,6 +159,7 @@ class ApiBaseHelper {
 
   dynamic _returnResponse(http.Response response,
       {required String url, String? request}) {
+    ResponseFailure? error;
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
@@ -175,16 +176,32 @@ class ApiBaseHelper {
             "=> REQUEST VALUES: $responseJson => HEADERS: ${response.headers}");
         return responseJson;
       case 400:
+        var responseJson = json.decode(response.body.toString());
+        if (responseJson['message'] != null) {
+          error = ResponseFailure.fromJson(responseJson);
+        } else {
+          error = ResponseFailure(
+              success: false,
+              message: response.body.toString(),
+              data: ErrorData(descAr: []));
+        }
         logger.i("RESPONSE[${response.statusCode}] => DATA: ${response.body}");
-        throw BadRequestException(response.body.toString());
+        throw BadRequestException(error);
       case 401:
       case 403:
       case 422:
         var responseJson = json.decode(response.body.toString());
+        if (responseJson['message'] != null) {
+          error = ResponseFailure.fromJson(responseJson);
+        } else {
+          error = ResponseFailure(
+              success: false,
+              message: response.body.toString(),
+              data: ErrorData(descAr: []));
+        }
         logger.i(
             "REQUEST[$request] => PATH: $url RESPONSE[${response.statusCode}] => DATA: ${response.body}");
-        throw UnauthorisedException(
-            responseJson['message'] ?? response.body.toString());
+        throw UnauthorisedException(error);
       case 500:
       default:
         logger.i(

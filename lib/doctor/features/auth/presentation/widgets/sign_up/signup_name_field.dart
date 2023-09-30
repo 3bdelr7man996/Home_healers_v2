@@ -11,28 +11,38 @@ class SignUpNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: TiteldTextFormField(
-            title: "first_name".tr(),
-            prefixIconPath: AppImages.personIcon,
-            validate: true,
-            validateMsg: "required".tr(),
-            onChanged: (p0) => context.read<AuthCubit>().onFNameChange(p0),
-          ),
-        ),
-        15.pw,
-        Expanded(
-          child: TiteldTextFormField(
-            title: "last_name".tr(),
-            prefixIconPath: AppImages.personIcon,
-            validate: true,
-            validateMsg: "required".tr(),
-            onChanged: (p0) => context.read<AuthCubit>().onLNameChange(p0),
-          ),
-        ),
-      ],
+    return BlocBuilder<AuthCubit, AuthState>(
+      buildWhen: (previous, current) =>
+          previous.firstName != current.firstName ||
+          previous.lastName != current.lastName ||
+          previous.advertiser != current.advertiser,
+      builder: (context, state) {
+        return Row(
+          children: [
+            Expanded(
+              child: TiteldTextFormField(
+                title: "first_name".tr(),
+                initialValue: state.advertiser?.firstnameAr,
+                prefixIconPath: AppImages.personIcon,
+                validate: true,
+                validateMsg: "required".tr(),
+                onChanged: (p0) => context.read<AuthCubit>().onFNameChange(p0),
+              ),
+            ),
+            15.pw,
+            Expanded(
+              child: TiteldTextFormField(
+                title: "last_name".tr(),
+                initialValue: state.advertiser?.lastnameAr,
+                prefixIconPath: AppImages.personIcon,
+                validate: true,
+                validateMsg: "required".tr(),
+                onChanged: (p0) => context.read<AuthCubit>().onLNameChange(p0),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

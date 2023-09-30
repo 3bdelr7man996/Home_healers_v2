@@ -24,7 +24,7 @@ PreferredSizeWidget customAppBar(BuildContext context,
               onPressed: () {
                 if (fromSetting) {
                   AppConstants.customNavigation(
-                      context, HomeScreen(selectedIndex: 3), 1, 0);
+                      context, const HomeScreen(selectedIndex: 3), 1, 0);
                 } else {
                   Navigator.pop(context);
                 }
