@@ -4,7 +4,9 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class specialistpageScreen extends StatefulWidget {
-  const specialistpageScreen({super.key});
+  var Data;
+  var status_id;
+  specialistpageScreen({super.key, this.Data, this.status_id});
 
   @override
   State<specialistpageScreen> createState() => _specialistpageScreenState();
@@ -12,7 +14,7 @@ class specialistpageScreen extends StatefulWidget {
 
 class _specialistpageScreenState extends State<specialistpageScreen> {
   bool click = false;
-
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                         top: 75.0, left: 20.0, right: 20.0),
                     child: Column(
                       children: [
-                        specialistInfo(),
+                        specialistInfo(Data: widget.Data),
                         20.ph,
                         const Divider(
                           thickness: 1,
@@ -44,10 +46,11 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                           ],
                         ),
                         5.ph,
-                        Certificates(),
+                        Certificates(Data: widget.Data['images']),
                         5.ph,
                         click
-                            ? ButtonWithCounter()
+                            ? ButtonWithCounter(
+                                Data: widget.Data, status_id: widget.status_id)
                             : Container(
                                 width: double.infinity,
                                 child: ElevatedButton(
@@ -62,8 +65,8 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(16.0),
                                     child: Text(
                                       'احجز الآن',
                                       style: TextStyle(fontSize: 20),
@@ -79,9 +82,9 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
             ],
           ),
           Positioned(
-            top: 150,
-            left: 30,
-            right: 30,
+            top: 140,
+            left: 25,
+            right: 25,
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -95,8 +98,8 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              height: 150,
-              child: PictureForSpecialist(),
+              height: 175,
+              child: PictureForSpecialist(Data: widget.Data),
             ),
           ),
         ],

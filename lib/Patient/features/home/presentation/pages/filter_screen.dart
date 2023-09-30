@@ -1,8 +1,12 @@
+import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_result_screen.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_widgets.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FiterScreen extends StatefulWidget {
   const FiterScreen({super.key});
@@ -17,50 +21,73 @@ late String? selectedValue3 = "ذكر";
 late String? selectedValue4 = "الرياض";
 late String? selectedValue5 = "حي المرسلات";
 
-var arrayForTitle = [
-  "أخصائي علاج أول",
-  "أخصائي علاج طبيعي",
-  "استشاري علاج طبيعي"
-];
-
-var arrayForSections = [
-  "الام العضلات والمفاصل",
-  "إصابات عضلية رياضية",
-  "إصابات الجهاز العصبي",
-  "تأهيل الأطفال",
-  "تأهيل مابعد العمليات الجراحية",
-  "مشاكل المرأة الصحية",
-  "انعاش القلب الرئوي"
-];
-
 var arrayForGender = ["ذكر", "أنثى"];
 
-var arrayForCity = [
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض",
-  "الرياض"
-];
-
-var arrayForStreets = ["المرسلات", "الصحافة", "المصيف", "النزهة"];
-
 class _FiterScreenState extends State<FiterScreen> {
+  var Cites,
+      CitesFromData,
+      areas,
+      categoriesFromData,
+      categories,
+      statusFromData,
+      Status;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<AuthCubit>().getAllCities();
+    context.read<AuthCubit>().onAreasChange("الرياض");
+    context.read<AuthCubit>().getAllDepartements();
+    context.read<AuthCubit>().getAllStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
+    statusFromData =
+        context.select((AuthCubit cubit) => cubit.state.statusList);
+    if (statusFromData != null) {
+      Status = statusFromData.map((city) {
+        if (city != null) {
+          return {
+            "name": city.nameAr,
+            "id": city.id,
+          };
+        } else {
+          return null;
+        }
+      }).toList();
+    }
+    print(Status);
+    categoriesFromData =
+        context.select((AuthCubit cubit) => cubit.state.departemensList);
+    if (categoriesFromData != null) {
+      categories = categoriesFromData.map((city) {
+        if (city != null) {
+          return {
+            "name": city.nameAr,
+            "id": city.id,
+          };
+        } else {
+          return null;
+        }
+      }).toList();
+    }
+    print(categories);
+    // print(context.select((AuthCubit cubit) => cubit.state.departemensList));
+    CitesFromData = context.select((AuthCubit cubit) => cubit.state.citiesList);
+    if (CitesFromData != null) {
+      Cites = CitesFromData.map((city) {
+        if (city != null) {
+          return {
+            "name": city.nameAr,
+            "id": city.id,
+          };
+        } else {
+          return null;
+        }
+      }).toList();
+    }
+
     return Scaffold(
       appBar: customAppBarForFilter(context,
           title: "filter_for_search", backButton: true),
@@ -68,8 +95,9 @@ class _FiterScreenState extends State<FiterScreen> {
         width: double.infinity,
         margin: const EdgeInsets.all(16),
         child: ElevatedButton(
-          onPressed: () {
-            AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
+          onPressed: () async {
+            await context.read<FilterCubit>().GetFilterResult(context);
+            // AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
           },
           style: ElevatedButton.styleFrom(
             primary: AppColors.primaryColor,
@@ -96,28 +124,36 @@ class _FiterScreenState extends State<FiterScreen> {
             RaioButtonsSections(
               title: "اختر مسمى الأخصائي",
               selectedValue: selectedValue,
-              arrayForTitle: arrayForTitle,
+              nameOfSection: "category_id",
+              arrayForTitle: categories,
+              num: 3,
             ),
             RaioButtonsSections(
               title: "اختر القسم",
               selectedValue: selectedValue2,
-              arrayForTitle: arrayForSections,
+              arrayForTitle: Status,
+              nameOfSection: "status_id",
+              num: 3,
             ),
             RaioButtonsSections(
               title: "اختر جنس الأخصائي",
               selectedValue: selectedValue3,
+              nameOfSection: "gender",
               arrayForTitle: arrayForGender,
             ),
             RaioButtonsSections(
               title: "اختر المدينة",
               selectedValue: selectedValue4,
-              arrayForTitle: arrayForCity,
+              arrayForTitle: Cites,
+              nameOfSection: "city_id",
               num: 2,
             ),
             RaioButtonsSections(
               title: "اختر الحي",
               selectedValue: selectedValue5,
-              arrayForTitle: arrayForStreets,
+              arrayForTitle:
+                  context.select((AuthCubit cubit) => cubit.state.areasList),
+              nameOfSection: "area_id",
               num: 2,
             ),
           ],

@@ -9,7 +9,6 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/privacy_screem.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/recruitment_policy_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/terms_and_conditions_screen.dart';

@@ -21,7 +21,7 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final SignUpAdvertiserRepo signUpAdverRepo;
-  AuthCubit({required this.signUpAdverRepo}) : super(const AuthState());
+  AuthCubit({required this.signUpAdverRepo}) : super(AuthState());
 
   ///TO DETECT CURRENT LOCATION(LAT,LONG)
   Future<void> getCurrentPosition() async {
@@ -63,6 +63,29 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   onGenderChange(String gender) => emit(state.copyWith(gender: gender));
+
+  ///////////Editing By Ghaith///////////////////
+  onAreasChange(String value) {
+    if (state.citiesList != null) {
+      List areas = state.citiesList!
+          .map((city) {
+            if (city.nameAr == value) {
+              return city.area!.map((area) {
+                return {
+                  "name": area.nameAr,
+                  "id": area.id,
+                };
+              }).toList();
+            } else {
+              return null;
+            }
+          })
+          .where((element) => element != null)
+          .toList();
+      if (areas != null) areas = areas[0] as List<dynamic>;
+      emit(state.copyWith(areasList: areas));
+    }
+  }
 
   onSelectCategory(int id) {
     List<int>? selectedCateg = state.selectedCategories?.toList() ?? [];

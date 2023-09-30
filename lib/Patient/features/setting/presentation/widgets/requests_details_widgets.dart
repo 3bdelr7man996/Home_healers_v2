@@ -1,15 +1,22 @@
+import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class FirstSection extends StatelessWidget {
   int num;
-  FirstSection({super.key, required this.num});
+  var listOfOrders;
+  FirstSection({super.key, required this.num, this.listOfOrders});
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +25,16 @@ class FirstSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "رقم الطلب : 973",
+                "رقم الطلب : ${listOfOrders.id}",
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               Text(
-                "تاريخ الطلب : 11-06-2023",
+                "تاريخ الطلب : ${listOfOrders.createdAt}",
                 style: TextStyle(fontWeight: FontWeight.w500),
               )
             ],
@@ -64,23 +71,51 @@ class FirstSection extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             )
-                          : const Text(
-                              "ملغية \nتم الإلغاء",
-                              style: TextStyle(
-                                  color: AppColors.redColor,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            )
+                          : num == 6
+                              ? const Text(
+                                  "الجلسة \n قيد الانتظار",
+                                  style: TextStyle(
+                                      color: AppColors.greenColor,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                )
+                              : const Text(
+                                  "ملغية \nتم الإلغاء",
+                                  style: TextStyle(
+                                      color: AppColors.redColor,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                )
         ],
       ),
     );
   }
 }
 
-class TowSection extends StatelessWidget {
+class TowSection extends StatefulWidget {
   int num;
+  var listOfOrders, categories, selectedName;
+  TowSection(
+      {super.key,
+      required this.num,
+      this.listOfOrders,
+      this.categories,
+      this.selectedName});
 
-  TowSection({super.key, required this.num});
+  @override
+  State<TowSection> createState() => _TowSectionState();
+}
+
+class _TowSectionState extends State<TowSection> {
+  List<String> categories = [];
+  String selectedName = "";
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    categories = widget.categories;
+    selectedName = widget.selectedName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,37 +126,60 @@ class TowSection extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 115,
+              width: 100,
               height: 90,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/person.png'),
-                  fit: BoxFit.cover,
-                ),
+                borderRadius: BorderRadius.circular(10),
+                image: widget.listOfOrders.advertiser.image != null
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          "${AppStrings.baseUrl}/upload/${widget.listOfOrders.advertiser.image}",
+                        ),
+                        fit: BoxFit.cover,
+                        onError: (exception, stackTrace) => {print(exception)},
+                      )
+                    : DecorationImage(
+                        image: AssetImage("assets/images/doctor.png"),
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             10.pw,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "فارس السيد",
+                Text(
+                  "${widget.listOfOrders.advertiser.nameAr}",
                   style: TextStyle(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w500,
-                      fontSize: 20),
+                      fontSize: 16),
                 ),
                 10.ph,
-                Text(
-                  "أخصائي علاج طبيعي",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                )
+                categories.isNotEmpty
+                    ? DropdownButton<String>(
+                        underline: Container(), // Hide the underline
+                        // icon: const SizedBox(), // Hide the arrow icon
+                        value: selectedName,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedName = newValue!;
+                          });
+                        },
+                        items: categories
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      )
+                    : Text('No Data available'),
               ],
             )
           ],
         ),
-        if (num == 3 || num == 4)
+        if (widget.num == 3 || widget.num == 4)
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,7 +203,9 @@ class TowSection extends StatelessWidget {
 }
 
 class Bill extends StatelessWidget {
-  const Bill({super.key});
+  var listOfOrders;
+
+  Bill({super.key, this.listOfOrders});
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +219,7 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "30 : 60 دقيقة",
+              "${listOfOrders.advertiser.sessionDur} دقيقة",
               style: TextStyle(fontWeight: FontWeight.w600),
             )
           ],
@@ -173,7 +233,7 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "4",
+              "${listOfOrders.sessionsCount}",
               style: TextStyle(fontWeight: FontWeight.w600),
             )
           ],
@@ -187,7 +247,7 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "250 ريال",
+              "${listOfOrders.advertiser.sessionPrice} ريال",
               style: TextStyle(
                   fontWeight: FontWeight.w600, color: AppColors.secondryColor),
             )
@@ -201,10 +261,15 @@ class Bill extends StatelessWidget {
               "كود الخصم :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            Text(
-              "لا يوجد",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            )
+            listOfOrders.coupon == null
+                ? Text(
+                    "لا يوجد",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  )
+                : Text(
+                    "${listOfOrders.coupon}",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  )
           ],
         ),
         20.ph,
@@ -231,7 +296,7 @@ class Bill extends StatelessWidget {
           children: [
             Text("المجموع : ", style: TextStyle(fontWeight: FontWeight.bold)),
             Text(
-              "350 ريال",
+              "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
               style: TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.secondryColor),
             )
@@ -247,10 +312,12 @@ class PopUpForRemoveRequest extends StatefulWidget {
   final VoidCallback changePopUp;
   final bool _isVisible;
   final bool firstPopUp;
-  const PopUpForRemoveRequest(
+  var listOfOrders;
+  PopUpForRemoveRequest(
       {super.key,
       required VoidCallback toggleVisibility,
       required VoidCallback changePopUp,
+      this.listOfOrders,
       required bool firstPopUp,
       required bool isVisible})
       : _isVisible = isVisible,
@@ -269,7 +336,17 @@ class _PopUpForRemoveRequestState extends State<PopUpForRemoveRequest> {
       visible: widget._isVisible,
       child: Positioned.fill(
         child: GestureDetector(
-          onTap: widget._toggleVisibility,
+          onTap: widget.firstPopUp
+              ? widget._toggleVisibility
+              : () async {
+                  await context.read<MyOrdersCubit>().GetOrders(context);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MyRequestsForPatient(activeIndex: 0)));
+                  widget._toggleVisibility;
+                },
           child: Container(
             color: Colors.black54,
             child: Column(
@@ -288,6 +365,7 @@ class _PopUpForRemoveRequestState extends State<PopUpForRemoveRequest> {
                           padding: const EdgeInsets.all(20),
                           child: widget.firstPopUp
                               ? FirstPopUp(
+                                  listOfOrders: widget.listOfOrders,
                                   changePopUp: widget.changePopUp,
                                   toggleVisibility: widget._toggleVisibility,
                                 )
@@ -308,9 +386,13 @@ class FirstPopUp extends StatefulWidget {
   final VoidCallback toggleVisibility;
 
   final VoidCallback changePopUp;
+  var listOfOrders;
 
   FirstPopUp(
-      {super.key, required this.toggleVisibility, required this.changePopUp});
+      {super.key,
+      required this.toggleVisibility,
+      required this.changePopUp,
+      this.listOfOrders});
 
   @override
   State<FirstPopUp> createState() => _FirstPopUpState();
@@ -319,6 +401,12 @@ class FirstPopUp extends StatefulWidget {
 class _FirstPopUpState extends State<FirstPopUp> {
   @override
   Widget build(BuildContext context) {
+    bool showPopUp =
+        context.select((UpdateReservationCubit cubit) => cubit.state.showPoUp);
+    setState(() {
+      showPopUp = context
+          .select((UpdateReservationCubit cubit) => cubit.state.showPoUp);
+    });
     return Column(
       children: [
         Text(
@@ -339,8 +427,27 @@ class _FirstPopUpState extends State<FirstPopUp> {
                 ),
                 padding: EdgeInsets.all(16),
               ),
-              onPressed: () {
-                widget.changePopUp();
+              onPressed: () async {
+                print("Ghaith");
+                print(widget.listOfOrders.id.toString());
+                print(widget.listOfOrders.startAt.toString());
+                print(widget.listOfOrders.endAt.toString());
+                await context
+                    .read<UpdateReservationCubit>()
+                    .onIdChange(widget.listOfOrders.id.toString());
+                await context
+                    .read<UpdateReservationCubit>()
+                    .onStartAtChange(widget.listOfOrders.startAt.toString());
+                await context
+                    .read<UpdateReservationCubit>()
+                    .onEndAtChange(widget.listOfOrders.endAt.toString());
+                await context
+                    .read<UpdateReservationCubit>()
+                    .onStatusChange("canceled");
+                await context
+                    .read<UpdateReservationCubit>()
+                    .updateSelectedReservation(context);
+                if (showPopUp) widget.changePopUp();
               },
               child: Text('حذف'),
             ),
@@ -354,6 +461,7 @@ class _FirstPopUpState extends State<FirstPopUp> {
                   padding: EdgeInsets.all(16),
                   backgroundColor: Colors.transparent),
               onPressed: () {
+                Navigator.pop(context);
                 widget.toggleVisibility();
               },
               child: Text(
@@ -374,12 +482,22 @@ class SecondPopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      const Row(
+      Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(
-            Icons.close,
-            color: AppColors.primaryColor,
+          InkWell(
+            onTap: () async {
+              await context.read<MyOrdersCubit>().GetOrders(context);
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MyRequestsForPatient(activeIndex: 0)));
+            },
+            child: Icon(
+              Icons.close,
+              color: AppColors.primaryColor,
+            ),
           ),
         ],
       ),
@@ -412,10 +530,30 @@ const checked = [true, true, false, false, false];
 
 // ignore: must_be_immutable
 class SessionInfoForPatient extends StatelessWidget {
-  SessionInfoForPatient({super.key});
-
+  var MainOrder;
+  SessionInfoForPatient({super.key, this.MainOrder});
+  var sessionsInfo = [];
   @override
   Widget build(BuildContext context) {
+    print("ghaith");
+    print(MainOrder.parentId);
+    var allOrders =
+        context.select((MyOrdersCubit cubit) => cubit.state.AllOrders);
+    if (MainOrder.parentId == 0) {
+      for (var order in allOrders) {
+        if (order.parentId == MainOrder.id) sessionsInfo.add(order);
+      }
+      sessionsInfo.add(MainOrder);
+    } else {
+      for (var order in allOrders) {
+        if (order.id == MainOrder.parentId) sessionsInfo.add(order);
+        if (order.parentId == MainOrder.parentId) sessionsInfo.add(order);
+      }
+    }
+    sessionsInfo.sort((a, b) {
+      return DateTime.parse(a.startAt).compareTo(DateTime.parse(b.startAt));
+    });
+    print(sessionsInfo.length);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -428,11 +566,12 @@ class SessionInfoForPatient extends StatelessWidget {
           height: context.height * 0.15,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: sessions.length,
+            itemCount: sessionsInfo.length,
             itemBuilder: (context, index) {
+              var number = index + 1;
               return OneSessionInfoForPatient(
-                  title: sessions[index].first,
-                  date: sessions[index].last,
+                  title: number.toString(),
+                  date: sessionsInfo[index].startAt ?? "",
                   checked: checked[index]);
             },
           ),
@@ -444,7 +583,7 @@ class SessionInfoForPatient extends StatelessWidget {
 }
 
 class OneSessionInfoForPatient extends StatelessWidget {
-  String title, date;
+  var title, date;
   bool checked;
   OneSessionInfoForPatient({
     super.key,
@@ -498,6 +637,7 @@ class OneSessionInfoForPatient extends StatelessWidget {
                   child: Center(
                     child: Text(
                       date,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 16,
                       ),

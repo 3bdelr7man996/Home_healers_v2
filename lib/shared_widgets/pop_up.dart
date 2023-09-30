@@ -8,11 +8,11 @@ import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class PopUp extends StatelessWidget {
+class PopUpForSignUp extends StatelessWidget {
   final VoidCallback _toggleVisibility;
   final bool _isVisible;
   final int rollSelected;
-  const PopUp(
+  const PopUpForSignUp(
       {super.key,
       required VoidCallback toggleVisibility,
       required this.rollSelected,
