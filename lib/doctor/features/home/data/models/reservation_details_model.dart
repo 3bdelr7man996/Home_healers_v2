@@ -2,7 +2,7 @@ import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../../diagnose_report/data/models/diagonse_form_model.dart';
-import 'user_model.dart';
+import 'user_reservation_model.dart';
 
 class ResevationsModel {
   bool? success;

@@ -1,7 +1,6 @@
 import 'package:dr/Patient/features/home/presentation/widgets/home_widgets.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/doctor/features/home/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

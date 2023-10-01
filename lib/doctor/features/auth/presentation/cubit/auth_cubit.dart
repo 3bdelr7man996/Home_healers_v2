@@ -84,7 +84,7 @@ class AuthCubit extends Cubit<AuthState> {
           })
           .where((element) => element != null)
           .toList();
-      if (areas != null) areas = areas[0] as List<dynamic>;
+      areas = areas[0] as List<dynamic>;
       emit(state.copyWith(areasList: areas));
     }
   }
@@ -405,7 +405,7 @@ class AuthCubit extends Cubit<AuthState> {
         "firstname_ar": "${state.firstName}",
         "firstname_en": "${state.firstName}",
         "lastname_en": "${state.lastName}",
-        "desc_ar": "فارغ",
+        "desc_ar": "فارغ", //todo bknd remove validation
         "desc_en": "ُempty",
         "iban": "${state.iban}",
         "lastname_ar": "${state.lastName}",

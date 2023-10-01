@@ -24,6 +24,9 @@ import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.da
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:dr/features/auth/data/datasources/login_ds.dart';
+import 'package:dr/features/auth/data/repositories/login_repo.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import 'core/utils/app_strings.dart';
@@ -49,18 +52,23 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ReservationOrdersDS(apiHelper: sl()));
   sl.registerLazySingleton(() => DiagnosereportDs(apiHelper: sl()));
   sl.registerLazySingleton(() => SettingsDs(apiHelper: sl()));
+  sl.registerLazySingleton(() => LoginDs(apiHelper: sl()));
 
   //REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ReservationOrdersRepo(dataSource: sl()));
   sl.registerLazySingleton(() => DiagnoseReportRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SettingsRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => LoginRepo(dataSource: sl()));
 
   //CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
   sl.registerFactory(() => ReservationsCubit(repository: sl()));
   sl.registerFactory(() => DiagnoseFormCubit(repository: sl()));
   sl.registerFactory(() => SettingCubit(repository: sl()));
+  sl.registerFactory(() => LoginCubit(repository: sl()));
+
+  //PATIENT DATA SOURCE
   sl.registerLazySingleton(() => PatientSignUpDS(apiHelper: sl()));
   sl.registerLazySingleton(() => PatientSignInDS(apiHelper: sl()));
   sl.registerLazySingleton(() => SectionDS(apiHelper: sl()));
@@ -71,7 +79,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateReservationDS(apiHelper: sl()));
   sl.registerLazySingleton(() => UpdateInfoDS(apiHelper: sl()));
 
-  //REPOSITORIES
+  //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SignUpPatientRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SignInPatientRepo(dataSource: sl()));
@@ -83,7 +91,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateReservationRepo(dataSource: sl()));
   sl.registerLazySingleton(() => UpdateInfoRepo(dataSource: sl()));
 
-  //CUBITS
+  //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
   sl.registerFactory(() => AuthCubitForPatient(signUpPatientRepo: sl()));
   sl.registerFactory(() => SignInCubitForPatient(signInPatientRepo: sl()));

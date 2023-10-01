@@ -37,7 +37,7 @@ class AppBarForHome extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                "${"hello_user".tr()} \n ${context.read<AuthCubit>().getAdvertiserInfo().nameEn} ${"how_are_you".tr()}",
+                "${"hello_user".tr()} \n ${context.read<AuthCubit>().getAdvertiserInfo().firstnameAr} ${"how_are_you".tr()}",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20.0,

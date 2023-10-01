@@ -1,10 +1,11 @@
 class AppStrings {
-  static String baseUrl ="http://admin.home-healers.com";
+  static String baseUrl = "http://admin.home-healers.com";
   static String divUrl = "https://dev.home-healers.com";
   static String imageUrl = "https://dev.home-healers.com/upload/";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";
+  static String userSignIn = "/api/user/login";
   static String advDepartments = "/api/categories";
   static String advStatus = "/api/status";
   static String advAllCities = "/api/Cities_Areas";

@@ -89,9 +89,8 @@ class Advertiser {
     mobile = json?['mobile'];
     email = json?['email'];
     image = json?['image'];
-    images = json?['images'] != null
-        ? List.castFrom<dynamic, String>(json?['images'])
-        : null;
+    images =
+        json?['images'] != null ? json!['images'].toString().split(",") : null;
     descAr = json?['desc_ar'];
     descEn = json?['desc_en'];
     addressAr = json?["address_ar"];
@@ -120,14 +119,18 @@ class Advertiser {
     rating = json?['rating'];
     nameAr = json?['name_ar'];
     nameEn = json?['name_en'];
-    categories = List.from(json?['categories'])
-        .map((e) => Categories.fromJson(e))
-        .toList();
-    statusAdvisor = List.from(json?['status_advisor'])
-        .map((e) => StatusData.fromJson(e))
-        .toList();
+    categories = json?['categories'] != null
+        ? List.from(json?['categories'])
+            .map((e) => Categories.fromJson(e))
+            .toList()
+        : null;
+    statusAdvisor = json?['status_advisor'] != null
+        ? List.from(json?['status_advisor'])
+            .map((e) => StatusData.fromJson(e))
+            .toList()
+        : null;
 
-    List.castFrom<dynamic, dynamic>(json?['status_advisor']);
+    // List.castFrom<dynamic, dynamic>(json?['status_advisor']);
   }
 
   Map<String, dynamic> toJson() {

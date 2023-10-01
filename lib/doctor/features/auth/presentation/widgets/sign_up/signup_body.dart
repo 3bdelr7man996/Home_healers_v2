@@ -7,6 +7,7 @@ import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
 import 'package:dr/shared_widgets/pop_up.dart';
+import 'package:dr/shared_widgets/submit_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,6 @@ import 'signup_gender_row.dart';
 import 'signup_have_acc_field.dart';
 import 'signup_name_field.dart';
 import 'signup_terms_field.dart';
-import 'submit_button.dart';
 
 class SignUpBody extends StatelessWidget {
   SignUpBody({
@@ -160,7 +160,7 @@ class SignUpBody extends StatelessWidget {
                             padding: 0,
                           );
                         } else {
-                          return ButtonForSignUp(
+                          return SubmitButton(
                               title: 'create_account'.tr(),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {

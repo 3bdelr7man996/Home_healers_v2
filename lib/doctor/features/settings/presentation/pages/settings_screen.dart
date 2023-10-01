@@ -1,14 +1,18 @@
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/certificates_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/html_body.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
+import 'package:dr/shared_widgets/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -109,23 +113,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   15.ph,
                   const Divider(thickness: 0.5),
                   15.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/log_out_setting_icon.svg",
-                        width: 40,
-                        height: 40,
-                      ),
-                      10.pw,
-                      const Text(
-                        "تسجيل الخروج",
-                        style: TextStyle(
-                            fontSize: 20, color: AppColors.primaryColor),
-                      ),
-                      20.ph
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      context.read<LoginCubit>().logOut();
+                      AppConstants.pushRemoveNavigator(context,
+                          screen: const SelectRollForSignIn());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/log_out_setting_icon.svg",
+                          width: 40,
+                          height: 40,
+                        ),
+                        10.pw,
+                        const Text(
+                          "تسجيل الخروج",
+                          style: TextStyle(
+                              fontSize: 20, color: AppColors.primaryColor),
+                        ),
+                        20.ph
+                      ],
+                    ),
                   ),
                   15.ph
                 ],
