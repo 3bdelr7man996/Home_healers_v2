@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
@@ -34,10 +35,15 @@ class LoginCubit extends Cubit<LoginState> {
         "password": "${state.password}",
         "fcm_token": "" //todo
       });
+      print(user);
+      print("aaaaaaaaaaaaaaaaaaaaa");
       await cacheData(user);
       emit(state.copyWith(loginState: RequestState.success));
-      if (user?.success?.advertiser != null) {
+      print(user?.success?.advertiser?.firstnameAr);
+      if (user?.success?.advertiser?.id != null) {
         if (context.mounted) {
+          print("1");
+
           AppConstants.pushRemoveNavigator(
             context,
             screen: const HomeScreen(
@@ -46,7 +52,9 @@ class LoginCubit extends Cubit<LoginState> {
           );
         }
       } else {
-        //todo
+        print("2");
+        AppConstants.customNavigation(
+            context, HomeScreenForPatient(selectedIndex: 2), -1, 0);
       }
     } catch (e) {
       emit(state.copyWith(loginState: RequestState.failed));
@@ -66,6 +74,10 @@ class LoginCubit extends Cubit<LoginState> {
         value: true,
       );
     } else {
+      await CacheHelper.saveData(
+          key: AppStrings.userInfo,
+          value: jsonEncode(response?.success?.toJson()));
+
       await CacheHelper.saveData(
         key: AppStrings.isAdvertise,
         value: false,

@@ -1,6 +1,4 @@
-import 'package:dr/Patient/features/auth/data/datasources/patient_signIn_ds.dart';
 import 'package:dr/Patient/features/auth/data/datasources/patient_signUp_ds.dart';
-import 'package:dr/Patient/features/auth/data/repositories/patient_signIn_repo.dart';
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/data/datasources/filter_ds.dart';
@@ -70,7 +68,6 @@ Future<void> serviceLocatorInit() async {
 
   //PATIENT DATA SOURCE
   sl.registerLazySingleton(() => PatientSignUpDS(apiHelper: sl()));
-  sl.registerLazySingleton(() => PatientSignInDS(apiHelper: sl()));
   sl.registerLazySingleton(() => SectionDS(apiHelper: sl()));
   sl.registerLazySingleton(() => FilterDs(apiHelper: sl()));
   sl.registerLazySingleton(() => SearchDS(apiHelper: sl()));
@@ -82,7 +79,6 @@ Future<void> serviceLocatorInit() async {
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SignUpPatientRepo(dataSource: sl()));
-  sl.registerLazySingleton(() => SignInPatientRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SectionRepo(dataSource: sl()));
   sl.registerLazySingleton(() => FilterRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SearchRepo(dataSource: sl()));
@@ -94,7 +90,6 @@ Future<void> serviceLocatorInit() async {
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
   sl.registerFactory(() => AuthCubitForPatient(signUpPatientRepo: sl()));
-  sl.registerFactory(() => SignInCubitForPatient(signInPatientRepo: sl()));
   sl.registerFactory(() => SectionCubit(sectionRepo: sl()));
   sl.registerFactory(() => FilterCubit(filterRepo: sl()));
   sl.registerFactory(() => ReservationCubit(reservationRepo: sl()));

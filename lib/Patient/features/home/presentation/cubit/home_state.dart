@@ -100,21 +100,22 @@ class SearchState extends Equatable {
 ///////////////////////////////////////////// New Class For Reservation ////////////////////////
 
 class ReservationState extends Equatable {
-  ReservationState({
-    this.Loading = false,
-    this.advertiser_id,
-    this.start_at,
-    this.end_at,
-    this.notes = "",
-    this.sessions_count = 1,
-    this.status_id,
-    this.days,
-    this.coupon,
-  });
+  ReservationState(
+      {this.Loading = false,
+      this.advertiser_id,
+      this.start_at,
+      this.end_at,
+      this.notes = "",
+      this.sessions_count = 1,
+      this.status_id,
+      this.days,
+      this.coupon,
+      this.painPlace});
   final bool Loading;
   var advertiser_id;
   String? start_at;
   String? end_at;
+  String? painPlace;
   String notes;
   var coupon;
   final int? sessions_count;
@@ -129,6 +130,7 @@ class ReservationState extends Equatable {
         start_at,
         notes,
         end_at,
+        painPlace,
         status_id,
         coupon,
         sessions_count,
@@ -141,6 +143,7 @@ class ReservationState extends Equatable {
     String? notes,
     String? end_at,
     var coupon,
+    String? painPlace,
     int? sessions_count,
     int? status_id,
     List<DateTime>? days,
@@ -152,6 +155,7 @@ class ReservationState extends Equatable {
           end_at: end_at ?? this.end_at,
           status_id: status_id ?? this.status_id,
           days: days ?? this.days,
+          painPlace: painPlace ?? this.painPlace,
           notes: notes ?? this.notes,
           coupon: coupon ?? this.coupon,
           sessions_count: sessions_count ?? this.sessions_count);

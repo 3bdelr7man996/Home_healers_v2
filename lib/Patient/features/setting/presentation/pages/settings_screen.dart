@@ -6,14 +6,18 @@ import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.da
 import 'package:dr/Patient/features/setting/presentation/widgets/settings_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/recruitment_policy_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/terms_and_conditions_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SettingsScreenForPatient extends StatefulWidget {
@@ -108,13 +112,13 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                   OneOptionForPatient(
                     IconPath: "assets/icons/rules_setting_icon.svg",
                     title: "الشروط و الأحكام",
-                    routeScreen: TermsAndConditionsScreen(fromPatient: true),
+                    routeScreen: HTMLBody(typePage: "terms"),
                   ),
                   15.ph,
                   OneOptionForPatient(
                     IconPath: "assets/icons/use_setting_icon.svg",
                     title: "سياسة الاستخدام",
-                    routeScreen: RecruitmentPolicyScreen(fromPatient: true),
+                    routeScreen: HTMLBody(typePage: "policy"),
                   ),
                   15.ph,
                   OneOptionForPatient(
@@ -125,23 +129,30 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                   15.ph,
                   const Divider(thickness: 0.5),
                   15.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/log_out_setting_icon.svg",
-                        width: 40,
-                        height: 40,
-                      ),
-                      10.pw,
-                      const Text(
-                        "تسجيل الخروج",
-                        style: TextStyle(
-                            fontSize: 20, color: AppColors.primaryColor),
-                      ),
-                      20.ph
-                    ],
+                  InkWell(
+                    onTap: () {
+                      context.read<LoginCubit>().logOut();
+                      AppConstants.pushRemoveNavigator(context,
+                          screen: const SelectRollForSignIn());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/log_out_setting_icon.svg",
+                          width: 40,
+                          height: 40,
+                        ),
+                        10.pw,
+                        const Text(
+                          "تسجيل الخروج",
+                          style: TextStyle(
+                              fontSize: 20, color: AppColors.primaryColor),
+                        ),
+                        20.ph
+                      ],
+                    ),
                   ),
                   15.ph
                 ],

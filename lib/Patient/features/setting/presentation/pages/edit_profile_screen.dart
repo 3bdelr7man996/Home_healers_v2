@@ -41,6 +41,9 @@ class _EditProfileScreenForPatientState
     getAttributeFromSharedPreferences().then((value) {
       setState(() {
         userInfo = value;
+        print("asdf");
+        print(value);
+
         jsonData = jsonDecode(userInfo);
         List<String> words = jsonData["name"].split(" ");
         FirstName = words[0];

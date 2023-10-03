@@ -1,4 +1,3 @@
-import 'package:dr/Patient/features/auth/data/repositories/patient_signIn_repo.dart';
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
@@ -51,11 +50,6 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => AuthCubitForPatient(
           signUpPatientRepo: di.sl<SignUpPatientRepo>(),
-        ),
-      ),
-      BlocProvider(
-        create: (BuildContext context) => SignInCubitForPatient(
-          signInPatientRepo: di.sl<SignInPatientRepo>(),
         ),
       ),
       BlocProvider(

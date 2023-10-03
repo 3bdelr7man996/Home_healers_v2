@@ -81,35 +81,3 @@ class AuthStateForPatient extends Equatable {
           term: term ?? this.term,
           requestStatus: requestStatus ?? this.requestStatus);
 }
-
-//////////// ⁡⁢⁣⁢New class⁡ ////////////////////////////////
-class SignInStateForPatient extends Equatable {
-  const SignInStateForPatient({
-    this.requestStatus = false,
-    this.email,
-    this.password,
-    this.showPassword = false,
-  });
-  final String? email;
-  final bool requestStatus;
-  final bool showPassword;
-  final String? password;
-  @override
-  List<Object?> get props => [
-        email,
-        password,
-        showPassword,
-        requestStatus,
-      ];
-  SignInStateForPatient copyWith({
-    String? email,
-    String? password,
-    bool? showPassword,
-    bool? requestStatus,
-  }) =>
-      SignInStateForPatient(
-          email: email ?? this.email,
-          password: password ?? this.password,
-          showPassword: showPassword ?? this.showPassword,
-          requestStatus: requestStatus ?? this.requestStatus);
-}
