@@ -1,15 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class DateOfSessionScreen extends StatefulWidget {
   var Data;

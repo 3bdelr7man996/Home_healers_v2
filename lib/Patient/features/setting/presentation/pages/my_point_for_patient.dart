@@ -2,7 +2,6 @@ import 'package:dr/Patient/features/setting/presentation/widgets/my_point_for_pa
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/doctor/features/home/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/my_point_widgets.dart';
 import 'package:flutter/material.dart';
 

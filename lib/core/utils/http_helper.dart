@@ -54,7 +54,7 @@ class ApiBaseHelper {
   Future<Map<String, dynamic>?> post(String url,
       {Object? body, Map<String, String>? headers}) async {
     Map<String, dynamic>? responseJson;
-    Uri urlRequest = Uri.parse(baseUrl + url);
+    Uri urlRequest = Uri.parse("https://dev.home-healers.com" + url);
     try {
       final http.Response response = await http.post(urlRequest,
           body: jsonEncode(body), headers: headers ?? baseHeaders);

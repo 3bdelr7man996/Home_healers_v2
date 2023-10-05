@@ -50,6 +50,7 @@ class _RowForCheckboxState extends State<RowForCheckbox> {
   }
 }
 
+// ignore: must_be_immutable
 class HumanAnatomy extends StatefulWidget {
   var onChanged;
 

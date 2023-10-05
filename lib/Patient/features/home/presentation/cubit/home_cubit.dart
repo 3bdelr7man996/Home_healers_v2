@@ -223,7 +223,7 @@ class ReservationCubit extends Cubit<ReservationState> {
     if (state.sessions_count! > state.days!.length) {
       throw ("قم بتحديد الأيام التي تريد حجز موعد بها");
     }
-    if (state.notes?.length == 0) {
+    if (state.notes.length == 0) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");
     }
   }

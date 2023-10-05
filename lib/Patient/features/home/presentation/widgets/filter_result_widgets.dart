@@ -1,3 +1,7 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/Patient/features/home/presentation/pages/specialist_page_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -5,9 +9,9 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-// ignore: must_be_immutable
 class DoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromOfferScreen, fromfavorite;
@@ -79,6 +83,7 @@ class _DoctorCardState extends State<DoctorCard> {
                   categories: widget.categories,
                   name: widget.name,
                   image: widget.image,
+                  data: widget.Data,
                   fromfavorite: widget.fromfavorite,
                   toggleVisibility: widget.toggleVisibility,
                   isVisible: widget.isVisible),
@@ -242,13 +247,13 @@ class Stars extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class HeaderForDoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromfavorite;
   String name;
   String? image;
   String status;
+  var data;
   var categories;
   HeaderForDoctorCard(
       {super.key,
@@ -256,6 +261,7 @@ class HeaderForDoctorCard extends StatefulWidget {
       this.categories,
       this.status = "",
       this.fromfavorite = false,
+      this.data,
       this.image = "",
       required VoidCallback this.toggleVisibility,
       this.name = ""});
@@ -277,6 +283,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -284,7 +291,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
         Stack(
           children: [
             Container(
-              width: 150,
+              width: 145,
               height: 100,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -306,14 +313,26 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               top: 5,
               right: 5,
               child: InkWell(
-                onTap: () {
-                  widget.toggleVisibility();
+                onTap: () async {
+                  if (widget.fromfavorite == false) {
+                    print(widget.data);
+
+                    await context
+                        .read<AddFavoriteCubit>()
+                        .AddFavorite(context, widget.data["id"]);
+
+                    setState(() {
+                      isFavorite = !isFavorite;
+                    });
+
+                    widget.toggleVisibility();
+                  }
                 },
                 child: CircleAvatar(
                   radius: 15,
                   backgroundColor: Colors.white,
                   child: Icon(
-                    widget.isVisible || widget.fromfavorite
+                    isFavorite || widget.fromfavorite
                         ? Icons.favorite
                         : Icons.favorite_border,
                     size: 20,
@@ -490,10 +509,20 @@ class PopUpForAddToFavourite extends StatelessWidget {
                                       10.pw,
                                       const Text("تمت الإضافة إلى المفضلة"),
                                       10.pw,
-                                      const Text(
-                                        "المفضلة",
-                                        style: TextStyle(
-                                            color: AppColors.primaryColor),
+                                      InkWell(
+                                        onTap: () {
+                                          AppConstants.customNavigation(
+                                              context,
+                                              HomeScreenForPatient(
+                                                  selectedIndex: 3),
+                                              -1,
+                                              0);
+                                        },
+                                        child: const Text(
+                                          "المفضلة",
+                                          style: TextStyle(
+                                              color: AppColors.primaryColor),
+                                        ),
                                       )
                                     ],
                                   ),

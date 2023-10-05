@@ -1,5 +1,8 @@
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/Patient/features/favorite/data/repositories/addFavorite_repo.dart';
+import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
@@ -30,6 +33,10 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) =>
             AuthCubit(signUpAdverRepo: di.sl<SignUpAdvertiserRepo>()),
+      ),
+      BlocProvider(
+        create: (BuildContext context) =>
+            AddFavoriteCubit(addFavoriteRepo: di.sl<AddFavoriteRepo>()),
       ),
       BlocProvider(
         create: (BuildContext context) =>
@@ -80,6 +87,11 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => UpdateReservationCubit(
           updateReservationRepo: di.sl<UpdateReservationRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => FavoriteCubit(
+          favoriteRepo: di.sl<FavoriteRepo>(),
         ),
       ),
       BlocProvider(

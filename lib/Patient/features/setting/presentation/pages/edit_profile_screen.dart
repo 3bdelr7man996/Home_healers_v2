@@ -62,7 +62,7 @@ class _EditProfileScreenForPatientState
 
     var cities = context.select((AuthCubit cubit) => cubit.state.citiesList);
     if (jsonData != null && cities != null)
-      for (int i = 0; i < cities!.length; i++) {
+      for (int i = 0; i < cities.length; i++) {
         citiesForDropDown.add(cities[i].nameAr);
         if (x == 0) if (cities[i].id == jsonData?["city_id"]) {
           city = cities[i].nameAr!;
@@ -168,7 +168,7 @@ class _EditProfileScreenForPatientState
                                 setState(() {
                                   city = value!;
                                   var val;
-                                  for (int i = 0; i < cities!.length; i++)
+                                  for (int i = 0; i < cities.length; i++)
                                     if (cities[i].nameAr == city)
                                       val = cities[i].id;
                                   context
