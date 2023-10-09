@@ -1,4 +1,5 @@
-import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -7,7 +8,6 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
-import 'package:dr/core/utils/cache_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -528,7 +528,6 @@ const sessions = [
 ];
 const checked = [true, true, false, false, false];
 
-// ignore: must_be_immutable
 class SessionInfoForPatient extends StatelessWidget {
   var MainOrder;
   SessionInfoForPatient({super.key, this.MainOrder});

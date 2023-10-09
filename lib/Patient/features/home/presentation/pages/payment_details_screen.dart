@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:dr/Patient/features/home/presentation/pages/choose_card_for_payment_screen.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/payment_details_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';

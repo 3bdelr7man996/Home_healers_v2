@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -41,6 +42,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (CacheHelper.getData(key: AppStrings.isAdvertise)) {
           AppConstants.pushRemoveNavigator(context,
               screen: const HomeScreen(selectedIndex: 0));
+        } else {
+          AppConstants.pushRemoveNavigator(context,
+              screen: HomeScreenForPatient(selectedIndex: 2));
         }
       } else {
         AppConstants.pushRemoveNavigator(context,

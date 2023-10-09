@@ -1,12 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
-import 'package:dr/Patient/features/auth/data/models/sign_in_patient_model.dart';
-import 'package:dr/Patient/features/auth/data/repositories/patient_signIn_repo.dart';
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
-import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
-import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -136,95 +131,6 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
 
   /// save user data in local
   Future<void> cacheData(SignUpForPatientModel response) async {
-    await CacheHelper.saveData(
-        key: AppStrings.userInfo, value: jsonEncode(response.success.toJson()));
-    await CacheHelper.saveData(
-      key: AppStrings.userToken,
-      value: response.success.token,
-    );
-    await CacheHelper.saveData(
-      key: AppStrings.isAdvertise,
-      value: false,
-    );
-  }
-
-  ///get user info from local data
-  Map<String, dynamic> userInfo() {
-    final String stringUser = CacheHelper.getData(key: AppStrings.userInfo);
-    print(stringUser);
-    Map<String, dynamic> user = jsonDecode(stringUser);
-    return user;
-  }
-
-  /// check if user login or not
-  bool hasToken() {
-    final String token = CacheHelper.getData(key: AppStrings.userToken) ?? "";
-    if (token.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-////////////////////////////-⁡⁢⁣⁢New Class⁡-////////////////////////////////////////////////////////////////////////////////
-
-class SignInCubitForPatient extends Cubit<SignInStateForPatient> {
-  final SignInPatientRepo signInPatientRepo;
-
-  SignInCubitForPatient({required this.signInPatientRepo})
-      : super(const SignInStateForPatient());
-
-  //?==================== formFields change ====================
-
-  onEmailChange(String email) => emit(state.copyWith(email: email));
-
-  onPassWordChange(String password) => emit(state.copyWith(password: password));
-
-  onShowPasswordChange() =>
-      emit(state.copyWith(showPassword: !state.showPassword));
-
-  onRequestStatusChange() =>
-      emit(state.copyWith(requestStatus: !state.requestStatus));
-
-  //?====================[  SIGN UP NEW ACC  ]==========================
-
-  ///Register new patient
-  Future<void> SignInPatient(BuildContext context) async {
-    try {
-      fieldsValidation();
-
-      Map<String, String> body = {
-        "email": "${state.email}",
-        "password": "${state.password}",
-      };
-      onRequestStatusChange();
-      SignInForPatientModel response =
-          await signInPatientRepo.signIn(body: body);
-      onRequestStatusChange();
-      AppConstants.customNavigation(
-          context, HomeScreenForPatient(selectedIndex: 2), -1, 0);
-
-      await cacheData(response);
-    } catch (e) {
-      onRequestStatusChange();
-      print(e);
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
-    }
-  }
-
-  ///validate on fields
-  void fieldsValidation() {
-    if (state.password == null) {
-      throw ("ادخل كلمة السر");
-    }
-
-    if (state.email == null) {
-      throw ("ادخل  الايميل");
-    }
-  }
-
-  /// save user data in local
-  Future<void> cacheData(SignInForPatientModel response) async {
     await CacheHelper.saveData(
         key: AppStrings.userInfo, value: jsonEncode(response.success.toJson()));
     await CacheHelper.saveData(

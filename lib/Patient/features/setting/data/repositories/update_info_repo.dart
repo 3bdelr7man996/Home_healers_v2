@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dr/Patient/features/auth/data/datasources/patient_signUp_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_info_ds.dart';
 import 'package:dr/Patient/features/setting/data/models/update_info_model.dart';
 

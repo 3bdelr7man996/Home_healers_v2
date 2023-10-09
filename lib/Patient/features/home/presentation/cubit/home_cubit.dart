@@ -148,6 +148,7 @@ class ReservationCubit extends Cubit<ReservationState> {
   makesessions_countOne() => {emit(state.copyWith(sessions_count: 1))};
   onChangeNotes(value) => {emit(state.copyWith(notes: value))};
   makeNotesEmpty() => {emit(state.copyWith(notes: ""))};
+  onChangePainPlace(value) => {emit(state.copyWith(painPlace: value))};
 
   Future<void> MakeReservation(BuildContext context) async {
     try {
@@ -174,7 +175,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       String end_at = sortedDates.last.toString();
       end_at = end_at.substring(0, end_at.length - 4);
       emit(state.copyWith(end_at: end_at));
-      List<String> daysArray = sortedDates!
+      List<String> daysArray = sortedDates
           .map((date) =>
               date.toString().substring(0, date.toString().length - 4))
           .toList();
@@ -187,19 +188,24 @@ class ReservationCubit extends Cubit<ReservationState> {
         "sessions_count": "${state.sessions_count}",
         "status_id": "${state.status_id}",
         "notes": "${state.notes}",
+        "days": daysArray,
+        "pain_place": "${state.painPlace}"
         //coupon ===ToDo===
       };
 
-      for (int i = 0; i < daysArray.length; i++) {
-        body['days[$i]'] = daysArray[i];
-      }
+      // for (int i = 0; i < daysArray.length; i++) {
+      //   body['days[$i]'] = daysArray[i];
+      // }
       reservationModel response =
           await reservationRepo.MakeReservation(body: body);
+      print(response);
+      print("Ghaith");
       emit(state.copyWith(sessions_count: 1));
       emit(state.copyWith(days: []));
       daysArray = [];
       sortedDates = [];
       makeNotesEmpty();
+      // ignore: use_build_context_synchronously
       AppConstants.customNavigation(
           context, PaymentDetailsScreen(withOffer: true), -1, 0);
       body.removeWhere((key, value) => key.startsWith('days['));
@@ -217,7 +223,7 @@ class ReservationCubit extends Cubit<ReservationState> {
     if (state.sessions_count! > state.days!.length) {
       throw ("قم بتحديد الأيام التي تريد حجز موعد بها");
     }
-    if (state.notes?.length == 0) {
+    if (state.notes.length == 0) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");
     }
   }
