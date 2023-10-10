@@ -7,13 +7,14 @@ import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_result_screen.dart';
-import 'package:dr/Patient/features/home/presentation/pages/payment_details_screen.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
 
 class SectionCubit extends Cubit<SectionState> {
   final SectionRepo sectionRepo;
@@ -200,14 +201,14 @@ class ReservationCubit extends Cubit<ReservationState> {
           await reservationRepo.MakeReservation(body: body);
       print(response);
       print("Ghaith");
+      AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       emit(state.copyWith(sessions_count: 1));
       emit(state.copyWith(days: []));
       daysArray = [];
       sortedDates = [];
       makeNotesEmpty();
       // ignore: use_build_context_synchronously
-      AppConstants.customNavigation(
-          context, PaymentDetailsScreen(withOffer: true), -1, 0);
+      AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       body.removeWhere((key, value) => key.startsWith('days['));
     } catch (e) {
       print(e.toString());

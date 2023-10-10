@@ -5,6 +5,7 @@ import 'package:dr/Patient/features/setting/presentation/pages/settings_screen.d
 import 'package:dr/doctor/features/notification/presentation/pages/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class HomeScreenForPatient extends StatefulWidget {
