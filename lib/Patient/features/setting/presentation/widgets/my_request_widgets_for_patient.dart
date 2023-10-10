@@ -18,6 +18,7 @@ class underProcessing extends StatelessWidget {
   Widget build(BuildContext context) {
     var listOfOrders =
         context.select((MyOrdersCubit cubit) => cubit.state.ReviewingOrders);
+    print(listOfOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,
@@ -482,7 +483,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                             AppConstants.customNavigation(
                                 context,
                                 RequestsDetailsScreenForPatient(
-                                  listOfOrders: widget.listOfOrders,
+                                  oneOrder: widget.listOfOrders,
                                   categories: names,
                                   selectedName: selectedName,
                                   num: 1,
@@ -494,7 +495,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 context,
                                 RequestsDetailsScreenForPatient(
                                   num: 2,
-                                  listOfOrders: widget.listOfOrders,
+                                  oneOrder: widget.listOfOrders,
                                   categories: names,
                                   selectedName: selectedName,
                                 ),
@@ -505,7 +506,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 context,
                                 RequestsDetailsScreenForPatient(
                                   num: 3,
-                                  listOfOrders: widget.listOfOrders,
+                                  oneOrder: widget.listOfOrders,
                                   categories: names,
                                   selectedName: selectedName,
                                 ),
@@ -516,7 +517,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 context,
                                 RequestsDetailsScreenForPatient(
                                   num: 4,
-                                  listOfOrders: widget.listOfOrders,
+                                  oneOrder: widget.listOfOrders,
                                   categories: names,
                                   selectedName: selectedName,
                                 ),
@@ -527,7 +528,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 context,
                                 RequestsDetailsScreenForPatient(
                                   num: 6,
-                                  listOfOrders: widget.listOfOrders,
+                                  oneOrder: widget.listOfOrders,
                                   categories: names,
                                   selectedName: selectedName,
                                 ),
@@ -538,7 +539,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 context,
                                 RequestsDetailsScreenForPatient(
                                   num: 5,
-                                  listOfOrders: widget.listOfOrders,
+                                  oneOrder: widget.listOfOrders,
                                   categories: names,
                                   selectedName: selectedName,
                                 ),

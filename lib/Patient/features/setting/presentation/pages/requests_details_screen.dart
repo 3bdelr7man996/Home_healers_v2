@@ -1,21 +1,23 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestsDetailsScreenForPatient extends StatefulWidget {
   int num;
-  var listOfOrders;
+  var oneOrder;
   var categories, selectedName;
   RequestsDetailsScreenForPatient(
       {super.key,
       required this.num,
-      this.listOfOrders,
+      this.oneOrder,
       this.categories,
       this.selectedName});
 
@@ -89,12 +91,12 @@ class _RequestsDetailsScreenForPatientState
         print(startAt);
         await context
             .read<UpdateReservationCubit>()
-            .onIdChange(widget.listOfOrders.id.toString());
+            .onIdChange(widget.oneOrder.id.toString());
         await context.read<UpdateReservationCubit>().onStartAtChange(startAt);
         await context.read<UpdateReservationCubit>().onEndAtChange(endAt);
         await context
             .read<UpdateReservationCubit>()
-            .onStatusChange(widget.listOfOrders.status);
+            .onStatusChange(widget.oneOrder.status);
         await context
             .read<UpdateReservationCubit>()
             .updateSelectedReservation(context);
@@ -114,7 +116,7 @@ class _RequestsDetailsScreenForPatientState
                 children: [
                   FirstSection(
                     num: widget.num,
-                    listOfOrders: widget.listOfOrders,
+                    listOfOrders: widget.oneOrder,
                   ),
                   20.ph,
                   const Divider(
@@ -123,7 +125,7 @@ class _RequestsDetailsScreenForPatientState
                   20.ph,
                   TowSection(
                     num: widget.num,
-                    listOfOrders: widget.listOfOrders,
+                    listOfOrders: widget.oneOrder,
                     categories: widget.categories,
                     selectedName: widget.selectedName,
                   ),
@@ -136,7 +138,7 @@ class _RequestsDetailsScreenForPatientState
                           widget.num == 4 ||
                           num == 5
                       ? SessionInfoForPatient(
-                          MainOrder: widget.listOfOrders,
+                          MainOrder: widget.oneOrder,
                         )
                       : SizedBox(),
                   Text(
@@ -145,7 +147,7 @@ class _RequestsDetailsScreenForPatientState
                   ),
                   20.ph,
                   Bill(
-                    listOfOrders: widget.listOfOrders,
+                    listOfOrders: widget.oneOrder,
                   ),
                   30.ph,
                   if (widget.num != 5)
@@ -164,7 +166,7 @@ class _RequestsDetailsScreenForPatientState
                                 onPressed: () {},
                                 child: Text('إظهار الفاتورة'),
                               ),
-                              if (widget.listOfOrders.canReview == 1)
+                              if (widget.oneOrder.canReview == 1)
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       side: BorderSide(
@@ -226,6 +228,8 @@ class _RequestsDetailsScreenForPatientState
                     ElevatedButton(
                       onPressed: () {
                         _toggleVisibility();
+                        AppConstants.customNavigation(context,
+                            PaymentDetailsScreen(withOffer: true), -1, 0);
                       },
                       style: ButtonStyle(
                         shape:
@@ -281,7 +285,7 @@ class _RequestsDetailsScreenForPatientState
             ),
           ),
           PopUpForRemoveRequest(
-            listOfOrders: widget.listOfOrders,
+            listOfOrders: widget.oneOrder,
             toggleVisibility: _toggleVisibility,
             changePopUp: changePopUp,
             isVisible: _isVisible,
@@ -289,116 +293,6 @@ class _RequestsDetailsScreenForPatientState
           )
         ],
       ),
-    );
-  }
-}
-
-class BottomSheetForEvalute extends StatelessWidget {
-  const BottomSheetForEvalute({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 350,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-          child: Column(
-            children: [
-              const Text(
-                "اكتب تعليقك",
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              15.ph,
-              FiveStarRating(
-                rating: 0,
-                onRatingChanged: (rating) {},
-              ),
-              15.ph,
-              TextFormField(
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.all(16),
-                  hintText: "اكتب تعليقك ...",
-                ),
-              ),
-              15.ph,
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                    Size(double.infinity, 50),
-                  ),
-                ),
-                child: Text(
-                  'إرسال التعليق',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-}
-
-class FiveStarRating extends StatefulWidget {
-  final int rating;
-  final Function(int) onRatingChanged;
-
-  const FiveStarRating({
-    Key? key,
-    required this.rating,
-    required this.onRatingChanged,
-  }) : super(key: key);
-
-  @override
-  State<FiveStarRating> createState() => _FiveStarRatingState();
-}
-
-class _FiveStarRatingState extends State<FiveStarRating> {
-  int _rating = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _rating = widget.rating;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int i = 1; i <= 5; i++)
-          InkWell(
-            onTap: () {
-              setState(() {
-                _rating = i;
-                widget.onRatingChanged(_rating);
-              });
-            },
-            child: Icon(
-              Icons.star,
-              size: 40,
-              color: i <= _rating ? Colors.yellow : Colors.grey,
-            ),
-          ),
-      ],
     );
   }
 }
