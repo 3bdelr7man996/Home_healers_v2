@@ -12,12 +12,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestsDetailsScreenForPatient extends StatefulWidget {
   int num;
-  var listOfOrders;
+  var oneOrder;
   var categories, selectedName;
   RequestsDetailsScreenForPatient(
       {super.key,
       required this.num,
-      this.listOfOrders,
+      this.oneOrder,
       this.categories,
       this.selectedName});
 
@@ -91,12 +91,12 @@ class _RequestsDetailsScreenForPatientState
         print(startAt);
         await context
             .read<UpdateReservationCubit>()
-            .onIdChange(widget.listOfOrders.id.toString());
+            .onIdChange(widget.oneOrder.id.toString());
         await context.read<UpdateReservationCubit>().onStartAtChange(startAt);
         await context.read<UpdateReservationCubit>().onEndAtChange(endAt);
         await context
             .read<UpdateReservationCubit>()
-            .onStatusChange(widget.listOfOrders.status);
+            .onStatusChange(widget.oneOrder.status);
         await context
             .read<UpdateReservationCubit>()
             .updateSelectedReservation(context);
@@ -116,7 +116,7 @@ class _RequestsDetailsScreenForPatientState
                 children: [
                   FirstSection(
                     num: widget.num,
-                    listOfOrders: widget.listOfOrders,
+                    listOfOrders: widget.oneOrder,
                   ),
                   20.ph,
                   const Divider(
@@ -125,7 +125,7 @@ class _RequestsDetailsScreenForPatientState
                   20.ph,
                   TowSection(
                     num: widget.num,
-                    listOfOrders: widget.listOfOrders,
+                    listOfOrders: widget.oneOrder,
                     categories: widget.categories,
                     selectedName: widget.selectedName,
                   ),
@@ -138,7 +138,7 @@ class _RequestsDetailsScreenForPatientState
                           widget.num == 4 ||
                           num == 5
                       ? SessionInfoForPatient(
-                          MainOrder: widget.listOfOrders,
+                          MainOrder: widget.oneOrder,
                         )
                       : SizedBox(),
                   Text(
@@ -147,7 +147,7 @@ class _RequestsDetailsScreenForPatientState
                   ),
                   20.ph,
                   Bill(
-                    listOfOrders: widget.listOfOrders,
+                    listOfOrders: widget.oneOrder,
                   ),
                   30.ph,
                   if (widget.num != 5)
@@ -166,7 +166,7 @@ class _RequestsDetailsScreenForPatientState
                                 onPressed: () {},
                                 child: Text('إظهار الفاتورة'),
                               ),
-                              if (widget.listOfOrders.canReview == 1)
+                              if (widget.oneOrder.canReview == 1)
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       side: BorderSide(
@@ -285,7 +285,7 @@ class _RequestsDetailsScreenForPatientState
             ),
           ),
           PopUpForRemoveRequest(
-            listOfOrders: widget.listOfOrders,
+            listOfOrders: widget.oneOrder,
             toggleVisibility: _toggleVisibility,
             changePopUp: changePopUp,
             isVisible: _isVisible,
