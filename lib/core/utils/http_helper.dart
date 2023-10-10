@@ -35,12 +35,18 @@ class ApiBaseHelper {
     };
   }
 
-  Future<Map<String, dynamic>?> get(String url,
-      {Map<String, String>? headers}) async {
+  Future<Map<String, dynamic>?> get(
+    String url, {
+    Map<String, String>? headers,
+    Map<String, dynamic>? queryParameters,
+    String? newBaseUrl,
+  }) async {
     Map<String, dynamic>? responseJson;
 
-    Uri urlRequest = Uri.parse(baseUrl + url);
+    Uri urlRequest = Uri.parse(newBaseUrl ?? baseUrl + url)
+        .replace(queryParameters: queryParameters);
     try {
+      log(urlRequest.toString());
       final http.Response response =
           await http.get(urlRequest, headers: headers ?? baseHeaders);
       responseJson =
@@ -54,7 +60,7 @@ class ApiBaseHelper {
   Future<Map<String, dynamic>?> post(String url,
       {Object? body, Map<String, String>? headers}) async {
     Map<String, dynamic>? responseJson;
-    Uri urlRequest = Uri.parse("https://dev.home-healers.com" + url);
+    Uri urlRequest = Uri.parse("$baseUrl$url");
     try {
       final http.Response response = await http.post(urlRequest,
           body: jsonEncode(body), headers: headers ?? baseHeaders);

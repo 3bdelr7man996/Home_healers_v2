@@ -11,6 +11,7 @@ import 'package:dr/Patient/features/home/presentation/pages/payment_details_scre
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -225,6 +226,23 @@ class ReservationCubit extends Cubit<ReservationState> {
     }
     if (state.notes.length == 0) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");
+    }
+  }
+
+  //?============================[ PAY BY VISA ]================================
+  Future<void> payByVisa({required int reservationParentId}) async {
+    try {
+      emit(state.copyWith(payState: RequestState.loading));
+      String? payUrl = await reservationRepo.visaPayment({
+        "parent_id": "$reservationParentId",
+      });
+      emit(state.copyWith(
+        payState: RequestState.success,
+        visaUrl: payUrl,
+      ));
+    } catch (e) {
+      emit(state.copyWith(payState: RequestState.failed));
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 }

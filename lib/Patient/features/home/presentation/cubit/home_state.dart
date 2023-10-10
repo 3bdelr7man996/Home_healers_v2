@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:equatable/equatable.dart';
 
 class SectionState extends Equatable {
@@ -102,17 +103,20 @@ class SearchState extends Equatable {
 ///////////////////////////////////////////// New Class For Reservation ////////////////////////
 
 class ReservationState extends Equatable {
-  ReservationState(
-      {this.Loading = false,
-      this.advertiser_id,
-      this.start_at,
-      this.end_at,
-      this.notes = "",
-      this.sessions_count = 1,
-      this.status_id,
-      this.days,
-      this.coupon,
-      this.painPlace});
+  ReservationState({
+    this.Loading = false,
+    this.advertiser_id,
+    this.start_at,
+    this.end_at,
+    this.notes = "",
+    this.sessions_count = 1,
+    this.status_id,
+    this.days,
+    this.coupon,
+    this.painPlace,
+    this.visaUrl,
+    this.payState = RequestState.initial,
+  });
   final bool Loading;
   var advertiser_id;
   String? start_at;
@@ -123,6 +127,8 @@ class ReservationState extends Equatable {
   final int? sessions_count;
   final int? status_id;
   List<DateTime>? days;
+  final String? visaUrl;
+  final RequestState payState;
 
   @override
   @override
@@ -137,6 +143,8 @@ class ReservationState extends Equatable {
         coupon,
         sessions_count,
         days,
+        visaUrl,
+        payState,
       ];
   ReservationState copyWith({
     bool? Loading,
@@ -149,16 +157,21 @@ class ReservationState extends Equatable {
     int? sessions_count,
     int? status_id,
     List<DateTime>? days,
+    String? visaUrl,
+    RequestState? payState,
   }) =>
       ReservationState(
-          Loading: Loading ?? this.Loading,
-          advertiser_id: advertiser_id ?? this.advertiser_id,
-          start_at: start_at ?? this.start_at,
-          end_at: end_at ?? this.end_at,
-          status_id: status_id ?? this.status_id,
-          days: days ?? this.days,
-          painPlace: painPlace ?? this.painPlace,
-          notes: notes ?? this.notes,
-          coupon: coupon ?? this.coupon,
-          sessions_count: sessions_count ?? this.sessions_count);
+        Loading: Loading ?? this.Loading,
+        advertiser_id: advertiser_id ?? this.advertiser_id,
+        start_at: start_at ?? this.start_at,
+        end_at: end_at ?? this.end_at,
+        status_id: status_id ?? this.status_id,
+        days: days ?? this.days,
+        painPlace: painPlace ?? this.painPlace,
+        notes: notes ?? this.notes,
+        coupon: coupon ?? this.coupon,
+        sessions_count: sessions_count ?? this.sessions_count,
+        payState: payState ?? this.payState,
+        visaUrl: visaUrl ?? this.visaUrl,
+      );
 }

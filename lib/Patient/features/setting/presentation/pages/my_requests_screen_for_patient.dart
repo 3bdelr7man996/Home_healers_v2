@@ -1,5 +1,6 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/my_request_widgets_for_patient.dart';
+import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/my_requests_widgets.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
       appBar: customAppBar(context, backButton: true, title: "my_requests"),
       body: Column(
         children: [
-          SizedBox(height: 20),
+          20.ph,
           Categories(
             categories: const [
               "قيد المعالجة",

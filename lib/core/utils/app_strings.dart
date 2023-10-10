@@ -22,6 +22,7 @@ class AppStrings {
   //api url for patient
   static String patientSignUp = "/api/user/register";
   static String patientSignIn = "/api/user/login";
+  static String visaPayment = "/api/payment";
 
   //assets url
   static String appName = "Home Healers";

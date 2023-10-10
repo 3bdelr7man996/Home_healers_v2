@@ -21,8 +21,7 @@ class MyReservationBody extends StatelessWidget {
             state.filteredReservList != []) {
           return Expanded(
             child: ListView.builder(
-              itemCount: context.select<ReservationsCubit, int>(
-                  (cubit) => cubit.state.filteredReservList?.length ?? 0),
+              itemCount: state.filteredReservList?.length ?? 0,
               itemBuilder: (context, index) {
                 return MyReservationCard(
                   reservation: state.filteredReservList?[index],

@@ -39,7 +39,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               TotalDetails(withOffer: widget.withOffer),
               widget.withOffer ? 0.ph : 20.ph,
               widget.withOffer
-                  ? SizedBox()
+                  ? const SizedBox.shrink()
                   : TextField(
                       decoration: InputDecoration(
                         hintText: 'ادخل كود الخصم',
