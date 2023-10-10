@@ -1,5 +1,5 @@
 class AppStrings {
-  static String baseUrl = "http://admin.home-healers.com";
+  static String baseUrl = "*";
   static String divUrl = "https://dev.home-healers.com";
   static String imageUrl = "https://dev.home-healers.com/upload/";
 

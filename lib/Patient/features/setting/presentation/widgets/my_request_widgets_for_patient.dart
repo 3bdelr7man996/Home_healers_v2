@@ -18,6 +18,7 @@ class underProcessing extends StatelessWidget {
   Widget build(BuildContext context) {
     var listOfOrders =
         context.select((MyOrdersCubit cubit) => cubit.state.ReviewingOrders);
+    print(listOfOrders);
     return SingleChildScrollView(
       child: Container(
         width: context.width,

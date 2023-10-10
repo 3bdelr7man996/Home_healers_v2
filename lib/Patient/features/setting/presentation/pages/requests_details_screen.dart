@@ -1,9 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -226,6 +228,8 @@ class _RequestsDetailsScreenForPatientState
                     ElevatedButton(
                       onPressed: () {
                         _toggleVisibility();
+                        AppConstants.customNavigation(context,
+                            PaymentDetailsScreen(withOffer: true), -1, 0);
                       },
                       style: ButtonStyle(
                         shape:
@@ -289,116 +293,6 @@ class _RequestsDetailsScreenForPatientState
           )
         ],
       ),
-    );
-  }
-}
-
-class BottomSheetForEvalute extends StatelessWidget {
-  const BottomSheetForEvalute({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 350,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-          child: Column(
-            children: [
-              const Text(
-                "اكتب تعليقك",
-                style: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              15.ph,
-              FiveStarRating(
-                rating: 0,
-                onRatingChanged: (rating) {},
-              ),
-              15.ph,
-              TextFormField(
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.all(16),
-                  hintText: "اكتب تعليقك ...",
-                ),
-              ),
-              15.ph,
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                    Size(double.infinity, 50),
-                  ),
-                ),
-                child: Text(
-                  'إرسال التعليق',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-}
-
-class FiveStarRating extends StatefulWidget {
-  final int rating;
-  final Function(int) onRatingChanged;
-
-  const FiveStarRating({
-    Key? key,
-    required this.rating,
-    required this.onRatingChanged,
-  }) : super(key: key);
-
-  @override
-  State<FiveStarRating> createState() => _FiveStarRatingState();
-}
-
-class _FiveStarRatingState extends State<FiveStarRating> {
-  int _rating = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _rating = widget.rating;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int i = 1; i <= 5; i++)
-          InkWell(
-            onTap: () {
-              setState(() {
-                _rating = i;
-                widget.onRatingChanged(_rating);
-              });
-            },
-            child: Icon(
-              Icons.star,
-              size: 40,
-              color: i <= _rating ? Colors.yellow : Colors.grey,
-            ),
-          ),
-      ],
     );
   }
 }

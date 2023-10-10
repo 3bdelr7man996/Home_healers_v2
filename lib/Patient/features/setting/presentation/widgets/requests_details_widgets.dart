@@ -111,7 +111,6 @@ class _TowSectionState extends State<TowSection> {
   String selectedName = "";
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     categories = widget.categories;
     selectedName = widget.selectedName;
@@ -138,7 +137,7 @@ class _TowSectionState extends State<TowSection> {
                         fit: BoxFit.cover,
                         onError: (exception, stackTrace) => {print(exception)},
                       )
-                    : DecorationImage(
+                    : const DecorationImage(
                         image: AssetImage("assets/images/doctor.png"),
                         fit: BoxFit.cover,
                       ),
@@ -150,7 +149,7 @@ class _TowSectionState extends State<TowSection> {
               children: [
                 Text(
                   "${widget.listOfOrders.advertiser.nameAr}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: AppColors.primaryColor,
                       fontWeight: FontWeight.w500,
                       fontSize: 16),
@@ -214,7 +213,7 @@ class Bill extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               "مدة الجلسة :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
@@ -273,7 +272,7 @@ class Bill extends StatelessWidget {
           ],
         ),
         20.ph,
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
@@ -650,5 +649,115 @@ class OneSessionInfoForPatient extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class FiveStarRating extends StatefulWidget {
+  final int rating;
+  final Function(int) onRatingChanged;
+
+  const FiveStarRating({
+    Key? key,
+    required this.rating,
+    required this.onRatingChanged,
+  }) : super(key: key);
+
+  @override
+  State<FiveStarRating> createState() => _FiveStarRatingState();
+}
+
+class _FiveStarRatingState extends State<FiveStarRating> {
+  int _rating = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _rating = widget.rating;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        for (int i = 1; i <= 5; i++)
+          InkWell(
+            onTap: () {
+              setState(() {
+                _rating = i;
+                widget.onRatingChanged(_rating);
+              });
+            },
+            child: Icon(
+              Icons.star,
+              size: 40,
+              color: i <= _rating ? Colors.yellow : Colors.grey,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class BottomSheetForEvalute extends StatelessWidget {
+  const BottomSheetForEvalute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 350,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+          child: Column(
+            children: [
+              const Text(
+                "اكتب تعليقك",
+                style: TextStyle(
+                    color: AppColors.primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              15.ph,
+              FiveStarRating(
+                rating: 0,
+                onRatingChanged: (rating) {},
+              ),
+              15.ph,
+              TextFormField(
+                maxLines: 5,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.all(16),
+                  hintText: "اكتب تعليقك ...",
+                ),
+              ),
+              15.ph,
+              ElevatedButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
+                  minimumSize: MaterialStateProperty.all<Size>(
+                    Size(double.infinity, 50),
+                  ),
+                ),
+                child: Text(
+                  'إرسال التعليق',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

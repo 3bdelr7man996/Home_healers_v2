@@ -1,9 +1,10 @@
-import 'package:dr/Patient/features/home/presentation/widgets/choose_card_for_payment_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/choose_card_for_payment_widgets.dart';
 
 class ChooseCard_screen extends StatelessWidget {
   const ChooseCard_screen({super.key});
