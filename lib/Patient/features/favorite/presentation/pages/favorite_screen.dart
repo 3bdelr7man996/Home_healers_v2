@@ -29,7 +29,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     var data = context.select((FavoriteCubit cubit) => cubit.state.data);
-
     return Scaffold(
       appBar: customAppBar(context, backButton: false, title: "favorite"),
       body: data == null
@@ -41,7 +40,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 itemCount: data["data"]["data"].length,
                 itemBuilder: (context, index) {
                   return DoctorCard(
-                      Data: data["data"]["data"][index],
+                      Data: data["data"]["data"][index]['advertiser'],
                       name: data["data"]["data"][index]["advertiser"]
                           ["name_ar"],
                       status: data["data"]["data"][index]["advertiser"]

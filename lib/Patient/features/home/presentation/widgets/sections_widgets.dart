@@ -264,7 +264,10 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
 }
 
 class IconsForSections extends StatefulWidget {
-  const IconsForSections({super.key});
+  bool formOffer;
+  var sessionCountForOffer;
+  IconsForSections(
+      {super.key, this.formOffer = false, this.sessionCountForOffer});
 
   @override
   State<IconsForSections> createState() => _IconsForSectionsState();
@@ -323,6 +326,8 @@ class _IconsForSectionsState extends State<IconsForSections> {
               AppConstants.customNavigation(
                   context,
                   SectionDetailsScreen(
+                    sessionCountForOffer: widget.sessionCountForOffer,
+                    fromOffer: widget.formOffer,
                     numberOfIcon: index,
                     SectiondetailsTitle: SectiondetailsTitle[index],
                     status_id: statusList![index].id,

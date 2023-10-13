@@ -8,13 +8,20 @@ import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dar
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/datasources/filter_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/reservation_ds.dart';
+import 'package:dr/Patient/features/home/data/datasources/reservation_with_offer_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/search_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/section_ds.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
+import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/offer/data/datasources/get_offers_ds.dart';
+import 'package:dr/Patient/features/offer/data/datasources/get_packages_ds.dart';
+import 'package:dr/Patient/features/offer/data/repositories/get_offers_Repo.dart';
+import 'package:dr/Patient/features/offer/data/repositories/get_packages_repo.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/setting/data/datasources/my_orders_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_info_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_reservation_ds.dart';
@@ -81,6 +88,9 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateInfoDS(apiHelper: sl()));
   sl.registerLazySingleton(() => FavoriteDS(apiHelper: sl()));
   sl.registerLazySingleton(() => AddFavoriteDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => GetPackagesDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => GetOffersDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => ReservationWithOfferDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -94,16 +104,22 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateInfoRepo(dataSource: sl()));
   sl.registerLazySingleton(() => FavoriteRepo(dataSource: sl()));
   sl.registerLazySingleton(() => AddFavoriteRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => GetPackagesRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => GetOffersRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => ReservationWithOfferRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
   sl.registerFactory(() => AuthCubitForPatient(signUpPatientRepo: sl()));
   sl.registerFactory(() => SectionCubit(sectionRepo: sl()));
   sl.registerFactory(() => FilterCubit(filterRepo: sl()));
-  sl.registerFactory(() => ReservationCubit(reservationRepo: sl()));
+  sl.registerFactory(() =>
+      ReservationCubit(reservationRepo: sl(), reservationWithOfferRepo: sl()));
   sl.registerFactory(() => MyOrdersCubit(myOrdersRepo: sl()));
   sl.registerFactory(() => UpdateReservationCubit(updateReservationRepo: sl()));
   sl.registerFactory(() => UpdateInfoCubit(UpdateInfo: sl()));
   sl.registerFactory(() => FavoriteCubit(favoriteRepo: sl()));
   sl.registerFactory(() => AddFavoriteCubit(addFavoriteRepo: sl()));
+  sl.registerFactory(() => GetPackagesCubit(getPackagesRepo: sl()));
+  sl.registerFactory(() => GetOffersCubit(getOffersRepo: sl()));
 }

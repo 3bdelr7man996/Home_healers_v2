@@ -51,7 +51,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
           ),
         ),
         10.ph,
-        const Expanded(child: IconsForSections()),
+        Expanded(child: IconsForSections()),
       ],
     );
   }

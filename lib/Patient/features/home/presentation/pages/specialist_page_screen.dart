@@ -8,7 +8,14 @@ import 'package:flutter/material.dart';
 class specialistpageScreen extends StatefulWidget {
   var Data;
   var status_id;
-  specialistpageScreen({super.key, this.Data, this.status_id});
+  bool fromOffer;
+  var sessionCountForOffer;
+  specialistpageScreen(
+      {super.key,
+      this.Data,
+      this.status_id,
+      this.fromOffer = false,
+      this.sessionCountForOffer});
 
   @override
   State<specialistpageScreen> createState() => _specialistpageScreenState();
@@ -38,21 +45,30 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                           thickness: 1,
                         ),
                         5.ph,
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "شهادات مهنية :",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
+                        widget.Data['images'] != null
+                            ? const Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "شهادات مهنية :",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         5.ph,
-                        Certificates(Data: widget.Data['images']),
+                        widget.Data['images'] != null
+                            ? Certificates(Data: widget.Data['images'])
+                            : SizedBox(),
                         5.ph,
                         click
                             ? ButtonWithCounter(
-                                Data: widget.Data, status_id: widget.status_id)
+                                sessionCountForOffer:
+                                    widget.sessionCountForOffer,
+                                Data: widget.Data,
+                                status_id: widget.status_id,
+                                fromOffer: widget.fromOffer)
                             : Container(
                                 width: double.infinity,
                                 child: ElevatedButton(

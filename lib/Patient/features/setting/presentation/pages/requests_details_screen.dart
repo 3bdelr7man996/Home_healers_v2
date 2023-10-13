@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
@@ -87,8 +87,7 @@ class _RequestsDetailsScreenForPatientState
           00,
         ).toString();
         startAt = startAt.substring(0, startAt.length - 4);
-        print(endAt);
-        print(startAt);
+
         await context
             .read<UpdateReservationCubit>()
             .onIdChange(widget.oneOrder.id.toString());
@@ -130,7 +129,7 @@ class _RequestsDetailsScreenForPatientState
                     selectedName: widget.selectedName,
                   ),
                   20.ph,
-                  Divider(
+                  const Divider(
                     thickness: 1,
                   ),
                   widget.num == 2 ||
@@ -140,8 +139,8 @@ class _RequestsDetailsScreenForPatientState
                       ? SessionInfoForPatient(
                           MainOrder: widget.oneOrder,
                         )
-                      : SizedBox(),
-                  Text(
+                      : const SizedBox(),
+                  const Text(
                     "تفاصيل الإجمالي",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
@@ -164,7 +163,7 @@ class _RequestsDetailsScreenForPatientState
                                   padding: EdgeInsets.all(16),
                                 ),
                                 onPressed: () {},
-                                child: Text('إظهار الفاتورة'),
+                                child: const Text('إظهار الفاتورة'),
                               ),
                               if (widget.oneOrder.canReview == 1)
                                 ElevatedButton(
@@ -187,7 +186,7 @@ class _RequestsDetailsScreenForPatientState
                                       );
                                     });
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     'تقييم الخدمة',
                                     style: TextStyle(
                                         color: AppColors.primaryColor),
@@ -214,7 +213,7 @@ class _RequestsDetailsScreenForPatientState
                                     Size(double.infinity, 50),
                                   ),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   'الغاء الطلب',
                                   style: TextStyle(
                                     fontSize: 16,
@@ -244,7 +243,7 @@ class _RequestsDetailsScreenForPatientState
                           Size(double.infinity, 50),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'ادفع الآن',
                         style: TextStyle(
                           fontSize: 16,
@@ -271,7 +270,7 @@ class _RequestsDetailsScreenForPatientState
                           Size(double.infinity, 50),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'تعديل',
                         style: TextStyle(
                           fontSize: 16,

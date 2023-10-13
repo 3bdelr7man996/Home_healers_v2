@@ -6,7 +6,7 @@ class MyOrdersModel {
   });
   late final bool success;
   late final List<Data> data;
-  late final String message;
+  late final String? message;
 
   MyOrdersModel.fromJson(Map<String, dynamic>? json) {
     success = json?['success'];
@@ -59,30 +59,30 @@ class Data {
   late var parentId;
   late var userId;
   late var advertiserId;
-  late final Null notes;
+  late var notes;
   late final String? coupon;
-  late final List<String>? days;
+  late var days;
   late final String? startAt;
   late final String? endAt;
   late var sessionsCount;
   late var subTotal;
-  late final String vat;
+  late final String? vat;
   late var fees;
   late var amount;
   late var isPaid;
-  late final Null paymentDetails;
-  late final String status;
-  late final Null lat;
-  late final Null lang;
-  late final Null centerId;
-  late final String createdAt;
-  late final String updatedAt;
-  late final Null deletedAt;
+  late var paymentDetails;
+  late final String? status;
+  late var lat;
+  late var lang;
+  late var centerId;
+  late final String? createdAt;
+  late final String? updatedAt;
+  late var deletedAt;
   late var statusId;
   late var canReview;
-  late final Null qrCode;
+  late var qrCode;
   late final List<dynamic> reports;
-  late final Null diagnoseForm;
+  late var diagnoseForm;
   late final Advertiser advertiser;
 
   Data.fromJson(Map<String, dynamic>? json) {
@@ -90,9 +90,9 @@ class Data {
     parentId = json?['parent_id'];
     userId = json?['user_id'];
     advertiserId = json?['advertiser_id'];
-    notes = null;
-    coupon = null;
-    days = null;
+    notes = json?['notes'];
+    coupon = json?['coupon'];
+    days = json?['days'];
     startAt = json?['start_at'];
     endAt = json?['end_at'];
     sessionsCount = json?['sessions_count'];
@@ -101,19 +101,19 @@ class Data {
     fees = json?['fees'];
     amount = json?['amount'];
     isPaid = json?['is_paid'];
-    paymentDetails = null;
+    paymentDetails = json?['payment_details'];
     status = json?['status'];
-    lat = null;
-    lang = null;
-    centerId = null;
+    lat = json?['lat'];
+    lang = json?['lang'];
+    centerId = json?['center_id'];
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
-    deletedAt = null;
-    statusId = null;
+    deletedAt = json?['delet_at'];
+    statusId = json?['status_id'];
     canReview = json?['can_review'];
-    qrCode = null;
+    qrCode = json?['qr_code'];
     reports = List.castFrom<dynamic, dynamic>(json?['reports']);
-    diagnoseForm = null;
+    diagnoseForm = json?['diagnose_form'];
     advertiser = Advertiser.fromJson(json?['advertiser']);
   }
 
@@ -193,19 +193,19 @@ class Advertiser {
     required this.statusAdvisor,
   });
   late var id;
-  late final String firstnameAr;
-  late final String firstnameEn;
-  late final String lastnameAr;
-  late final String lastnameEn;
-  late final String mobile;
-  late final String email;
-  late final String image;
-  late final List<String>? images;
+  late final String? firstnameAr;
+  late final String? firstnameEn;
+  late final String? lastnameAr;
+  late final String? lastnameEn;
+  late final String? mobile;
+  late final String? email;
+  late final String? image;
+  late var images;
   late final String? descAr;
   late final String? descEn;
-  late final String addressAr;
+  late final String? addressAr;
   late final String? addressEn;
-  late final String gender;
+  late final String? gender;
   late final String? iban;
   late final String? location;
   late var bundleId;
@@ -216,17 +216,17 @@ class Advertiser {
   late final String? endat;
   late var sessionPrice;
   late var sessionDur;
-  late final String lat;
-  late final String lng;
-  late final String status;
-  late final Null centerId;
+  late final String? lat;
+  late final String? lng;
+  late final String? status;
+  late var centerId;
   late final String? fcmToken;
   late var isOnline;
-  late final String createdAt;
-  late final String updatedAt;
+  late final String? createdAt;
+  late final String? updatedAt;
   late var rating;
-  late final String nameAr;
-  late final String nameEn;
+  late final String? nameAr;
+  late final String? nameEn;
   late final List<Categories> categories;
   late final List<StatusAdvisor> statusAdvisor;
 
@@ -239,27 +239,27 @@ class Advertiser {
     mobile = json?['mobile'];
     email = json?['email'];
     image = json?['image'];
-    images = null;
-    descAr = null;
-    descEn = null;
+    images = json?['images'];
+    descAr = json?['desc_ar'];
+    descEn = json?['desc_en'];
     addressAr = json?['address_ar'];
-    addressEn = null;
+    addressEn = json?['address_en'];
     gender = json?['gender'];
-    iban = null;
-    location = null;
-    bundleId = null;
+    iban = json?['iban'];
+    location = json?['location'];
+    bundleId = json?['bundle_id'];
     countryId = json?['country_id'];
     cityId = json?['city_id'];
-    areaId = null;
-    startfrom = null;
-    endat = null;
+    areaId = json?['area_id'];
+    startfrom = json?['start_from'];
+    endat = json?['end_at'];
     sessionPrice = json?['session_price'];
     sessionDur = json?['session_dur'];
     lat = json?['lat'];
     lng = json?['lng'];
     status = json?['status'];
-    centerId = null;
-    fcmToken = null;
+    centerId = json?['center_id'];
+    fcmToken = json?['fcm_token'];
     isOnline = json?['is_online'];
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
@@ -328,11 +328,11 @@ class Categories {
     required this.pivot,
   });
   late var id;
-  late final String nameAr;
-  late final String nameEn;
-  late final String status;
+  late final String? nameAr;
+  late final String? nameEn;
+  late final String? status;
   late var orderNum;
-  late final String image;
+  late final String? image;
   late final Pivot pivot;
 
   Categories.fromJson(Map<String, dynamic>? json) {
@@ -388,9 +388,9 @@ class StatusAdvisor {
     required this.pivot,
   });
   late var id;
-  late final String nameAr;
-  late final String nameEn;
-  late final String status;
+  late final String? nameAr;
+  late final String? nameEn;
+  late final String? status;
   late final Pivot pivot;
 
   StatusAdvisor.fromJson(Map<String, dynamic>? json) {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:dr/doctor/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/splash_screen.dart';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'Patient/features/home/presentation/pages/home_screen_for_patient.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         builder: BotToastInit(),
-        home: HomeScreenForPatient(selectedIndex: 2),
+        home: SplashScreen(),
         //const SignUpScreen(),
         //const SelectRollForSignIn(),
         // const  SplashScreen ()

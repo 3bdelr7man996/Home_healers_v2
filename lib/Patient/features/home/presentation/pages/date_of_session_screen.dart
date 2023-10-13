@@ -15,7 +15,9 @@ import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart'
 class DateOfSessionScreen extends StatefulWidget {
   var Data;
   var status_id;
-  DateOfSessionScreen({super.key, this.Data, this.status_id});
+  bool fromOffer;
+  DateOfSessionScreen(
+      {super.key, this.Data, this.status_id, this.fromOffer = false});
 
   @override
   _DateOfSessionScreenState createState() => _DateOfSessionScreenState();
@@ -47,38 +49,33 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
             children: [
               TableClenderForSession(),
               30.ph,
-              TextFormField(
-                onChanged: (value) {
-                  context.read<ReservationCubit>().onChangeNotes(value);
-                },
-                maxLines: 7,
-                decoration: InputDecoration(
-                  hintText:
-                      'تفاصيل أخري \nتشخيص سابق - ملاحظات - الوقت المناسب للزيارة',
-                  hintStyle: TextStyle(fontSize: 12),
-                ),
-              ),
+              widget.fromOffer
+                  ? SizedBox()
+                  : TextFormField(
+                      onChanged: (value) {
+                        context.read<ReservationCubit>().onChangeNotes(value);
+                      },
+                      maxLines: 7,
+                      decoration: InputDecoration(
+                        hintText:
+                            'تفاصيل أخري \nتشخيص سابق - ملاحظات - الوقت المناسب للزيارة',
+                        hintStyle: TextStyle(fontSize: 12),
+                      ),
+                    ),
               10.ph,
-              // TextField(
-              //   decoration: InputDecoration(
-              //     hintText: 'حدد موقع الجلسة العلاجية',
-              //     suffixIcon: Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: SvgPicture.asset(
-              //         "assets/icons/session_location_icon.svg",
-              //         width: 5,
-              //         height: 5,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // 20.ph,
               Container(
                 width: context.width,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    context.read<ReservationCubit>().MakeReservation(context);
+                    if (widget.fromOffer) {
+                      context
+                          .read<ReservationCubit>()
+                          .MakeReservation(context, true);
+                    } else
+                      context
+                          .read<ReservationCubit>()
+                          .MakeReservation(context, false);
                   },
                   child: Text('إتمام العملية'),
                   style: ElevatedButton.styleFrom(
