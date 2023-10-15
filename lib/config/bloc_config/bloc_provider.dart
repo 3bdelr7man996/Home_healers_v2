@@ -4,6 +4,7 @@ import 'package:dr/Patient/features/favorite/data/repositories/addFavorite_repo.
 import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
+import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
@@ -111,6 +112,11 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => GetOffersCubit(
           getOffersRepo: di.sl<GetOffersRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => GetAllAdsCubit(
+          getAllAdsRepo: di.sl<GetAllAdsRepo>(),
         ),
       ),
     ],

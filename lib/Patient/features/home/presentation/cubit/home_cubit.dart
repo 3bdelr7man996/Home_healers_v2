@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/data/models/reservation-model.dart';
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
+import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
+import '../../data/models/get_all_ads_model.dart';
 
 class SectionCubit extends Cubit<SectionState> {
   final SectionRepo sectionRepo;
@@ -253,6 +255,24 @@ class ReservationCubit extends Cubit<ReservationState> {
     }
     if (state.notes.length == 0 && !withOffer) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");
+    }
+  }
+}
+
+/////////////// ⁡⁢⁣⁢New Class For ADs /////////////////////////////////////////
+class GetAllAdsCubit extends Cubit<GetAllAdsState> {
+  final GetAllAdsRepo getAllAdsRepo;
+
+  GetAllAdsCubit({required this.getAllAdsRepo}) : super(GetAllAdsState());
+
+  Future<void> GetAllAds(BuildContext context) async {
+    try {
+      GetAllAdsModel response = await getAllAdsRepo.GetAllAds();
+      print(
+          "AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad MohsenAHmad Mohsen  AHmad Mohsen AHmad Mohsen");
+      emit(state.copyWith(data: response));
+    } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 }

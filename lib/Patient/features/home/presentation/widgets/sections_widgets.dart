@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/search_screen.dart';
@@ -22,75 +23,76 @@ class SliderForPatient extends StatefulWidget {
   State<SliderForPatient> createState() => _SliderForPatientState();
 }
 
-List<String> imageList = [
-  'assets/images/report.png',
-  'assets/images/doctor.png',
-  'assets/images/patient.png',
-];
+var imageList;
 
 class _SliderForPatientState extends State<SliderForPatient> {
   int _currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            height: context.height * 0.2,
-            initialPage: 0,
-            enableInfiniteScroll: true,
-            reverse: false,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 2),
-            autoPlayAnimationDuration: const Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastOutSlowIn,
-            enlargeCenterPage: true,
-            scrollDirection: Axis.horizontal,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _currentImageIndex = index;
-              });
-            },
-          ),
-          items: imageList.map((item) {
-            return Builder(
-              builder: (BuildContext context) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Center(
-                    child: Image.asset(
-                      item,
-                      fit: BoxFit.cover,
-                      width: 1000,
-                    ),
-                  ),
-                );
-              },
-            );
-          }).toList(),
-        ),
-        10.ph,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: imageList.map((imageUrl) {
-            int index = imageList.indexOf(imageUrl);
+    imageList =
+        context.select((GetAllAdsCubit cubit) => cubit.state.data.data) ?? [];
 
-            return Container(
-              width: 8.0,
-              height: 8.0,
-              margin: const EdgeInsets.symmetric(horizontal: 4.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _currentImageIndex == index
-                    ? AppColors.primaryColor
-                    : Colors.grey,
+    return imageList != null
+        ? SizedBox()
+        : Column(
+            children: [
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: context.height * 0.2,
+                  initialPage: 0,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 2),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentImageIndex = index;
+                    });
+                  },
+                ),
+                items: imageList?.map((item) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Center(
+                          child: Image.asset(
+                            item,
+                            fit: BoxFit.cover,
+                            width: 1000,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
               ),
-            );
-          }).toList(),
-        )
-      ],
-    );
+              10.ph,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: imageList!.map((imageUrl) {
+                  int index = imageList!.indexOf(imageUrl);
+
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentImageIndex == index
+                          ? AppColors.primaryColor
+                          : Colors.grey,
+                    ),
+                  );
+                }).toList(),
+              )
+            ],
+          );
   }
 }
 

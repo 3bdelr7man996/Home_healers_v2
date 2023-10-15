@@ -7,6 +7,7 @@ import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/pages/forget_password_screen.dart';
 import 'package:dr/shared_widgets/submit_button.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
@@ -100,10 +101,16 @@ class _SignInScreen extends State<SignInScreen> {
                       padding: EdgeInsets.only(left: context.width * 0.05),
                       child: SizedBox(
                         width: context.width,
-                        child: Text(
-                          "forget_your_password".tr(), //todo
-                          style: const TextStyle(color: Color(0xFF37D2F4)),
-                          textAlign: TextAlign.end,
+                        child: InkWell(
+                          onTap: () {
+                            AppConstants.customNavigation(
+                                context, ForgetPaswwordScreen(), -1, 0);
+                          },
+                          child: Text(
+                            "forget_your_password".tr(), //todo
+                            style: const TextStyle(color: Color(0xFF37D2F4)),
+                            textAlign: TextAlign.end,
+                          ),
                         ),
                       ),
                     ),

@@ -7,11 +7,13 @@ import 'package:dr/Patient/features/favorite/data/repositories/addFavorite_repo.
 import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/datasources/filter_ds.dart';
+import 'package:dr/Patient/features/home/data/datasources/get_all_ads_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/reservation_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/reservation_with_offer_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/search_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/section_ds.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
+import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
@@ -91,6 +93,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetPackagesDS(apiHelper: sl()));
   sl.registerLazySingleton(() => GetOffersDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ReservationWithOfferDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => GetAllAdsDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -107,6 +110,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetPackagesRepo(dataSource: sl()));
   sl.registerLazySingleton(() => GetOffersRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ReservationWithOfferRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => GetAllAdsRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -122,4 +126,5 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => AddFavoriteCubit(addFavoriteRepo: sl()));
   sl.registerFactory(() => GetPackagesCubit(getPackagesRepo: sl()));
   sl.registerFactory(() => GetOffersCubit(getOffersRepo: sl()));
+  sl.registerFactory(() => GetAllAdsCubit(getAllAdsRepo: sl()));
 }

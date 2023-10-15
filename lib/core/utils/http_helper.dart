@@ -41,6 +41,8 @@ class ApiBaseHelper {
 
     Uri urlRequest = Uri.parse(baseUrl + url);
     try {
+      print(urlRequest);
+
       final http.Response response =
           await http.get(urlRequest, headers: headers ?? baseHeaders);
       responseJson =
