@@ -1,3 +1,4 @@
+import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_images.dart';
@@ -89,9 +90,12 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
             ),
           ),
         ),
-        PopUpForForgetPassword(
-          isVisible: _isVisible,
-          toggleVisibility: _toggleVisibility,
+        Container(
+          height: context.height,
+          child: PopUpForForgetPassword(
+            isVisible: _isVisible,
+            toggleVisibility: _toggleVisibility,
+          ),
         )
       ]),
     );

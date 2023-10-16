@@ -33,6 +33,7 @@ class AppStrings {
 
   //SHARED PREFERENCE
   static String userToken = "USER_TOKEN";
+  static String userId = "USER_ID";
   static String userEmail = "USER_EMAIL";
   static String userFullName = "USER_NAME";
   static String userMobile = "USER_MOBILE";

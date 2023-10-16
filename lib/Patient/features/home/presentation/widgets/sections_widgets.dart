@@ -31,7 +31,9 @@ class _SliderForPatientState extends State<SliderForPatient> {
   @override
   Widget build(BuildContext context) {
     imageList =
-        context.select((GetAllAdsCubit cubit) => cubit.state.data.data) ?? [];
+        context.select((GetAllAdsCubit cubit) => cubit.state.data) != null
+            ? context.select((GetAllAdsCubit cubit) => cubit.state.data.data)
+            : [];
 
     return imageList != null
         ? SizedBox()
@@ -61,8 +63,8 @@ class _SliderForPatientState extends State<SliderForPatient> {
                       return Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Center(
-                          child: Image.asset(
-                            item,
+                          child: Image.network(
+                            "${AppStrings.baseUrl}/upload/${item['image']}",
                             fit: BoxFit.cover,
                             width: 1000,
                           ),
