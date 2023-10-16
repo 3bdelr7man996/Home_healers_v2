@@ -129,7 +129,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
                 image: widget.Data["image"] != null
                     ? DecorationImage(
                         image: NetworkImage(
-                          "${AppStrings.baseUrl}/upload/${widget.Data["image"]}",
+                          "${AppStrings.imageUrl}${widget.Data["image"]}",
                         ),
                         fit: BoxFit.cover,
                         onError: (exception, stackTrace) => {print(exception)},
@@ -474,7 +474,7 @@ class _CertificatesState extends State<Certificates> {
 
     pdfFiles = widget.Data;
     print("pdFiles");
-    print("${AppStrings.baseUrl}/upload/${pdfFiles[0]}");
+    print(widget.Data);
   }
 
   @override
@@ -496,7 +496,7 @@ class _CertificatesState extends State<Certificates> {
                         MaterialPageRoute(
                           builder: (context) => PDFViewer(
                               filePath:
-                                  "${AppStrings.baseUrl}/upload/${pdfFiles[index]}"),
+                                  "${AppStrings.imageUrl}${pdfFiles[index]}"),
                         ),
                       );
                     },

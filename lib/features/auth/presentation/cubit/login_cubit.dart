@@ -77,7 +77,10 @@ class LoginCubit extends Cubit<LoginState> {
       await CacheHelper.saveData(
           key: AppStrings.userInfo,
           value: jsonEncode(response?.success?.toJson()));
-
+      await CacheHelper.saveData(
+        key: AppStrings.userId,
+        value: response?.success?.id,
+      );
       await CacheHelper.saveData(
         key: AppStrings.isAdvertise,
         value: false,

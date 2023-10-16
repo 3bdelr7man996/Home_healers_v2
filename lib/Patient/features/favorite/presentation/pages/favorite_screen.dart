@@ -1,5 +1,7 @@
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +30,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("Token ${CacheHelper.getData(key: AppStrings.userToken)}");
+
     var data = context.select((FavoriteCubit cubit) => cubit.state.data);
     return Scaffold(
       appBar: customAppBar(context, backButton: false, title: "favorite"),

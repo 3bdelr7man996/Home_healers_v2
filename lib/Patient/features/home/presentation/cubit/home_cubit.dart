@@ -15,6 +15,7 @@ import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 
 import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
 import '../../data/models/get_all_ads_model.dart';
@@ -160,6 +161,7 @@ class ReservationCubit extends Cubit<ReservationState> {
   OnOfferChange(var offer) => emit(state.copyWith(offer: offer));
 
   Future<void> MakeReservation(BuildContext context, bool withOffer) async {
+    var userId = await CacheHelper.getData(key: AppStrings.userId);
     try {
       List<DateTime>? sortedDates = state.days;
       sortedDates?.sort((a, b) => a.compareTo(b));
@@ -191,6 +193,24 @@ class ReservationCubit extends Cubit<ReservationState> {
 
       fieldsValidation(withOffer);
       Map<String, dynamic> body;
+      var lat, lng;
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        Geolocator.requestPermission();
+      }
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      print("location is ${position.latitude}");
+
+      lat = position.latitude;
+      lng = position.longitude;
+
+      // You can use latitude and longitude for your desired purpose.
+      print("Latitude: ${lat}, Longitude: ${lng}");
+
       if (withOffer) {
         print(state.offer.runtimeType);
         print(state.start_at.runtimeType);
@@ -202,11 +222,17 @@ class ReservationCubit extends Cubit<ReservationState> {
           "days": daysArray,
           "offer": state.offer,
           "advertiser_id": "${state.advertiser_id}",
+          "lat": "${lat}",
+          "lang": "${lng}",
+          "user_id": "${userId}",
         };
       } else {
         print("asdf");
         body = {
           "advertiser_id": "${state.advertiser_id}",
+          "lat": "${lat}",
+          "lang": "${lng}",
+          "user_id": "${userId}",
           "start_at": "${state.start_at}",
           "end_at": "${state.end_at}",
           "sessions_count": "${state.sessions_count}",

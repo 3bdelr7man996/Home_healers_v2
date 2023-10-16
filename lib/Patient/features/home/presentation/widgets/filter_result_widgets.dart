@@ -311,7 +311,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                 image: widget.image != null
                     ? DecorationImage(
                         image: NetworkImage(
-                          "${AppStrings.baseUrl}/upload/${widget.image}",
+                          "${AppStrings.imageUrl}${widget.image}",
                         ),
                         fit: BoxFit.cover,
                         onError: (exception, stackTrace) => {print(exception)},

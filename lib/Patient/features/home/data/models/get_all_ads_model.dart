@@ -1,24 +1,50 @@
 class GetAllAdsModel {
-  GetAllAdsModel({
-    required this.success,
-    required this.data,
-    required this.message,
-  });
-  late final bool success;
-  late final List<dynamic> data;
-  late final String message;
+  bool? success;
+  List<Data>? data;
+  String? message;
+
+  GetAllAdsModel({this.success, this.data, this.message});
 
   GetAllAdsModel.fromJson(Map<String, dynamic>? json) {
     success = json?['success'];
-    data = List.castFrom<dynamic, dynamic>(json?['data']);
+    if (json?['data'] != null) {
+      data = List.from(json?['data']);
+    }
     message = json?['message'];
   }
 
   Map<String, dynamic>? toJson() {
-    final _data = <String, dynamic>{};
-    _data['success'] = success;
-    _data['data'] = data;
-    _data['message'] = message;
-    return _data;
+    final Map<String, dynamic>? data = new Map<String, dynamic>();
+    data?['success'] = this.success;
+    if (this.data != null) {
+      data?['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data?['message'] = this.message;
+    return data;
+  }
+}
+
+class Data {
+  String? title;
+  String? image;
+  var status;
+  var id;
+
+  Data({this.title, this.image, this.status, this.id});
+
+  Data.fromJson(Map<String, dynamic>? json) {
+    title = json?['title'];
+    image = json?['image'];
+    status = json?['status'];
+    id = json?['id'];
+  }
+
+  Map<String, dynamic>? toJson() {
+    final Map<String, dynamic>? data = new Map<String, dynamic>();
+    data?['title'] = this.title;
+    data?['image'] = this.image;
+    data?['status'] = this.status;
+    data?['id'] = this.id;
+    return data;
   }
 }

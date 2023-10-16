@@ -38,11 +38,9 @@ class ApiBaseHelper {
   Future<Map<String, dynamic>?> get(String url,
       {Map<String, String>? headers}) async {
     Map<String, dynamic>? responseJson;
-
+   
     Uri urlRequest = Uri.parse(baseUrl + url);
     try {
-      print(urlRequest);
-
       final http.Response response =
           await http.get(urlRequest, headers: headers ?? baseHeaders);
       responseJson =
