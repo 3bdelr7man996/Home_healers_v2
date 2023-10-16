@@ -267,7 +267,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
         ),
@@ -375,7 +375,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 onError: (exception, stackTrace) =>
                                     {print(exception)},
                               )
-                            : DecorationImage(
+                            : const DecorationImage(
                                 image: AssetImage("assets/images/doctor.png"),
                                 fit: BoxFit.cover,
                               ),
@@ -387,7 +387,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                       children: [
                         Text(
                           "${widget.listOfOrders.advertiser.nameAr}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 20),
