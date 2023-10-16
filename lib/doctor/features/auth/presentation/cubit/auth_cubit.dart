@@ -18,6 +18,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dr/di_container.dart' as di;
 
 part 'auth_state.dart';
 
@@ -270,6 +271,7 @@ class AuthCubit extends Cubit<AuthState> {
         body: body,
       );
       await cacheData(response);
+      di.sl<ApiBaseHelper>().updateHeader();
       initRegisterData();
       emit(
           state.copyWith(registerState: RequestState.success, showPopup: true));

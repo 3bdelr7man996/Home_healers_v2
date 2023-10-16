@@ -13,6 +13,8 @@ import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/offer/data/repositories/get_offers_Repo.dart';
 import 'package:dr/Patient/features/offer/data/repositories/get_packages_repo.dart';
 import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
+import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
@@ -117,6 +119,11 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => GetAllAdsCubit(
           getAllAdsRepo: di.sl<GetAllAdsRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => PaymentCubit(
+          repository: di.sl<PaymentRepository>(),
         ),
       ),
     ],

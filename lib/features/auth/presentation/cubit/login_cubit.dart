@@ -13,6 +13,7 @@ import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:dr/di_container.dart' as di;
 
 part 'login_state.dart';
 
@@ -35,15 +36,12 @@ class LoginCubit extends Cubit<LoginState> {
         "password": "${state.password}",
         "fcm_token": "" //todo
       });
-      print(user);
-      print("aaaaaaaaaaaaaaaaaaaaa");
+
       await cacheData(user);
+      di.sl<ApiBaseHelper>().updateHeader();
       emit(state.copyWith(loginState: RequestState.success));
-      print(user?.success?.advertiser?.firstnameAr);
       if (user?.success?.advertiser?.id != null) {
         if (context.mounted) {
-          print("1");
-
           AppConstants.pushRemoveNavigator(
             context,
             screen: const HomeScreen(
@@ -52,9 +50,10 @@ class LoginCubit extends Cubit<LoginState> {
           );
         }
       } else {
-        print("2");
-        AppConstants.customNavigation(
-            context, HomeScreenForPatient(selectedIndex: 2), -1, 0);
+        if (context.mounted) {
+          AppConstants.customNavigation(
+              context, HomeScreenForPatient(selectedIndex: 2), -1, 0);
+        }
       }
     } catch (e) {
       emit(state.copyWith(loginState: RequestState.failed));
@@ -65,7 +64,6 @@ class LoginCubit extends Cubit<LoginState> {
   /// save user data in local
   Future<void> cacheData(UserModel? response) async {
     if (response?.success?.advertiser?.email != null) {
-      log("this advertiser ==========${response?.success?.advertiser?.email}");
       await CacheHelper.saveData(
           key: AppStrings.userInfo,
           value: jsonEncode(response?.success?.advertiser?.toJson()));
@@ -74,6 +72,7 @@ class LoginCubit extends Cubit<LoginState> {
         value: true,
       );
     } else {
+      log("else patient login ======");
       await CacheHelper.saveData(
           key: AppStrings.userInfo,
           value: jsonEncode(response?.success?.toJson()));
@@ -81,16 +80,21 @@ class LoginCubit extends Cubit<LoginState> {
         key: AppStrings.userId,
         value: response?.success?.id,
       );
+      log("user info: ${CacheHelper.getData(key: AppStrings.userInfo)}");
       await CacheHelper.saveData(
         key: AppStrings.isAdvertise,
         value: false,
       );
     }
     if (response?.success?.token != null) {
+      log("saveTokkken ");
       await CacheHelper.saveData(
         key: AppStrings.userToken,
         value: response?.success?.token,
       );
+      log("${CacheHelper.getData(
+        key: AppStrings.userToken,
+      )}");
     }
   }
 

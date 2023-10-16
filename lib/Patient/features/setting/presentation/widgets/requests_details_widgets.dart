@@ -31,11 +31,11 @@ class FirstSection extends StatelessWidget {
             children: [
               Text(
                 "رقم الطلب : ${listOfOrders.id}",
-                style: TextStyle(fontWeight: FontWeight.w500),
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               Text(
                 "تاريخ الطلب : ${listOfOrders.createdAt}",
-                style: TextStyle(fontWeight: FontWeight.w500),
+                style: const TextStyle(fontWeight: FontWeight.w500),
               )
             ],
           ),
@@ -173,7 +173,7 @@ class _TowSectionState extends State<TowSection> {
                           );
                         }).toList(),
                       )
-                    : Text('No Data available'),
+                    : const Text('No Data available'),
               ],
             )
           ],
@@ -219,7 +219,7 @@ class Bill extends StatelessWidget {
             ),
             Text(
               "${listOfOrders.advertiser.sessionDur} دقيقة",
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             )
           ],
         ),
@@ -227,13 +227,13 @@ class Bill extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               "عدد الجلسات",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
               "${listOfOrders.sessionsCount}",
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             )
           ],
         ),
@@ -241,13 +241,13 @@ class Bill extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               "سعر الجلسة :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
               "${listOfOrders.advertiser.sessionPrice} ريال",
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.w600, color: AppColors.secondryColor),
             )
           ],
@@ -256,18 +256,18 @@ class Bill extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               "كود الخصم :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             listOfOrders.coupon == null
-                ? Text(
+                ? const Text(
                     "لا يوجد",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   )
                 : Text(
                     "${listOfOrders.coupon}",
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   )
           ],
         ),
@@ -286,17 +286,18 @@ class Bill extends StatelessWidget {
           ],
         ),
         20.ph,
-        Divider(
+        const Divider(
           thickness: 1,
         ),
         20.ph,
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text("المجموع : ", style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text("المجموع : ",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             Text(
               "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.secondryColor),
             )
           ],
@@ -343,7 +344,7 @@ class _PopUpForRemoveRequestState extends State<PopUpForRemoveRequest> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              MyRequestsForPatient(activeIndex: 0)));
+                              const MyRequestsForPatient(activeIndex: 0)));
                   widget._toggleVisibility;
                 },
           child: Container(
@@ -368,7 +369,7 @@ class _PopUpForRemoveRequestState extends State<PopUpForRemoveRequest> {
                                   changePopUp: widget.changePopUp,
                                   toggleVisibility: widget._toggleVisibility,
                                 )
-                              : SecondPopUp()),
+                              : const SecondPopUp()),
                     ),
                   ),
                 ),
@@ -408,7 +409,7 @@ class _FirstPopUpState extends State<FirstPopUp> {
     });
     return Column(
       children: [
-        Text(
+        const Text(
           "هل ترغب حقا في \nحذف الطلب ؟",
           style:
               TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1.5),
@@ -424,7 +425,7 @@ class _FirstPopUpState extends State<FirstPopUp> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
               ),
               onPressed: () async {
                 print(widget.listOfOrders.id.toString());
@@ -447,22 +448,22 @@ class _FirstPopUpState extends State<FirstPopUp> {
                     .updateSelectedReservation(context);
                 if (showPopUp) widget.changePopUp();
               },
-              child: Text('حذف'),
+              child: const Text('حذف'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  side: BorderSide(color: AppColors.primaryColor),
+                  side: const BorderSide(color: AppColors.primaryColor),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   elevation: 0,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   backgroundColor: Colors.transparent),
               onPressed: () {
                 Navigator.pop(context);
                 widget.toggleVisibility();
               },
-              child: Text(
+              child: const Text(
                 'عودة',
                 style: TextStyle(color: AppColors.primaryColor),
               ),
@@ -490,9 +491,9 @@ class SecondPopUp extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          MyRequestsForPatient(activeIndex: 0)));
+                          const MyRequestsForPatient(activeIndex: 0)));
             },
-            child: Icon(
+            child: const Icon(
               Icons.close,
               color: AppColors.primaryColor,
             ),
@@ -508,7 +509,7 @@ class SecondPopUp extends StatelessWidget {
         ),
       ),
       15.ph,
-      Text(
+      const Text(
         "تم حذف الطلب بنجاح",
         style: TextStyle(fontWeight: FontWeight.w500),
       ),
@@ -535,7 +536,7 @@ class SessionInfoForPatient extends StatelessWidget {
     print("ghaith");
     print(MainOrder.parentId);
     var allOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.AllOrders);
+        context.select((MyOrdersCubit cubit) => cubit.state.allOrders) ?? [];
     if (MainOrder.parentId == 0) {
       for (var order in allOrders) {
         if (order.parentId == MainOrder.id) sessionsInfo.add(order);
@@ -743,10 +744,10 @@ class BottomSheetForEvalute extends StatelessWidget {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(AppColors.primaryColor),
                   minimumSize: MaterialStateProperty.all<Size>(
-                    Size(double.infinity, 50),
+                    const Size(double.infinity, 50),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'إرسال التعليق',
                   style: TextStyle(
                     fontSize: 16,

@@ -24,6 +24,9 @@ import 'package:dr/Patient/features/offer/data/datasources/get_packages_ds.dart'
 import 'package:dr/Patient/features/offer/data/repositories/get_offers_Repo.dart';
 import 'package:dr/Patient/features/offer/data/repositories/get_packages_repo.dart';
 import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
+import 'package:dr/Patient/features/payment/data/datasources/payment_ds.dart';
+import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/datasources/my_orders_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_info_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_reservation_ds.dart';
@@ -90,6 +93,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateInfoDS(apiHelper: sl()));
   sl.registerLazySingleton(() => FavoriteDS(apiHelper: sl()));
   sl.registerLazySingleton(() => AddFavoriteDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => PaymentDataSource(apiHelper: sl()));
   sl.registerLazySingleton(() => GetPackagesDS(apiHelper: sl()));
   sl.registerLazySingleton(() => GetOffersDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ReservationWithOfferDS(apiHelper: sl()));
@@ -111,6 +115,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetOffersRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ReservationWithOfferRepo(dataSource: sl()));
   sl.registerLazySingleton(() => GetAllAdsRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => PaymentRepository(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -127,4 +132,5 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => GetPackagesCubit(getPackagesRepo: sl()));
   sl.registerFactory(() => GetOffersCubit(getOffersRepo: sl()));
   sl.registerFactory(() => GetAllAdsCubit(getAllAdsRepo: sl()));
+  sl.registerFactory(() => PaymentCubit(repository: sl()));
 }

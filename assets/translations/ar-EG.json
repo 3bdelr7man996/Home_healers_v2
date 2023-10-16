@@ -133,5 +133,17 @@
   "full_name": "الاسم الكامل",
   "forget_password": "إعادة تعيين كلمة السر",
   "activation_code": "تفعيل كود كلمة المرور",
-  "change_password": "تغيير كلمة السر"
+  "thank_you":"شكرا لك!",
+  "back":"عودة",
+  "reservation_been_confirmed":"تم تأكيد حجزك",
+  "booking_with_physiotherapist_confirmed":"لقد تم تأكيد حجزك مع أخصائي علاج طبيعي ",
+  "order_number":"رقم الطلب ",
+  "canceled_payment":"لقد قمت بإلغاء عملية الدفع",
+  "edit_account":"تعديل الحساب",
+  "specialist_requests":"طلبات الأخصائي",
+  "certificates_and_documents":"الشهادات و المستندات",
+  "about_the_app":"عن التطبيق",
+  "visit_the_application_website":"زيارة موقع التطبيق",
+  "share_app":"مشاركة التطبيق",
+  "c":"تسجيل الخروج"
 }

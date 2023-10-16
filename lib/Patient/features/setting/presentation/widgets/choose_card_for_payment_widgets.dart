@@ -9,8 +9,16 @@ import 'package:flutter_svg/svg.dart';
 class CardWay extends StatelessWidget {
   String iconPath, title;
   int num;
-  CardWay(
-      {super.key, required this.iconPath, required this.title, this.num = 0});
+  final bool selected;
+  final void Function()? onTap;
+  CardWay({
+    super.key,
+    required this.iconPath,
+    required this.title,
+    this.num = 0,
+    this.selected = false,
+    this.onTap,
+  });
   void _showBottomSheet(BuildContext context, String IconPath) {
     showModalBottomSheet(
       context: context,
@@ -95,13 +103,14 @@ class CardWay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        _showBottomSheet(context, "assets/icons/master_card_icon.svg");
-      },
+      onTap: onTap,
+      // _showBottomSheet(context, "assets/icons/master_card_icon.svg");
       child: Container(
         width: context.width,
         decoration: BoxDecoration(
           color: Colors.white,
+          border: Border.all(
+              color: selected ? AppColors.primaryColor : Colors.white),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
@@ -118,10 +127,11 @@ class CardWay extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
-              Icon(Icons.arrow_forward_ios)
+              //const Icon(Icons.arrow_forward_ios)
             ],
           ),
         ),

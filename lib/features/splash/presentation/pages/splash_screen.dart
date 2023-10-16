@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -35,8 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    log("Token ${CacheHelper.getData(key: AppStrings.userToken)}");
-    log("user info    ${CacheHelper.getData(key: AppStrings.userInfo)}");
     initConfigData().then((value) {
       if (CacheHelper.dataSaved(key: AppStrings.userToken)) {
         if (CacheHelper.getData(key: AppStrings.isAdvertise)) {

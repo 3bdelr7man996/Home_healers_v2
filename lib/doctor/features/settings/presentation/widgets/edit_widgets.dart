@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,7 +32,9 @@ class _ProfileImageState extends State<ProfileImage> {
         _imageFile = File(pickedImage.path);
       } else {
         _imageFile = File('assets/images/doctor.png');
-        print('No image selected.');
+        if (kDebugMode) {
+          print('No image selected.');
+        }
       }
     });
   }
@@ -47,7 +50,7 @@ class _ProfileImageState extends State<ProfileImage> {
             CircleAvatar(
               radius: 80,
               backgroundColor: Colors.grey[300],
-              backgroundImage: _imageFile != null && _imageFile.existsSync()
+              backgroundImage: _imageFile.existsSync()
                   ? Image.file(_imageFile).image
                   : const AssetImage('assets/images/doctor.png'),
             ),

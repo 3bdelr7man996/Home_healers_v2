@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +32,7 @@ class _PersonalinfoState extends State<Personalinfo> {
       children: [
         Text(
           "personal_info".tr(),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         Column(
           children: [
@@ -38,7 +41,7 @@ class _PersonalinfoState extends State<Personalinfo> {
               children: [
                 Text(
                   switchValue ? "نشط الآن" : "غير نشط",
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 Switch(
                   inactiveThumbColor: Colors.red,
@@ -64,21 +67,26 @@ class _PersonalinfoState extends State<Personalinfo> {
   }
 }
 
-// ignore: must_be_immutable
 class OneOption extends StatelessWidget {
-  String IconPath, title;
-  var routeScreen;
-  OneOption(
-      {super.key,
-      required this.IconPath,
-      required this.title,
-      this.routeScreen});
+  final String iconPath, title;
+  final Widget? routeScreen;
+  final void Function()? onPressed;
+  const OneOption({
+    super.key,
+    required this.iconPath,
+    required this.title,
+    this.routeScreen,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        AppConstants.customNavigation(context, routeScreen, -1, 0);
+        if (routeScreen != null) {
+          log("route screen != null");
+          AppConstants.customNavigation(context, routeScreen!, -1, 0);
+        }
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -88,18 +96,25 @@ class OneOption extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                IconPath,
+                iconPath,
                 width: 40,
                 height: 40,
               ),
               10.pw,
               Text(
                 title,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
-          Icon(Icons.arrow_back_ios_new)
+          IconButton(
+            onPressed: onPressed,
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: AppColors.textGrey,
+            ),
+          ),
+          //const Icon(Icons.arrow_back_ios_new)
         ],
       ),
     );

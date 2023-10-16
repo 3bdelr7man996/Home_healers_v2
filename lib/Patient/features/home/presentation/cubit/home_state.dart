@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:equatable/equatable.dart';
 
 class SectionState extends Equatable {
@@ -114,6 +115,7 @@ class ReservationState extends Equatable {
       this.coupon,
       this.offer,
       this.painPlace});
+
   final bool Loading;
   var advertiser_id;
   String? start_at;
@@ -153,6 +155,8 @@ class ReservationState extends Equatable {
     int? sessions_count,
     int? status_id,
     List<DateTime>? days,
+    String? visaUrl,
+    RequestState? payState,
   }) =>
       ReservationState(
           Loading: Loading ?? this.Loading,

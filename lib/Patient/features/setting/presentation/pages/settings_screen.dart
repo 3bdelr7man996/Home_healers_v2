@@ -7,9 +7,11 @@ import 'package:dr/Patient/features/setting/presentation/widgets/settings_widget
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
+import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/html_body.dart';
@@ -47,38 +49,38 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                         fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   20.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/person_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/person_setting_icon.svg",
                     title: "تعديل الحساب",
                     routeScreen: EditProfileScreenForPatient(),
                   ),
                   15.ph,
                   OneOptionForPatient(
-                    IconPath: "assets/icons/report_for_setting_icon.svg",
+                    iconPath: "assets/icons/report_for_setting_icon.svg",
                     title: "التقارير",
                     routeScreen: ReportScreenForSetting(),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/requests_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/requests_setting_icon.svg",
                     title: "طلباتي",
                     routeScreen: MyRequestsForPatient(),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/budget_icon_for_payment.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/budget_icon_for_payment.svg",
                     title: "محفظتي",
                     routeScreen: MyWalletScreen(),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/my_point_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/my_point_setting_icon.svg",
                     title: "نقاطي",
                     routeScreen: MyPointScreenForPatient(),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/lock_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/lock_setting_icon.svg",
                     title: "تغيير الرقم السري",
                     routeScreen: ChangePassword(),
                   ),
@@ -90,37 +92,39 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/privacy_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/privacy_setting_icon.svg",
                     title: "الخصوصية",
                     routeScreen:
-                        const HTMLBody(typePage: 'privacy', fromPatient: true),
+                        HTMLBody(typePage: 'privacy', fromPatient: true),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/web_setting_icon.svg",
-                    title: "زيارة موقع التطبيق",
+                  OneOption(
+                    iconPath: AppImages.settingWebPg,
+                    title: "visit_the_application_website".tr(),
+                    onPressed: () =>
+                        AppConstants.launchURL("https://home-healers.com"),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/share_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/share_setting_icon.svg",
                     title: "مشاركة التطبيق",
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/rules_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/rules_setting_icon.svg",
                     title: "الشروط و الأحكام",
                     routeScreen: HTMLBody(typePage: "terms"),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/use_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/use_setting_icon.svg",
                     title: "سياسة الاستخدام",
                     routeScreen: HTMLBody(typePage: "policy"),
                   ),
                   15.ph,
-                  OneOptionForPatient(
-                    IconPath: "assets/icons/contact_setting_icon.svg",
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/contact_setting_icon.svg",
                     title: "تواصل معنا",
                     routeScreen: ContactUsScreen(fromPatient: true),
                   ),

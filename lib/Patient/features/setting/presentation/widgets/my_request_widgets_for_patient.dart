@@ -17,14 +17,15 @@ class underProcessing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.ReviewingOrders);
+        context.select((MyOrdersCubit cubit) => cubit.state.reviewingOrders) ??
+            [];
     print(listOfOrders);
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: context.width,
         height: context.height * 0.75,
-        child: listOfOrders == null
-            ? Center(
+        child: listOfOrders.isEmpty
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : ListView.builder(
@@ -33,7 +34,7 @@ class underProcessing extends StatelessWidget {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    if (item != null) names.add(item.nameAr);
+                    names.add(item.nameAr);
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -55,10 +56,11 @@ class Accepted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.WaitConfirmOrders);
+    var listOfOrders = context
+            .select((MyOrdersCubit cubit) => cubit.state.waitConfirmOrders) ??
+        [];
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: context.width,
         height: context.height * 0.75,
         child: ListView.builder(
@@ -67,7 +69,7 @@ class Accepted extends StatelessWidget {
             List<String> names = [];
             String selectedName = "";
             for (var item in listOfOrders[index].advertiser.categories) {
-              if (item != null) names.add(item.nameAr);
+              names.add(item.nameAr);
             }
             selectedName = names.isNotEmpty ? names[0] : 'No names available';
             return CardsForRequests(
@@ -89,20 +91,21 @@ class Confirmed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.ConfirmedOrders);
+        context.select((MyOrdersCubit cubit) => cubit.state.confirmedOrders) ??
+            [];
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: context.width,
         height: context.height * 0.75,
-        child: listOfOrders.length == 0
-            ? SizedBox()
+        child: listOfOrders.isEmpty
+            ? const SizedBox()
             : ListView.builder(
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    if (item != null) names.add(item.nameAr);
+                    names.add(item.nameAr);
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -126,20 +129,21 @@ class completed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.CompletedOrders);
+        context.select((MyOrdersCubit cubit) => cubit.state.completedOrders) ??
+            [];
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: context.width,
         height: context.height * 0.75,
-        child: listOfOrders.length == 0
-            ? SizedBox()
+        child: listOfOrders.isEmpty
+            ? const SizedBox()
             : ListView.builder(
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    if (item != null) names.add(item.nameAr);
+                    names.add(item.nameAr);
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -162,21 +166,22 @@ class canceledRequests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.CanceledOrders);
+        context.select((MyOrdersCubit cubit) => cubit.state.canceledOrders) ??
+            [];
     print(listOfOrders);
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: context.width,
         height: context.height * 0.75,
-        child: listOfOrders.length == 0
-            ? SizedBox()
+        child: listOfOrders.isEmpty
+            ? const SizedBox()
             : ListView.builder(
                 itemCount: listOfOrders.length,
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    if (item != null) names.add(item.nameAr);
+                    names.add(item.nameAr);
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -199,20 +204,21 @@ class Pending extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.PendingOrders);
+        context.select((MyOrdersCubit cubit) => cubit.state.pendingOrders) ??
+            [];
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         width: context.width,
         height: context.height * 0.75,
-        child: listOfOrders.length == 0
-            ? SizedBox()
+        child: listOfOrders.isEmpty
+            ? const SizedBox()
             : ListView.builder(
                 itemCount: listOfOrders.length,
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    if (item != null) names.add(item.nameAr);
+                    names.add(item.nameAr);
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -267,7 +273,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
         ),
@@ -290,11 +296,11 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         children: [
                           Text(
                             "رقم الطلب : ${widget.listOfOrders.id}",
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            style: const TextStyle(fontWeight: FontWeight.w500),
                           ),
                           Text(
                             "تاريخ الطلب : ${widget.listOfOrders.startAt}",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 14),
                           )
                         ],
@@ -375,7 +381,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 onError: (exception, stackTrace) =>
                                     {print(exception)},
                               )
-                            : DecorationImage(
+                            : const DecorationImage(
                                 image: AssetImage("assets/images/doctor.png"),
                                 fit: BoxFit.cover,
                               ),
@@ -387,7 +393,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                       children: [
                         Text(
                           "${widget.listOfOrders.advertiser.nameAr}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: AppColors.primaryColor,
                               fontWeight: FontWeight.w500,
                               fontSize: 20),
@@ -413,7 +419,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                     );
                                   }).toList(),
                                 )
-                              : Text('No Data available'),
+                              : const Text('No Data available'),
                       ],
                     )
                   ],
@@ -437,7 +443,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                               5.pw,
                               Text(
                                 "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: AppColors.secondryColor,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -446,17 +452,17 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         ),
                       10.ph,
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Text(
                           "عدد الجلسات : ${widget.listOfOrders.sessionsCount}",
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                          style: const TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
+                    child: SizedBox(
                       height: context.height * 0.05,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(

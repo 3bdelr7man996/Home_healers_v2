@@ -1,6 +1,7 @@
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/certificates_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
@@ -11,6 +12,7 @@ import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -42,71 +44,76 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   20.ph,
                   OneOption(
-                    IconPath: "assets/icons/person_setting_icon.svg",
-                    title: "تعديل الحساب",
+                    iconPath: AppImages.settingPerson,
+                    title: "edit_account".tr(),
                     routeScreen: const EditProfileScreen(),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/lock_setting_icon.svg",
-                    title: "تغيير الرقم السري",
+                    iconPath: AppImages.settingLock,
+                    title: "change_password".tr(),
                     routeScreen: const ChangePassword(),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/requests_setting_icon.svg",
-                    title: "طلبات الأخصائي",
+                    iconPath: AppImages.settingRequests,
+                    title: "specialist_requests".tr(),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/certificate_setting_icon.svg",
-                    title: "الشهادات و المستندات",
+                    iconPath: AppImages.settingCertificate,
+                    title: "certificates_and_documents".tr(),
                     routeScreen: const CertificatesScreen(),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/my_point_setting_icon.svg",
-                    title: "نقاطي",
+                    iconPath: AppImages.settingPoints,
+                    title: "my_point".tr(),
                     routeScreen: const MyPointScreen(),
                   ),
                   15.ph,
                   const Divider(thickness: 0.5),
                   15.ph,
-                  const Text(
-                    "عن التطبيق",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  Text(
+                    "about_the_app".tr(),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/privacy_setting_icon.svg",
-                    title: "الخصوصية",
+                    iconPath: AppImages.settingPrivacy,
+                    title: "privacy".tr(),
                     routeScreen: const HTMLBody(typePage: 'privacy'),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/web_setting_icon.svg",
-                    title: "زيارة موقع التطبيق",
+                    iconPath: AppImages.settingWebPg,
+                    title: "visit_the_application_website".tr(),
+                    onPressed: () =>
+                        AppConstants.launchURL("https://home-healers.com"),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/share_setting_icon.svg",
-                    title: "مشاركة التطبيق",
+                    iconPath: AppImages.settingShare,
+                    title: "share_app".tr(),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/rules_setting_icon.svg",
-                    title: "الشروط و الأحكام",
+                    iconPath: AppImages.settingRules,
+                    title: "terms_and_conditions".tr(),
                     routeScreen: const HTMLBody(typePage: 'terms'),
                   ),
                   15.ph,
                   OneOption(
-                    IconPath: "assets/icons/use_setting_icon.svg",
-                    title: "سياسة الاستخدام",
+                    iconPath: AppImages.settingPolicy,
+                    title: "recruitment_policy".tr(),
                     routeScreen: const HTMLBody(typePage: 'policy'),
                   ),
                   15.ph,
-                  OneOption(
-                    IconPath: "assets/icons/contact_setting_icon.svg",
+                  const OneOption(
+                    iconPath: "assets/icons/contact_setting_icon.svg",
                     title: "تواصل معنا",
                     routeScreen: ContactUsScreen(),
                   ),
@@ -124,15 +131,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          "assets/icons/log_out_setting_icon.svg",
+                          AppImages.logOutIcon,
                           width: 40,
                           height: 40,
                         ),
                         10.pw,
-                        const Text(
-                          "تسجيل الخروج",
-                          style: TextStyle(
-                              fontSize: 20, color: AppColors.primaryColor),
+                        Text(
+                          "log_out".tr(),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: AppColors.primaryColor,
+                          ),
                         ),
                         20.ph
                       ],

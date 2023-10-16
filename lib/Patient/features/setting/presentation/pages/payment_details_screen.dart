@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/choose_card_for_payment_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/payment_details_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -12,7 +13,12 @@ import 'package:flutter_svg/svg.dart';
 
 class PaymentDetailsScreen extends StatefulWidget {
   bool withOffer;
-  PaymentDetailsScreen({super.key, this.withOffer = false});
+  final OrderData order;
+  PaymentDetailsScreen({
+    super.key,
+    this.withOffer = false,
+    required this.order,
+  });
 
   @override
   State<PaymentDetailsScreen> createState() => _PaymentDetailsScreenState();
@@ -39,7 +45,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               TotalDetails(withOffer: widget.withOffer),
               widget.withOffer ? 0.ph : 20.ph,
               widget.withOffer
-                  ? SizedBox()
+                  ? const SizedBox.shrink()
                   : TextField(
                       decoration: InputDecoration(
                         hintText: 'ادخل كود الخصم',
@@ -79,9 +85,9 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                   ),
                   onPressed: () {
                     AppConstants.customNavigation(
-                        context, ChooseCard_screen(), -1, 0);
+                        context, ChooseCardScreen(order: widget.order), -1, 0);
                   },
-                  child: Text('تابع'),
+                  child: const Text('تابع'),
                 ),
               ),
             ],

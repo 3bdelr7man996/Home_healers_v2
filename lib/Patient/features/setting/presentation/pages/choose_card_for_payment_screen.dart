@@ -1,14 +1,19 @@
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/choose_card_for_payment_widgets.dart';
 
-class ChooseCard_screen extends StatelessWidget {
-  const ChooseCard_screen({super.key});
-
+class ChooseCardScreen extends StatelessWidget {
+  const ChooseCardScreen({super.key, required this.order});
+  final OrderData order;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,56 +27,103 @@ class ChooseCard_screen extends StatelessWidget {
               "اختر الكارد الخاصة بك :",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0),
             ),
+
             20.ph,
-            CardWay(
-              iconPath: "assets/icons/master_card_icon.svg",
-              title: "Master card",
+            BlocBuilder<PaymentCubit, PaymentState>(
+              buildWhen: (previous, current) =>
+                  previous.selectedPayType != current.selectedPayType,
+              builder: (context, state) {
+                return CardWay(
+                  iconPath: "assets/images/tamara.png",
+                  title: "Tamara",
+                  selected: state.selectedPayType == PayType.tamara,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayType(PayType.tamara),
+                );
+              },
+            ),
+
+            // 20.ph,
+            // CardWay(
+            //   iconPath: "assets/icons/paypal_icon.svg",
+            //   title: "PayPal",
+            // ),
+            20.ph,
+            BlocBuilder<PaymentCubit, PaymentState>(
+              // buildWhen: (previous, current) =>
+              //     previous.selectedPayType != current.selectedPayType,
+              builder: (context, state) {
+                return CardWay(
+                  iconPath: "assets/icons/Apple_pay_icon.svg",
+                  title: "Apple PAy",
+                  selected: state.selectedPayType == PayType.apple,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayType(PayType.apple),
+                );
+              },
+            ),
+
+            // 20.ph,
+            // CardWay(
+            //   iconPath: "assets/images/stc_pay.png",
+            //   num: 1,
+            //   title: "Stc Pay",
+            // ),
+            20.ph,
+            BlocBuilder<PaymentCubit, PaymentState>(
+              // buildWhen: (previous, current) =>
+              //     previous.selectedPayType != current.selectedPayType,
+              builder: (context, state) {
+                return CardWay(
+                  iconPath: "assets/icons/visa_card_icon.svg",
+                  title: "Visa",
+                  selected: state.selectedPayType == PayType.visa,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayType(PayType.visa),
+                );
+              },
             ),
             20.ph,
-            CardWay(
-              iconPath: "assets/images/tamara.png",
-              num: 1,
-              title: "Tamara",
-            ),
-            20.ph,
-            CardWay(
-              iconPath: "assets/icons/paypal_icon.svg",
-              title: "PayPal",
-            ),
-            20.ph,
-            CardWay(
-              iconPath: "assets/icons/Apple_pay_icon.svg",
-              title: "Apple PAy",
-            ),
-            20.ph,
-            CardWay(
-              iconPath: "assets/images/stc_pay.png",
-              num: 1,
-              title: "Stc Pay",
-            ),
-            20.ph,
-            CardWay(
-              iconPath: "assets/icons/visa_card_icon.svg",
-              title: "Visa",
-            ),
-            20.ph,
-            SizedBox(
-              width: context.width,
-              height: 50,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+            BlocBuilder<PaymentCubit, PaymentState>(
+              builder: (context, state) {
+                if (state.payState == RequestState.loading) {
+                  return const CustomLoader(
+                    padding: 0,
+                  );
+                } else {
+                  return SizedBox(
+                    width: context.width,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            AppColors.primaryColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        switch (state.selectedPayType) {
+                          case PayType.visa:
+                            await context
+                                .read<PaymentCubit>()
+                                .payByVisa(reservationParentId: order.id);
+                            break;
+                          default:
+                        }
+                      },
+                      child: const Text('تابع'),
                     ),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text('تابع'),
-              ),
-            ),
+                  );
+                }
+              },
+            )
           ],
         ),
       ),

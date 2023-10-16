@@ -2,6 +2,7 @@ class AppStrings {
   static String baseUrl = "*";
   static String divUrl = "https://dev.home-healers.com";
   static String imageUrl = "https://dev.home-healers.com/upload/";
+  static String visaBaseUrl = "https://testing.home-healers.com";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";
@@ -22,6 +23,7 @@ class AppStrings {
   //api url for patient
   static String patientSignUp = "/api/user/register";
   static String patientSignIn = "/api/user/login";
+  static String visaPayment = "/api/payment";
 
   //assets url
   static String appName = "Home Healers";

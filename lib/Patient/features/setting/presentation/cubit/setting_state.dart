@@ -4,49 +4,50 @@ part of 'setting_cubit.dart';
 
 class MyOrdersState extends Equatable {
   MyOrdersState({
-    this.AllOrders,
-    this.ReviewingOrders,
-    this.ConfirmedOrders,
-    this.WaitConfirmOrders,
-    this.PendingOrders,
-    this.CompletedOrders,
-    this.CanceledOrders,
+    this.allOrders,
+    this.reviewingOrders,
+    this.confirmedOrders,
+    this.waitConfirmOrders,
+    this.pendingOrders,
+    this.completedOrders,
+    this.canceledOrders,
   });
 
-  var ReviewingOrders,
-      ConfirmedOrders,
-      AllOrders,
-      WaitConfirmOrders,
-      PendingOrders,
-      CompletedOrders,
-      CanceledOrders;
+  List<OrderData>? reviewingOrders,
+      confirmedOrders,
+      allOrders,
+      waitConfirmOrders,
+      pendingOrders,
+      completedOrders,
+      canceledOrders;
 
   @override
   List<Object?> get props => [
-        ReviewingOrders,
-        ConfirmedOrders,
-        WaitConfirmOrders,
-        AllOrders,
-        PendingOrders,
-        CompletedOrders,
-        CanceledOrders
+        reviewingOrders,
+        confirmedOrders,
+        waitConfirmOrders,
+        allOrders,
+        pendingOrders,
+        completedOrders,
+        canceledOrders,
       ];
-  MyOrdersState copyWith(
-          {var ReviewingOrders,
-          ConfirmedOrders,
-          WaitConfirmOrders,
-          AllOrders,
-          PendingOrders,
-          CompletedOrders,
-          CanceledOrders}) =>
+  MyOrdersState copyWith({
+    List<OrderData>? reviewingOrders,
+    confirmedOrders,
+    waitConfirmOrders,
+    allOrders,
+    pendingOrders,
+    completedOrders,
+    canceledOrders,
+  }) =>
       MyOrdersState(
-        ReviewingOrders: ReviewingOrders ?? this.ReviewingOrders,
-        ConfirmedOrders: ConfirmedOrders ?? this.ConfirmedOrders,
-        WaitConfirmOrders: WaitConfirmOrders ?? this.WaitConfirmOrders,
-        PendingOrders: PendingOrders ?? this.PendingOrders,
-        CompletedOrders: CompletedOrders ?? this.CompletedOrders,
-        CanceledOrders: CanceledOrders ?? this.CanceledOrders,
-        AllOrders: AllOrders ?? this.AllOrders,
+        reviewingOrders: reviewingOrders ?? this.reviewingOrders,
+        confirmedOrders: confirmedOrders ?? this.confirmedOrders,
+        waitConfirmOrders: waitConfirmOrders ?? this.waitConfirmOrders,
+        pendingOrders: pendingOrders ?? this.pendingOrders,
+        completedOrders: completedOrders ?? this.completedOrders,
+        canceledOrders: canceledOrders ?? this.canceledOrders,
+        allOrders: allOrders ?? this.allOrders,
       );
 }
 

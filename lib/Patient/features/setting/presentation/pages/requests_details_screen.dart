@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
+import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
@@ -12,12 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestsDetailsScreenForPatient extends StatefulWidget {
   int num;
-  var oneOrder;
+  OrderData oneOrder;
   var categories, selectedName;
   RequestsDetailsScreenForPatient(
       {super.key,
       required this.num,
-      this.oneOrder,
+      required this.oneOrder,
       this.categories,
       this.selectedName});
 
@@ -160,7 +161,7 @@ class _RequestsDetailsScreenForPatientState
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                 ),
                                 onPressed: () {},
                                 child: const Text('إظهار الفاتورة'),
@@ -168,13 +169,13 @@ class _RequestsDetailsScreenForPatientState
                               if (widget.oneOrder.canReview == 1)
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                           color: AppColors.primaryColor),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       elevation: 0,
-                                      padding: EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       backgroundColor: Colors.transparent),
                                   onPressed: () {
                                     Future.delayed(Duration.zero, () {
@@ -210,7 +211,7 @@ class _RequestsDetailsScreenForPatientState
                                       MaterialStateProperty.all<Color>(
                                           AppColors.primaryColor),
                                   minimumSize: MaterialStateProperty.all<Size>(
-                                    Size(double.infinity, 50),
+                                    const Size(double.infinity, 50),
                                   ),
                                 ),
                                 child: const Text(
@@ -222,13 +223,17 @@ class _RequestsDetailsScreenForPatientState
                                   ),
                                 ),
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                   if (widget.num == 2)
                     ElevatedButton(
                       onPressed: () {
                         _toggleVisibility();
-                        AppConstants.customNavigation(context,
-                            PaymentDetailsScreen(withOffer: true), -1, 0);
+                        AppConstants.customNavigation(
+                            context,
+                            PaymentDetailsScreen(
+                                withOffer: true, order: widget.oneOrder),
+                            -1,
+                            0);
                       },
                       style: ButtonStyle(
                         shape:
@@ -240,7 +245,7 @@ class _RequestsDetailsScreenForPatientState
                         backgroundColor: MaterialStateProperty.all<Color>(
                             AppColors.primaryColor),
                         minimumSize: MaterialStateProperty.all<Size>(
-                          Size(double.infinity, 50),
+                          const Size(double.infinity, 50),
                         ),
                       ),
                       child: const Text(
@@ -267,7 +272,7 @@ class _RequestsDetailsScreenForPatientState
                         backgroundColor: MaterialStateProperty.all<Color>(
                             AppColors.primaryColor),
                         minimumSize: MaterialStateProperty.all<Size>(
-                          Size(double.infinity, 50),
+                          const Size(double.infinity, 50),
                         ),
                       ),
                       child: const Text(

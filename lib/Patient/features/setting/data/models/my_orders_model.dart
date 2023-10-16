@@ -5,26 +5,26 @@ class MyOrdersModel {
     required this.message,
   });
   late final bool success;
-  late final List<Data> data;
-  late final String? message;
+  late final List<OrderData>? data;
+  late final String message;
 
   MyOrdersModel.fromJson(Map<String, dynamic>? json) {
     success = json?['success'];
-    data = List.from(json?['data']).map((e) => Data.fromJson(e)).toList();
+    data = List.from(json?['data']).map((e) => OrderData.fromJson(e)).toList();
     message = json?['message'];
   }
 
   Map<String, dynamic>? toJson() {
     final _data = <String, dynamic>{};
     _data['success'] = success;
-    _data['data'] = data.map((e) => e.toJson()).toList();
+    _data['data'] = data?.map((e) => e.toJson()).toList();
     _data['message'] = message;
     return _data;
   }
 }
 
-class Data {
-  Data({
+class OrderData {
+  OrderData({
     required this.id,
     required this.parentId,
     required this.userId,
@@ -85,7 +85,7 @@ class Data {
   late var diagnoseForm;
   late final Advertiser advertiser;
 
-  Data.fromJson(Map<String, dynamic>? json) {
+  OrderData.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
     parentId = json?['parent_id'];
     userId = json?['user_id'];
