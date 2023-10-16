@@ -1,6 +1,8 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SectionsScreen extends StatefulWidget {
   final BuildContext context;
@@ -15,6 +17,12 @@ int i = 0;
 
 class _SectionsScreenState extends State<SectionsScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<GetAllAdsCubit>().GetAllAds(context);
+  }
+
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (i == 0) {
@@ -51,7 +59,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
           ),
         ),
         10.ph,
-        const Expanded(child: IconsForSections()),
+        Expanded(child: IconsForSections()),
       ],
     );
   }

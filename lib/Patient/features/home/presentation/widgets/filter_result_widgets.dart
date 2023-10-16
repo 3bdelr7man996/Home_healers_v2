@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/Patient/features/home/presentation/pages/specialist_page_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -24,15 +25,21 @@ class DoctorCard extends StatefulWidget {
   var categories;
   var status_id;
   var Data;
+  bool fromOffer;
+  var offer;
+  var sessionCountForOffer;
   DoctorCard(
       {super.key,
+      this.sessionCountForOffer,
       required this.isVisible,
       this.status_id,
       this.Data,
+      this.fromOffer = false,
       this.fromfavorite = false,
       this.fromOfferScreen = false,
       this.statusAdvisor,
       this.categories,
+      this.offer,
       this.price = 0,
       this.status = "",
       this.address = "",
@@ -51,6 +58,9 @@ class _DoctorCardState extends State<DoctorCard> {
   @override
   void initState() {
     super.initState();
+    if (widget.offer != null)
+      context.read<ReservationCubit>().OnOfferChange(widget.offer);
+
     for (var item in widget.statusAdvisor) {
       names.add(item['name_ar']);
     }
@@ -200,7 +210,10 @@ class _DoctorCardState extends State<DoctorCard> {
                     ),
               20.ph,
               ButtonForDoctorCard(
-                  Data: widget.Data, status_id: widget.status_id)
+                  sessionCountForOffer: widget.sessionCountForOffer,
+                  Data: widget.Data,
+                  status_id: widget.status_id,
+                  fromOffer: widget.fromOffer)
             ],
           ),
         ),
@@ -413,7 +426,14 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
 class ButtonForDoctorCard extends StatelessWidget {
   var Data;
   var status_id;
-  ButtonForDoctorCard({super.key, this.Data, this.status_id});
+  bool fromOffer;
+  var sessionCountForOffer;
+  ButtonForDoctorCard(
+      {super.key,
+      this.Data,
+      this.sessionCountForOffer,
+      this.status_id,
+      this.fromOffer = false});
 
   @override
   Widget build(BuildContext context) {
@@ -428,8 +448,15 @@ class ButtonForDoctorCard extends StatelessWidget {
       width: context.width,
       child: ElevatedButton(
         onPressed: () {
-          AppConstants.customNavigation(context,
-              specialistpageScreen(Data: Data, status_id: status_id), -1, 0);
+          AppConstants.customNavigation(
+              context,
+              specialistpageScreen(
+                  Data: Data,
+                  status_id: status_id,
+                  fromOffer: fromOffer,
+                  sessionCountForOffer: sessionCountForOffer),
+              -1,
+              0);
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.transparent,

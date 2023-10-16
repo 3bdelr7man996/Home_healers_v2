@@ -103,18 +103,19 @@ class SearchState extends Equatable {
 ///////////////////////////////////////////// New Class For Reservation ////////////////////////
 
 class ReservationState extends Equatable {
-  ReservationState({
-    this.Loading = false,
-    this.advertiser_id,
-    this.start_at,
-    this.end_at,
-    this.notes = "",
-    this.sessions_count = 1,
-    this.status_id,
-    this.days,
-    this.coupon,
-    this.painPlace,
-  });
+  ReservationState(
+      {this.Loading = false,
+      this.advertiser_id,
+      this.start_at,
+      this.end_at,
+      this.notes = "",
+      this.sessions_count = 1,
+      this.status_id,
+      this.days,
+      this.coupon,
+      this.offer,
+      this.painPlace});
+
   final bool Loading;
   var advertiser_id;
   String? start_at;
@@ -122,6 +123,7 @@ class ReservationState extends Equatable {
   String? painPlace;
   String notes;
   var coupon;
+  var offer;
   final int? sessions_count;
   final int? status_id;
   List<DateTime>? days;
@@ -132,6 +134,7 @@ class ReservationState extends Equatable {
         Loading,
         advertiser_id,
         start_at,
+        offer,
         notes,
         end_at,
         painPlace,
@@ -143,6 +146,7 @@ class ReservationState extends Equatable {
   ReservationState copyWith({
     bool? Loading,
     var advertiser_id,
+    var offer,
     String? start_at,
     String? notes,
     String? end_at,
@@ -155,15 +159,41 @@ class ReservationState extends Equatable {
     RequestState? payState,
   }) =>
       ReservationState(
+          Loading: Loading ?? this.Loading,
+          advertiser_id: advertiser_id ?? this.advertiser_id,
+          start_at: start_at ?? this.start_at,
+          end_at: end_at ?? this.end_at,
+          status_id: status_id ?? this.status_id,
+          days: days ?? this.days,
+          painPlace: painPlace ?? this.painPlace,
+          notes: notes ?? this.notes,
+          coupon: coupon ?? this.coupon,
+          offer: offer ?? this.offer,
+          sessions_count: sessions_count ?? this.sessions_count);
+}
+
+/////////////// ⁡⁢⁣⁢New Class For ADs /////////////////////////////////////////
+
+class GetAllAdsState extends Equatable {
+  GetAllAdsState({
+    this.Loading = false,
+    this.data,
+  });
+  final bool Loading;
+  var data;
+
+  @override
+  @override
+  List<Object?> get props => [
+        Loading,
+        data,
+      ];
+  GetAllAdsState copyWith({
+    bool? Loading,
+    var data,
+  }) =>
+      GetAllAdsState(
         Loading: Loading ?? this.Loading,
-        advertiser_id: advertiser_id ?? this.advertiser_id,
-        start_at: start_at ?? this.start_at,
-        end_at: end_at ?? this.end_at,
-        status_id: status_id ?? this.status_id,
-        days: days ?? this.days,
-        painPlace: painPlace ?? this.painPlace,
-        notes: notes ?? this.notes,
-        coupon: coupon ?? this.coupon,
-        sessions_count: sessions_count ?? this.sessions_count,
+        data: data ?? this.data,
       );
 }

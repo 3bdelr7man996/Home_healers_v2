@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
@@ -88,8 +88,7 @@ class _RequestsDetailsScreenForPatientState
           00,
         ).toString();
         startAt = startAt.substring(0, startAt.length - 4);
-        print(endAt);
-        print(startAt);
+
         await context
             .read<UpdateReservationCubit>()
             .onIdChange(widget.oneOrder.id.toString());
