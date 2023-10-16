@@ -3,21 +3,25 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-// ignore: must_be_immutable
 class OneOptionForPatient extends StatelessWidget {
-  String IconPath, title;
-  var routeScreen;
-  OneOptionForPatient(
-      {super.key,
-      required this.IconPath,
-      required this.title,
-      this.routeScreen});
+  final String iconPath, title;
+  final Widget? routeScreen;
+  final void Function()? onPressed;
+  const OneOptionForPatient({
+    super.key,
+    required this.iconPath,
+    required this.title,
+    this.routeScreen,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        AppConstants.customNavigation(context, routeScreen, -1, 0);
+        if (routeScreen != null) {
+          AppConstants.customNavigation(context, routeScreen!, -1, 0);
+        }
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,18 +31,21 @@ class OneOptionForPatient extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
-                IconPath,
+                iconPath,
                 width: 40,
                 height: 40,
               ),
               10.pw,
               Text(
                 title,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
             ],
           ),
-          Icon(Icons.arrow_back_ios_new)
+          IconButton(
+            onPressed: onPressed,
+            icon: const Icon(Icons.arrow_back_ios_new),
+          ),
         ],
       ),
     );

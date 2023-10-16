@@ -26,16 +26,16 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
   Future<void> GetOrders(BuildContext context) async {
     try {
       MyOrdersModel response = await myOrdersRepo.GetMyOrders();
-      emit(state.copyWith(AllOrders: response.data));
+      emit(state.copyWith(allOrders: response.data));
 
       print(response);
-      var arrayForReviewing = [];
-      var arrayForConfirmed = [];
-      var arrayForWaitConfirmed = [];
-      var arrayForPending = [];
-      var arrayForCompleted = [];
-      var arrayForCanceled = [];
-      for (var order in response.data) {
+      List<OrderData>? arrayForReviewing = [];
+      List<OrderData>? arrayForConfirmed = [];
+      List<OrderData>? arrayForWaitConfirmed = [];
+      List<OrderData>? arrayForPending = [];
+      List<OrderData>? arrayForCompleted = [];
+      List<OrderData>? arrayForCanceled = [];
+      for (var order in response.data!) {
         if (order.status == "reviewing") {
           arrayForReviewing.add(order);
         } else if (order.status == "confirmed") {
@@ -50,13 +50,13 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
           arrayForCanceled.add(order);
         }
       }
-      emit(state.copyWith(ReviewingOrders: arrayForReviewing));
-      emit(state.copyWith(ConfirmedOrders: arrayForConfirmed));
-      emit(state.copyWith(WaitConfirmOrders: arrayForWaitConfirmed));
-      emit(state.copyWith(PendingOrders: arrayForPending));
-      emit(state.copyWith(CompletedOrders: arrayForCompleted));
-      emit(state.copyWith(CanceledOrders: arrayForCanceled));
-      print(state.ConfirmedOrders);
+      emit(state.copyWith(reviewingOrders: arrayForReviewing));
+      emit(state.copyWith(confirmedOrders: arrayForConfirmed));
+      emit(state.copyWith(waitConfirmOrders: arrayForWaitConfirmed));
+      emit(state.copyWith(pendingOrders: arrayForPending));
+      emit(state.copyWith(completedOrders: arrayForCompleted));
+      emit(state.copyWith(canceledOrders: arrayForCanceled));
+      print(state.confirmedOrders);
       print("asd");
       // print(state.ReviewingOrders);
     } catch (e) {

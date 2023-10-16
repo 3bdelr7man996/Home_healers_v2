@@ -15,6 +15,9 @@ import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/payment/data/datasources/payment_ds.dart';
+import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/datasources/my_orders_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_info_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_reservation_ds.dart';
@@ -81,6 +84,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateInfoDS(apiHelper: sl()));
   sl.registerLazySingleton(() => FavoriteDS(apiHelper: sl()));
   sl.registerLazySingleton(() => AddFavoriteDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => PaymentDataSource(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -94,6 +98,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => UpdateInfoRepo(dataSource: sl()));
   sl.registerLazySingleton(() => FavoriteRepo(dataSource: sl()));
   sl.registerLazySingleton(() => AddFavoriteRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => PaymentRepository(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -106,4 +111,5 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => UpdateInfoCubit(UpdateInfo: sl()));
   sl.registerFactory(() => FavoriteCubit(favoriteRepo: sl()));
   sl.registerFactory(() => AddFavoriteCubit(addFavoriteRepo: sl()));
+  sl.registerFactory(() => PaymentCubit(repository: sl()));
 }

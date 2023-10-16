@@ -20,6 +20,21 @@ class AppImages {
   static String correctIcon = "assets/icons/correct_icon.svg";
   static String children = "assets/icons/children_icon.svg";
   static String muscle = "assets/icons/muscle_icon.svg";
+  // ignore: non_constant_identifier_names
   static String sports_muscle_injuries_icon =
       "assets/icons/sports_muscle_injuries_icon.svg";
+  static String alertSign = "assets/icons/alert_sign.svg";
+  static String likeSign = "assets/icons/like.svg";
+  static String settingPerson = "assets/icons/person_setting_icon.svg";
+  static String settingLock = "assets/icons/lock_setting_icon.svg";
+  static String settingRequests = "assets/icons/requests_setting_icon.svg";
+  static String settingCertificate =
+      "assets/icons/certificate_setting_icon.svg";
+  static String settingPoints = "assets/icons/my_point_setting_icon.svg";
+  static String settingPrivacy = "assets/icons/privacy_setting_icon.svg";
+  static String settingWebPg = "assets/icons/web_setting_icon.svg";
+  static String settingShare = "assets/icons/share_setting_icon.svg";
+  static String settingRules = "assets/icons/rules_setting_icon.svg";
+  static String settingPolicy = "assets/icons/use_setting_icon.svg";
+  static String logOutIcon = "assets/icons/log_out_setting_icon.svg";
 }

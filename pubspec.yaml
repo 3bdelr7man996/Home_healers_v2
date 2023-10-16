@@ -39,6 +39,7 @@ dependencies:
   simple_html_css: ^4.0.0
   maps_launcher: ^2.2.0
   url_launcher: ^6.1.14
+  flutter_inappwebview: ^5.8.0
 
 dev_dependencies:
   flutter_test:

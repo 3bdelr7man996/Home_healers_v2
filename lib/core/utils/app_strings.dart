@@ -2,6 +2,7 @@ class AppStrings {
   static String baseUrl = "*";
   static String divUrl = "https://dev.home-healers.com";
   static String imageUrl = "https://dev.home-healers.com/upload/";
+  static String visaBaseUrl = "https://testing.home-healers.com";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";

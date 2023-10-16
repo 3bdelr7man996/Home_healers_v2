@@ -8,6 +8,8 @@ import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
@@ -97,6 +99,11 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => UpdateInfoCubit(
           UpdateInfo: di.sl<UpdateInfoRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => PaymentCubit(
+          repository: di.sl<PaymentRepository>(),
         ),
       ),
     ],

@@ -42,8 +42,8 @@ class ApiBaseHelper {
     String? newBaseUrl,
   }) async {
     Map<String, dynamic>? responseJson;
-
-    Uri urlRequest = Uri.parse(newBaseUrl ?? baseUrl + url)
+    log("api url $url");
+    Uri urlRequest = Uri.parse("${newBaseUrl ?? baseUrl}$url")
         .replace(queryParameters: queryParameters);
     try {
       log(urlRequest.toString());

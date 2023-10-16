@@ -130,5 +130,18 @@
   "gender_required": "حدد النوع",
   "accept_term": "وافق على الشروط والاحكام",
   "search": "البحث",
-  "full_name": "الاسم الكامل"
+  "full_name": "الاسم الكامل",
+  "thank_you":"شكرا لك!",
+  "back":"عودة",
+  "reservation_been_confirmed":"تم تأكيد حجزك",
+  "booking_with_physiotherapist_confirmed":"لقد تم تأكيد حجزك مع أخصائي علاج طبيعي ",
+  "order_number":"رقم الطلب ",
+  "canceled_payment":"لقد قمت بإلغاء عملية الدفع",
+  "edit_account":"تعديل الحساب",
+  "specialist_requests":"طلبات الأخصائي",
+  "certificates_and_documents":"الشهادات و المستندات",
+  "about_the_app":"عن التطبيق",
+  "visit_the_application_website":"زيارة موقع التطبيق",
+  "share_app":"مشاركة التطبيق",
+  "c":"تسجيل الخروج"
 }

@@ -17,11 +17,4 @@ class ReservationRepo {
     );
     return MakeReservationResponse;
   }
-
-  Future<String>? visaPayment(
-    Map<String, dynamic> body,
-  ) async {
-    Map<String, dynamic>? response = await dataSource.visaPayment(body: body);
-    return response?["redirect_url"];
-  }
 }
