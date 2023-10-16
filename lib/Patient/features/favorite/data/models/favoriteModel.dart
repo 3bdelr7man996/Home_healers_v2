@@ -44,10 +44,10 @@ class Data1 {
   late var from;
   late var lastPage;
   late final String? lastPageUrl;
-  late final Null nextPageUrl;
+  late var nextPageUrl;
   late final String? path;
   late var perPage;
-  late final Null prevPageUrl;
+  late var prevPageUrl;
   late var to;
   late var total;
 
@@ -60,10 +60,10 @@ class Data1 {
     from = json?['from'];
     lastPage = json?['last_page'];
     lastPageUrl = json?['last_page_url'];
-    nextPageUrl = null;
+    nextPageUrl = json?['next_page_url'];
     path = json?['path'];
     perPage = json?['per_page'];
-    prevPageUrl = null;
+    prevPageUrl = json?['prev_page_url'];
     to = json?['to'];
     total = json?['total'];
   }
@@ -167,14 +167,14 @@ class Advertiser {
   late final String? mobile;
   late final String? email;
   late final String? image;
-  late final Null images;
+  late var images;
   late final String? descAr;
   late final String? descEn;
   late final String? addressAr;
   late final String? addressEn;
   late final String? gender;
-  late final Null iban;
-  late final Null location;
+  late var iban;
+  late var location;
   late var bundleId;
   late var countryId;
   late var cityId;
@@ -186,8 +186,8 @@ class Advertiser {
   late final String? lat;
   late final String? lng;
   late final String? status;
-  late final Null centerId;
-  late final Null fcmToken;
+  late var centerId;
+  late var fcmToken;
   late var isOnline;
   late final String? createdAt;
   late final String? updatedAt;
@@ -206,14 +206,14 @@ class Advertiser {
     mobile = json?['mobile'];
     email = json?['email'];
     image = json?['image'];
-    images = null;
+    images = json?['images'];
     descAr = json?['desc_ar'];
     descEn = json?['desc_en'];
     addressAr = json?['address_ar'];
     addressEn = json?['address_en'];
     gender = json?['gender'];
-    iban = null;
-    location = null;
+    iban = json?['iban'];
+    location = json?['location'];
     bundleId = json?['bundle_id'];
     countryId = json?['country_id'];
     cityId = json?['city_id'];
@@ -225,8 +225,8 @@ class Advertiser {
     lat = json?['lat'];
     lng = json?['lng'];
     status = json?['status'];
-    centerId = null;
-    fcmToken = null;
+    centerId = json?['center_id'];
+    fcmToken = json?['fcm_token'];
     isOnline = json?['is_online'];
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
@@ -366,15 +366,15 @@ class User {
   late final String? name;
   late final String? mobile;
   late final String? image;
-  late final Null fcmToken;
+  late var fcmToken;
   late final String? email;
-  late final Null emailVerifiedAt;
+  late var emailVerifiedAt;
   late final String? gender;
   late var cityId;
-  late final Null centerId;
+  late var centerId;
   late final String? createdAt;
   late final String? updatedAt;
-  late final Null deletedAt;
+  late var deletedAt;
   late final List<dynamic> doctorReports;
   late final List<dynamic> diagnoseForms;
 
@@ -383,15 +383,15 @@ class User {
     name = json?['name'];
     mobile = json?['mobile'];
     image = json?['image'];
-    fcmToken = null;
+    fcmToken = json?['fcm_token'];
     email = json?['email'];
-    emailVerifiedAt = null;
+    emailVerifiedAt = json?['email_verified_at'];
     gender = json?['gender'];
     cityId = json?['city_id'];
-    centerId = null;
+    centerId = json?['center_id'];
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
-    deletedAt = null;
+    deletedAt = json?['delete_at'];
     doctorReports = List.castFrom<dynamic, dynamic>(json?['doctor_reports']);
     diagnoseForms = List.castFrom<dynamic, dynamic>(json?['diagnose_forms']);
   }

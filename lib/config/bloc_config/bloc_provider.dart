@@ -4,10 +4,15 @@ import 'package:dr/Patient/features/favorite/data/repositories/addFavorite_repo.
 import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
+import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
+import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/offer/data/repositories/get_offers_Repo.dart';
+import 'package:dr/Patient/features/offer/data/repositories/get_packages_repo.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
@@ -76,8 +81,8 @@ MultiBlocProvider blocMultiProvider({required child}) {
       ),
       BlocProvider(
         create: (BuildContext context) => ReservationCubit(
-          reservationRepo: di.sl<ReservationRepo>(),
-        ),
+            reservationRepo: di.sl<ReservationRepo>(),
+            reservationWithOfferRepo: di.sl<ReservationWithOfferRepo>()),
       ),
       BlocProvider(
         create: (BuildContext context) => MyOrdersCubit(
@@ -97,6 +102,21 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => UpdateInfoCubit(
           UpdateInfo: di.sl<UpdateInfoRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => GetPackagesCubit(
+          getPackagesRepo: di.sl<GetPackagesRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => GetOffersCubit(
+          getOffersRepo: di.sl<GetOffersRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => GetAllAdsCubit(
+          getAllAdsRepo: di.sl<GetAllAdsRepo>(),
         ),
       ),
     ],

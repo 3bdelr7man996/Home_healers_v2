@@ -107,7 +107,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
   @override
   void initState() {
     super.initState();
-    print(widget.Data["categories"]);
+
     for (var item in widget.Data["categories"]) {
       names.add(item['name_ar']);
     }
@@ -305,9 +305,7 @@ class _specialistInfoState extends State<specialistInfo> {
   @override
   void initState() {
     super.initState();
-    print("Ghaith");
-    print(widget.Data);
-    print("Ghaith");
+
     for (var item in widget.Data["status_advisor"]) {
       names.add(item['name_ar']);
     }
@@ -426,19 +424,22 @@ class _specialistInfoState extends State<specialistInfo> {
           ],
         ),
         5.ph,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Icon(
-              Icons.location_on_outlined,
-              color: AppColors.primaryColor,
-            ),
-            10.pw,
-            Text(
-              "${widget.Data["address_ar"]}",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-          ],
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Icon(
+                Icons.location_on_outlined,
+                color: AppColors.primaryColor,
+              ),
+              10.pw,
+              Text(
+                "${widget.Data["address_ar"]}",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -548,7 +549,14 @@ class _CertificatesState extends State<Certificates> {
 class ButtonWithCounter extends StatefulWidget {
   var Data;
   var status_id;
-  ButtonWithCounter({super.key, this.Data, this.status_id});
+  bool fromOffer;
+  var sessionCountForOffer;
+  ButtonWithCounter(
+      {super.key,
+      this.Data,
+      this.status_id,
+      this.sessionCountForOffer,
+      this.fromOffer = false});
 
   @override
   State<ButtonWithCounter> createState() => _ButtonWithCounterState();
@@ -556,6 +564,15 @@ class ButtonWithCounter extends StatefulWidget {
 
 class _ButtonWithCounterState extends State<ButtonWithCounter> {
   int number = 1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.sessionCountForOffer != null)
+      context
+          .read<ReservationCubit>()
+          .OnChangeSessionCount(widget.sessionCountForOffer);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -567,40 +584,50 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    number++;
-                    context.read<ReservationCubit>().increaseSessionsCount();
-                  });
-                },
-                child: const Icon(
-                  Icons.add_circle,
-                  size: 35,
-                  color: AppColors.primaryColor,
-                ),
-              ),
+              widget.sessionCountForOffer != null
+                  ? SizedBox()
+                  : InkWell(
+                      onTap: () {
+                        setState(() {
+                          number++;
+                          context
+                              .read<ReservationCubit>()
+                              .increaseSessionsCount();
+                        });
+                      },
+                      child: const Icon(
+                        Icons.add_circle,
+                        size: 35,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
               5.pw,
               Text(
-                '${number}',
+                widget.sessionCountForOffer != null
+                    ? '${widget.sessionCountForOffer}'
+                    : '${number}',
                 style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
               ),
               5.pw,
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    if (number > 1) {
-                      number--;
-                      context.read<ReservationCubit>().decraseSessionsCount();
-                    }
-                  });
-                },
-                child: const Icon(
-                  Icons.remove_circle,
-                  size: 35,
-                  color: AppColors.primaryColor,
-                ),
-              ),
+              widget.sessionCountForOffer != null
+                  ? SizedBox()
+                  : InkWell(
+                      onTap: () {
+                        setState(() {
+                          if (number > 1) {
+                            number--;
+                            context
+                                .read<ReservationCubit>()
+                                .decraseSessionsCount();
+                          }
+                        });
+                      },
+                      child: const Icon(
+                        Icons.remove_circle,
+                        size: 35,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
             ],
           ),
           Container(
@@ -610,7 +637,9 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                 AppConstants.customNavigation(
                     context,
                     DateOfSessionScreen(
-                        Data: widget.Data, status_id: widget.status_id),
+                        Data: widget.Data,
+                        status_id: widget.status_id,
+                        fromOffer: widget.fromOffer),
                     -1,
                     0);
               },

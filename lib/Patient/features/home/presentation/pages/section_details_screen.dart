@@ -11,10 +11,14 @@ class SectionDetailsScreen extends StatefulWidget {
   var SectiondetailsTitle;
   var numberOfIcon;
   var status_id;
+  bool fromOffer;
+  var sessionCountForOffer;
   SectionDetailsScreen(
       {super.key,
+      this.sessionCountForOffer,
       required this.SectiondetailsTitle,
       this.status_id,
+      this.fromOffer = false,
       required this.numberOfIcon});
 
   @override
@@ -48,7 +52,9 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     return Scaffold(
       appBar: customAppBar(context,
           backButton: true, title: widget.SectiondetailsTitle),
-      bottomNavigationBar: BottomNavigationForPatient(selectedIndex: 2),
+      bottomNavigationBar: widget.fromOffer
+          ? null
+          : BottomNavigationForPatient(selectedIndex: 2),
       body: Stack(
         children: [
           data == null
@@ -76,6 +82,9 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return DoctorCard(
+                                  sessionCountForOffer:
+                                      widget.sessionCountForOffer,
+                                  fromOffer: widget.fromOffer,
                                   status_id: widget.status_id,
                                   Data: data[index],
                                   name: data[index]["name_ar"],
