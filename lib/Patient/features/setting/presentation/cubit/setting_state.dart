@@ -76,7 +76,7 @@ class UpdateReservationState extends Equatable {
     String? id,
     var start_at,
     var end_at,
-    String? status,
+    var status,
     bool? showPoUp,
   }) =>
       UpdateReservationState(

@@ -25,8 +25,12 @@ import 'package:dr/doctor/features/home/data/repositories/reservation_orders_rep
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:dr/features/auth/data/repositories/forget_password_repo.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
+import 'package:dr/features/auth/data/repositories/reset_password_repo.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:dr/di_container.dart' as di;
@@ -124,6 +128,16 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => PaymentCubit(
           repository: di.sl<PaymentRepository>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => ForgetPasswordCubit(
+          repository: di.sl<ForgetPasswordRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => ResetPasswordCubit(
+          repository: di.sl<ResetPasswordRepo>(),
         ),
       ),
     ],

@@ -1,6 +1,7 @@
 import 'package:dr/Patient/features/offer/presentation/widgets/offer_widgets.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class PackagesScreen extends StatefulWidget {
   var Packages;
   PackagesScreen({super.key, this.Packages});

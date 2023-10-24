@@ -3,6 +3,7 @@ import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class OfferDetailsScreen extends StatefulWidget {
   var Package;
   OfferDetailsScreen({super.key, this.Package});
@@ -27,7 +28,8 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: IconsForSections(formOffer: true,sessionCountForOffer:widget.Package.sessionCount),
+        child: IconsForSections(
+            formOffer: true, sessionCountForOffer: widget.Package.sessionCount),
       )),
     );
   }

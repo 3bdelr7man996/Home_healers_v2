@@ -5,6 +5,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class OfferCard extends StatefulWidget {
   var Package;
   OfferCard({super.key, this.Package});

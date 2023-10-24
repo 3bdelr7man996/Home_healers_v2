@@ -1,7 +1,7 @@
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
-import 'package:dr/Patient/features/offer/data/models/get_offers_model.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class OfferScreen extends StatefulWidget {
   var Offers;
   OfferScreen({super.key, required this.Offers});
