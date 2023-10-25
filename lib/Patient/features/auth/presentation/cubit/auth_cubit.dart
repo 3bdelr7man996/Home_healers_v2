@@ -9,6 +9,7 @@ import 'package:dr/core/utils/toast_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 
 import '../../data/models/sign_up_patient_model.dart';
 
@@ -18,11 +19,27 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   final SignUpPatientRepo signUpPatientRepo;
 
   AuthCubitForPatient({required this.signUpPatientRepo})
-      : super(const AuthStateForPatient());
+      : super(AuthStateForPatient());
 
   //?==================== formFields change ====================
+  void onAddressChange({
+    String? address,
+    Location? location,
+  }) {
+    print("current address $address");
+    print("location ${location?.lng}");
+    emit(state.copyWith(
+      location: location,
+      address: address,
+    ));
+  }
 
   onGenderChange(String gender) => emit(state.copyWith(gender: gender));
+  onIsVisibleChange() => emit(state.copyWith(isVisible: !state.isVisible));
+  oncountryCodeChange(String CountryCode) =>
+      emit(state.copyWith(country_code: CountryCode));
+  onNationalityChange(String nationality) =>
+      emit(state.copyWith(nationality: nationality));
 
   onFNameChange(String fname) => emit(state.copyWith(firstName: fname));
 
@@ -30,7 +47,11 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
 
   onEmailChange(String email) => emit(state.copyWith(email: email));
 
+  onCityChange(var CityId) => emit(state.copyWith(cityId: CityId));
+
   onPhoneChange(String phone) => emit(state.copyWith(phone: phone));
+  onbirthdayChange(String birthday) => emit(state.copyWith(birthday: birthday));
+  onageChange(String age) => emit(state.copyWith(age: age));
 
   onPassWordChange(String password) => emit(state.copyWith(password: password));
 
@@ -55,15 +76,13 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   ///Register new patient
   Future<void> signUpPatient(BuildContext context) async {
     try {
-      print("aha ");
-      print(state.firstName);
-      print(state.lastName);
-      print(state.email);
-      print(state.phone);
-      print(state.gender);
-      print(state.password);
-      print(state.confirmPassword);
       fieldsValidation();
+      var inputFormat = DateFormat('MM/dd/yyyy');
+      var outputFormat = DateFormat('yyyy-MM-dd');
+
+      var parsedDate = inputFormat.parse(state.birthday);
+      var formattedDate = outputFormat.format(parsedDate);
+
       Map<String, String> body = {
         "name": "${state.firstName} ${state.lastName}",
         "email": "${state.email}",
@@ -71,7 +90,14 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
         "gender": "${state.gender}",
         "password": "${state.password}",
         "c_password": "${state.confirmPassword}",
-        "city_id": "4"
+        "city_id": "${state.cityId}",
+        "line1": "${state.location.lat}",
+        "line2": "${state.location.lng}",
+        "nationality": "${state.nationality}",
+        "age": "${state.age}",
+        "birthday": "${formattedDate}",
+        "country_code": "${state.country_code}",
+        "region": "${state.address}",
       };
 
       emit(state.copyWith(registerState: RequestState.loading));
@@ -92,6 +118,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
 
   ///validate on fields
   void fieldsValidation() {
+    emit(state.copyWith(requestStatus: !state.requestStatus));
     if (state.gender == null || state.gender!.isEmpty) {
       throw ("gender_required".tr());
     }
@@ -126,6 +153,18 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     }
     if (state.city_id == null) {
       throw ("ادخل  رقم الهوية");
+    }
+    if (state.cityId == null) {
+      throw ("اختر مدينتك");
+    }
+    if (state.address == null) {
+      throw ("حدد موقعك");
+    }
+    if (state.nationality == null) {
+      throw ("حدد جنسيتك");
+    }
+    if (state.country_code == null) {
+      throw ("حدد رمز مدينتك");
     }
   }
 

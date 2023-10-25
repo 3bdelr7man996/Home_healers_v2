@@ -4,8 +4,10 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class FilterForSectionDetails extends StatefulWidget {
-  const FilterForSectionDetails({super.key});
+  Function search;
+  FilterForSectionDetails({super.key, required this.search});
 
   @override
   State<FilterForSectionDetails> createState() =>
@@ -58,6 +60,7 @@ class _FilterForSectionDetailsState extends State<FilterForSectionDetails> {
           width: context.width * 0.7,
           child: TextField(
             controller: _searchController,
+            onChanged: (value) => widget.search(value),
             decoration: const InputDecoration(
               filled: true,
               fillColor: Colors.white,

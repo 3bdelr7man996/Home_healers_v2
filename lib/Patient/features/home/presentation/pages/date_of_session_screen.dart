@@ -1,16 +1,14 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
 
 class DateOfSessionScreen extends StatefulWidget {
   var Data;
@@ -63,29 +61,35 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                       ),
                     ),
               10.ph,
-              Container(
-                width: context.width,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (widget.fromOffer) {
-                      context
-                          .read<ReservationCubit>()
-                          .MakeReservation(context, true);
-                    } else
-                      context
-                          .read<ReservationCubit>()
-                          .MakeReservation(context, false);
-                  },
-                  child: Text('إتمام العملية'),
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
-                    onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
+              BlocBuilder<ReservationCubit, ReservationState>(
+                builder: (context, state) {
+                  return state.Loading
+                      ? CircularProgressIndicator()
+                      : Container(
+                          width: context.width,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (widget.fromOffer) {
+                                context
+                                    .read<ReservationCubit>()
+                                    .MakeReservation(context, true);
+                              } else
+                                context
+                                    .read<ReservationCubit>()
+                                    .MakeReservation(context, false);
+                            },
+                            child: Text('إتمام العملية'),
+                            style: ElevatedButton.styleFrom(
+                              primary: AppColors.primaryColor,
+                              onPrimary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        );
+                },
               )
             ],
           ),

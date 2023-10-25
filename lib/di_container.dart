@@ -41,9 +41,15 @@ import 'package:dr/doctor/features/notification/presentation/cubit/notification_
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:dr/features/auth/data/datasources/forget_password_ds.dart';
 import 'package:dr/features/auth/data/datasources/login_ds.dart';
+import 'package:dr/features/auth/data/datasources/reset_password_ds.dart';
+import 'package:dr/features/auth/data/repositories/forget_password_repo.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
+import 'package:dr/features/auth/data/repositories/reset_password_repo.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'config/notifications_config/firebase_messages.dart';
 import 'config/notifications_config/local_notification_config.dart';
@@ -109,6 +115,8 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetOffersDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ReservationWithOfferDS(apiHelper: sl()));
   sl.registerLazySingleton(() => GetAllAdsDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => ForgetPasswordDs(apiHelper: sl()));
+  sl.registerLazySingleton(() => ResetPasswordDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -127,6 +135,8 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ReservationWithOfferRepo(dataSource: sl()));
   sl.registerLazySingleton(() => GetAllAdsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => PaymentRepository(dataSource: sl()));
+  sl.registerLazySingleton(() => ForgetPasswordRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => ResetPasswordRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -144,4 +154,6 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => GetOffersCubit(getOffersRepo: sl()));
   sl.registerFactory(() => GetAllAdsCubit(getAllAdsRepo: sl()));
   sl.registerFactory(() => PaymentCubit(repository: sl()));
+  sl.registerFactory(() => ForgetPasswordCubit(repository: sl()));
+  sl.registerFactory(() => ResetPasswordCubit(repository: sl()));
 }

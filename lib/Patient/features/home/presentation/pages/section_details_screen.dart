@@ -42,13 +42,31 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
   }
 
   String? image;
+  var data;
+  var searchResults = [];
+  void search(String query) {
+    print("///////////////////////////////////////////");
+    print("Ghaith");
+    setState(() {
+      searchResults = data.where((obj) {
+        final name = obj['name_ar'].toString().toLowerCase();
+        return name.contains(query.toLowerCase());
+      }).toList();
+    });
+    print(searchResults);
+    print("///////////////////////////////////////////");
+  }
 
+  int i = 0;
   @override
   Widget build(BuildContext context) {
-    var data = context.select(
+    data = context.select(
       (SectionCubit cubit) => cubit.state.listOfResponse?["data"],
     );
-
+    if (i == 0 && data != null) {
+      searchResults = data;
+      i++;
+    }
     return Scaffold(
       appBar: customAppBar(context,
           backButton: true, title: widget.SectiondetailsTitle),
@@ -57,50 +75,55 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
           : BottomNavigationForPatient(selectedIndex: 2),
       body: Stack(
         children: [
-          data == null
+          searchResults == null
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : data.length == 0
-                  ? const Center(
-                      child: Text(
-                      "عذراً لا يوجد أخصائيين \n في هذا المجال",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          height: 2,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25.0),
-                    ))
-                  : Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: FilterForSectionDetails(),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return DoctorCard(
-                                  sessionCountForOffer:
-                                      widget.sessionCountForOffer,
-                                  fromOffer: widget.fromOffer,
-                                  status_id: widget.status_id,
-                                  Data: data[index],
-                                  name: data[index]["name_ar"],
-                                  status: data[index]["status"],
-                                  price: data[index]["session_price"],
-                                  address: data[index]["address_ar"],
-                                  statusAdvisor: data[index]["status_advisor"],
-                                  categories: data[index]['categories'],
-                                  image: data[index]["image"],
-                                  toggleVisibility: _toggleVisibility,
-                                  isVisible: _isVisible);
-                            },
-                          ),
-                        )
-                      ],
+              : Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: FilterForSectionDetails(search: search),
                     ),
+                    searchResults.length == 0
+                        ?
+                        // const Center(
+                        //     child: Text(
+                        //     "عذراً لا يوجد أخصائيين ",
+                        //     textAlign: TextAlign.center,
+                        //     style: TextStyle(
+                        //         height: 2,
+                        //         fontWeight: FontWeight.bold,
+                        //         fontSize: 25.0),
+                        //   ))
+                        SizedBox()
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: searchResults.length,
+                              itemBuilder: (context, index) {
+                                return DoctorCard(
+                                    sessionCountForOffer:
+                                        widget.sessionCountForOffer,
+                                    fromOffer: widget.fromOffer,
+                                    status_id: widget.status_id,
+                                    Data: searchResults[index],
+                                    name: searchResults[index]["name_ar"],
+                                    status: searchResults[index]["status"],
+                                    price: searchResults[index]
+                                        ["session_price"],
+                                    address: searchResults[index]["address_ar"],
+                                    statusAdvisor: searchResults[index]
+                                        ["status_advisor"],
+                                    categories: searchResults[index]
+                                        ['categories'],
+                                    image: searchResults[index]["image"],
+                                    toggleVisibility: _toggleVisibility,
+                                    isVisible: _isVisible);
+                              },
+                            ),
+                          )
+                  ],
+                ),
           PopUpForAddToFavourite(
             isVisible: _isVisible,
             toggleVisibility: _toggleVisibility,

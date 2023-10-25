@@ -397,48 +397,53 @@ class _specialistInfoState extends State<specialistInfo> {
               "سعر العرض : ",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            const Text(
-              "250 SAR",
+            Text(
+              "${widget.Data["session_price"]} SAR",
               style: TextStyle(
                   fontWeight: FontWeight.w500, color: AppColors.secondryColor),
             ),
             10.pw,
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: RichText(
-                text: const TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: '800 SAR',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: Colors.grey,
-                          decorationThickness: 2.0,
-                          fontSize: 14),
-                    ),
-                  ],
-                ),
-              ),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 4),
+            //   child: RichText(
+            //     text: const TextSpan(
+            //       children: <TextSpan>[
+            //         TextSpan(
+            //           text: '800 SAR',
+            //           style: TextStyle(
+            //               color: Colors.grey,
+            //               decoration: TextDecoration.lineThrough,
+            //               decorationColor: Colors.grey,
+            //               decorationThickness: 2.0,
+            //               fontSize: 14),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // )
           ],
         ),
         5.ph,
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              const Icon(
-                Icons.location_on_outlined,
-                color: AppColors.primaryColor,
-              ),
-              10.pw,
-              Text(
-                "${widget.Data["address_ar"]}",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-            ],
+        Container(
+          width: context.width,
+          alignment: Alignment.centerRight,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                const Icon(
+                  Icons.location_on_outlined,
+                  color: AppColors.primaryColor,
+                ),
+                10.pw,
+                Text(
+                  "${widget.Data["address_ar"]}",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           ),
         ),
       ],
