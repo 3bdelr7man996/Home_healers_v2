@@ -96,7 +96,7 @@ class _RequestsDetailsScreenForPatientState
         await context.read<UpdateReservationCubit>().onEndAtChange(endAt);
         await context
             .read<UpdateReservationCubit>()
-            .onStatusChange(widget.oneOrder.status);
+            .onStatusChange(widget.oneOrder.status!);
         await context
             .read<UpdateReservationCubit>()
             .updateSelectedReservation(context);

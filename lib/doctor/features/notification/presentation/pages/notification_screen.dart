@@ -1,52 +1,67 @@
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/notification/presentation/widgets/notification_widgets.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
   @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  @override
+  void initState() {
+    context.read<NotificationCubit>().getAllNotifications();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        customAppBar(context, backButton: false, title: "notification"),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-              child: Column(
-                children: [
-                  OneNotification(
-                      title: "تم بنجاح حجز الموعد",
-                      imagePath: "assets/icons/done_notification_icon.svg",
-                      date: "15:30",
-                      description:
-                          "هذا النص هو مثال لنص يمكن استبداله حيث يمكننا اضافة اي نص اخر يعبر عن تلك الحالة بشكل عادي."),
-                  OneNotification(
-                      title: "تحذير  من نقص المعلومات",
-                      imagePath: "assets/icons/warnning_notification_icon.svg",
-                      date: "15:30",
-                      description:
-                          "هذا النص هو مثال لنص يمكن استبداله حيث يمكننا اضافة اي نص اخر يعبر عن تلك الحالة بشكل عادي."),
-                  OneNotification(
-                      title: "خطأ في الإعدادت",
-                      imagePath: "assets/icons/wrong_notification_icon.svg",
-                      date: "15:30",
-                      description:
-                          "هذا النص هو مثال لنص يمكن استبداله حيث يمكننا اضافة اي نص اخر يعبر عن تلك الحالة بشكل عادي."),
-                  OneNotification(
-                      title: "تحديث في الأبليكيشن",
-                      imagePath:
-                          "assets/icons/blue_warnning_notification_icon.svg",
-                      date: "15:30",
-                      description:
-                          "هذا النص هو مثال لنص يمكن استبداله حيث يمكننا اضافة اي نص اخر يعبر عن تلك الحالة بشكل عادي."),
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
+    return SafeArea(
+      child: Column(
+        children: [
+          customAppBar(context, backButton: false, title: "notification"),
+          BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+              if (state.notifState == RequestState.loading) {
+                return const CustomLoader();
+              } else if (state.notifState == RequestState.success &&
+                  state.notifList!.isNotEmpty) {
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 30.0),
+                    child: ListView.builder(
+                      itemCount: state.notifList?.length,
+                      itemBuilder: (context, index) {
+                        return OneNotification(
+                            title: state.notifList?[index].data?.title ?? "",
+                            imagePath:
+                                "${state.notifList?[index].data?.icon ?? 'notif_purple'}.svg",
+                            date: state.notifList?[index].createdAt ?? "",
+                            description:
+                                state.notifList?[index].data?.body ?? "");
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: Center(
+                    child: Text("there_are_no_notifications".tr()),
+                  ),
+                );
+              }
+            },
+          )
+        ],
+      ),
     );
   }
 }

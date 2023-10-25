@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
@@ -34,7 +35,8 @@ class LoginCubit extends Cubit<LoginState> {
       UserModel? user = await repository.userLogin(body: {
         "email": "${state.email}",
         "password": "${state.password}",
-        "fcm_token": "" //todo
+        "fcm_token":
+            await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       });
 
       await cacheData(user);

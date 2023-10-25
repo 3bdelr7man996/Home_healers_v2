@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:dr/config/notifications_config/local_notification_config.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/splash_screen.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'config/notifications_config/firebase_messages.dart';
 import 'di_container.dart' as di;
 import 'package:bot_toast/bot_toast.dart';
 
@@ -16,9 +19,11 @@ import 'features/splash/presentation/pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await di.serviceLocatorInit();
   await EasyLocalization.ensureInitialized();
   await CacheHelper.init();
+
   Bloc.observer = MyBlocObserver();
 
   runApp(EasyLocalization(

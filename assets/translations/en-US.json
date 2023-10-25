@@ -145,5 +145,13 @@
   "about_the_app":"About the app",
   "visit_the_application_website":"Visit the application website",
   "share_app":"Share app",
-  "log_out":"Log Out"
+  "log_out":"Log Out",
+  "there_are_no_notifications":"There are no notifications",
+  "today":"Today",
+  "yesterday":"Yesterday",
+  "your_number_of_points":"Your number of points",
+  "point":"Point",
+  "SAR":"SAR",
+  "enjoy_your_cashback":"Enjoy your cashback",
+  "latest_activity":"Latest activity"
 }

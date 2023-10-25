@@ -7,6 +7,8 @@ class SettingState extends Equatable {
     this.myDocuments,
     this.pullStatus = RequestState.initial,
     this.appInfo,
+    this.pointsData,
+    this.pointState = RequestState.initial,
   });
 
   final List<File>? docFile;
@@ -14,6 +16,8 @@ class SettingState extends Equatable {
   final List<String>? myDocuments;
   final RequestState pullStatus;
   final InfoData? appInfo;
+  final DoctorPointsModel? pointsData;
+  final RequestState pointState;
 
   @override
   List<Object?> get props => [
@@ -22,6 +26,8 @@ class SettingState extends Equatable {
         myDocuments,
         pullStatus,
         appInfo,
+        pointsData,
+        pointState,
       ];
   SettingState copyWith({
     List<File>? docFile,
@@ -29,6 +35,8 @@ class SettingState extends Equatable {
     List<String>? myDocuments,
     RequestState? pullStatus,
     InfoData? appInfo,
+    DoctorPointsModel? pointsData,
+    RequestState? pointState,
   }) =>
       SettingState(
         docFile: docFile ?? this.docFile,
@@ -36,5 +44,7 @@ class SettingState extends Equatable {
         pullStatus: pullStatus ?? this.pullStatus,
         pushStatus: pushStatus ?? this.pushStatus,
         appInfo: appInfo ?? this.appInfo,
+        pointsData: pointsData ?? this.pointsData,
+        pointState: pointState ?? this.pointState,
       );
 }

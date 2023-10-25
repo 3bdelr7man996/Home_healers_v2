@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
 import 'package:dr/doctor/features/settings/data/models/app_info_model.dart';
+import 'package:dr/doctor/features/settings/data/models/doctor_points_model.dart';
 import 'package:dr/doctor/features/settings/data/models/documents_model.dart';
 
 class SettingsRepo {
@@ -18,5 +19,11 @@ class SettingsRepo {
   Future<InfoData?>? appInfo() async {
     AppInfoModel response = AppInfoModel.fromJson(await dataSource.appInfo());
     return response.data;
+  }
+
+  Future<DoctorPointsModel?>? doctorPoints() async {
+    DoctorPointsModel response =
+        DoctorPointsModel.fromJson(await dataSource.doctorPoints());
+    return response;
   }
 }

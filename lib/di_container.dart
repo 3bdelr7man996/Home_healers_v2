@@ -36,6 +36,8 @@ import 'package:dr/Patient/features/setting/data/repositories/update_reservation
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
+import 'package:dr/doctor/features/notification/data/data_source/notifications_ds.dart';
+import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
@@ -43,6 +45,8 @@ import 'package:dr/features/auth/data/datasources/login_ds.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'config/notifications_config/firebase_messages.dart';
+import 'config/notifications_config/local_notification_config.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/http_helper.dart';
 import 'doctor/features/auth/presentation/cubit/auth_cubit.dart';
@@ -52,6 +56,7 @@ import 'doctor/features/home/data/datasources/reservations_orders_ds.dart';
 import 'doctor/features/diagnose_report/data/repositories/diagnose_report_repo.dart';
 import 'doctor/features/home/data/repositories/reservation_orders_repo.dart';
 import 'doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
+import 'doctor/features/notification/data/repositories/notifications_repo.dart';
 
 final sl = GetIt.instance;
 
@@ -60,6 +65,9 @@ Future<void> serviceLocatorInit() async {
 
   // Core
   sl.registerLazySingleton(() => ApiBaseHelper(AppStrings.divUrl));
+  sl.registerLazySingleton(() => LocalNotificationsService());
+  sl.registerLazySingleton(
+      () => FirebaseMessagingService(localNotification: sl()));
 
   //data source class
   sl.registerLazySingleton(() => AdvertiseSignUpDS(apiHelper: sl()));
@@ -67,6 +75,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => DiagnosereportDs(apiHelper: sl()));
   sl.registerLazySingleton(() => SettingsDs(apiHelper: sl()));
   sl.registerLazySingleton(() => LoginDs(apiHelper: sl()));
+  sl.registerLazySingleton(() => NotificationsDs(apiHelper: sl()));
 
   //REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -74,6 +83,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => DiagnoseReportRepo(dataSource: sl()));
   sl.registerLazySingleton(() => SettingsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => LoginRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => NotificationsRepo(dataSource: sl()));
 
   //CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -81,6 +91,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => DiagnoseFormCubit(repository: sl()));
   sl.registerFactory(() => SettingCubit(repository: sl()));
   sl.registerFactory(() => LoginCubit(repository: sl()));
+  sl.registerFactory(() => NotificationCubit(repository: sl()));
 
   //PATIENT DATA SOURCE
   sl.registerLazySingleton(() => PatientSignUpDS(apiHelper: sl()));

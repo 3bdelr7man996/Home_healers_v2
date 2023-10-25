@@ -23,13 +23,13 @@ class RequestCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3),
-          ),
+              color: Color.fromARGB(255, 245, 243, 243),
+              spreadRadius: 6,
+              blurRadius: 5,
+              offset: Offset(3, 3),
+              blurStyle: BlurStyle.solid),
         ],
       ),
       child: Padding(

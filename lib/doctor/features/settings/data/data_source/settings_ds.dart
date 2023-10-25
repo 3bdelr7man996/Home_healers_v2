@@ -24,4 +24,11 @@ class SettingsDs {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>?> doctorPoints() async {
+    Map<String, dynamic>? response = await apiHelper.get(
+      AppStrings.doctorsPoints,
+    );
+    return response;
+  }
 }

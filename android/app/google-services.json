@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "755691730752",
+    "project_id": "healersdr-android",
+    "storage_bucket": "healersdr-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755691730752:android:aa243404b4b5f3a4956ca5",
+        "android_client_info": {
+          "package_name": "com.healers.dr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755691730752-tugurddklfksl2821n8q6db140q162aq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXwp0vLOqoIF1vGuF3qml8STo6ra0yu3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755691730752-tugurddklfksl2821n8q6db140q162aq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "755691730752-br42vs9inrii15mfsdn2g5s8s9tig20t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.home.healers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

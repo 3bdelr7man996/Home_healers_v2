@@ -3,6 +3,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/doctor/features/home/presentation/pages/all_requests.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/certificates_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
@@ -39,9 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Personalinfo(
-                    switchValue: switchValue,
-                  ),
+                  Personalinfo(switchValue: switchValue),
                   20.ph,
                   OneOption(
                     iconPath: AppImages.settingPerson,
@@ -58,6 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     iconPath: AppImages.settingRequests,
                     title: "specialist_requests".tr(),
+                    routeScreen: const Scaffold(body: Allrequests()),
                   ),
                   15.ph,
                   OneOption(

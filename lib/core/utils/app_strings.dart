@@ -19,6 +19,8 @@ class AppStrings {
   static String updateProfile = "/api/advertiser/update";
   static String advCertification = "/api/advertiser/cirtificate";
   static String appInfo = "/api/app_info";
+  static String allNotifications = "/api/getAllNotifications";
+  static String doctorsPoints = "/api/advertiser/getDoctorPoints";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";

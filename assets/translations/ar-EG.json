@@ -145,5 +145,14 @@
   "about_the_app":"عن التطبيق",
   "visit_the_application_website":"زيارة موقع التطبيق",
   "share_app":"مشاركة التطبيق",
-  "c":"تسجيل الخروج"
+  "c":"تسجيل الخروج",
+  "log_out":"تسجيل الخروج ",
+  "there_are_no_notifications":"لا يوجد اشعارات",
+  "today":"اليوم",
+  "yesterday":"أمس",
+  "your_number_of_points":"عدد نقاطك",
+  "point":"نقطة",
+  "SAR":"ريال سعودي",
+  "enjoy_your_cashback":"استمتع بالكاش باك",
+  "latest_activity":"اخر نشـاط"
 }

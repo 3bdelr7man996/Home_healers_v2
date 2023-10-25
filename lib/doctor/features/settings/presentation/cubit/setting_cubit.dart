@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/settings/data/models/app_info_model.dart';
+import 'package:dr/doctor/features/settings/data/models/doctor_points_model.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
@@ -82,6 +83,25 @@ class SettingCubit extends Cubit<SettingState> {
       emit(state.copyWith(appInfo: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+  //?========================[ GET DOCTOR POINTS DATA]===================
+
+  Future<void> doctorPoints() async {
+    try {
+      emit(state.copyWith(
+        pointState: RequestState.loading,
+      ));
+      DoctorPointsModel? response = await repository.doctorPoints();
+      emit(state.copyWith(
+        pointState: RequestState.success,
+        pointsData: response,
+      ));
+    } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+      emit(state.copyWith(
+        pointState: RequestState.failed,
+      ));
     }
   }
 }

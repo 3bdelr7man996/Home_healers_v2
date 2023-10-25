@@ -5,8 +5,13 @@ class AppImages {
   static String doctorPlaceholder = "assets/images/doctor.png";
   static String patientImg = "assets/images/patient.png";
   static String avatar = "assets/images/avatar.png";
-  //icons
+  static String pointsRestaurant = 'assets/images/restaurants.png';
+  static String pointsPurchase = 'assets/images/purchases.png';
+  static String pointsClothes = 'assets/images/clothes.png';
+  static String pointsDonaites = 'assets/images/Donations.png';
 
+  //icons
+  static String iconPath = "assets/icons/";
   static String cancelIcon = "assets/icons/cancel_icon.svg";
   static String circleBackArrowIcon = "assets/icons/circle_back_arrow_icon.svg";
   static String emailIcon = "assets/icons/email_icon.svg";
@@ -37,4 +42,5 @@ class AppImages {
   static String settingRules = "assets/icons/rules_setting_icon.svg";
   static String settingPolicy = "assets/icons/use_setting_icon.svg";
   static String logOutIcon = "assets/icons/log_out_setting_icon.svg";
+  static String pointsPayIcon = 'assets/icons/pay_icon.svg';
 }

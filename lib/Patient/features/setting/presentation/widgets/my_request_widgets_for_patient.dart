@@ -34,7 +34,7 @@ class underProcessing extends StatelessWidget {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr);
+                    names.add(item.nameAr ?? "");
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -69,7 +69,7 @@ class Accepted extends StatelessWidget {
             List<String> names = [];
             String selectedName = "";
             for (var item in listOfOrders[index].advertiser.categories) {
-              names.add(item.nameAr);
+              names.add(item.nameAr ?? "");
             }
             selectedName = names.isNotEmpty ? names[0] : 'No names available';
             return CardsForRequests(
@@ -105,7 +105,7 @@ class Confirmed extends StatelessWidget {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr);
+                    names.add(item.nameAr ?? "");
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -143,7 +143,7 @@ class completed extends StatelessWidget {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr);
+                    names.add(item.nameAr ?? "");
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -181,7 +181,7 @@ class canceledRequests extends StatelessWidget {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr);
+                    names.add(item.nameAr ?? "");
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
@@ -218,7 +218,7 @@ class Pending extends StatelessWidget {
                   List<String> names = [];
                   String selectedName = "";
                   for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr);
+                    names.add(item.nameAr ?? "");
                   }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';

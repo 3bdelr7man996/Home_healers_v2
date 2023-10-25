@@ -29,7 +29,7 @@ class SessionInfo extends StatelessWidget {
               ),
               10.ph,
               SizedBox(
-                height: context.height * 0.1,
+                height: context.height * 0.13,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: state.reservation?.days?.length,

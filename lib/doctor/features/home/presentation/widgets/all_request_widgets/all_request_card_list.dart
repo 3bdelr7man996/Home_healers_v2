@@ -47,8 +47,10 @@ class RequestsCardList extends StatelessWidget {
                     },
                     child: RequestCard(
                       title: context.locale.languageCode == "ar"
-                          ? state.resrvationStatusList![index].status!.nameAr!
-                          : state.resrvationStatusList![index].status!.nameEn!,
+                          ? state.resrvationStatusList![index].status!.nameAr ??
+                              ""
+                          : state.resrvationStatusList![index].status!.nameEn ??
+                              "",
                       pathImage: "assets/icons/muscle_icon.svg",
                       requestsCount:
                           state.resrvationStatusList![index].count ?? 0,

@@ -49,22 +49,23 @@ class ChooseCardScreen extends StatelessWidget {
             //   iconPath: "assets/icons/paypal_icon.svg",
             //   title: "PayPal",
             // ),
-            20.ph,
-            BlocBuilder<PaymentCubit, PaymentState>(
-              // buildWhen: (previous, current) =>
-              //     previous.selectedPayType != current.selectedPayType,
-              builder: (context, state) {
-                return CardWay(
-                  iconPath: "assets/icons/Apple_pay_icon.svg",
-                  title: "Apple PAy",
-                  selected: state.selectedPayType == PayType.apple,
-                  onTap: () => context
-                      .read<PaymentCubit>()
-                      .onSelectPayType(PayType.apple),
-                );
-              },
-            ),
-
+            //?============================================================
+            // 20.ph,
+            // BlocBuilder<PaymentCubit, PaymentState>(
+            // buildWhen: (previous, current) =>
+            //     previous.selectedPayType != current.selectedPayType,
+            //   builder: (context, state) {
+            //     return CardWay(
+            //       iconPath: "assets/icons/Apple_pay_icon.svg",
+            //       title: "Apple PAy",
+            //       selected: state.selectedPayType == PayType.apple,
+            //       onTap: () => context
+            //           .read<PaymentCubit>()
+            //           .onSelectPayType(PayType.apple),
+            //     );
+            //   },
+            // ),
+            //?==============================================================
             // 20.ph,
             // CardWay(
             //   iconPath: "assets/images/stc_pay.png",
