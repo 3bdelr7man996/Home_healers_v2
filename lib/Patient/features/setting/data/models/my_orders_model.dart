@@ -60,23 +60,23 @@ class OrderData {
   late var userId;
   late var advertiserId;
   late var notes;
-  late final String? coupon;
+  late var coupon;
   late var days;
-  late final String? startAt;
-  late final String? endAt;
+  late var startAt;
+  late var endAt;
   late var sessionsCount;
   late var subTotal;
-  late final String? vat;
+  late var vat;
   late var fees;
   late var amount;
   late var isPaid;
   late var paymentDetails;
-  late final String? status;
+  late var status;
   late var lat;
   late var lang;
   late var centerId;
-  late final String? createdAt;
-  late final String? updatedAt;
+  late var createdAt;
+  late var updatedAt;
   late var deletedAt;
   late var statusId;
   late var canReview;
@@ -193,40 +193,40 @@ class Advertiser {
     required this.statusAdvisor,
   });
   late var id;
-  late final String? firstnameAr;
-  late final String? firstnameEn;
-  late final String? lastnameAr;
-  late final String? lastnameEn;
-  late final String? mobile;
-  late final String? email;
-  late final String? image;
+  late var firstnameAr;
+  late var firstnameEn;
+  late var lastnameAr;
+  late var lastnameEn;
+  late var mobile;
+  late var email;
+  late var image;
   late var images;
-  late final String? descAr;
-  late final String? descEn;
-  late final String? addressAr;
-  late final String? addressEn;
-  late final String? gender;
-  late final String? iban;
-  late final String? location;
+  late var descAr;
+  late var descEn;
+  late var addressAr;
+  late var addressEn;
+  late var gender;
+  late var iban;
+  late var location;
   late var bundleId;
   late var countryId;
   late var cityId;
   late var areaId;
-  late final String? startfrom;
-  late final String? endat;
+  late var startfrom;
+  late var endat;
   late var sessionPrice;
   late var sessionDur;
-  late final String? lat;
-  late final String? lng;
-  late final String? status;
+  late var lat;
+  late var lng;
+  late var status;
   late var centerId;
-  late final String? fcmToken;
+  late var fcmToken;
   late var isOnline;
-  late final String? createdAt;
-  late final String? updatedAt;
+  late var createdAt;
+  late var updatedAt;
   late var rating;
-  late final String? nameAr;
-  late final String? nameEn;
+  late var nameAr;
+  late var nameEn;
   late final List<Categories> categories;
   late final List<StatusAdvisor> statusAdvisor;
 
@@ -328,11 +328,11 @@ class Categories {
     required this.pivot,
   });
   late var id;
-  late final String? nameAr;
-  late final String? nameEn;
-  late final String? status;
+  late var nameAr;
+  late var nameEn;
+  late var status;
   late var orderNum;
-  late final String? image;
+  late var image;
   late final Pivot pivot;
 
   Categories.fromJson(Map<String, dynamic>? json) {
@@ -388,9 +388,9 @@ class StatusAdvisor {
     required this.pivot,
   });
   late var id;
-  late final String? nameAr;
-  late final String? nameEn;
-  late final String? status;
+  late var nameAr;
+  late var nameEn;
+  late var status;
   late final Pivot pivot;
 
   StatusAdvisor.fromJson(Map<String, dynamic>? json) {

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dr/Patient/features/home/data/models/reservation-model.dart';
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
@@ -190,8 +189,9 @@ class ReservationCubit extends Cubit<ReservationState> {
           .map((date) =>
               date.toString().substring(0, date.toString().length - 4))
           .toList();
-
       fieldsValidation(withOffer);
+      emit(state.copyWith(Loading: true));
+
       Map<String, dynamic> body;
       var lat, lng;
       var permission = await Geolocator.checkPermission();
@@ -247,6 +247,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       // for (int i = 0; i < daysArray.length; i++) {
       //   body['days[$i]'] = daysArray[i];
       // }\
+
       var response;
       if (withOffer) {
         response = await reservationWithOfferRepo.MakeReservation(body: body);
@@ -254,6 +255,8 @@ class ReservationCubit extends Cubit<ReservationState> {
       } else {
         response = await reservationRepo.MakeReservation(body: body);
       }
+      emit(state.copyWith(Loading: false));
+
       print(response);
       print("Ghaith");
       AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
@@ -266,6 +269,8 @@ class ReservationCubit extends Cubit<ReservationState> {
       AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       body.removeWhere((key, value) => key.startsWith('days['));
     } catch (e) {
+      emit(state.copyWith(Loading: false));
+
       print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }

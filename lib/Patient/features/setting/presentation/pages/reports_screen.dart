@@ -194,8 +194,6 @@ class _PDFViewerState extends State<PDFViewer> {
     print(
         "/////////////////////////////////////////////////////////////////////////////////////////////////////");
     print(widget.filePath);
-    int _totalPages = 0;
-    int _renderedPages = 0;
     return Scaffold(
       appBar: customAppBar(context, backButton: true, title: "pdf_viewer"),
       body: isLoading

@@ -1,5 +1,6 @@
 part of 'offer_cubit.dart';
 
+// ignore: must_be_immutable
 class GetPackagesState extends Equatable {
   GetPackagesState({
     this.AllPackages,
@@ -16,6 +17,7 @@ class GetPackagesState extends Equatable {
       );
 }
 
+// ignore: must_be_immutable
 class GetOffersState extends Equatable {
   GetOffersState({
     this.AllOffers,

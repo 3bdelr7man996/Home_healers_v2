@@ -3,9 +3,11 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared_widgets/forget_password_widgets.dart';
 
@@ -18,14 +20,6 @@ class ForgetPaswwordScreen extends StatefulWidget {
 
 class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
   @override
-  bool _isVisible = false;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: "forget_password", backButton: true),
@@ -63,28 +57,38 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
                   prefixIconPath: AppImages.emailIcon,
                   validate: true,
                   validateMsg: "required".tr(),
-                  onChanged: (p0) {},
+                  onChanged: (p0) {
+                    context.read<ForgetPasswordCubit>().onEmailChange(p0);
+                  },
                 ),
                 20.ph,
-                ElevatedButton(
-                  onPressed: () {
-                    _toggleVisibility();
+                BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (state.loading == false) {
+                          context
+                              .read<ForgetPasswordCubit>()
+                              .forgetPassword(context);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: AppColors.primaryColor,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'إعادة تعيين كلمة المرور',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
                   },
-                  style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'إعادة تعيين كلمة المرور',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
                 )
               ],
             ),
@@ -92,10 +96,7 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
         ),
         Container(
           height: context.height,
-          child: PopUpForForgetPassword(
-            isVisible: _isVisible,
-            toggleVisibility: _toggleVisibility,
-          ),
+          child: PopUpForForgetPassword(),
         )
       ]),
     );

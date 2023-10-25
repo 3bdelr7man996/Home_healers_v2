@@ -127,6 +127,68 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       icon: AppImages.passwordIcon,
                     ),
                     30.ph,
+                    LocationInput(),
+                    30.ph,
+                    BottomSheetForSignUP(
+                      title: "select_city".tr(),
+                    ),
+                    30.ph,
+                    SizedBox(
+                      width: context.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "رمز المدينة",
+                            style: bigBlackFont(fontWeight: FontWeight.w500),
+                          ),
+                          5.ph,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SelectCityButtonForSignUpForPatient(
+                                value: "SA",
+                                title: "SA",
+                              ), //todo
+                              SelectCityButtonForSignUpForPatient(
+                                value: "Any",
+                                title: "غير ذلك",
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    30.ph,
+                    SizedBox(
+                      width: context.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "choose_nationality".tr(),
+                            style: bigBlackFont(fontWeight: FontWeight.w500),
+                          ),
+                          5.ph,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              nationalityButtonForSignUpForPatient(
+                                value: "SA",
+                                title: "SA",
+                              ), //todo
+                              nationalityButtonForSignUpForPatient(
+                                value: "Any",
+                                title: "غير ذلك",
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    30.ph,
+                    BirthdayPicker(),
+                    30.ph,
                     ListTile(
                       leading: Checkbox(
                         value: context.select(

@@ -1,24 +1,31 @@
+import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerificationCodeForm extends StatelessWidget {
-  final List controllers;
-
-  const VerificationCodeForm({Key? key, required this.controllers})
-      : super(key: key);
+  const VerificationCodeForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var email =
+        context.select((ForgetPasswordCubit cubit) => cubit.state.email);
+    context.read<ResetPasswordCubit>().onEmailChange(email!);
     return Container(
       height: 100,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          for (var i = 0; i < controllers.length; i++)
+          for (var i = 0; i < 6; i++)
             Container(
               width: 50,
               height: 50,
               child: TextFormField(
-                controller: controllers[i],
+                onChanged: (value) {
+                  context
+                      .read<ResetPasswordCubit>()
+                      .onTextFormFieldValueChange(value, i);
+                },
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
