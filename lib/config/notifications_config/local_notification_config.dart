@@ -20,7 +20,7 @@ class LocalNotificationsService {
   void _initializeLocalNotifications() async {
     _requestPermissions();
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('launch_background');
+        const AndroidInitializationSettings('launcher_icon');
 
     final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(

@@ -25,7 +25,6 @@ import 'package:dr/doctor/features/notification/presentation/cubit/notification_
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/features/auth/data/repositories/forget_password_repo.dart';
-import 'package:dr/features/auth/data/repositories/login_repo.dart';
 import 'package:dr/features/auth/data/repositories/reset_password_repo.dart';
 import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
