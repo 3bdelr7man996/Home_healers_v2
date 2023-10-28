@@ -92,6 +92,7 @@ class AuthState extends Equatable {
         departementState,
         statusState,
         citiesState,
+        areasList,
       ];
   AuthState copyWith({
     Advertiser? advertiser,

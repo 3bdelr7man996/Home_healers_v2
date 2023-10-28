@@ -42,6 +42,7 @@ class _SelectRollForSignInState extends State<SelectRollForSignIn> {
             },
             child: CardIdentification(
               imagePath: "assets/images/patient.png",
+              patient: true,
               title: "Roll_Title_For_Patient",
               opacity: rollSelected == 0 ? 1 : 0.5,
             ),

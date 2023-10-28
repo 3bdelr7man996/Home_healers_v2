@@ -124,10 +124,21 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
   var userInfo;
   var jsonData;
   String FirstName = '';
+  late bool IsUserGuest;
+
+  IsGuest() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      IsUserGuest = prefs.containsKey('guest');
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
+    IsUserGuest = false;
+    IsGuest();
     getAttributeFromSharedPreferences().then((value) {
       setState(() {
         userInfo = value;
@@ -166,15 +177,26 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "مرحبا ! \n ${FirstName} , كيف حالك !",
-                    textAlign: TextAlign.right,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  IsUserGuest == true
+                      ? Text(
+                          "مرحبا ! \n قم بتسجيل الدخول \n وتمتع بجميع ميزات التطبيق",
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            height: 1.5,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      : Text(
+                          "مرحبا ! \n ${FirstName} , كيف حالك !",
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                   Container(
                     width: 100,
                     height: 100,

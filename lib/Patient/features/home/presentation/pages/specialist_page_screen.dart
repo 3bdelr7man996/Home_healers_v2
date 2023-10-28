@@ -4,6 +4,7 @@ import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_wi
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class specialistpageScreen extends StatefulWidget {
   var Data;
@@ -23,6 +24,23 @@ class specialistpageScreen extends StatefulWidget {
 
 class _specialistpageScreenState extends State<specialistpageScreen> {
   bool click = false;
+  late bool IsUserGuest;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    IsUserGuest = false;
+    IsGuest();
+  }
+
+  IsGuest() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      IsUserGuest = prefs.containsKey('guest');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,36 +80,39 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                             ? Certificates(Data: widget.Data['images'])
                             : SizedBox(),
                         5.ph,
-                        click
-                            ? ButtonWithCounter(
-                                sessionCountForOffer:
-                                    widget.sessionCountForOffer,
-                                Data: widget.Data,
-                                status_id: widget.status_id,
-                                fromOffer: widget.fromOffer)
-                            : Container(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      click = !click;
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: AppColors.primaryColor,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                        IsUserGuest == true
+                            ? SizedBox()
+                            : click
+                                ? ButtonWithCounter(
+                                    sessionCountForOffer:
+                                        widget.sessionCountForOffer,
+                                    Data: widget.Data,
+                                    status_id: widget.status_id,
+                                    fromOffer: widget.fromOffer)
+                                : Container(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          click = !click;
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: AppColors.primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Text(
+                                          'احجز الآن',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Text(
-                                      'احجز الآن',
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ),
-                                ),
-                              ),
                       ],
                     ),
                   ),

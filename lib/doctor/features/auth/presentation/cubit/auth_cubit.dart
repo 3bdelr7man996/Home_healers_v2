@@ -86,7 +86,11 @@ class AuthCubit extends Cubit<AuthState> {
           .where((element) => element != null)
           .toList();
       areas = areas[0] as List<dynamic>;
+      print(areas);
+
       emit(state.copyWith(areasList: areas));
+      print(state.areasList);
+      print("Functionnnnnn");
     }
   }
 

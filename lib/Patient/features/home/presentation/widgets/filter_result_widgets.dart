@@ -28,10 +28,12 @@ class DoctorCard extends StatefulWidget {
   bool fromOffer;
   var offer;
   var sessionCountForOffer;
+  var isFav;
   DoctorCard(
       {super.key,
       this.sessionCountForOffer,
       required this.isVisible,
+      this.isFav = false,
       this.status_id,
       this.Data,
       this.fromOffer = false,
@@ -60,7 +62,7 @@ class _DoctorCardState extends State<DoctorCard> {
     super.initState();
     if (widget.offer != null)
       context.read<ReservationCubit>().OnOfferChange(widget.offer);
-
+    names.add("الأقسام :");
     for (var item in widget.statusAdvisor) {
       names.add(item['name_ar']);
     }
@@ -89,6 +91,7 @@ class _DoctorCardState extends State<DoctorCard> {
           child: Column(
             children: [
               HeaderForDoctorCard(
+                  isFav: widget.isFav,
                   status: widget.status,
                   categories: widget.categories,
                   name: widget.name,
@@ -142,7 +145,7 @@ class _DoctorCardState extends State<DoctorCard> {
                             );
                           }).toList(),
                         )
-                      : Text('No Data available')
+                      : Text('لا يوجد بيانات لعرضها')
                 ],
               ),
               10.ph,
@@ -268,10 +271,12 @@ class HeaderForDoctorCard extends StatefulWidget {
   String status;
   var data;
   var categories;
+  var isFav;
   HeaderForDoctorCard(
       {super.key,
       required this.isVisible,
       this.categories,
+      this.isFav = false,
       this.status = "",
       this.fromfavorite = false,
       this.data,
@@ -290,6 +295,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   @override
   void initState() {
     super.initState();
+    names.add("الاختصاص :");
     for (var item in widget.categories) {
       names.add(item['name_ar']);
     }
@@ -299,6 +305,8 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
+    print("favoriteISTHIs");
+    print(widget.isFav);
     return Row(
       children: [
         Stack(
@@ -327,7 +335,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               right: 5,
               child: InkWell(
                 onTap: () async {
-                  if (widget.fromfavorite == false) {
+                  if (widget.fromfavorite == false && widget.isFav == false) {
                     print(widget.data);
 
                     await context
@@ -345,7 +353,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                   radius: 15,
                   backgroundColor: Colors.white,
                   child: Icon(
-                    isFavorite || widget.fromfavorite
+                    isFavorite || widget.fromfavorite || widget.isFav
                         ? Icons.favorite
                         : Icons.favorite_border,
                     size: 20,
@@ -374,6 +382,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               names.isNotEmpty
                   ? DropdownButton<String>(
                       underline: Container(), // Hide the underline
+
                       // icon: const SizedBox(), // Hide the arrow icon
                       value: selectedName,
                       onChanged: (String? newValue) {

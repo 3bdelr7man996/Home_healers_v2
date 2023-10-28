@@ -46,8 +46,9 @@ class ApiBaseHelper {
     Uri urlRequest = Uri.parse("${newBaseUrl ?? baseUrl}$url")
         .replace(queryParameters: queryParameters);
     try {
-
       log(urlRequest.toString());
+      log(baseHeaders.toString());
+
       final http.Response response =
           await http.get(urlRequest, headers: headers ?? baseHeaders);
       responseJson =

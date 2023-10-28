@@ -99,7 +99,7 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
 
       UpdateReservationModel response =
           await updateReservationRepo.updateReservation(body: body);
-      context.read<MyOrdersCubit>().GetOrders(context);
+      await context.read<MyOrdersCubit>().GetOrders(context);
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
 
       emit(state.copyWith(showPoUp: true));
@@ -111,7 +111,11 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
   }
 
   ///validate on fields
-  void fieldsValidation() {}
+  void fieldsValidation() {
+    // if (state.start_at == state.end_at) {
+    //   throw ("لا يمكن حذف هذا الطلب");
+    // }
+  }
 }
 
 ///////////////////////////////////////////// NEW CLASS //////////////////////////////

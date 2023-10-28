@@ -33,6 +33,7 @@ class underProcessing extends StatelessWidget {
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
+                  names.add("الاختصاص :");
                   for (var item in listOfOrders[index].advertiser.categories) {
                     names.add(item.nameAr ?? "");
                   }
@@ -478,6 +479,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         onPressed: () {
                           List<String> names = [];
                           String selectedName = "";
+                          names.add("الاختصاص");
                           for (var item
                               in widget.listOfOrders.advertiser.categories) {
                             if (item != null) names.add(item.nameAr);

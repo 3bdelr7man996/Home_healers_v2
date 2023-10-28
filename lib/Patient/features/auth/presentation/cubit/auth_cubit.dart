@@ -10,6 +10,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:map_location_picker/map_location_picker.dart';
+import 'package:dr/di_container.dart' as di;
 
 import '../../data/models/sign_up_patient_model.dart';
 
@@ -104,8 +105,11 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
       onRequestStatusChange();
       SignUpForPatientModel response =
           await signUpPatientRepo.signUP(body: body);
+      print(response);
 
       await cacheData(response);
+      di.sl<ApiBaseHelper>().updateHeader();
+
       showPopUpAfterSignUp();
       onRequestStatusChange();
       log("Register Success");
@@ -170,6 +174,9 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
 
   /// save user data in local
   Future<void> cacheData(SignUpForPatientModel response) async {
+    print("Token");
+    print("////////////////////////////////////////////////////////////");
+    print(response.success.token);
     await CacheHelper.saveData(
         key: AppStrings.userInfo, value: jsonEncode(response.success.toJson()));
     await CacheHelper.saveData(

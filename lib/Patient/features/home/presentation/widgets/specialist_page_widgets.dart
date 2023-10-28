@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/date_of_session_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
@@ -107,7 +108,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
   @override
   void initState() {
     super.initState();
-
+    names.add("الاختصاص");
     for (var item in widget.Data["categories"]) {
       names.add(item['name_ar']);
     }
@@ -305,7 +306,7 @@ class _specialistInfoState extends State<specialistInfo> {
   @override
   void initState() {
     super.initState();
-
+    names.add("الأقسام :");
     for (var item in widget.Data["status_advisor"]) {
       names.add(item['name_ar']);
     }
@@ -320,7 +321,7 @@ class _specialistInfoState extends State<specialistInfo> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             statisticsBox(
-              text1: "مرضى",
+              text1: "جلسة طبية",
               text2: "+100",
             ),
             statisticsBox(
@@ -394,7 +395,7 @@ class _specialistInfoState extends State<specialistInfo> {
             ),
             10.pw,
             const Text(
-              "سعر العرض : ",
+              "سعر الجلسة الطبية : ",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
@@ -641,12 +642,17 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
               onPressed: () {
                 AppConstants.customNavigation(
                     context,
-                    DateOfSessionScreen(
+                    InjuryAreaScreen(
                         Data: widget.Data,
                         status_id: widget.status_id,
                         fromOffer: widget.fromOffer),
                     -1,
                     0);
+                // DateOfSessionScreen(
+                //     status_id: widget.status_id,
+                //     fromOffer: widget.fromOffer),
+                // -1,
+                // 0);
               },
               style: ElevatedButton.styleFrom(
                 primary: AppColors.primaryColor,

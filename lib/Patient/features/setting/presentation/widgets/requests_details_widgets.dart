@@ -218,7 +218,7 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "${listOfOrders.advertiser.sessionDur} دقيقة",
+              "30-60 دقيقة",
               style: const TextStyle(fontWeight: FontWeight.w600),
             )
           ],
@@ -348,6 +348,7 @@ class _PopUpForRemoveRequestState extends State<PopUpForRemoveRequest> {
                   widget._toggleVisibility;
                 },
           child: Container(
+            height: context.height,
             color: Colors.black54,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
