@@ -30,35 +30,39 @@ class TotalDetails extends StatelessWidget {
                   height: 75,
                 ),
                 5.pw,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "فارس الفارس",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
-                    ),
-                    withOffer ? 5.ph : 10.ph,
-                    const Text(
-                      "أخصائي علاج طبيعي",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w300, fontSize: 14),
-                    ),
-                    withOffer ? 5.ph : 0.ph,
-                    withOffer
-                        ? Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/offer_icon.svg",
-                                color: AppColors.primaryColor,
-                                width: 20,
-                                height: 20,
-                              ),
-                              Text("عرض 12 جلسة - عمود فقري"),
-                            ],
-                          )
-                        : SizedBox()
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "فارس الفارس",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 18),
+                      ),
+                      withOffer ? 5.ph : 10.ph,
+                      const Text(
+                        "أخصائي علاج طبيعي",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300, fontSize: 14),
+                      ),
+                      withOffer ? 5.ph : 0.ph,
+                      withOffer
+                          ? Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/offer_icon.svg",
+                                  color: AppColors.primaryColor,
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                5.pw,
+                                Expanded(
+                                    child: Text("عرض 12 جلسة - عمود فقري")),
+                              ],
+                            )
+                          : SizedBox()
+                    ],
+                  ),
                 )
               ],
             ),

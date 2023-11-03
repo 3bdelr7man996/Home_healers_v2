@@ -323,8 +323,7 @@ class _IconsForSectionsState extends State<IconsForSections> {
     return GridView.builder(
       itemCount: icons.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-      ),
+          crossAxisCount: 3, childAspectRatio: 0.8),
       itemBuilder: (BuildContext context, int index) {
         return Builder(builder: (BuildContext context) {
           return InkWell(
@@ -353,6 +352,7 @@ class _IconsForSectionsState extends State<IconsForSections> {
                               cubit.state.statusList![index].nameAr)
                           .toString()
                       : "",
+                  maxLines: 2,
                   textAlign: TextAlign.center,
                 )
               ],
@@ -370,7 +370,7 @@ class BottomSheetForPatient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 450,
+        height: 500,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
           child: Column(

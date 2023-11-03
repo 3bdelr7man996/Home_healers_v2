@@ -13,6 +13,13 @@ class PaymentRepository {
     return VisaPayModel.fromJson(response);
   }
 
+  // Future<VisaPayModel>? tamaraPayment(
+  //   Map<String, dynamic> body,
+  // ) async {
+  //   Map<String, dynamic>? response = await dataSource.tamaraPayment(body: body);
+  //   return response;
+  // }
+
   Future<String>? visaPayResult({
     required String fullUrl,
   }) async {

@@ -43,4 +43,5 @@ class AppImages {
   static String settingPolicy = "assets/icons/use_setting_icon.svg";
   static String logOutIcon = "assets/icons/log_out_setting_icon.svg";
   static String pointsPayIcon = 'assets/icons/pay_icon.svg';
+  static String errorIcon = "assets/icons/error_icon.svg";
 }

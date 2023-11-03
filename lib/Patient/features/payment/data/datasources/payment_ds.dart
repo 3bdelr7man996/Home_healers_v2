@@ -17,6 +17,17 @@ class PaymentDataSource {
     return response;
   }
 
+  Future<Map<String, dynamic>?> tamaraPayment({
+    required Map<String, dynamic> body,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper.get(
+      AppStrings.tamaraPayment,
+      newBaseUrl: AppStrings.visaBaseUrl,
+      queryParameters: body,
+    );
+    return response;
+  }
+
   ///GET RESULT OF VISA PAYMENT BY SEND RETURNED URL FROM WEB VIEW AS GET REQUEST
   Future<Map<String, dynamic>?> visaPayResult({
     required String url,

@@ -136,7 +136,9 @@
   "thank_you":"شكرا لك!",
   "back":"عودة",
   "reservation_been_confirmed":"تم تأكيد حجزك",
-  "booking_with_physiotherapist_confirmed":"لقد تم تأكيد حجزك مع أخصائي علاج طبيعي ",
+  "booking_with_physiotherapist_confirmed":"لقد تم تأكيد حجزك مع أخصائي ",
+  "reservation_failed":"فشل تأكيد الحجز",
+  "booking_with_physiotherapist_failed":"لقد فشل تأكيد حجزك مع أخصائي ",
   "order_number":"رقم الطلب ",
   "canceled_payment":"لقد قمت بإلغاء عملية الدفع",
   "edit_account":"تعديل الحساب",
@@ -155,5 +157,8 @@
   "SAR":"ريال سعودي",
   "enjoy_your_cashback":"استمتع بالكاش باك",
   "latest_activity":"اخر نشـاط",
-  "select_city":"اختر المدينة"
+  "select_city":"اختر المدينة",
+  "return":"عودة",
+  "sorry":"نأسف !",
+  "ok":"حسناً"
 }

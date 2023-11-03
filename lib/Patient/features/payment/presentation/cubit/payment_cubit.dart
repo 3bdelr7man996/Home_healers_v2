@@ -37,6 +37,24 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
+  //?============================[ PAY BY TAMARA ]================================
+  // Future<void> payByTamara({required int reservationParentId}) async {
+  //   try {
+  //     emit(state.copyWith(payState: RequestState.loading));
+  //     String? payResponse = await repository.visaPayment({
+  //       "parent_id": "$reservationParentId",
+  //     });
+  //     emit(state.copyWith(
+  //       payState: RequestState.success,
+  //       visaUrl: payResponse?.redirectUrl,
+  //       payId: payResponse?.paymentId,
+  //     ));
+  //   } catch (e) {
+  //     emit(state.copyWith(payState: RequestState.failed));
+  //     ShowToastHelper.showToast(msg: e.toString(), isError: true);
+  //   }
+  // }
+
   void resetPayData() {
     emit(state.copyWith(
       selectedPayType: () => null,
@@ -82,7 +100,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   }) async {
     try {
       //String? result =
-      await repository.visaPayResult(fullUrl: path);
+      String? response = await repository.visaPayResult(fullUrl: path);
       if (context.mounted) {
         AppConstants.pushRemoveNavigator(context,
             screen: HomeScreenForPatient(
@@ -92,7 +110,8 @@ class PaymentCubit extends Cubit<PaymentState> {
       if (context.mounted) {
         showCupertinoDialog(
           context: context,
-          builder: (context) => ConfirmPayDialog(order: myOrder),
+          builder: (context) =>
+              ConfirmPayDialog(order: myOrder, paymentResponse: response),
         );
       }
     } catch (e) {

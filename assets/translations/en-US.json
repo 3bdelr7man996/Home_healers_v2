@@ -137,6 +137,8 @@
   "back": "Back",
   "reservation_been_confirmed": "Your reservation has been confirmed",
   "booking_with_physiotherapist_confirmed": "Your booking with a physiotherapist has been confirmed",
+  "reservation_failed":"Reservation failed",
+  "booking_with_physiotherapist_failed":"Your reservation with a specialist has failed to be confirmed",
   "order_number": "order number",
   "canceled_payment": "You have canceled the payment",
   "edit_account": "Edit account",
@@ -155,5 +157,8 @@
   "point":"Point",
   "SAR":"SAR",
   "enjoy_your_cashback":"Enjoy your cashback",
-  "latest_activity":"Latest activity"
+  "latest_activity":"Latest activity",
+  "return":"Return",
+  "sorry":"Sorry !",
+  "ok":"OK"
 }

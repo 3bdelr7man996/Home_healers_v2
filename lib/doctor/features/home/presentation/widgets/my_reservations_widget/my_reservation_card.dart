@@ -71,19 +71,21 @@ class CardHeader extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "رقم الطلب : ${reservation?.id}",
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Text(
-                "تاريخ الطلب : ${reservation?.startAt}",
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              )
-            ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "رقم الطلب : ${reservation?.id}",
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  "تاريخ الطلب : ${reservation?.startAt}",
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                )
+              ],
+            ),
           ),
           Container(
             height: 40,

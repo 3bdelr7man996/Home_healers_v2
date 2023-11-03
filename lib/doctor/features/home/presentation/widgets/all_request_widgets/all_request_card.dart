@@ -45,21 +45,23 @@ class RequestCard extends StatelessWidget {
               ),
             ),
             20.pw,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                40.ph,
-                Text(
-                  title.tr(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 15),
-                ),
-                10.ph,
-                Text(
-                  "( $requestsCount ${"request".tr()} )",
-                  style: const TextStyle(color: AppColors.secondryColor),
-                )
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  40.ph,
+                  Text(
+                    title.tr(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 15),
+                  ),
+                  10.ph,
+                  Text(
+                    "( $requestsCount ${"request".tr()} )",
+                    style: const TextStyle(color: AppColors.secondryColor),
+                  )
+                ],
+              ),
             )
           ],
         ),

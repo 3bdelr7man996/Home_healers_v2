@@ -10,6 +10,7 @@ import 'package:dr/core/utils/app_strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart' as intl;
 
 class underProcessing extends StatelessWidget {
   const underProcessing({super.key});
@@ -253,7 +254,6 @@ class _CardsForRequestsState extends State<CardsForRequests> {
   var selectedName, categories;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selectedName = widget.selectedName;
     categories = widget.categories;
@@ -290,67 +290,103 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "رقم الطلب : ${widget.listOfOrders.id}",
-                            style: const TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            "تاريخ الطلب : ${widget.listOfOrders.startAt}",
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w500, fontSize: 14),
-                          )
-                        ],
-                      ),
-                      widget.num == 1
-                          ? const Text(
-                              "قيد المراجعة \nفي انتظار القبول",
-                              style: TextStyle(
-                                  color: AppColors.yellowColor,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FittedBox(
+                              child: Text(
+                                "رقم الطلب : ${widget.listOfOrders.id}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            FittedBox(
+                              child: Text(
+                                "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(widget.listOfOrders.startAt))}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500, fontSize: 14),
+                              ),
                             )
-                          : widget.num == 2
-                              ? const Text(
-                                  "مقبولة \nفي انتظار الدفع",
+                          ],
+                        ),
+                      ),
+                      10.pw,
+                      widget.num == 1
+                          ? Expanded(
+                              child: FittedBox(
+                                child: const Text(
+                                  "قيد المراجعة \nفي انتظار القبول",
                                   style: TextStyle(
-                                      color: AppColors.greenColor,
+                                      color: AppColors.yellowColor,
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center,
-                                )
-                              : widget.num == 3
-                                  ? const Text(
-                                      "مؤكدة \nتم الدفع",
+                                ),
+                              ),
+                            )
+                          : widget.num == 2
+                              ? Expanded(
+                                  child: FittedBox(
+                                    child: const Text(
+                                      "مقبولة \nفي انتظار الدفع",
                                       style: TextStyle(
                                           color: AppColors.greenColor,
                                           fontWeight: FontWeight.bold),
                                       textAlign: TextAlign.center,
-                                    )
-                                  : widget.num == 4
-                                      ? const Text(
-                                          "مكتملة \nتم إنهاء الزيارة",
+                                    ),
+                                  ),
+                                )
+                              : widget.num == 3
+                                  ? Expanded(
+                                      child: FittedBox(
+                                        child: const Text(
+                                          "مؤكدة \nتم الدفع",
                                           style: TextStyle(
                                               color: AppColors.greenColor,
                                               fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
-                                        )
-                                      : widget.num == 6
-                                          ? const Text(
-                                              "الجلسة \n قيد الانتظار",
+                                        ),
+                                      ),
+                                    )
+                                  : widget.num == 4
+                                      ? Expanded(
+                                          child: FittedBox(
+                                            child: const Text(
+                                              "مكتملة \nتم إنهاء الزيارة",
                                               style: TextStyle(
                                                   color: AppColors.greenColor,
                                                   fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        )
+                                      : widget.num == 6
+                                          ? Expanded(
+                                              child: FittedBox(
+                                                child: const Text(
+                                                  "الجلسة \n قيد الانتظار",
+                                                  style: TextStyle(
+                                                      color:
+                                                          AppColors.greenColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
                                             )
-                                          : const Text(
-                                              "ملغية \nتم الإلغاء",
-                                              style: TextStyle(
-                                                  color: AppColors.redColor,
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
+                                          : Expanded(
+                                              child: FittedBox(
+                                                child: const Text(
+                                                  "ملغية \nتم الإلغاء",
+                                                  style: TextStyle(
+                                                      color: AppColors.redColor,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
                                             )
                     ],
                   ),
@@ -367,60 +403,62 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: 115,
-                      height: 90,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: widget.listOfOrders.advertiser.image != null
-                            ? DecorationImage(
-                                image: NetworkImage(
-                                  "${AppStrings.baseUrl}/upload/${widget.listOfOrders.advertiser.image}",
-                                ),
-                                fit: BoxFit.cover,
-                                onError: (exception, stackTrace) =>
-                                    {print(exception)},
-                              )
-                            : const DecorationImage(
-                                image: AssetImage("assets/images/doctor.png"),
-                                fit: BoxFit.cover,
-                              ),
+                    // widget.listOfOrders.advertiser.image != null
+                    //     ?
+                    ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      child: AppConstants.customNetworkImage(
+                        width: 75,
+                        height: 70,
+                        imageError: "assets/images/doctor.png",
+                        imagePath:
+                            "${AppStrings.imageUrl}${widget.listOfOrders.advertiser.image}",
                       ),
                     ),
-                    10.pw,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${widget.listOfOrders.advertiser.nameAr}",
-                          style: const TextStyle(
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20),
-                        ),
-                        10.ph,
-                        if (categories != null)
-                          categories.isNotEmpty
-                              ? DropdownButton<String>(
-                                  underline: Container(), // Hide the underline
-                                  // icon: const SizedBox(), // Hide the arrow icon
-                                  value: selectedName,
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      selectedName = newValue!;
-                                    });
-                                  },
-                                  items: categories
-                                      .map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                )
-                              : const Text('No Data available'),
-                      ],
+                    // : const DecorationImage(
+                    //     image: AssetImage("assets/images/doctor.png"),
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    5.pw,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${widget.listOfOrders.advertiser.nameAr}",
+                            style: const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16),
+                          ),
+                          //5.ph,
+                          if (categories != null)
+                            categories.isNotEmpty
+                                ? DropdownButton<String>(
+                                    padding: EdgeInsets.zero,
+                                    underline: SizedBox(), // Hide the underline
+                                    // icon: const SizedBox(), // Hide the arrow icon
+                                    value: selectedName,
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        selectedName = newValue!;
+                                      });
+                                    },
+                                    items: categories
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(fontSize: 14.0),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  )
+                                : const Text('No Data available'),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -428,37 +466,48 @@ class _CardsForRequestsState extends State<CardsForRequests> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (widget.listOfOrders.parentId == 0)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (widget.listOfOrders.parentId == 0)
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: FittedBox(
+                                    child: const Text(
+                                      "سعر الجلسة",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                ),
+                                5.pw,
+                                Text(
+                                  "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
+                                  style: const TextStyle(
+                                      color: AppColors.secondryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        10.ph,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                "سعر الجلسة",
-                                style: TextStyle(fontWeight: FontWeight.w500),
-                              ),
-                              5.pw,
-                              Text(
-                                "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
-                                style: const TextStyle(
-                                    color: AppColors.secondryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          child: FittedBox(
+                            child: Text(
+                              "عدد الجلسات : ${widget.listOfOrders.sessionsCount}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
+                            ),
                           ),
                         ),
-                      10.ph,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Text(
-                          "عدد الجلسات : ${widget.listOfOrders.sessionsCount}",
-                          style: const TextStyle(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),

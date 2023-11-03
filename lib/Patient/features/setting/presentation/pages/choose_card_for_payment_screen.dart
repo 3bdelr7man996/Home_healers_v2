@@ -1,8 +1,10 @@
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/payment/presentation/pages/visa_payment_screen.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
@@ -114,8 +116,15 @@ class ChooseCardScreen extends StatelessWidget {
                           case PayType.visa:
                             await context
                                 .read<PaymentCubit>()
-                                .payByVisa(reservationParentId: order.id);
+                                .payByVisa(reservationParentId: order.id)
+                                .then((value) => AppConstants.customNavigation(
+                                    context,
+                                    VisaPaymentScreen(myOrder: order),
+                                    0,
+                                    1));
                             break;
+                            case PayType.tamara:
+                            
                           default:
                         }
                       },

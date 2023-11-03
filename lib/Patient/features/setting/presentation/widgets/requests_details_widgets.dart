@@ -12,6 +12,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart' as intl;
 
 class FirstSection extends StatelessWidget {
   int num;
@@ -25,66 +26,98 @@ class FirstSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "رقم الطلب : ${listOfOrders.id}",
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Text(
-                "تاريخ الطلب : ${listOfOrders.createdAt}",
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-          num == 1
-              ? const Text(
-                  "قيد المراجعة \nفي انتظار القبول",
-                  style: TextStyle(
-                      color: AppColors.yellowColor,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FittedBox(
+                  child: Text(
+                    "رقم الطلب : ${listOfOrders.id}",
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                ),
+                FittedBox(
+                  child: Text(
+                    "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(listOfOrders.createdAt))}",
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
                 )
-              : num == 2
-                  ? const Text(
-                      "مقبولة \nفي انتظار الدفع",
+              ],
+            ),
+          ),
+          10.pw,
+          num == 1
+              ? Expanded(
+                  child: FittedBox(
+                    child: const Text(
+                      "قيد المراجعة \nفي انتظار القبول",
                       style: TextStyle(
-                          color: AppColors.greenColor,
+                          color: AppColors.yellowColor,
                           fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
-                    )
-                  : num == 3
-                      ? const Text(
-                          "مؤكدة \nتم الدفع",
+                    ),
+                  ),
+                )
+              : num == 2
+                  ? Expanded(
+                      child: FittedBox(
+                        child: const Text(
+                          "مقبولة \nفي انتظار الدفع",
                           style: TextStyle(
                               color: AppColors.greenColor,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
-                        )
-                      : num == 4
-                          ? const Text(
-                              "مكتملة \nتم إنهاء الزيارة",
+                        ),
+                      ),
+                    )
+                  : num == 3
+                      ? Expanded(
+                          child: FittedBox(
+                            child: const Text(
+                              "مؤكدة \nتم الدفع",
                               style: TextStyle(
                                   color: AppColors.greenColor,
                                   fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
-                            )
-                          : num == 6
-                              ? const Text(
-                                  "الجلسة \n قيد الانتظار",
+                            ),
+                          ),
+                        )
+                      : num == 4
+                          ? Expanded(
+                              child: FittedBox(
+                                child: const Text(
+                                  "مكتملة \nتم إنهاء الزيارة",
                                   style: TextStyle(
                                       color: AppColors.greenColor,
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center,
+                                ),
+                              ),
+                            )
+                          : num == 6
+                              ? Expanded(
+                                  child: FittedBox(
+                                    child: const Text(
+                                      "الجلسة \n قيد الانتظار",
+                                      style: TextStyle(
+                                          color: AppColors.greenColor,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 )
-                              : const Text(
-                                  "ملغية \nتم الإلغاء",
-                                  style: TextStyle(
-                                      color: AppColors.redColor,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
+                              : Expanded(
+                                  child: FittedBox(
+                                    child: const Text(
+                                      "ملغية \nتم الإلغاء",
+                                      style: TextStyle(
+                                          color: AppColors.redColor,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
                                 )
         ],
       ),
@@ -122,61 +155,61 @@ class _TowSectionState extends State<TowSection> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          children: [
-            Container(
-              width: 100,
-              height: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: widget.listOfOrders.advertiser.image != null
-                    ? DecorationImage(
-                        image: NetworkImage(
-                          "${AppStrings.baseUrl}/upload/${widget.listOfOrders.advertiser.image}",
-                        ),
-                        fit: BoxFit.cover,
-                        onError: (exception, stackTrace) => {print(exception)},
-                      )
-                    : const DecorationImage(
-                        image: AssetImage("assets/images/doctor.png"),
-                        fit: BoxFit.cover,
-                      ),
-              ),
-            ),
-            10.pw,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${widget.listOfOrders.advertiser.nameAr}",
-                  style: const TextStyle(
-                      color: AppColors.primaryColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16),
+        Expanded(
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                child: AppConstants.customNetworkImage(
+                  imagePath:
+                      "${AppStrings.imageUrl}${widget.listOfOrders.advertiser.image}",
+                  imageError: "assets/images/doctor.png",
+                  width: context.width * 0.25,
+                  height: context.width * 0.25 - 10,
                 ),
-                10.ph,
-                categories.isNotEmpty
-                    ? DropdownButton<String>(
-                        underline: Container(), // Hide the underline
-                        // icon: const SizedBox(), // Hide the arrow icon
-                        value: selectedName,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedName = newValue!;
-                          });
-                        },
-                        items: categories
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      )
-                    : const Text('No Data available'),
-              ],
-            )
-          ],
+              ),
+              10.pw,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${widget.listOfOrders.advertiser.nameAr}",
+                      style: const TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    categories.isNotEmpty
+                        ? SizedBox(
+                            height: 35,
+                            child: DropdownButton<String>(
+                              padding: EdgeInsets.zero,
+                              underline: SizedBox(), // Hide the underline
+                              value: selectedName,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedName = newValue!;
+                                });
+                              },
+                              items: categories.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(fontSize: 14.0),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          )
+                        : const Text('No Data available'),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
         if (widget.num == 3 || widget.num == 4)
           Row(
@@ -634,7 +667,7 @@ class OneSessionInfoForPatient extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Center(
                     child: Text(
-                      date,
+                      ' ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(date))}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 16,

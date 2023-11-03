@@ -58,7 +58,7 @@ class Advertiser {
   late final String? gender;
   late final String? iban;
   late final String? location;
-  late final String? bundleId;
+  late final int? bundleId;
   late final int? countryId;
   late final int? cityId;
   late final int? areaId;
