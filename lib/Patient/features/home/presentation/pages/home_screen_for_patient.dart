@@ -1,9 +1,11 @@
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/favorite/presentation/pages/favorite_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/sections_screen.dart';
 import 'package:dr/Patient/features/offer/presentation/pages/offer_and_packages_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/settings_screen.dart';
 import 'package:dr/doctor/features/notification/presentation/pages/notification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,6 +20,12 @@ class HomeScreenForPatient extends StatefulWidget {
 
 class _HomeScreenForPatientState extends State<HomeScreenForPatient> {
   late List<Widget> _widgets;
+  IsGuest() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('guest') == false)
+      context.read<FavoriteCubit>().GetFavorite(context);
+    ;
+  }
 
   @override
   void initState() {
@@ -30,6 +38,7 @@ class _HomeScreenForPatientState extends State<HomeScreenForPatient> {
       FavoriteScreen(),
       SettingsScreenForPatient(),
     ];
+    IsGuest();
   }
 
   @override

@@ -57,24 +57,21 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 )
               : Stack(children: [
                   ListView.builder(
-                    itemCount: data["data"]["data"].length,
+                    itemCount: data["data"].length,
                     itemBuilder: (context, index) {
                       return DoctorCard(
-                          Data: data["data"]["data"][index]['advertiser'],
-                          name: data["data"]["data"][index]["advertiser"]
-                              ["name_ar"],
-                          status: data["data"]["data"][index]["advertiser"]
-                              ["status"],
-                          price: data["data"]["data"][index]["advertiser"]
+                          Data: data["data"][index]['advertiser'],
+                          name: data["data"][index]["advertiser"]["name_ar"],
+                          status: data["data"][index]["advertiser"]["status"],
+                          price: data["data"][index]["advertiser"]
                               ["session_price"],
-                          address: data["data"]["data"][index]["advertiser"]
+                          address: data["data"][index]["advertiser"]
                               ["address_ar"],
-                          statusAdvisor: data["data"]["data"][index]
-                              ["advertiser"]["status_advisor"],
-                          categories: data["data"]["data"][index]["advertiser"]
+                          statusAdvisor: data["data"][index]["advertiser"]
+                              ["status_advisor"],
+                          categories: data["data"][index]["advertiser"]
                               ["categories"],
-                          image: data["data"]["data"][index]["advertiser"]
-                              ["image"],
+                          image: data["data"][index]["advertiser"]["image"],
                           fromfavorite: true,
                           toggleVisibility: _toggleVisibility,
                           isVisible: _isVisible);

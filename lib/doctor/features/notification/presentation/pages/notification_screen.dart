@@ -87,7 +87,12 @@ class NotificationBody extends StatelessWidget {
             } else {
               return Expanded(
                 child: Center(
-                  child: Text("there_are_no_notifications".tr()),
+                  child: Column(
+                    children: [
+                      Image.asset("asset/images/notificationsEmpty.png"),
+                      Text("لا توجد إشعارات في الوقت الحالي")
+                    ],
+                  ),
                 ),
               );
             }

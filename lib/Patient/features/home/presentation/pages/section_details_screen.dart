@@ -42,6 +42,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     super.initState();
     context.read<SectionCubit>().changeSectionNumber(widget.numberOfIcon);
     context.read<SectionCubit>().GetSectionDetails(context);
+
     IsUserGuest = IsGuest();
   }
 
@@ -49,8 +50,6 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
   var data;
   var searchResults = [];
   void search(String query) {
-    print("///////////////////////////////////////////");
-    print("Ghaith");
     setState(() {
       searchResults = data.where((obj) {
         final name = obj['name_ar'].toString().toLowerCase();
@@ -72,9 +71,9 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     print("///////////////////////////////////////////");
     print("///////////////////////////////////////////");
     var FavoriteList;
-    if (IsUserGuest == false)
-      FavoriteList = context
-          .select((FavoriteCubit cubit) => cubit.state.data['data']['data']);
+
+    FavoriteList = context.select((FavoriteCubit cubit) => cubit.state.data);
+    print(FavoriteList);
     print("///////////////////////////////////////////");
 
     data = context.select(
@@ -119,8 +118,8 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                               itemCount: searchResults.length,
                               itemBuilder: (context, index) {
                                 bool isIdExist = false;
-                                if (IsUserGuest == false)
-                                  isIdExist = FavoriteList.any((item) =>
+                                if (FavoriteList != null)
+                                  isIdExist = FavoriteList['data'].any((item) =>
                                       item["advertiser"]['id'] ==
                                       searchResults[index]['id']);
                                 return DoctorCard(

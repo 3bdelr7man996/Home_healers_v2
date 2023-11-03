@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
+import 'package:dr/Patient/features/setting/data/models/my_points_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_info_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_reservation_model.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/core/utils/app_strings.dart';
@@ -213,4 +215,24 @@ Future<void> cacheData(UpdateInfoModel response) async {
     // Save the updated jsonData object to the shared preferences
     CacheHelper.saveData(key: AppStrings.userInfo, value: jsonEncode(jsonData));
   });
+}
+
+///////////////////////////////////////////// NEW CLASS //////////////////////////////
+
+class GetPointsCubit extends Cubit<GetPointsState> {
+  final GetPointsRepo getPointrepo;
+
+  GetPointsCubit({required this.getPointrepo}) : super(GetPointsState());
+
+  Future<void> GetMyPoints(BuildContext context) async {
+    try {
+      MyPointsModel response = await getPointrepo.GetPoints();
+      print(response);
+      print(
+          "AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad MohsenAHmad Mohsen  AHmad Mohsen AHmad Mohsen");
+      emit(state.copyWith(Data: response));
+    } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
 }

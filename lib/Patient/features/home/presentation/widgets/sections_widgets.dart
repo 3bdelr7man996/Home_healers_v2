@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/search_screen.dart';
@@ -26,78 +27,79 @@ class SliderForPatient extends StatefulWidget {
   State<SliderForPatient> createState() => _SliderForPatientState();
 }
 
-var imageList;
-
 class _SliderForPatientState extends State<SliderForPatient> {
   int _currentImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    imageList =
-        context.select((GetAllAdsCubit cubit) => cubit.state.data) != null
-            ? context.select((GetAllAdsCubit cubit) => cubit.state.data.data)
-            : [];
-
-    return imageList != null
-        ? SizedBox()
-        : Column(
-            children: [
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: context.height * 0.2,
-                  initialPage: 0,
-                  enableInfiniteScroll: true,
-                  reverse: false,
-                  autoPlay: true,
-                  autoPlayInterval: const Duration(seconds: 2),
-                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  enlargeCenterPage: true,
-                  scrollDirection: Axis.horizontal,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      _currentImageIndex = index;
-                    });
-                  },
-                ),
-                items: imageList?.map((item) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Center(
-                          child: Image.network(
-                            "${AppStrings.baseUrl}/upload/${item['image']}",
-                            fit: BoxFit.cover,
-                            width: 1000,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
+    return BlocBuilder<GetAllAdsCubit, GetAllAdsState>(
+      builder: (context, state) {
+        if (state.data == null) {
+          return SizedBox();
+        }
+        if (state.data != null && state.data.data.length == 0) {
+          return SizedBox();
+        }
+        var items = [];
+        for (int i = 0; i < state.data.data.length; i++)
+          items.add(Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Center(
+              child: Image.network(
+                "${AppStrings.imageUrl}${state.data.data[i]['image']}",
+                fit: BoxFit.cover,
+                width: 1000,
               ),
-              10.ph,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: imageList!.map((imageUrl) {
-                  int index = imageList!.indexOf(imageUrl);
-
-                  return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentImageIndex == index
-                          ? AppColors.primaryColor
-                          : Colors.grey,
-                    ),
-                  );
-                }).toList(),
-              )
-            ],
-          );
+            ),
+          ));
+        List<Widget> widgets = items.cast<Widget>();
+        var items2 = [];
+        for (int i = 0; i < state.data.data.length; i++) {
+          int index = state.data.data.indexOf(state.data.data[i]);
+          items2.add(Container(
+            width: 8.0,
+            height: 8.0,
+            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: _currentImageIndex == index
+                  ? AppColors.primaryColor
+                  : Colors.grey,
+            ),
+          ));
+        }
+        List<Widget> widgets2 = items2.cast<Widget>();
+        return Column(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                height: context.height * 0.2,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 2),
+                autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentImageIndex = index;
+                  });
+                },
+              ),
+              items: widgets,
+            ),
+            10.ph,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widgets2,
+            )
+          ],
+        );
+      },
+    );
   }
 }
 

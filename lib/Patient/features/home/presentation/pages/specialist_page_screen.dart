@@ -47,78 +47,80 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: [
-              ApPBarForspecialistScreen(),
-              Container(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 75.0, left: 20.0, right: 20.0),
-                    child: Column(
-                      children: [
-                        specialistInfo(Data: widget.Data),
-                        20.ph,
-                        const Divider(
-                          thickness: 1,
-                        ),
-                        5.ph,
-                        widget.Data['images'] != null
-                            ? const Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "شهادات مهنية :",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
-                        5.ph,
-                        widget.Data['images'] != null
-                            ? Certificates(Data: widget.Data['images'])
-                            : SizedBox(),
-                        5.ph,
-                        IsUserGuest == true
-                            ? SizedBox()
-                            : click
-                                ? ButtonWithCounter(
-                                    sessionCountForOffer:
-                                        widget.sessionCountForOffer,
-                                    Data: widget.Data,
-                                    status_id: widget.status_id,
-                                    fromOffer: widget.fromOffer)
-                                : Container(
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          click = !click;
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: AppColors.primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                ApPBarForspecialistScreen(),
+                Container(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 75.0, left: 20.0, right: 20.0),
+                      child: Column(
+                        children: [
+                          specialistInfo(Data: widget.Data),
+                          20.ph,
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          5.ph,
+                          widget.Data['images'] != null
+                              ? const Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "شهادات مهنية :",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox(),
+                          5.ph,
+                          widget.Data['images'] != null
+                              ? Certificates(Data: widget.Data['images'])
+                              : SizedBox(),
+                          5.ph,
+                          IsUserGuest == true
+                              ? SizedBox()
+                              : click
+                                  ? ButtonWithCounter(
+                                      sessionCountForOffer:
+                                          widget.sessionCountForOffer,
+                                      Data: widget.Data,
+                                      status_id: widget.status_id,
+                                      fromOffer: widget.fromOffer)
+                                  : Container(
+                                      width: double.infinity,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            click = !click;
+                                          });
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          primary: AppColors.primaryColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
                                         ),
-                                      ),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(16.0),
-                                        child: Text(
-                                          'احجز الآن',
-                                          style: TextStyle(fontSize: 20),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(16.0),
+                                          child: Text(
+                                            'احجز الآن',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Positioned(
             top: 140,

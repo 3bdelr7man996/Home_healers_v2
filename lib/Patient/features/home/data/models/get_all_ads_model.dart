@@ -1,6 +1,6 @@
 class GetAllAdsModel {
   bool? success;
-  List<Data>? data;
+  var data;
   String? message;
 
   GetAllAdsModel({this.success, this.data, this.message});

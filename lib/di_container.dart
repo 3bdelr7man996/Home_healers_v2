@@ -28,9 +28,11 @@ import 'package:dr/Patient/features/payment/data/datasources/payment_ds.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/datasources/my_orders_ds.dart';
+import 'package:dr/Patient/features/setting/data/datasources/my_points_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_info_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_reservation_ds.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
@@ -117,6 +119,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetAllAdsDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ForgetPasswordDs(apiHelper: sl()));
   sl.registerLazySingleton(() => ResetPasswordDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => MyPointsDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -137,6 +140,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => PaymentRepository(dataSource: sl()));
   sl.registerLazySingleton(() => ForgetPasswordRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ResetPasswordRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => GetPointsRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -156,4 +160,5 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => PaymentCubit(repository: sl()));
   sl.registerFactory(() => ForgetPasswordCubit(repository: sl()));
   sl.registerFactory(() => ResetPasswordCubit(repository: sl()));
+  sl.registerFactory(() => GetPointsCubit(getPointrepo: sl()));
 }

@@ -25,9 +25,7 @@ class underProcessing extends StatelessWidget {
         width: context.width,
         height: context.height * 0.75,
         child: listOfOrders.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? SizedBox()
             : ListView.builder(
                 itemCount: listOfOrders.length,
                 itemBuilder: (context, index) {
@@ -101,7 +99,7 @@ class Confirmed extends StatelessWidget {
         child: listOfOrders.isEmpty
             ? const SizedBox()
             : ListView.builder(
-                itemCount: 4,
+                itemCount: listOfOrders.length,
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
@@ -139,7 +137,7 @@ class completed extends StatelessWidget {
         child: listOfOrders.isEmpty
             ? const SizedBox()
             : ListView.builder(
-                itemCount: 4,
+                itemCount: listOfOrders.length,
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
