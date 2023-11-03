@@ -251,7 +251,7 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "${listOfOrders.advertiser.sessionDur} دقيقة",
+              "30-60 دقيقة",
               style: const TextStyle(fontWeight: FontWeight.w600),
             )
           ],
@@ -279,7 +279,9 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "${listOfOrders.advertiser.sessionPrice} ريال",
+              listOfOrders.advertiser.sessionPrice == null
+                  ? ""
+                  : "${listOfOrders.advertiser.sessionPrice} ريال",
               style: const TextStyle(
                   fontWeight: FontWeight.w600, color: AppColors.secondryColor),
             )
@@ -305,7 +307,7 @@ class Bill extends StatelessWidget {
           ],
         ),
         20.ph,
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
@@ -329,7 +331,10 @@ class Bill extends StatelessWidget {
             const Text("المجموع : ",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text(
-              "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
+              listOfOrders.sessionsCount == null ||
+                      listOfOrders.advertiser.sessionPrice == null
+                  ? ""
+                  : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
               style: const TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.secondryColor),
             )
@@ -367,47 +372,46 @@ class _PopUpForRemoveRequestState extends State<PopUpForRemoveRequest> {
   Widget build(BuildContext context) {
     return Visibility(
       visible: widget._isVisible,
-      child: Positioned.fill(
-        child: GestureDetector(
-          onTap: widget.firstPopUp
-              ? widget._toggleVisibility
-              : () async {
-                  await context.read<MyOrdersCubit>().GetOrders(context);
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const MyRequestsForPatient(activeIndex: 0)));
-                  widget._toggleVisibility;
-                },
-          child: Container(
-            color: Colors.black54,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: context.height * 0.3),
-                  child: Center(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      width: context.width * 0.8,
-                      child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: widget.firstPopUp
-                              ? FirstPopUp(
-                                  listOfOrders: widget.listOfOrders,
-                                  changePopUp: widget.changePopUp,
-                                  toggleVisibility: widget._toggleVisibility,
-                                )
-                              : const SecondPopUp()),
+      child: GestureDetector(
+        onTap: widget.firstPopUp
+            ? widget._toggleVisibility
+            : () async {
+                await context.read<MyOrdersCubit>().GetOrders(context);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const MyRequestsForPatient(activeIndex: 0)));
+                widget._toggleVisibility;
+              },
+        child: Container(
+          height: context.height,
+          color: Colors.black54,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(bottom: context.height * 0.3),
+                child: Center(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
+                    width: context.width * 0.8,
+                    child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: widget.firstPopUp
+                            ? FirstPopUp(
+                                listOfOrders: widget.listOfOrders,
+                                changePopUp: widget.changePopUp,
+                                toggleVisibility: widget._toggleVisibility,
+                              )
+                            : const SecondPopUp()),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

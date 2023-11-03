@@ -4,6 +4,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class OfferCard extends StatefulWidget {
@@ -15,14 +16,34 @@ class OfferCard extends StatefulWidget {
 }
 
 class _OfferCardState extends State<OfferCard> {
+  late bool IsUserGuest;
+
+  IsGuest() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      IsUserGuest = prefs.containsKey('guest');
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    IsUserGuest = false;
+    IsGuest();
+  }
+
   @override
   Widget build(BuildContext context) {
     var newPrice = widget.Package.oldPrice - int.parse(widget.Package.discount);
 
     return InkWell(
       onTap: () {
-        AppConstants.customNavigation(
-            context, OfferDetailsScreen(Package: widget.Package), -1, 0);
+        IsUserGuest == true
+            ? null
+            : AppConstants.customNavigation(
+                context, OfferDetailsScreen(Package: widget.Package), -1, 0);
       },
       child: Container(
         margin: const EdgeInsets.all(10),
@@ -131,8 +152,10 @@ class _OfferCardState extends State<OfferCard> {
                     ),
                   ),
                   onPressed: () {
-                    AppConstants.customNavigation(
-                        context, OfferDetailsScreen(), -1, 0);
+                    IsUserGuest == true
+                        ? null
+                        : AppConstants.customNavigation(
+                            context, OfferDetailsScreen(), -1, 0);
                   },
                   child: const Text('استمتع بالعرض'),
                 ),

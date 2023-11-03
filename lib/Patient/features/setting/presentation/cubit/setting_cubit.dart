@@ -4,9 +4,11 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
+import 'package:dr/Patient/features/setting/data/models/my_points_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_info_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_reservation_model.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/core/utils/app_strings.dart';
@@ -56,7 +58,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       emit(state.copyWith(pendingOrders: arrayForPending));
       emit(state.copyWith(completedOrders: arrayForCompleted));
       emit(state.copyWith(canceledOrders: arrayForCanceled));
-      print(state.confirmedOrders);
+      debugPrint("${state.waitConfirmOrders}");
       print("asd");
       // print(state.ReviewingOrders);
     } catch (e) {
@@ -99,7 +101,7 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
 
       UpdateReservationModel response =
           await updateReservationRepo.updateReservation(body: body);
-      context.read<MyOrdersCubit>().GetOrders(context);
+      await context.read<MyOrdersCubit>().GetOrders(context);
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
 
       emit(state.copyWith(showPoUp: true));
@@ -111,7 +113,11 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
   }
 
   ///validate on fields
-  void fieldsValidation() {}
+  void fieldsValidation() {
+    // if (state.start_at == state.end_at) {
+    //   throw ("لا يمكن حذف هذا الطلب");
+    // }
+  }
 }
 
 ///////////////////////////////////////////// NEW CLASS //////////////////////////////
@@ -209,4 +215,24 @@ Future<void> cacheData(UpdateInfoModel response) async {
     // Save the updated jsonData object to the shared preferences
     CacheHelper.saveData(key: AppStrings.userInfo, value: jsonEncode(jsonData));
   });
+}
+
+///////////////////////////////////////////// NEW CLASS //////////////////////////////
+
+class GetPointsCubit extends Cubit<GetPointsState> {
+  final GetPointsRepo getPointrepo;
+
+  GetPointsCubit({required this.getPointrepo}) : super(GetPointsState());
+
+  Future<void> GetMyPoints(BuildContext context) async {
+    try {
+      MyPointsModel response = await getPointrepo.GetPoints();
+      print(response);
+      print(
+          "AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad MohsenAHmad Mohsen  AHmad Mohsen AHmad Mohsen");
+      emit(state.copyWith(Data: response));
+    } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
 }

@@ -8,9 +8,31 @@ import 'option_job_title.dart';
 import 'options_cities.dart';
 import 'options_sections.dart';
 
-class BottomSheetForSignUP extends StatelessWidget {
+class BottomSheetForSignUP extends StatefulWidget {
   final String title;
-  const BottomSheetForSignUP({super.key, required this.title});
+  BottomSheetForSignUP({super.key, required this.title});
+  @override
+  State<BottomSheetForSignUP> createState() => _BottomSheetForSignUPState();
+}
+
+class _BottomSheetForSignUPState extends State<BottomSheetForSignUP> {
+  var jobTitle = "المسمى";
+  var section = "القسم";
+  var city = "المدينة";
+  changeTitle(var value, int number) {
+    if (number == 1)
+      setState(() {
+        jobTitle = value;
+      });
+    else if (number == 2)
+      setState(() {
+        section = value;
+      });
+    else
+      setState(() {
+        city = value;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +42,7 @@ class BottomSheetForSignUP extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title.tr(),
+            widget.title.tr(),
             style: bigBlackFont(fontWeight: FontWeight.w500),
           ),
           5.ph,
@@ -39,18 +61,22 @@ class BottomSheetForSignUP extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
-                    return "job_title".tr().compareTo(title) == 0
-                        ? const OptionsForJobTitle()
-                        : "section".tr().compareTo(title) == 0
-                            ? const OptionsForsection()
-                            : const OptionsForCities();
+                    return "job_title".tr().compareTo(widget.title) == 0
+                        ? OptionsForJobTitle(changeTitle: changeTitle)
+                        : "section".tr().compareTo(widget.title) == 0
+                            ? OptionsForsection(changeTitle: changeTitle)
+                            : OptionsForCities(changeTitle: changeTitle);
                   },
                 );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(title.tr()),
+                  "job_title".tr().compareTo(widget.title) == 0
+                      ? Text(jobTitle)
+                      : "section".tr().compareTo(widget.title) == 0
+                          ? Text(section)
+                          : Text(city),
                   const Icon(Icons.arrow_forward_ios_outlined),
                 ],
               ),

@@ -1,4 +1,5 @@
 import 'package:dr/Patient/features/auth/presentation/pages/sign_up_for_patient_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -14,6 +15,7 @@ import 'package:dr/shared_widgets/custom_titled_text_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInScreen extends StatefulWidget {
   final int rollSelected;
@@ -67,7 +69,7 @@ class _SignInScreen extends State<SignInScreen> {
                     ),
                     40.ph,
                     TiteldTextFormField(
-                      title: "email".tr(),
+                      title: "${"email".tr()} أو رقم الهاتف ",
                       keyboardType: TextInputType.emailAddress,
                       prefixIconPath: AppImages.emailIcon,
                       validate: true,
@@ -132,6 +134,14 @@ class _SignInScreen extends State<SignInScreen> {
                                   : Colors.grey,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  bool isGuest = prefs.containsKey('guest');
+
+                                  if (isGuest) {
+                                    prefs.remove('guest');
+                                  }
                                   await context
                                       .read<LoginCubit>()
                                       .userLogin(context);
@@ -163,6 +173,30 @@ class _SignInScreen extends State<SignInScreen> {
                         Text("do_you_have_account".tr()),
                       ],
                     ),
+                    widget.rollSelected == 1
+                        ? SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                primary: AppColors.primaryColor,
+                              ),
+                              onPressed: () async {
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setBool('guest', true);
+                                AppConstants.customNavigation(
+                                    context,
+                                    HomeScreenForPatient(selectedIndex: 2),
+                                    -1,
+                                    0);
+                              },
+                              child: Text('تخطي'),
+                            ),
+                          ),
                   ],
                 ),
               ),

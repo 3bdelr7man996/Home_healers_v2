@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _widgets = [
       const Allrequests(),
       const ChatsScreen(),
-      const NotificationScreen(),
+      NotificationScreen(),
       const SettingsScreen(),
     ];
   }

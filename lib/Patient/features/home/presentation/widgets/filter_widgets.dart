@@ -89,7 +89,6 @@ class _RaioButtonsSectionsState extends State<RaioButtonsSections> {
 
   @override
   Widget build(BuildContext context) {
-    print(context.select((AuthCubit cubit) => cubit.state.areasList));
     return Padding(
       padding: const EdgeInsets.only(
           left: 20.0, right: 20.0, top: 30.0, bottom: 10.0),

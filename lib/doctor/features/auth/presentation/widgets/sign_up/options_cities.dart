@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsForCities extends StatelessWidget {
-  const OptionsForCities({super.key});
+  var changeTitle;
+  OptionsForCities({super.key, this.changeTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,8 @@ class OptionsForCities extends StatelessWidget {
                                 groupValue: state.selectedCity,
                                 value: state.citiesList![index].id,
                                 onChanged: (checked) {
+                                  changeTitle(
+                                      state.citiesList![index].nameAr, 3);
                                   try {
                                     context.read<AuthCubit>().onSelectCity(
                                           state.citiesList![index].id!,

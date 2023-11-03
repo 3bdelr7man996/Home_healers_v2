@@ -40,6 +40,11 @@ class _FiterScreenState extends State<FiterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(context.select((AuthCubit cubit) => cubit.state.areasList));
+    print("//////////////////////////////////////////////////////////////");
+    print(context.select((AuthCubit cubit) => cubit.state.citiesList));
+    print("//////////////////////////////////////////////////////////////");
+
     statusFromData =
         context.select((AuthCubit cubit) => cubit.state.statusList);
     if (statusFromData != null) {
@@ -54,7 +59,6 @@ class _FiterScreenState extends State<FiterScreen> {
         }
       }).toList();
     }
-    print(Status);
     categoriesFromData =
         context.select((AuthCubit cubit) => cubit.state.departemensList);
     if (categoriesFromData != null) {
@@ -69,7 +73,6 @@ class _FiterScreenState extends State<FiterScreen> {
         }
       }).toList();
     }
-    print(categories);
     // print(context.select((AuthCubit cubit) => cubit.state.departemensList));
     CitesFromData = context.select((AuthCubit cubit) => cubit.state.citiesList);
     if (CitesFromData != null) {
@@ -84,7 +87,6 @@ class _FiterScreenState extends State<FiterScreen> {
         }
       }).toList();
     }
-
     return Scaffold(
       appBar: customAppBarForFilter(context,
           title: "filter_for_search", backButton: true),

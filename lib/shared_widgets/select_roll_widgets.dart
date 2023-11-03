@@ -69,14 +69,17 @@ class CardIdentification extends StatelessWidget {
     required String? imagePath,
     required String? title,
     double opacity = 1.0,
+    bool patient = false,
   })  : _imagePath = imagePath,
         _title = title,
         _opacity = opacity,
+        patient = patient,
         super(key: key);
 
   final String? _imagePath;
   final String? _title;
   final double _opacity;
+  final bool patient;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +98,15 @@ class CardIdentification extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(_imagePath!),
+            patient
+                ? Image.asset(
+                    _imagePath!,
+                    width: 60.0,
+                    height: 60.0,
+                  )
+                : Image.asset(
+                    _imagePath!,
+                  ),
             SizedBox(height: 10),
             Text(
               _title!.tr(),

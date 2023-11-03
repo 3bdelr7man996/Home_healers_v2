@@ -25,8 +25,6 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-bool switchValue = false;
-
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
@@ -40,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Personalinfo(switchValue: switchValue),
+                  Personalinfo(),
                   20.ph,
                   OneOption(
                     iconPath: AppImages.settingPerson,

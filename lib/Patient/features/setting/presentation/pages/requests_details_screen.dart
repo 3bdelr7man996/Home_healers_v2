@@ -4,6 +4,7 @@ import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
+import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -196,33 +197,36 @@ class _RequestsDetailsScreenForPatientState
                             ],
                           )
                         : widget.num != 2 && widget.num != 6
-                            ? ElevatedButton(
-                                onPressed: () async {
-                                  _toggleVisibility();
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                            ? widget.oneOrder.startAt == widget.oneOrder.endAt
+                                ? SizedBox()
+                                : ElevatedButton(
+                                    onPressed: () {
+                                      _toggleVisibility();
+                                    },
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                        AppColors.primaryColor,
+                                      ),
+                                      minimumSize: MaterialStateProperty.all(
+                                        const Size(double.infinity, 50),
+                                      ),
                                     ),
-                                  ),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          AppColors.primaryColor),
-                                  minimumSize: MaterialStateProperty.all<Size>(
-                                    const Size(double.infinity, 50),
-                                  ),
-                                ),
-                                child: const Text(
-                                  'الغاء الطلب',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
+                                    child: const Text(
+                                      'الغاء الطلب',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
                             : const SizedBox(),
                   if (widget.num == 2)
                     ElevatedButton(
@@ -288,12 +292,15 @@ class _RequestsDetailsScreenForPatientState
               ),
             ),
           ),
-          PopUpForRemoveRequest(
-            listOfOrders: widget.oneOrder,
-            toggleVisibility: _toggleVisibility,
-            changePopUp: changePopUp,
-            isVisible: _isVisible,
-            firstPopUp: _firstPopUp,
+          Container(
+            height: context.height,
+            child: PopUpForRemoveRequest(
+              listOfOrders: widget.oneOrder,
+              toggleVisibility: _toggleVisibility,
+              changePopUp: changePopUp,
+              isVisible: _isVisible,
+              firstPopUp: _firstPopUp,
+            ),
           )
         ],
       ),
