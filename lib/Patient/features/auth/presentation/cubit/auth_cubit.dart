@@ -102,7 +102,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
       };
 
       emit(state.copyWith(registerState: RequestState.loading));
-      onRequestStatusChange();
+      emit(state.copyWith(requestStatus: true));
       SignUpForPatientModel response =
           await signUpPatientRepo.signUP(body: body);
       print(response);
@@ -111,11 +111,11 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
       di.sl<ApiBaseHelper>().updateHeader();
 
       showPopUpAfterSignUp();
-      onRequestStatusChange();
+      emit(state.copyWith(requestStatus: false));
       log("Register Success");
     } catch (e) {
       print(e);
-      onRequestStatusChange();
+      emit(state.copyWith(requestStatus: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

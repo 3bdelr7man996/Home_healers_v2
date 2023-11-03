@@ -24,15 +24,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     setState(() {
       IsUserGuest = prefs.containsKey('guest');
+      print(prefs.containsKey('guest'));
     });
+    if (IsUserGuest == false)
+      context.read<NotificationCubit>().getAllNotifications();
   }
 
   @override
   void initState() {
     IsUserGuest = false;
     IsGuest();
-    if (IsUserGuest == false)
-      context.read<NotificationCubit>().getAllNotifications();
+    print(IsUserGuest);
+
     super.initState();
   }
 

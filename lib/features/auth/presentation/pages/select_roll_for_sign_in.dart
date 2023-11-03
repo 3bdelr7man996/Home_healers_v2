@@ -3,6 +3,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/shared_widgets/select_roll_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SelectRollForSignIn extends StatefulWidget {
   const SelectRollForSignIn({super.key});
@@ -21,10 +22,16 @@ class _SelectRollForSignInState extends State<SelectRollForSignIn> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            "assets/images/mainlogo.png",
-            width: context.width * 0.9,
+          SvgPicture.asset(
+            "assets/images/mainlogo.svg",
+            width: 120,
+            height: 120,
           ),
+          // Image.asset(
+          //   "assets/images/mainlogo.png",
+          //   width: context.width * 0.9,
+          // ),
+          20.ph,
           Text(
             "sign_in".tr(),
             style: TextStyle(

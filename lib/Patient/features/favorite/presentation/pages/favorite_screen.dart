@@ -31,6 +31,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     setState(() {
       IsUserGuest = prefs.containsKey('guest');
     });
+    if (IsUserGuest == false)
+      context.read<FavoriteCubit>().GetFavorite(context);
   }
 
   @override
@@ -38,8 +40,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     super.initState();
     IsUserGuest = false;
     IsGuest();
-    if (IsUserGuest == false)
-      context.read<FavoriteCubit>().GetFavorite(context);
   }
 
   @override

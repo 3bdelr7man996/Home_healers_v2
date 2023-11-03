@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
@@ -353,7 +354,7 @@ class _IconsForSectionsState extends State<IconsForSections> {
             onTap: () {
               AppConstants.customNavigation(
                   context,
-                  SectionDetailsScreen(
+                  InjuryAreaScreen(
                     sessionCountForOffer: widget.sessionCountForOffer,
                     fromOffer: widget.formOffer,
                     numberOfIcon: index,
@@ -362,6 +363,15 @@ class _IconsForSectionsState extends State<IconsForSections> {
                   ),
                   -1,
                   0);
+              // SectionDetailsScreen(
+              //   sessionCountForOffer: widget.sessionCountForOffer,
+              //   fromOffer: widget.formOffer,
+              //   numberOfIcon: index,
+              //   SectiondetailsTitle: SectiondetailsTitle[index],
+              //   status_id: statusList![index].id,
+              // ),
+              // -1,
+              // 0);
             },
             child: Column(
               children: [

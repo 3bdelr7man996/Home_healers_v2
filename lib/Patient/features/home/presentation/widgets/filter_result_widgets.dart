@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
@@ -20,7 +21,7 @@ class DoctorCard extends StatefulWidget {
   String address;
   String status;
   String? image;
-  int price;
+  var price;
   var statusAdvisor;
   var categories;
   var status_id;
@@ -204,7 +205,7 @@ class _DoctorCardState extends State<DoctorCard> {
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "${widget.price} SAR",
+                          widget.price == null ? " SAR" : "${widget.price} SAR",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
@@ -459,11 +460,17 @@ class ButtonForDoctorCard extends StatelessWidget {
         onPressed: () {
           AppConstants.customNavigation(
               context,
-              specialistpageScreen(
-                  Data: Data,
-                  status_id: status_id,
-                  fromOffer: fromOffer,
-                  sessionCountForOffer: sessionCountForOffer),
+              fromOffer
+                  ? InjuryAreaScreen(
+                      Data: Data,
+                      status_id: status_id,
+                      fromOffer: fromOffer,
+                      sessionCountForOffer: sessionCountForOffer)
+                  : specialistpageScreen(
+                      Data: Data,
+                      status_id: status_id,
+                      fromOffer: fromOffer,
+                      sessionCountForOffer: sessionCountForOffer),
               -1,
               0);
         },

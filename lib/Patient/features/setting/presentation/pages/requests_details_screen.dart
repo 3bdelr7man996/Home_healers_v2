@@ -200,22 +200,21 @@ class _RequestsDetailsScreenForPatientState
                             ? widget.oneOrder.startAt == widget.oneOrder.endAt
                                 ? SizedBox()
                                 : ElevatedButton(
-                                    onPressed: () async {
+                                    onPressed: () {
                                       _toggleVisibility();
                                     },
                                     style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
+                                      shape: MaterialStateProperty.all(
                                         RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
                                       ),
                                       backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              AppColors.primaryColor),
-                                      minimumSize:
-                                          MaterialStateProperty.all<Size>(
+                                          MaterialStateProperty.all(
+                                        AppColors.primaryColor,
+                                      ),
+                                      minimumSize: MaterialStateProperty.all(
                                         const Size(double.infinity, 50),
                                       ),
                                     ),

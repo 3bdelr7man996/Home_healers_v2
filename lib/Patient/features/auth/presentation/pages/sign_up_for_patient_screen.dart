@@ -11,7 +11,9 @@ import 'package:dr/shared_widgets/pop_up.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/utils/app_font.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUpForPatientScreen extends StatefulWidget {
   const SignUpForPatientScreen({super.key});
@@ -22,8 +24,8 @@ class SignUpForPatientScreen extends StatefulWidget {
 
 class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
   Widget build(BuildContext context) {
-    bool Request = context
-        .select((AuthCubitForPatient cubit) => cubit.state.requestStatus);
+    // bool Request = context
+    //     .select((AuthCubitForPatient cubit) => cubit.state.requestStatus);
     return Scaffold(
       appBar: customAppBar(context),
       body: CustomScrollView(slivers: <Widget>[
@@ -76,10 +78,41 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       icon: AppImages.emailIcon,
                     ),
                     30.ph,
-                    TextFormFieldForSignUpForPatient(
-                      num: 8,
-                      title: "mobile_number",
-                      icon: AppImages.phoneIcon,
+                    // TextFormFieldForSignUpForPatient(
+                    //   num: 8,
+                    //   title: "mobile_number",
+                    //   icon: AppImages.phoneIcon,
+                    // ),
+                    // 30.ph,
+                    IntlPhoneField(
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        hintText: ' رقم الموبايل',
+                        suffixIcon: const Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(),
+                        ),
+                      ),
+                      initialCountryCode: 'SA',
+                      onChanged: (phone) {
+                        var phonenumber = phone.completeNumber;
+                        print(phonenumber);
+
+                        // phonenumber = phonenumber.substring(4);
+                        context
+                            .read<AuthCubitForPatient>()
+                            .onPhoneChange(phonenumber);
+                      },
+                      onCountryChanged: (country) {
+                        // Get the selected country code.
+                        String countryCode = country.code;
+                        context
+                            .read<AuthCubitForPatient>()
+                            .oncountryCodeChange(countryCode);
+
+                        // Print the selected country code to the console.
+                        print(countryCode);
+                      },
                     ),
                     30.ph,
                     SizedBox(
@@ -88,7 +121,7 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "choose_nationality".tr(),
+                            "اختر الجنس",
                             style: bigBlackFont(fontWeight: FontWeight.w500),
                           ),
                           5.ph,
@@ -115,6 +148,34 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       icon: AppImages.locationIcon,
                     ),
                     30.ph,
+
+                    SizedBox(
+                      width: context.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "choose_nationality".tr(),
+                            style: bigBlackFont(fontWeight: FontWeight.w500),
+                          ),
+                          5.ph,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              nationalityButtonForSignUpForPatient(
+                                value: "SA",
+                                title: "سعودي",
+                              ), //todo
+                              nationalityButtonForSignUpForPatient(
+                                value: "Any",
+                                title: "غير ذلك",
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    30.ph,
                     TextFormFieldForSignUpForPatient(
                       num: 4,
                       title: "password",
@@ -133,60 +194,34 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       title: "select_city".tr(),
                     ),
                     30.ph,
-                    SizedBox(
-                      width: context.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "رمز المدينة",
-                            style: bigBlackFont(fontWeight: FontWeight.w500),
-                          ),
-                          5.ph,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SelectCityButtonForSignUpForPatient(
-                                value: "SA",
-                                title: "SA",
-                              ), //todo
-                              SelectCityButtonForSignUpForPatient(
-                                value: "Any",
-                                title: "غير ذلك",
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    30.ph,
-                    SizedBox(
-                      width: context.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "choose_nationality".tr(),
-                            style: bigBlackFont(fontWeight: FontWeight.w500),
-                          ),
-                          5.ph,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              nationalityButtonForSignUpForPatient(
-                                value: "SA",
-                                title: "SA",
-                              ), //todo
-                              nationalityButtonForSignUpForPatient(
-                                value: "Any",
-                                title: "غير ذلك",
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    30.ph,
+                    // SizedBox(
+                    //   width: context.width,
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "رمز المدينة",
+                    //         style: bigBlackFont(fontWeight: FontWeight.w500),
+                    //       ),
+                    //       5.ph,
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    // SelectCityButtonForSignUpForPatient(
+                    //             value: "SA",
+                    //             title: "SA",
+                    //           ), //todo
+                    //           SelectCityButtonForSignUpForPatient(
+                    //             value: "Any",
+                    //             title: "غير ذلك",
+                    //           )
+                    //         ],
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
+                    // 30.ph,
+
                     BirthdayPicker(),
                     30.ph,
                     ListTile(
@@ -207,15 +242,28 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       ),
                     ),
                     30.ph,
-                    ButtonForSignUp(
-                      onPressed: () async {
-                        Request
-                            ? null
-                            : await context
-                                .read<AuthCubitForPatient>()
-                                .signUpPatient(context);
+                    BlocBuilder<AuthCubitForPatient, AuthStateForPatient>(
+                      builder: (context, state) {
+                        return state.requestStatus
+                            ? CircularProgressIndicator()
+                            : ButtonForSignUp(
+                                onPressed: () async {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  bool isGuest = prefs.containsKey('guest');
+
+                                  if (isGuest) {
+                                    prefs.remove('guest');
+                                  }
+
+                                  await context
+                                      .read<AuthCubitForPatient>()
+                                      .signUpPatient(context);
+                                },
+                                title: 'create_account'.tr(),
+                              );
                       },
-                      title: 'create_account'.tr(),
                     ),
                     30.ph,
                     Row(

@@ -40,16 +40,16 @@ class _SectionsScreenState extends State<SectionsScreen> {
 
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (i == 0) {
-      Future.delayed(Duration.zero, () {
-        showModalBottomSheet(
-          context: widget.context,
-          builder: (BuildContext context) {
-            return const BottomSheetForPatient();
-          },
-        );
-      });
-    }
+    // if (i == 0) {
+    //   Future.delayed(Duration.zero, () {
+    //     showModalBottomSheet(
+    //       context: widget.context,
+    //       builder: (BuildContext context) {
+    //         return const BottomSheetForPatient();
+    //       },
+    //     );
+    //   });
+    // }
     i++;
   }
 

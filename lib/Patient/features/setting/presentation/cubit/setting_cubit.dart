@@ -56,7 +56,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       emit(state.copyWith(pendingOrders: arrayForPending));
       emit(state.copyWith(completedOrders: arrayForCompleted));
       emit(state.copyWith(canceledOrders: arrayForCanceled));
-      print(state.confirmedOrders);
+      debugPrint("${state.waitConfirmOrders}");
       print("asd");
       // print(state.ReviewingOrders);
     } catch (e) {

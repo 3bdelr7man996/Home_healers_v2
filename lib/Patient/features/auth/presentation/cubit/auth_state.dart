@@ -8,7 +8,7 @@ class AuthStateForPatient extends Equatable {
       this.requestStatus = false,
       this.lastName,
       this.phone,
-      this.country_code,
+      this.country_code = "SA",
       this.term = false,
       this.gender,
       this.cityId,

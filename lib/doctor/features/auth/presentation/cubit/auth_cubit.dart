@@ -403,6 +403,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   //?============================[ UPDATE PROFILE ]===========================
   ///Register new advertiser
+  onStatusChange(bool value) =>
+      emit(state.copyWith(status: value ? "on" : "off"));
   Future<void> updateProfile() async {
     try {
       fieldsValidation(false);
@@ -425,6 +427,7 @@ class AuthCubit extends Cubit<AuthState> {
         "location": "${state.address}",
         "address_ar": "${state.address}",
         "address_en": "${state.address}",
+        "status": "${state.status}",
         //"fcm_token": "",
       };
       if (state.selectedCategories != null) {
@@ -438,6 +441,7 @@ class AuthCubit extends Cubit<AuthState> {
         }
       }
       emit(state.copyWith(registerState: RequestState.loading));
+      log(body.toString());
       SignUpAdvertiseModel response = await signUpAdverRepo.signUP(
           body: body,
           isUpdateProfile: true,

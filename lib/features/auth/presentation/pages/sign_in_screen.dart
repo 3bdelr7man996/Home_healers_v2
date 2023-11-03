@@ -134,6 +134,14 @@ class _SignInScreen extends State<SignInScreen> {
                                   : Colors.grey,
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  bool isGuest = prefs.containsKey('guest');
+
+                                  if (isGuest) {
+                                    prefs.remove('guest');
+                                  }
                                   await context
                                       .read<LoginCubit>()
                                       .userLogin(context);

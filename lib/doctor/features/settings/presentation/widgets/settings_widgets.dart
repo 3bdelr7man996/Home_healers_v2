@@ -3,26 +3,26 @@ import 'dart:developer';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Personalinfo extends StatefulWidget {
-  final bool switchValue;
-
-  Personalinfo({Key? key, required this.switchValue}) : super(key: key);
+  Personalinfo({Key? key}) : super(key: key);
 
   @override
   State<Personalinfo> createState() => _PersonalinfoState();
 }
 
 class _PersonalinfoState extends State<Personalinfo> {
-  late bool switchValue;
-
+  bool switchValue = false;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    switchValue = widget.switchValue;
+    context.read<AuthCubit>().initProfileData();
   }
 
   @override
@@ -48,7 +48,9 @@ class _PersonalinfoState extends State<Personalinfo> {
                   inactiveTrackColor: const Color.fromARGB(174, 244, 67, 54),
                   activeColor: Colors.green,
                   value: switchValue,
-                  onChanged: (value) {
+                  onChanged: (value) async {
+                    await context.read<AuthCubit>().onStatusChange(value);
+                    await context.read<AuthCubit>().updateProfile();
                     setState(() {
                       switchValue = value;
                     });

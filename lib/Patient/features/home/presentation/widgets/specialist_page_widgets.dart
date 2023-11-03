@@ -582,6 +582,8 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.status_id);
+    print("Aliiiii");
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -642,17 +644,12 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
               onPressed: () {
                 AppConstants.customNavigation(
                     context,
-                    InjuryAreaScreen(
+                    DateOfSessionScreen(
                         Data: widget.Data,
                         status_id: widget.status_id,
                         fromOffer: widget.fromOffer),
                     -1,
                     0);
-                // DateOfSessionScreen(
-                //     status_id: widget.status_id,
-                //     fromOffer: widget.fromOffer),
-                // -1,
-                // 0);
               },
               style: ElevatedButton.styleFrom(
                 primary: AppColors.primaryColor,

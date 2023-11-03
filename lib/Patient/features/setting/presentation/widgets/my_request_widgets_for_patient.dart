@@ -300,7 +300,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                             style: const TextStyle(fontWeight: FontWeight.w500),
                           ),
                           Text(
-                            "تاريخ الطلب : ${widget.listOfOrders.startAt}",
+                            "تاريخ الطلب : ${widget.listOfOrders.createdAt}",
                             style: const TextStyle(
                                 fontWeight: FontWeight.w500, fontSize: 14),
                           )
@@ -376,7 +376,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         image: widget.listOfOrders.advertiser.image != null
                             ? DecorationImage(
                                 image: NetworkImage(
-                                  "${AppStrings.baseUrl}/upload/${widget.listOfOrders.advertiser.image}",
+                                  "${AppStrings.imageUrl}${widget.listOfOrders.advertiser.image}",
                                 ),
                                 fit: BoxFit.cover,
                                 onError: (exception, stackTrace) =>
@@ -442,12 +442,17 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 style: TextStyle(fontWeight: FontWeight.w500),
                               ),
                               5.pw,
-                              Text(
-                                "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
-                                style: const TextStyle(
-                                    color: AppColors.secondryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
+                              widget.listOfOrders.sessionsCount == null ||
+                                      widget.listOfOrders.advertiser
+                                              .sessionPrice ==
+                                          null
+                                  ? Text("")
+                                  : Text(
+                                      "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
+                                      style: const TextStyle(
+                                          color: AppColors.secondryColor,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                             ],
                           ),
                         ),
