@@ -206,8 +206,8 @@ class LocationInput extends StatelessWidget {
           builder: (context, state) {
             return TextFormField(
               key: const Key('signUpForm_locationInput_textField'),
-              controller: (control.text.isEmpty && state.advertiser != null)
-                  ? TextEditingController(text: state.advertiser?.addressAr)
+              controller: (control.text.isEmpty && state.address != null)
+                  ? TextEditingController(text: state.address)
                   : control,
               //initialValue: state.advertiser?.addressAr ?? "",
               readOnly: true,
@@ -315,9 +315,21 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
   }
 }
 
-class BottomSheetForSignUP extends StatelessWidget {
+class BottomSheetForSignUP extends StatefulWidget {
   final String title;
   const BottomSheetForSignUP({super.key, required this.title});
+  @override
+  State<BottomSheetForSignUP> createState() => _BottomSheetForSignUPState();
+}
+
+class _BottomSheetForSignUPState extends State<BottomSheetForSignUP> {
+  var city = "اختر المدينة";
+  changeTitle(var value) {
+    print("object");
+    setState(() {
+      city = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -327,7 +339,7 @@ class BottomSheetForSignUP extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title.tr(),
+            widget.title.tr(),
             style: bigBlackFont(fontWeight: FontWeight.w500),
           ),
           5.ph,
@@ -346,14 +358,14 @@ class BottomSheetForSignUP extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
-                    return const OptionsForCities();
+                    return OptionsForCities(changeTitle: changeTitle);
                   },
                 );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(title.tr()),
+                  Text(city),
                   const Icon(Icons.arrow_forward_ios_outlined),
                 ],
               ),
@@ -365,9 +377,15 @@ class BottomSheetForSignUP extends StatelessWidget {
   }
 }
 
-class OptionsForCities extends StatelessWidget {
-  const OptionsForCities({super.key});
+class OptionsForCities extends StatefulWidget {
+  var changeTitle;
+  OptionsForCities({super.key, this.changeTitle});
 
+  @override
+  State<OptionsForCities> createState() => _OptionsForCitiesState();
+}
+
+class _OptionsForCitiesState extends State<OptionsForCities> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -406,6 +424,8 @@ class OptionsForCities extends StatelessWidget {
                                 groupValue: state.selectedCity,
                                 value: state.citiesList![index].id,
                                 onChanged: (checked) {
+                                  widget.changeTitle(
+                                      state.citiesList![index].nameAr);
                                   try {
                                     context.read<AuthCubit>().onSelectCity(
                                           state.citiesList![index].id!,
@@ -414,6 +434,7 @@ class OptionsForCities extends StatelessWidget {
                                     context
                                         .read<AuthCubitForPatient>()
                                         .onCityChange(id);
+
                                     print(id);
                                   } catch (e) {
                                     print(e.toString());

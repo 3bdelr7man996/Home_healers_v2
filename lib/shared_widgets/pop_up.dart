@@ -1,4 +1,5 @@
 import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -67,7 +68,7 @@ class PopUpDialog extends StatelessWidget {
                                       ? const HomeScreen(
                                           selectedIndex: 0,
                                         )
-                                      : const InjuryAreaScreen(),
+                                      : HomeScreenForPatient(selectedIndex: 2),
                                 );
                               },
                               style: ButtonStyle(

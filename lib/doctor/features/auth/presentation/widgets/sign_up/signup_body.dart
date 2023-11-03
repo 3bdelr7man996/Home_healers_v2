@@ -146,7 +146,6 @@ class SignUpBody extends StatelessWidget {
                       title: "bank_account_number".tr(),
                       validate: true,
                       validateMsg: "required".tr(),
-                      keyboardType: TextInputType.number,
                       onChanged: (p0) =>
                           context.read<AuthCubit>().onIbanChange(p0),
                     ),

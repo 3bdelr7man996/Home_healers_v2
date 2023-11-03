@@ -15,6 +15,7 @@ import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
@@ -136,6 +137,11 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => ResetPasswordCubit(
           repository: di.sl<ResetPasswordRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => GetPointsCubit(
+          getPointrepo: di.sl<GetPointsRepo>(),
         ),
       ),
     ],

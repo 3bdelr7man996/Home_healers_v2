@@ -8,7 +8,8 @@ import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
-import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
+import 'package:dr/features/splash/presentation/pages/first_screen.dart';
+
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,8 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
               screen: HomeScreenForPatient(selectedIndex: 2));
         }
       } else {
-        AppConstants.pushRemoveNavigator(context,
-            screen: const SelectRollForSignIn());
+        AppConstants.pushRemoveNavigator(context, screen: FirstScreen());
       }
     });
     super.initState();

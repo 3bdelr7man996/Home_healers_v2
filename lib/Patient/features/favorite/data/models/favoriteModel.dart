@@ -1,87 +1,24 @@
 class FavoriteModel {
   FavoriteModel({
     required this.success,
-    required this.data1,
+    required this.data,
     required this.message,
   });
   late final bool success;
-  late final Data1 data1;
-  late final String? message;
+  late final List<Data> data;
+  late final String message;
 
   FavoriteModel.fromJson(Map<String, dynamic>? json) {
     success = json?['success'];
-    data1 = Data1.fromJson(json?['data1']);
+    data = List.from(json?['data']).map((e) => Data.fromJson(e)).toList();
     message = json?['message'];
   }
 
   Map<String, dynamic>? toJson() {
     final _data = <String, dynamic>{};
     _data['success'] = success;
-    _data['data1'] = data1.toJson();
-    _data['message'] = message;
-    return _data;
-  }
-}
-
-class Data1 {
-  Data1({
-    required this.currentPage,
-    required this.data,
-    required this.firstPageUrl,
-    required this.from,
-    required this.lastPage,
-    required this.lastPageUrl,
-    this.nextPageUrl,
-    required this.path,
-    required this.perPage,
-    this.prevPageUrl,
-    required this.to,
-    required this.total,
-  });
-  late var currentPage;
-  late var data;
-  late final String? firstPageUrl;
-  late var from;
-  late var lastPage;
-  late final String? lastPageUrl;
-  late var nextPageUrl;
-  late final String? path;
-  late var perPage;
-  late var prevPageUrl;
-  late var to;
-  late var total;
-
-  Data1.fromJson(Map<String, dynamic>? json) {
-    currentPage = json?['current_page'];
-    data = json?['data'] == null
-        ? null
-        : List.from(json?['data']).map((e) => Data.fromJson(e)).toList();
-    firstPageUrl = json?['first_page_url'];
-    from = json?['from'];
-    lastPage = json?['last_page'];
-    lastPageUrl = json?['last_page_url'];
-    nextPageUrl = json?['next_page_url'];
-    path = json?['path'];
-    perPage = json?['per_page'];
-    prevPageUrl = json?['prev_page_url'];
-    to = json?['to'];
-    total = json?['total'];
-  }
-
-  Map<String, dynamic>? toJson() {
-    final _data = <String, dynamic>{};
-    _data['current_page'] = currentPage;
     _data['data'] = data.map((e) => e.toJson()).toList();
-    _data['first_page_url'] = firstPageUrl;
-    _data['from'] = from;
-    _data['last_page'] = lastPage;
-    _data['last_page_url'] = lastPageUrl;
-    _data['next_page_url'] = nextPageUrl;
-    _data['path'] = path;
-    _data['per_page'] = perPage;
-    _data['prev_page_url'] = prevPageUrl;
-    _data['to'] = to;
-    _data['total'] = total;
+    _data['message'] = message;
     return _data;
   }
 }
@@ -94,9 +31,9 @@ class Data {
     required this.advertiser,
     required this.user,
   });
-  late var id;
-  late var userId;
-  late var advertiserId;
+  late final int id;
+  late final int userId;
+  late final int advertiserId;
   late final Advertiser advertiser;
   late final User user;
 
@@ -128,74 +65,78 @@ class Advertiser {
     required this.lastnameEn,
     required this.mobile,
     required this.email,
-    required this.image,
+    this.image,
     this.images,
-    required this.descAr,
-    required this.descEn,
+    this.descAr,
+    this.descEn,
     required this.addressAr,
-    required this.addressEn,
+    this.addressEn,
     required this.gender,
     this.iban,
     this.location,
     required this.bundleId,
     required this.countryId,
     required this.cityId,
-    required this.areaId,
+    this.areaId,
     required this.startfrom,
     required this.endat,
     required this.sessionPrice,
     required this.sessionDur,
-    required this.lat,
-    required this.lng,
+    this.lat,
+    this.lng,
     required this.status,
     this.centerId,
     this.fcmToken,
     required this.isOnline,
     required this.createdAt,
     required this.updatedAt,
+    required this.points,
+    required this.activated,
     required this.rating,
     required this.nameAr,
     required this.nameEn,
     required this.categories,
     required this.statusAdvisor,
   });
-  late var id;
-  late final String? firstnameAr;
-  late final String? firstnameEn;
-  late final String? lastnameAr;
-  late final String? lastnameEn;
-  late final String? mobile;
-  late final String? email;
+  late final int id;
+  late final String firstnameAr;
+  late final String firstnameEn;
+  late final String lastnameAr;
+  late final String lastnameEn;
+  late final String mobile;
+  late final String email;
   late final String? image;
-  late var images;
+  late final List<String>? images;
   late final String? descAr;
   late final String? descEn;
-  late final String? addressAr;
+  late final String addressAr;
   late final String? addressEn;
-  late final String? gender;
-  late var iban;
-  late var location;
-  late var bundleId;
-  late var countryId;
-  late var cityId;
-  late var areaId;
-  late final String? startfrom;
-  late final String? endat;
-  late var sessionPrice;
-  late var sessionDur;
+  late final String gender;
+  late final String? iban;
+  late final Null location;
+  late final int bundleId;
+  late final int countryId;
+  late final int cityId;
+  late final int? areaId;
+  late final String startfrom;
+  late final String endat;
+  late final int sessionPrice;
+  late final int sessionDur;
   late final String? lat;
   late final String? lng;
-  late final String? status;
-  late var centerId;
-  late var fcmToken;
-  late var isOnline;
-  late final String? createdAt;
-  late final String? updatedAt;
-  late var rating;
-  late final String? nameAr;
-  late final String? nameEn;
+  late final String status;
+  late final Null centerId;
+  late final String? fcmToken;
+  late final int isOnline;
+  late final String createdAt;
+  late final String updatedAt;
+  late final int points;
+  late final int activated;
+  late final int rating;
+  late final String nameAr;
+  late final String nameEn;
   late final List<Categories> categories;
-  late final List<dynamic> statusAdvisor;
+  late final List<StatusAdvisor> statusAdvisor;
 
   Advertiser.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -205,38 +146,42 @@ class Advertiser {
     lastnameEn = json?['lastname_en'];
     mobile = json?['mobile'];
     email = json?['email'];
-    image = json?['image'];
-    images = json?['images'];
-    descAr = json?['desc_ar'];
-    descEn = json?['desc_en'];
+    image = null;
+    images = null;
+    descAr = null;
+    descEn = null;
     addressAr = json?['address_ar'];
-    addressEn = json?['address_en'];
+    addressEn = null;
     gender = json?['gender'];
-    iban = json?['iban'];
-    location = json?['location'];
+    iban = null;
+    location = null;
     bundleId = json?['bundle_id'];
     countryId = json?['country_id'];
     cityId = json?['city_id'];
-    areaId = json?['area_id'];
+    areaId = null;
     startfrom = json?['startfrom'];
     endat = json?['endat'];
     sessionPrice = json?['session_price'];
     sessionDur = json?['session_dur'];
-    lat = json?['lat'];
-    lng = json?['lng'];
+    lat = null;
+    lng = null;
     status = json?['status'];
-    centerId = json?['center_id'];
-    fcmToken = json?['fcm_token'];
+    centerId = null;
+    fcmToken = null;
     isOnline = json?['is_online'];
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
+    points = json?['points'];
+    activated = json?['activated'];
     rating = json?['rating'];
     nameAr = json?['name_ar'];
     nameEn = json?['name_en'];
     categories = List.from(json?['categories'])
         .map((e) => Categories.fromJson(e))
         .toList();
-    statusAdvisor = List.castFrom<dynamic, dynamic>(json?['status_advisor']);
+    statusAdvisor = List.from(json?['status_advisor'])
+        .map((e) => StatusAdvisor.fromJson(e))
+        .toList();
   }
 
   Map<String, dynamic>? toJson() {
@@ -273,11 +218,13 @@ class Advertiser {
     _data['is_online'] = isOnline;
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
+    _data['points'] = points;
+    _data['activated'] = activated;
     _data['rating'] = rating;
     _data['name_ar'] = nameAr;
     _data['name_en'] = nameEn;
     _data['categories'] = categories.map((e) => e.toJson()).toList();
-    _data['status_advisor'] = statusAdvisor;
+    _data['status_advisor'] = statusAdvisor.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -292,12 +239,12 @@ class Categories {
     required this.image,
     required this.pivot,
   });
-  late var id;
-  late final String? nameAr;
-  late final String? nameEn;
-  late final String? status;
-  late var orderNum;
-  late final String? image;
+  late final int id;
+  late final String nameAr;
+  late final String nameEn;
+  late final String status;
+  late final int orderNum;
+  late final String image;
   late final Pivot pivot;
 
   Categories.fromJson(Map<String, dynamic>? json) {
@@ -328,8 +275,8 @@ class Pivot {
     required this.advertiserId,
     required this.categoryId,
   });
-  late var advertiserId;
-  late var categoryId;
+  late final int advertiserId;
+  late final int categoryId;
 
   Pivot.fromJson(Map<String, dynamic>? json) {
     advertiserId = json?['advertiser_id'];
@@ -344,13 +291,50 @@ class Pivot {
   }
 }
 
+class StatusAdvisor {
+  StatusAdvisor({
+    required this.id,
+    required this.nameAr,
+    required this.nameEn,
+    required this.status,
+    this.image,
+    required this.pivot,
+  });
+  late final int id;
+  late final String nameAr;
+  late final String nameEn;
+  late final String status;
+  late final Null image;
+  late final Pivot pivot;
+
+  StatusAdvisor.fromJson(Map<String, dynamic>? json) {
+    id = json?['id'];
+    nameAr = json?['name_ar'];
+    nameEn = json?['name_en'];
+    status = json?['status'];
+    image = null;
+    pivot = Pivot.fromJson(json?['pivot']);
+  }
+
+  Map<String, dynamic>? toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name_ar'] = nameAr;
+    _data['name_en'] = nameEn;
+    _data['status'] = status;
+    _data['image'] = image;
+    _data['pivot'] = pivot.toJson();
+    return _data;
+  }
+}
+
 class User {
   User({
     required this.id,
     required this.name,
     required this.mobile,
     required this.image,
-    this.fcmToken,
+    required this.fcmToken,
     required this.email,
     this.emailVerifiedAt,
     required this.gender,
@@ -359,22 +343,44 @@ class User {
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
+    required this.points,
+    required this.activated,
+    this.line1,
+    this.line2,
+    this.age,
+    this.birthday,
+    this.countryCode,
+    this.firstName,
+    this.lastName,
+    this.region,
+    this.nationality,
     required this.doctorReports,
     required this.diagnoseForms,
   });
-  late var id;
-  late final String? name;
-  late final String? mobile;
-  late final String? image;
-  late var fcmToken;
-  late final String? email;
-  late var emailVerifiedAt;
-  late final String? gender;
-  late var cityId;
-  late var centerId;
-  late final String? createdAt;
-  late final String? updatedAt;
-  late var deletedAt;
+  late final int id;
+  late final String name;
+  late final String mobile;
+  late final String image;
+  late final String fcmToken;
+  late final String email;
+  late final Null emailVerifiedAt;
+  late final String gender;
+  late final int cityId;
+  late final Null centerId;
+  late final String createdAt;
+  late final String updatedAt;
+  late final Null deletedAt;
+  late final int points;
+  late final int activated;
+  late final Null line1;
+  late final Null line2;
+  late final Null age;
+  late final Null birthday;
+  late final Null countryCode;
+  late final Null firstName;
+  late final Null lastName;
+  late final Null region;
+  late final Null nationality;
   late final List<dynamic> doctorReports;
   late final List<dynamic> diagnoseForms;
 
@@ -385,13 +391,24 @@ class User {
     image = json?['image'];
     fcmToken = json?['fcm_token'];
     email = json?['email'];
-    emailVerifiedAt = json?['email_verified_at'];
+    emailVerifiedAt = null;
     gender = json?['gender'];
     cityId = json?['city_id'];
-    centerId = json?['center_id'];
+    centerId = null;
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
-    deletedAt = json?['delete_at'];
+    deletedAt = null;
+    points = json?['points'];
+    activated = json?['activated'];
+    line1 = null;
+    line2 = null;
+    age = null;
+    birthday = null;
+    countryCode = null;
+    firstName = null;
+    lastName = null;
+    region = null;
+    nationality = null;
     doctorReports = List.castFrom<dynamic, dynamic>(json?['doctor_reports']);
     diagnoseForms = List.castFrom<dynamic, dynamic>(json?['diagnose_forms']);
   }
@@ -411,6 +428,17 @@ class User {
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
     _data['deleted_at'] = deletedAt;
+    _data['points'] = points;
+    _data['activated'] = activated;
+    _data['line1'] = line1;
+    _data['line2'] = line2;
+    _data['age'] = age;
+    _data['birthday'] = birthday;
+    _data['country_code'] = countryCode;
+    _data['first_name'] = firstName;
+    _data['last_name'] = lastName;
+    _data['region'] = region;
+    _data['nationality'] = nationality;
     _data['doctor_reports'] = doctorReports;
     _data['diagnose_forms'] = diagnoseForms;
     return _data;

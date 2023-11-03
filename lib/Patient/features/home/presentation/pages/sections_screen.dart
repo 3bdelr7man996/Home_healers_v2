@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SectionsScreen extends StatefulWidget {
   final BuildContext context;
@@ -16,25 +20,36 @@ class SectionsScreen extends StatefulWidget {
 int i = 0;
 
 class _SectionsScreenState extends State<SectionsScreen> {
+  IsGuest() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey('guest');
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     context.read<GetAllAdsCubit>().GetAllAds(context);
+    var isGuestExist = IsGuest();
+    print(isGuestExist);
+    print("\\\\\\\\\\\\\\\\\\\\\\");
+    if (isGuestExist == false)
+      context.read<FavoriteCubit>().GetFavorite(context);
   }
 
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (i == 0) {
-      Future.delayed(Duration.zero, () {
-        showModalBottomSheet(
-          context: widget.context,
-          builder: (BuildContext context) {
-            return const BottomSheetForPatient();
-          },
-        );
-      });
-    }
+    // if (i == 0) {
+    //   Future.delayed(Duration.zero, () {
+    //     showModalBottomSheet(
+    //       context: widget.context,
+    //       builder: (BuildContext context) {
+    //         return const BottomSheetForPatient();
+    //       },
+    //     );
+    //   });
+    // }
     i++;
   }
 

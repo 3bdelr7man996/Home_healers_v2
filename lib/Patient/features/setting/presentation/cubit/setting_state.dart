@@ -130,3 +130,23 @@ class UpdateInfoState extends Equatable {
           cityId: cityId ?? this.cityId,
           fullName: fullName ?? this.fullName);
 }
+
+////////////////////////////////////////////////////////////////////
+class GetPointsState extends Equatable {
+  GetPointsState({
+    this.Data = false,
+  });
+  var Data;
+
+  @override
+  @override
+  List<Object?> get props => [
+        Data,
+      ];
+  GetPointsState copyWith({
+    var Data,
+  }) =>
+      GetPointsState(
+        Data: Data ?? this.Data,
+      );
+}

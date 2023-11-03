@@ -20,6 +20,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       var response = await favoriteRepo.GetFavorite();
       print(
           "============================================================================================");
+      print(response);
       emit(await state.copyWith(data: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -44,7 +45,6 @@ class AddFavoriteCubit extends Cubit<AddFavoriteState> {
       print("Ghaith");
     } catch (e) {
       print(e.toString());
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 

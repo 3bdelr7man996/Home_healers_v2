@@ -1,6 +1,8 @@
 import 'package:dr/Patient/features/auth/presentation/widgets/injury_area_widgets.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
+import 'package:dr/Patient/features/home/presentation/pages/date_of_session_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
+import 'package:dr/Patient/features/home/presentation/pages/specialist_page_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -10,7 +12,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InjuryAreaScreen extends StatefulWidget {
-  const InjuryAreaScreen({super.key});
+  var sessionCountForOffer,
+      numberOfIcon,
+      Data,
+      fromOffer,
+      SectiondetailsTitle,
+      status_id;
+  InjuryAreaScreen(
+      {super.key,
+      this.sessionCountForOffer,
+      this.numberOfIcon,
+      this.Data,
+      this.fromOffer,
+      this.SectiondetailsTitle,
+      this.status_id});
 
   @override
   State<InjuryAreaScreen> createState() => _InjuryAreaScreenState();
@@ -158,11 +173,32 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                       ),
                       onPressed: () {
                         print(ListOfResult.join(","));
-                        context
-                            .read<ReservationCubit>()
-                            .onChangePainPlace(ListOfResult.join(", "));
-                        AppConstants.customNavigation(context,
-                            HomeScreenForPatient(selectedIndex: 2), 1, 0);
+                        print("////////////////");
+                        if (ListOfResult.length != 0) {
+                          context
+                              .read<ReservationCubit>()
+                              .onChangePainPlace(ListOfResult.join(", "));
+                          AppConstants.customNavigation(
+                              context,
+                              widget.fromOffer
+                                  ? specialistpageScreen(
+                                      Data: widget.Data,
+                                      status_id: widget.status_id,
+                                      fromOffer: widget.fromOffer,
+                                      sessionCountForOffer:
+                                          widget.sessionCountForOffer)
+                                  : SectionDetailsScreen(
+                                      sessionCountForOffer:
+                                          widget.sessionCountForOffer,
+                                      fromOffer: widget.fromOffer,
+                                      numberOfIcon: widget.numberOfIcon,
+                                      SectiondetailsTitle:
+                                          widget.SectiondetailsTitle,
+                                      status_id: widget.status_id,
+                                    ),
+                              1,
+                              0);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -174,20 +210,20 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                     ),
                   ),
                   10.ph,
-                  SizedBox(
-                    width: context.width,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        primary: Colors.transparent,
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        'تخطي',
-                        style: TextStyle(color: AppColors.primaryColor),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: context.width,
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(
+                  //       elevation: 0,
+                  //       primary: Colors.transparent,
+                  //     ),
+                  //     onPressed: () {},
+                  //     child: const Text(
+                  //       'تخطي',
+                  //       style: TextStyle(color: AppColors.primaryColor),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               )
             ],

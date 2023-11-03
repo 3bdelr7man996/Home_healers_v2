@@ -8,13 +8,13 @@ class FavoriteState extends Equatable {
     this.data,
   });
   final bool Loading;
-
   var data;
   @override
   @override
   List<Object?> get props => [Loading, data];
   FavoriteState copyWith({
     bool? Loading,
+    var page,
     var data,
   }) =>
       FavoriteState(

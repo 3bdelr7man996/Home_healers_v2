@@ -1,6 +1,6 @@
 {
   "register_new_account": "Register a new account",
-  "enjoy_many_advantages": "Register your account now and enjoy the many advantages of the application",
+  "enjoy_many_advantages": "Register now and enjoy the benefits of the application",
   "first_name": "First Name",
   "last_name": "Last Name",
   "email": "Email",
@@ -146,14 +146,15 @@
   "visit_the_application_website": "Visit the application website",
   "share_app": "Share app",
   "log_out": "Log Out",
-  "c":"Log Out",
+  "c": "Log Out",
   "select_city": "Select City",
-  "there_are_no_notifications":"There are no notifications",
-  "today":"Today",
-  "yesterday":"Yesterday",
-  "your_number_of_points":"Your number of points",
-  "point":"Point",
-  "SAR":"SAR",
-  "enjoy_your_cashback":"Enjoy your cashback",
-  "latest_activity":"Latest activity"
+  "there_are_no_notifications": "There are no notifications",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "your_number_of_points": "Your number of points",
+  "point": "Point",
+  "SAR": "SAR",
+  "enjoy_your_cashback": "Enjoy your cashback",
+  "latest_activity": "Latest activity",
+  "city": "city"
 }

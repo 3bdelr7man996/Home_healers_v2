@@ -26,10 +26,7 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("/////////////");
-    print(widget.Data);
-    print("/////////////");
-    print(widget.status_id);
+
     context.read<ReservationCubit>().onChangeadvertiserId(widget.Data["id"]);
     context.read<ReservationCubit>().onChangestatus_id(widget.status_id);
     context.read<ReservationCubit>().makeNotesEmpty();

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
@@ -20,7 +21,7 @@ class DoctorCard extends StatefulWidget {
   String address;
   String status;
   String? image;
-  int price;
+  var price;
   var statusAdvisor;
   var categories;
   var status_id;
@@ -28,10 +29,12 @@ class DoctorCard extends StatefulWidget {
   bool fromOffer;
   var offer;
   var sessionCountForOffer;
+  var isFav;
   DoctorCard(
       {super.key,
       this.sessionCountForOffer,
       required this.isVisible,
+      this.isFav = false,
       this.status_id,
       this.Data,
       this.fromOffer = false,
@@ -60,7 +63,7 @@ class _DoctorCardState extends State<DoctorCard> {
     super.initState();
     if (widget.offer != null)
       context.read<ReservationCubit>().OnOfferChange(widget.offer);
-
+    names.add("الأقسام :");
     for (var item in widget.statusAdvisor) {
       names.add(item['name_ar']);
     }
@@ -89,6 +92,7 @@ class _DoctorCardState extends State<DoctorCard> {
           child: Column(
             children: [
               HeaderForDoctorCard(
+                  isFav: widget.isFav,
                   status: widget.status,
                   categories: widget.categories,
                   name: widget.name,
@@ -142,7 +146,7 @@ class _DoctorCardState extends State<DoctorCard> {
                             );
                           }).toList(),
                         )
-                      : Text('No Data available')
+                      : Text('لا يوجد بيانات لعرضها')
                 ],
               ),
               10.ph,
@@ -201,7 +205,7 @@ class _DoctorCardState extends State<DoctorCard> {
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "${widget.price} SAR",
+                          widget.price == null ? " SAR" : "${widget.price} SAR",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
@@ -268,10 +272,12 @@ class HeaderForDoctorCard extends StatefulWidget {
   String status;
   var data;
   var categories;
+  var isFav;
   HeaderForDoctorCard(
       {super.key,
       required this.isVisible,
       this.categories,
+      this.isFav = false,
       this.status = "",
       this.fromfavorite = false,
       this.data,
@@ -290,6 +296,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   @override
   void initState() {
     super.initState();
+    names.add("الاختصاص :");
     for (var item in widget.categories) {
       names.add(item['name_ar']);
     }
@@ -299,6 +306,8 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
+    print("favoriteISTHIs");
+    print(widget.isFav);
     return Row(
       children: [
         Stack(
@@ -327,7 +336,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               right: 5,
               child: InkWell(
                 onTap: () async {
-                  if (widget.fromfavorite == false) {
+                  if (widget.fromfavorite == false && widget.isFav == false) {
                     print(widget.data);
 
                     await context
@@ -345,7 +354,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                   radius: 15,
                   backgroundColor: Colors.white,
                   child: Icon(
-                    isFavorite || widget.fromfavorite
+                    isFavorite || widget.fromfavorite || widget.isFav
                         ? Icons.favorite
                         : Icons.favorite_border,
                     size: 20,
@@ -374,6 +383,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               names.isNotEmpty
                   ? DropdownButton<String>(
                       underline: Container(), // Hide the underline
+
                       // icon: const SizedBox(), // Hide the arrow icon
                       value: selectedName,
                       onChanged: (String? newValue) {
@@ -450,11 +460,17 @@ class ButtonForDoctorCard extends StatelessWidget {
         onPressed: () {
           AppConstants.customNavigation(
               context,
-              specialistpageScreen(
-                  Data: Data,
-                  status_id: status_id,
-                  fromOffer: fromOffer,
-                  sessionCountForOffer: sessionCountForOffer),
+              fromOffer
+                  ? InjuryAreaScreen(
+                      Data: Data,
+                      status_id: status_id,
+                      fromOffer: fromOffer,
+                      sessionCountForOffer: sessionCountForOffer)
+                  : specialistpageScreen(
+                      Data: Data,
+                      status_id: status_id,
+                      fromOffer: fromOffer,
+                      sessionCountForOffer: sessionCountForOffer),
               -1,
               0);
         },

@@ -31,6 +31,7 @@ class AuthState extends Equatable {
     this.departementState = RequestState.initial,
     this.citiesState = RequestState.initial,
     this.registerState = RequestState.initial,
+    this.status = "off",
   });
   final Advertiser? advertiser;
   final String? email;
@@ -57,6 +58,7 @@ class AuthState extends Equatable {
   final bool obscureConfPass;
   final bool term;
   final bool showPopup;
+  final String? status;
   final RequestState registerState;
   final RequestState departementState;
   final RequestState statusState;
@@ -92,6 +94,8 @@ class AuthState extends Equatable {
         departementState,
         statusState,
         citiesState,
+        areasList,
+        status
       ];
   AuthState copyWith({
     Advertiser? advertiser,
@@ -121,6 +125,7 @@ class AuthState extends Equatable {
     bool? obscureConfPass,
     bool? term,
     bool? showPopup,
+    String? status,
     RequestState? departementState,
     RequestState? statusState,
     RequestState? citiesState,
@@ -158,5 +163,6 @@ class AuthState extends Equatable {
         obscureConfPass: obscureConfPass ?? this.obscureConfPass,
         term: term ?? this.term,
         showPopup: showPopup ?? this.showPopup,
+        status: status ?? this.status,
       );
 }

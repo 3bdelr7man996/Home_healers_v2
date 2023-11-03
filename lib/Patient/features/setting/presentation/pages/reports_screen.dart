@@ -120,28 +120,32 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
             ReportForMe
                 ? ReportsForMe(pdfFiles: pdfFiles)
                 : specialist_reports(pdfFiles: pdfFiles2),
-            Container(
-              height: 50,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+            ReportForMe
+                ? Container(
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            AppColors.primaryColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      onPressed:
+                          ReportForMe ? pickAndUploadPDF : pickAndUploadPDF2,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.upload_file_rounded),
+                          Text('تحميل تقرير'),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-                onPressed: ReportForMe ? pickAndUploadPDF : pickAndUploadPDF2,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.upload_file_rounded),
-                    Text('تحميل تقرير'),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : SizedBox(),
           ],
         ),
       ),
