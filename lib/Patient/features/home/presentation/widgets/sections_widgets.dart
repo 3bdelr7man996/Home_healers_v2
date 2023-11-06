@@ -419,7 +419,7 @@ class BottomSheetForPatient extends StatelessWidget {
               ),
               5.ph,
               const Text(
-                "احصل علي خصم 50% علي رسوم الخدمة عند استخدام كود الخصم الخاص بطلبك",
+                "احصل علي خصم 10% علي رسوم الخدمة عند استخدام كود الخصم الخاص بطلبك",
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),

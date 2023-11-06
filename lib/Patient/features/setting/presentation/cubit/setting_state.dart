@@ -150,3 +150,60 @@ class GetPointsState extends Equatable {
         Data: Data ?? this.Data,
       );
 }
+
+////////////////////////////////////////////////////////////////////
+class evaluationsState extends Equatable {
+  evaluationsState({
+    this.Data = false,
+    this.rate,
+    this.showEvaluationPopUp = 0,
+  });
+  var Data, rate, showEvaluationPopUp;
+
+  @override
+  @override
+  List<Object?> get props => [Data, rate, showEvaluationPopUp];
+  evaluationsState copyWith({var Data, rate, showEvaluationPopUp}) =>
+      evaluationsState(
+        Data: Data ?? this.Data,
+        rate: rate ?? this.rate,
+        showEvaluationPopUp: showEvaluationPopUp ?? this.showEvaluationPopUp,
+      );
+}
+
+////////////////////////////////////////////////////////////////////
+class ReportsState extends Equatable {
+  ReportsState(
+      {this.Data = false, this.reportsForPatient, this.reportsForDoctors});
+  var Data, reportsForPatient, reportsForDoctors;
+
+  @override
+  @override
+  List<Object?> get props => [Data, reportsForPatient, reportsForDoctors];
+  ReportsState copyWith({var Data, reportsForPatient, reportsForDoctors}) =>
+      ReportsState(
+        Data: Data ?? this.Data,
+        reportsForPatient: reportsForPatient ?? this.reportsForPatient,
+        reportsForDoctors: reportsForDoctors ?? this.reportsForDoctors,
+      );
+}
+
+////////////////////////////////////////////////////////////////////
+class AddReportState extends Equatable {
+  AddReportState({
+    this.Data = false,
+  });
+  var Data;
+
+  @override
+  @override
+  List<Object?> get props => [
+        Data,
+      ];
+  AddReportState copyWith({
+    var Data,
+  }) =>
+      AddReportState(
+        Data: Data ?? this.Data,
+      );
+}

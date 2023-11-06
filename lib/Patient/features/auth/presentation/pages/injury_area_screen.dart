@@ -17,11 +17,14 @@ class InjuryAreaScreen extends StatefulWidget {
       Data,
       fromOffer,
       SectiondetailsTitle,
+      fromFilter,
       status_id;
+
   InjuryAreaScreen(
       {super.key,
       this.sessionCountForOffer,
       this.numberOfIcon,
+      this.fromFilter = false,
       this.Data,
       this.fromOffer,
       this.SectiondetailsTitle,
@@ -180,8 +183,9 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                               .onChangePainPlace(ListOfResult.join(", "));
                           AppConstants.customNavigation(
                               context,
-                              widget.fromOffer
+                              widget.fromOffer || widget.fromFilter
                                   ? specialistpageScreen(
+                                      fromFilter: widget.fromFilter,
                                       Data: widget.Data,
                                       status_id: widget.status_id,
                                       fromOffer: widget.fromOffer,

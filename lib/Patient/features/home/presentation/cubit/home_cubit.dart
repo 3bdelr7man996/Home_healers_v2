@@ -259,18 +259,22 @@ class ReservationCubit extends Cubit<ReservationState> {
 
       print(response);
       print("Ghaith");
-      AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyRequestsForPatient()),
+      );
+      // AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       emit(state.copyWith(sessions_count: 1));
+      emit(state.copyWith(status_id: null));
       emit(state.copyWith(days: []));
       daysArray = [];
       sortedDates = [];
       makeNotesEmpty();
       // ignore: use_build_context_synchronously
-      AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       body.removeWhere((key, value) => key.startsWith('days['));
     } catch (e) {
       emit(state.copyWith(Loading: false));
-
+      print(state.status_id);
       print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
@@ -278,6 +282,9 @@ class ReservationCubit extends Cubit<ReservationState> {
 
   ///validate on fields
   void fieldsValidation(bool withOffer) {
+    if (state.status_id == null) {
+      throw ("حدد الاختصاص ");
+    }
     if (state.sessions_count != state.days!.length) {
       throw ("عدد الجلسات لا يساوي الأيام المحددة");
     }

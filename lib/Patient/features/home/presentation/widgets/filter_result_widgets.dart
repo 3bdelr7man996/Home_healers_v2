@@ -30,10 +30,12 @@ class DoctorCard extends StatefulWidget {
   var offer;
   var sessionCountForOffer;
   var isFav;
+  var fromFilter;
   DoctorCard(
       {super.key,
       this.sessionCountForOffer,
       required this.isVisible,
+      this.fromFilter = false,
       this.isFav = false,
       this.status_id,
       this.Data,
@@ -214,6 +216,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     ),
               20.ph,
               ButtonForDoctorCard(
+                  fromFilter: widget.fromFilter,
                   sessionCountForOffer: widget.sessionCountForOffer,
                   Data: widget.Data,
                   status_id: widget.status_id,
@@ -438,9 +441,11 @@ class ButtonForDoctorCard extends StatelessWidget {
   var status_id;
   bool fromOffer;
   var sessionCountForOffer;
+  var fromFilter;
   ButtonForDoctorCard(
       {super.key,
       this.Data,
+      this.fromFilter = false,
       this.sessionCountForOffer,
       this.status_id,
       this.fromOffer = false});
@@ -460,10 +465,11 @@ class ButtonForDoctorCard extends StatelessWidget {
         onPressed: () {
           AppConstants.customNavigation(
               context,
-              fromOffer
+              fromOffer || fromFilter
                   ? InjuryAreaScreen(
                       Data: Data,
                       status_id: status_id,
+                      fromFilter: fromFilter,
                       fromOffer: fromOffer,
                       sessionCountForOffer: sessionCountForOffer)
                   : specialistpageScreen(

@@ -29,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-
+    context.read<ReservationCubit>().onChangestatus_id(null);
     context.read<SearchCubit>().GetSearchResult(context);
   }
 
@@ -121,6 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         final result = searchResults[index];
                         final firstName = result['firstname_ar'];
                         return DoctorCard(
+                            fromFilter: true,
                             Data: result,
                             name: result["name_ar"],
                             status: result["status"],

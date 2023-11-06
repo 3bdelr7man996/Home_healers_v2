@@ -43,6 +43,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     context.read<SectionCubit>().changeSectionNumber(widget.numberOfIcon);
     context.read<SectionCubit>().GetSectionDetails(context);
 
+    print("as");
     IsUserGuest = IsGuest();
   }
 

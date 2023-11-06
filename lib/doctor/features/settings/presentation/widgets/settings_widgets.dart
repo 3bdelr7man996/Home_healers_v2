@@ -17,7 +17,6 @@ class Personalinfo extends StatefulWidget {
 }
 
 class _PersonalinfoState extends State<Personalinfo> {
-  bool switchValue = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -34,36 +33,38 @@ class _PersonalinfoState extends State<Personalinfo> {
           "personal_info".tr(),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+        BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return Column(
               children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      state.status == "on" ? "نشط الآن" : "غير نشط",
+                      style: const TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    Switch(
+                      inactiveThumbColor: Colors.red,
+                      inactiveTrackColor:
+                          const Color.fromARGB(174, 244, 67, 54),
+                      activeColor: Colors.green,
+                      value: state.status == "on" ? true : false,
+                      onChanged: (value) async {
+                        await context.read<AuthCubit>().onStatusChange(value);
+                        await context.read<AuthCubit>().updateProfile();
+                      },
+                    ),
+                  ],
+                ),
                 Text(
-                  switchValue ? "نشط الآن" : "غير نشط",
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-                Switch(
-                  inactiveThumbColor: Colors.red,
-                  inactiveTrackColor: const Color.fromARGB(174, 244, 67, 54),
-                  activeColor: Colors.green,
-                  value: switchValue,
-                  onChanged: (value) async {
-                    await context.read<AuthCubit>().onStatusChange(value);
-                    await context.read<AuthCubit>().updateProfile();
-                    setState(() {
-                      switchValue = value;
-                    });
-                  },
-                ),
+                  "(إظهار وجودك للمرضى)",
+                  style: TextStyle(color: Colors.grey[400]),
+                )
               ],
-            ),
-            Text(
-              "(إظهار وجودك للمرضى)",
-              style: TextStyle(color: Colors.grey[400]),
-            )
-          ],
-        ),
+            );
+          },
+        )
       ],
     );
   }

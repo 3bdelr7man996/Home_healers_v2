@@ -9,6 +9,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -500,9 +501,8 @@ class _CertificatesState extends State<Certificates> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PDFViewer(
-                              filePath:
-                                  "${AppStrings.imageUrl}${pdfFiles[index]}"),
+                          builder: (context) => PhotoViewerRouteWrapper(
+                              filePath: "${pdfFiles[index]}"),
                         ),
                       );
                     },
@@ -557,9 +557,11 @@ class ButtonWithCounter extends StatefulWidget {
   var status_id;
   bool fromOffer;
   var sessionCountForOffer;
+  var fromFilter;
   ButtonWithCounter(
       {super.key,
       this.Data,
+      this.fromFilter,
       this.status_id,
       this.sessionCountForOffer,
       this.fromOffer = false});
@@ -646,6 +648,7 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                     context,
                     DateOfSessionScreen(
                         Data: widget.Data,
+                        fromFilter: widget.fromFilter,
                         status_id: widget.status_id,
                         fromOffer: widget.fromOffer),
                     -1,
