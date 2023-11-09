@@ -5,6 +5,7 @@ import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.d
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/Patient/features/home/presentation/pages/specialist_page_screen.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -229,44 +230,6 @@ class _DoctorCardState extends State<DoctorCard> {
   }
 }
 
-class Stars extends StatelessWidget {
-  const Stars({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star_half,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star_border,
-          color: Colors.yellow,
-          size: 20,
-        ),
-      ],
-    );
-  }
-}
-
 class HeaderForDoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromfavorite;
@@ -381,7 +344,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                     fontWeight: FontWeight.w500),
               ),
               5.ph,
-              const Stars(),
+              Stars(rating: widget.data['rating']),
               5.ph,
               names.isNotEmpty
                   ? DropdownButton<String>(

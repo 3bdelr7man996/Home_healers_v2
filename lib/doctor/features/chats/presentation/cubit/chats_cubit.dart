@@ -32,6 +32,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         body: body,
       );
       print(response);
+      emit(state.copyWith(content: ""));
       _textFieldController.clear();
       await getAllMessage(user_id, advertiser_id);
       log("send Success");

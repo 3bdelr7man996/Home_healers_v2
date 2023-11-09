@@ -62,6 +62,8 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
             children: [
               TableClenderForSession(),
               30.ph,
+              LocationInput(),
+              30.ph,
               widget.fromOffer
                   ? SizedBox()
                   : TextFormField(

@@ -297,8 +297,12 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
 class IconsForSections extends StatefulWidget {
   bool formOffer;
   var sessionCountForOffer;
+  var fromPackage;
   IconsForSections(
-      {super.key, this.formOffer = false, this.sessionCountForOffer});
+      {super.key,
+      this.formOffer = false,
+      this.sessionCountForOffer,
+      this.fromPackage = false});
 
   @override
   State<IconsForSections> createState() => _IconsForSectionsState();
@@ -344,6 +348,7 @@ class _IconsForSectionsState extends State<IconsForSections> {
   Widget build(BuildContext context) {
     final statusList =
         context.select((AuthCubit cubit) => cubit.state.statusList);
+    print(statusList);
 
     return GridView.builder(
       itemCount: icons.length,
@@ -356,12 +361,12 @@ class _IconsForSectionsState extends State<IconsForSections> {
               AppConstants.customNavigation(
                   context,
                   InjuryAreaScreen(
-                    sessionCountForOffer: widget.sessionCountForOffer,
-                    fromOffer: widget.formOffer,
-                    numberOfIcon: index,
-                    SectiondetailsTitle: SectiondetailsTitle[index],
-                    status_id: statusList![index].id,
-                  ),
+                      sessionCountForOffer: widget.sessionCountForOffer,
+                      fromOffer: widget.formOffer,
+                      numberOfIcon: index,
+                      SectiondetailsTitle: SectiondetailsTitle[index],
+                      status_id: statusList![index].id,
+                      fromPackage: widget.fromPackage),
                   -1,
                   0);
               // SectionDetailsScreen(

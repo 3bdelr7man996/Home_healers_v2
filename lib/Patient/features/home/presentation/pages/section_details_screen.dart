@@ -58,7 +58,6 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
       }).toList();
     });
     print(searchResults);
-    print("///////////////////////////////////////////");
   }
 
   IsGuest() async {
@@ -69,13 +68,9 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
   int i = 0;
   @override
   Widget build(BuildContext context) {
-    print("///////////////////////////////////////////");
-    print("///////////////////////////////////////////");
     var FavoriteList;
 
     FavoriteList = context.select((FavoriteCubit cubit) => cubit.state.data);
-    print(FavoriteList);
-    print("///////////////////////////////////////////");
 
     data = context.select(
       (SectionCubit cubit) => cubit.state.listOfResponse?["data"],
@@ -84,6 +79,8 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
       searchResults = data;
       i++;
     }
+    print(data);
+
     return Scaffold(
       appBar: customAppBar(context,
           backButton: true, title: widget.SectiondetailsTitle),
@@ -92,61 +89,54 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
           : BottomNavigationForPatient(selectedIndex: 2),
       body: Stack(
         children: [
-          searchResults == null
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: FilterForSectionDetails(search: search),
-                    ),
-                    searchResults.length == 0
-                        ?
-                        // const Center(
-                        //     child: Text(
-                        //     "عذراً لا يوجد أخصائيين ",
-                        //     textAlign: TextAlign.center,
-                        //     style: TextStyle(
-                        //         height: 2,
-                        //         fontWeight: FontWeight.bold,
-                        //         fontSize: 25.0),
-                        //   ))
-                        SizedBox()
-                        : Expanded(
-                            child: ListView.builder(
-                              itemCount: searchResults.length,
-                              itemBuilder: (context, index) {
-                                bool isIdExist = false;
-                                if (FavoriteList != null)
-                                  isIdExist = FavoriteList['data'].any((item) =>
-                                      item["advertiser"]['id'] ==
-                                      searchResults[index]['id']);
-                                return DoctorCard(
-                                    isFav: isIdExist,
-                                    sessionCountForOffer:
-                                        widget.sessionCountForOffer,
-                                    fromOffer: widget.fromOffer,
-                                    status_id: widget.status_id,
-                                    Data: searchResults[index],
-                                    name: searchResults[index]["name_ar"],
-                                    status: searchResults[index]["status"],
-                                    price: searchResults[index]
-                                        ["session_price"],
-                                    address: searchResults[index]["address_ar"],
-                                    statusAdvisor: searchResults[index]
-                                        ["status_advisor"],
-                                    categories: searchResults[index]
-                                        ['categories'],
-                                    image: searchResults[index]["image"],
-                                    toggleVisibility: _toggleVisibility,
-                                    isVisible: _isVisible);
-                              },
-                            ),
-                          )
-                  ],
-                ),
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(20.0),
+                child: FilterForSectionDetails(search: search),
+              ),
+              searchResults.length == 0
+                  ?
+                  // const Center(
+                  //     child: Text(
+                  //     "عذراً لا يوجد أخصائيين ",
+                  //     textAlign: TextAlign.center,
+                  //     style: TextStyle(
+                  //         height: 2,
+                  //         fontWeight: FontWeight.bold,
+                  //         fontSize: 25.0),
+                  //   ))
+                  SizedBox()
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: searchResults.length,
+                        itemBuilder: (context, index) {
+                          bool isIdExist = false;
+                          if (FavoriteList != null)
+                            isIdExist = FavoriteList['data'].any((item) =>
+                                item["advertiser"]['id'] ==
+                                searchResults[index]['id']);
+                          return DoctorCard(
+                              isFav: isIdExist,
+                              sessionCountForOffer: widget.sessionCountForOffer,
+                              fromOffer: widget.fromOffer,
+                              status_id: widget.status_id,
+                              Data: searchResults[index],
+                              name: searchResults[index]["name_ar"],
+                              status: searchResults[index]["status"],
+                              price: searchResults[index]["session_price"],
+                              address: searchResults[index]["address_ar"],
+                              statusAdvisor: searchResults[index]
+                                  ["status_advisor"],
+                              categories: searchResults[index]['categories'],
+                              image: searchResults[index]["image"],
+                              toggleVisibility: _toggleVisibility,
+                              isVisible: _isVisible);
+                        },
+                      ),
+                    )
+            ],
+          ),
           PopUpForAddToFavourite(
             isVisible: _isVisible,
             toggleVisibility: _toggleVisibility,

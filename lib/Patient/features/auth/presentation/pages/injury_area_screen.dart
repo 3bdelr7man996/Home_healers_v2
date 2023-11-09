@@ -18,8 +18,8 @@ class InjuryAreaScreen extends StatefulWidget {
       fromOffer,
       SectiondetailsTitle,
       fromFilter,
-      status_id;
-
+      status_id,
+      fromPackage;
   InjuryAreaScreen(
       {super.key,
       this.sessionCountForOffer,
@@ -27,6 +27,7 @@ class InjuryAreaScreen extends StatefulWidget {
       this.fromFilter = false,
       this.Data,
       this.fromOffer,
+      this.fromPackage = false,
       this.SectiondetailsTitle,
       this.status_id});
 
@@ -115,6 +116,7 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.fromPackage);
     return Scaffold(
       appBar: customAppBar(context, title: "injury_area", backButton: true),
       body: SingleChildScrollView(
@@ -183,15 +185,8 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                               .onChangePainPlace(ListOfResult.join(", "));
                           AppConstants.customNavigation(
                               context,
-                              widget.fromOffer || widget.fromFilter
-                                  ? specialistpageScreen(
-                                      fromFilter: widget.fromFilter,
-                                      Data: widget.Data,
-                                      status_id: widget.status_id,
-                                      fromOffer: widget.fromOffer,
-                                      sessionCountForOffer:
-                                          widget.sessionCountForOffer)
-                                  : SectionDetailsScreen(
+                              widget.fromPackage
+                                  ? SectionDetailsScreen(
                                       sessionCountForOffer:
                                           widget.sessionCountForOffer,
                                       fromOffer: widget.fromOffer,
@@ -199,7 +194,24 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                                       SectiondetailsTitle:
                                           widget.SectiondetailsTitle,
                                       status_id: widget.status_id,
-                                    ),
+                                    )
+                                  : (widget.fromOffer || widget.fromFilter)
+                                      ? specialistpageScreen(
+                                          fromFilter: widget.fromFilter,
+                                          Data: widget.Data,
+                                          status_id: widget.status_id,
+                                          fromOffer: widget.fromOffer,
+                                          sessionCountForOffer:
+                                              widget.sessionCountForOffer)
+                                      : SectionDetailsScreen(
+                                          sessionCountForOffer:
+                                              widget.sessionCountForOffer,
+                                          fromOffer: widget.fromOffer,
+                                          numberOfIcon: widget.numberOfIcon,
+                                          SectiondetailsTitle:
+                                              widget.SectiondetailsTitle,
+                                          status_id: widget.status_id,
+                                        ),
                               1,
                               0);
                         }

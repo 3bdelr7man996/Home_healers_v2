@@ -182,7 +182,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
                     ),
                   ),
                 5.ph,
-                const Stars(),
+                Stars(rating: widget.Data["rating"]),
                 5.ph,
                 widget.Data["status"] == "on"
                     ? const Text(
@@ -216,35 +216,36 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
 }
 
 class Stars extends StatelessWidget {
-  const Stars({super.key});
+  var rating;
+  Stars({super.key, this.rating});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(
-          Icons.star,
+          rating >= 1 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star,
+          rating >= 2 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star,
+          rating >= 3 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star_half,
+          rating >= 4 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star_border,
+          rating == 5 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
@@ -323,7 +324,7 @@ class _specialistInfoState extends State<specialistInfo> {
           children: [
             statisticsBox(
               text1: "جلسة طبية",
-              text2: "+100",
+              text2: "${widget.Data["rating"]}",
             ),
             statisticsBox(
               text1: "خبرة",

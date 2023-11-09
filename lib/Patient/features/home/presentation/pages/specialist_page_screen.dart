@@ -46,6 +46,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.Data);
     return Scaffold(
       body: Stack(
         children: [

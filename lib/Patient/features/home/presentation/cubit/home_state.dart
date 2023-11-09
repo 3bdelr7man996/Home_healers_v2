@@ -113,7 +113,9 @@ class ReservationState extends Equatable {
       this.status_id,
       this.days,
       this.coupon,
+      this.location,
       this.offer,
+      this.address,
       this.painPlace});
 
   final bool Loading;
@@ -124,6 +126,8 @@ class ReservationState extends Equatable {
   String notes;
   var coupon;
   var offer;
+  var address;
+  var location;
   final int? sessions_count;
   final int? status_id;
   List<DateTime>? days;
@@ -136,7 +140,9 @@ class ReservationState extends Equatable {
         start_at,
         offer,
         notes,
+        address,
         end_at,
+        location,
         painPlace,
         status_id,
         coupon,
@@ -147,10 +153,12 @@ class ReservationState extends Equatable {
     bool? Loading,
     var advertiser_id,
     var offer,
+    var address,
     String? start_at,
     String? notes,
     String? end_at,
     var coupon,
+    var location,
     String? painPlace,
     int? sessions_count,
     int? status_id,
@@ -166,8 +174,10 @@ class ReservationState extends Equatable {
           status_id: status_id ?? this.status_id,
           days: days ?? this.days,
           painPlace: painPlace ?? this.painPlace,
+          address: address ?? this.address,
           notes: notes ?? this.notes,
           coupon: coupon ?? this.coupon,
+          location: location ?? this.location,
           offer: offer ?? this.offer,
           sessions_count: sessions_count ?? this.sessions_count);
 }
