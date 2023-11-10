@@ -26,7 +26,8 @@ class AppStrings {
   static String patientSignUp = "/api/user/register";
   static String patientSignIn = "/api/user/login";
   static String visaPayment = "/api/payment";
-  static String tamaraPayment = "api/tamara-payment";
+  static String tamaraPayment = "/api/tamara-payment";
+  static String pUpdateReservation = "/api/user/updateReservation";
 
   //assets url
   static String appName = "Home Healers";

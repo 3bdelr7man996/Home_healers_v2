@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
+import 'package:dr/Patient/features/payment/data/models/response_model.dart';
 import 'package:dr/Patient/features/payment/data/models/visa_pay_model.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets/confirm_pay_dialog.dart';
@@ -20,7 +21,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit({required this.repository}) : super(const PaymentState());
   final PaymentRepository repository;
   //?============================[ PAY BY VISA ]================================
-  Future<void> payByVisa({required int reservationParentId}) async {
+  Future<bool> payByVisa({required int reservationParentId}) async {
     try {
       emit(state.copyWith(payState: RequestState.loading));
       VisaPayModel? payResponse = await repository.visaPayment({
@@ -31,29 +32,33 @@ class PaymentCubit extends Cubit<PaymentState> {
         visaUrl: payResponse?.redirectUrl,
         payId: payResponse?.paymentId,
       ));
+      return true;
     } catch (e) {
       emit(state.copyWith(payState: RequestState.failed));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
+      return false;
     }
   }
 
   //?============================[ PAY BY TAMARA ]================================
-  // Future<void> payByTamara({required int reservationParentId}) async {
-  //   try {
-  //     emit(state.copyWith(payState: RequestState.loading));
-  //     String? payResponse = await repository.visaPayment({
-  //       "parent_id": "$reservationParentId",
-  //     });
-  //     emit(state.copyWith(
-  //       payState: RequestState.success,
-  //       visaUrl: payResponse?.redirectUrl,
-  //       payId: payResponse?.paymentId,
-  //     ));
-  //   } catch (e) {
-  //     emit(state.copyWith(payState: RequestState.failed));
-  //     ShowToastHelper.showToast(msg: e.toString(), isError: true);
-  //   }
-  // }
+  Future<bool> payByTamara({required int reservationParentId}) async {
+    try {
+      emit(state.copyWith(payState: RequestState.loading));
+      VisaPayModel? payResponse = await repository.tamaraPayment({
+        "parent_id": "$reservationParentId",
+      });
+      emit(state.copyWith(
+        payState: RequestState.success,
+        visaUrl: payResponse?.redirectUrl,
+        payId: payResponse?.paymentId,
+      ));
+      return true;
+    } catch (e) {
+      emit(state.copyWith(payState: RequestState.failed));
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+      return false;
+    }
+  }
 
   void resetPayData() {
     emit(state.copyWith(
@@ -100,7 +105,13 @@ class PaymentCubit extends Cubit<PaymentState> {
   }) async {
     try {
       //String? result =
-      String? response = await repository.visaPayResult(fullUrl: path);
+      ResponseModel? response = await repository.visaPayResult(fullUrl: path);
+      if (response.paySuccess == true) {
+        //Map<String, dynamic>? statusResponse =
+        await repository.confirmReservationStatus(myOrder: myOrder);
+        // log("order Status ${statusResponse}");
+        //log("order ${statusResponse}")
+      }
       if (context.mounted) {
         AppConstants.pushRemoveNavigator(context,
             screen: HomeScreenForPatient(
@@ -110,8 +121,10 @@ class PaymentCubit extends Cubit<PaymentState> {
       if (context.mounted) {
         showCupertinoDialog(
           context: context,
-          builder: (context) =>
-              ConfirmPayDialog(order: myOrder, paymentResponse: response),
+          builder: (context) => ConfirmPayDialog(
+            order: myOrder,
+            paymentResponse: response,
+          ),
         );
       }
     } catch (e) {

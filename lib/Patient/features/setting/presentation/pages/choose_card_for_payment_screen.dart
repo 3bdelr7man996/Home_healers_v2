@@ -117,14 +117,24 @@ class ChooseCardScreen extends StatelessWidget {
                             await context
                                 .read<PaymentCubit>()
                                 .payByVisa(reservationParentId: order.id)
-                                .then((value) => AppConstants.customNavigation(
-                                    context,
-                                    VisaPaymentScreen(myOrder: order),
-                                    0,
-                                    1));
+                                .then((value) {
+                              if (value == true) {
+                                AppConstants.customNavigation(context,
+                                    VisaPaymentScreen(myOrder: order), 0, 1);
+                              }
+                            });
                             break;
-                            case PayType.tamara:
-                            
+                          case PayType.tamara:
+                            await context
+                                .read<PaymentCubit>()
+                                .payByTamara(reservationParentId: order.id)
+                                .then((value) {
+                              if (value == true) {
+                                AppConstants.customNavigation(context,
+                                    VisaPaymentScreen(myOrder: order), 0, 1);
+                              }
+                            });
+                            break;
                           default:
                         }
                       },

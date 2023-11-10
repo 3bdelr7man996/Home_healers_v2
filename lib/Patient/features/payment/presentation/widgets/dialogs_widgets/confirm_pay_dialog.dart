@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/payment/data/models/response_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -9,9 +10,9 @@ import 'package:flutter/material.dart';
 
 class ConfirmPayDialog extends StatelessWidget {
   const ConfirmPayDialog(
-      {super.key, required this.order, this.paymentResponse = ''});
+      {super.key, required this.order, this.paymentResponse});
   final OrderData order;
-  final String? paymentResponse;
+  final ResponseModel? paymentResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +37,14 @@ class ConfirmPayDialog extends StatelessWidget {
                 color: Color.fromRGBO(215, 248, 255, 1),
               ),
               child: AppConstants.customAssetSvg(
-                imagePath: paymentResponse == "faild payment"
+                imagePath: paymentResponse?.paySuccess == false
                     ? AppImages.errorIcon
                     : AppImages.likeSign,
               ),
             ),
             10.ph,
             Text(
-              paymentResponse == "faild payment"
+              paymentResponse?.paySuccess == false
                   ? "sorry".tr()
                   : "thank_you".tr(),
               style: const TextStyle(
@@ -53,16 +54,14 @@ class ConfirmPayDialog extends StatelessWidget {
             ),
             5.ph,
             Text(
-              paymentResponse == "faild payment"
-                  ? "reservation_failed".tr()
-                  : "reservation_been_confirmed".tr(),
+              paymentResponse?.message ?? '',
               style: const TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
               ),
             ),
             10.ph,
-            paymentResponse == "faild payment"
+            paymentResponse?.paySuccess == false
                 ? Text(
                     "${"booking_with_physiotherapist_failed".tr()}${order.advertiser.firstnameAr} ${order.advertiser.lastnameAr}",
                     textAlign: TextAlign.center,

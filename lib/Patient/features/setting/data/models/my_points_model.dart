@@ -10,7 +10,7 @@ class MyPointsModel {
   late final int userId;
   late final String name;
   late final int points;
-  late final double pointsInSAR;
+  late final num pointsInSAR;
   late final int walletBalance;
   late final List<NewPointsNotifications> newPointsNotifications;
 

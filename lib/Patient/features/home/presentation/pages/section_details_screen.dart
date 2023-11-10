@@ -91,7 +91,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
           : BottomNavigationForPatient(selectedIndex: 2),
       body: Stack(
         children: [
-          searchResults == null
+          searchResults.isEmpty
               ? const Center(
                   child: CircularProgressIndicator(),
                 )

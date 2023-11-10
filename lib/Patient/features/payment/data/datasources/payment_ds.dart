@@ -38,4 +38,14 @@ class PaymentDataSource {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>?> updateReservationStatus({
+    required Map<String, dynamic> body,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      AppStrings.pUpdateReservation,
+      body: body,
+    );
+    return response;
+  }
 }
