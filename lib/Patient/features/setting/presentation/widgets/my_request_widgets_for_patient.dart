@@ -10,6 +10,7 @@ import 'package:dr/core/utils/app_strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart' as intl;
 
 class underProcessing extends StatelessWidget {
@@ -21,33 +22,51 @@ class underProcessing extends StatelessWidget {
         context.select((MyOrdersCubit cubit) => cubit.state.reviewingOrders) ??
             [];
     print(listOfOrders);
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: context.width,
-        height: context.height * 0.75,
-        child: listOfOrders.isEmpty
-            ? SizedBox()
-            : ListView.builder(
-                itemCount: listOfOrders.length,
-                itemBuilder: (context, index) {
-                  List<String> names = [];
-                  String selectedName = "";
-                  names.add("الاختصاص :");
-                  for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr ?? "");
-                  }
-                  selectedName =
-                      names.isNotEmpty ? names[0] : 'No names available';
-                  return CardsForRequests(
-                    listOfOrders: listOfOrders[index],
-                    categories: names,
-                    selectedName: selectedName,
-                    num: 1,
-                  );
-                },
-              ),
-      ),
-    );
+    return listOfOrders.length == 0
+        ? Center(
+            child: Column(
+              children: [
+                SvgPicture.asset(
+                  "assets/images/noOrders.svg",
+                  width: 200,
+                  height: 200,
+                ),
+                10.ph,
+                Text(
+                  "لا يوجد طلبات في الوقت الحالي",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          )
+        : SingleChildScrollView(
+            child: SizedBox(
+              width: context.width,
+              height: context.height * 0.75,
+              child: listOfOrders.isEmpty
+                  ? SizedBox()
+                  : ListView.builder(
+                      itemCount: listOfOrders.length,
+                      itemBuilder: (context, index) {
+                        List<String> names = [];
+                        String selectedName = "";
+                        names.add("الاختصاص :");
+                        for (var item
+                            in listOfOrders[index].advertiser.categories) {
+                          names.add(item.nameAr ?? "");
+                        }
+                        selectedName =
+                            names.isNotEmpty ? names[0] : 'No names available';
+                        return CardsForRequests(
+                          listOfOrders: listOfOrders[index],
+                          categories: names,
+                          selectedName: selectedName,
+                          num: 1,
+                        );
+                      },
+                    ),
+            ),
+          );
   }
 }
 
@@ -206,6 +225,9 @@ class Pending extends StatelessWidget {
     var listOfOrders =
         context.select((MyOrdersCubit cubit) => cubit.state.pendingOrders) ??
             [];
+    print("asdfafsdfasdfasdf");
+    print("asdfafsdfasdfasdf");
+
     return SingleChildScrollView(
       child: SizedBox(
         width: context.width,
@@ -217,9 +239,11 @@ class Pending extends StatelessWidget {
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
-                  for (var item in listOfOrders[index].advertiser.categories) {
-                    names.add(item.nameAr ?? "");
-                  }
+                  if (listOfOrders[index].advertiser.categories != null)
+                    for (var item
+                        in listOfOrders[index].advertiser.categories) {
+                      names.add(item.nameAr ?? "");
+                    }
                   selectedName =
                       names.isNotEmpty ? names[0] : 'No names available';
                   return CardsForRequests(
@@ -339,14 +363,13 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 )
                               : widget.num == 3
                                   ? Expanded(
-                                      child: FittedBox(
-                                        child: const Text(
-                                          "مؤكدة \nتم الدفع",
-                                          style: TextStyle(
-                                              color: AppColors.greenColor,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
+                                      child: const Text(
+                                        "مؤكدة \nتم الدفع",
+                                        style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: AppColors.greenColor,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
                                       ),
                                     )
                                   : widget.num == 4
@@ -376,15 +399,14 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                               ),
                                             )
                                           : Expanded(
-                                              child: FittedBox(
-                                                child: const Text(
-                                                  "ملغية \nتم الإلغاء",
-                                                  style: TextStyle(
-                                                      color: AppColors.redColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  textAlign: TextAlign.center,
-                                                ),
+                                              child: const Text(
+                                                "ملغية \nتم الإلغاء",
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: AppColors.redColor,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
                                               ),
                                             )
                     ],
@@ -486,7 +508,12 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 ),
                                 5.pw,
                                 Text(
-                                  "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
+                                  widget.listOfOrders.sessionsCount == null ||
+                                          widget.listOfOrders.advertiser
+                                                  .sessionPrice ==
+                                              null
+                                      ? ""
+                                      : "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
                                   style: const TextStyle(
                                       color: AppColors.secondryColor,
                                       fontWeight: FontWeight.bold),

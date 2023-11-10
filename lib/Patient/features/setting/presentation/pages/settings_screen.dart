@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
@@ -37,6 +38,8 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
 
   IsGuest() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('guest') == false)
+      context.read<GetPointsCubit>().GetMyPoints(context);
 
     setState(() {
       IsUserGuest = prefs.containsKey('guest');
@@ -49,6 +52,7 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
     super.initState();
     IsUserGuest = false;
     IsGuest();
+    context.read<ReportsCubit>().GetReports();
   }
 
   @override

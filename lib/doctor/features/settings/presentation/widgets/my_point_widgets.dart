@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Activity extends StatelessWidget {
-  const Activity({super.key});
+  var Notification;
+  Activity({super.key, this.Notification});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +21,10 @@ class Activity extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'أمس',
-              style: TextStyle(fontSize: 18),
-            ),
+            // const Text(
+            //   'أمس',
+            //   style: TextStyle(fontSize: 18),
+            // ),
             10.ph,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,13 +38,13 @@ class Activity extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('تم كسب نقاط',
+                    Text('${Notification.data.title}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         )),
                     5.ph,
                     Text(
-                      '16 يونيو 2023 - 10:39 م',
+                      '${Notification.createdAt}',
                       style: TextStyle(color: Colors.grey[400]),
                     ),
                   ],
@@ -52,15 +53,15 @@ class Activity extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
-                      '50 نقطة',
+                    Text(
+                      '${Notification.notifiableId} نقطة',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.secondryColor),
                     ),
                     5.ph,
-                    const Text(
-                      '(15 ر.س)',
+                    Text(
+                      '(${Notification.data.pointsInSAR} ر.س)',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primaryColor),

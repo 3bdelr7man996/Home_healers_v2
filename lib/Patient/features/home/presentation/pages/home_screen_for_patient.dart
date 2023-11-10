@@ -30,7 +30,6 @@ class _HomeScreenForPatientState extends State<HomeScreenForPatient> {
   @override
   void initState() {
     super.initState();
-
     _widgets = [
       OfferAndPackagesScreen(),
       NotificationScreen(fromPatient: true),

@@ -3,12 +3,18 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
+import 'package:dr/Patient/features/setting/data/models/add_report_model.dart';
+import 'package:dr/Patient/features/setting/data/models/evaluations_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_points_model.dart';
+import 'package:dr/Patient/features/setting/data/models/reports_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_info_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_reservation_model.dart';
+import 'package:dr/Patient/features/setting/data/repositories/add_report_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/evaluation_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/core/utils/app_strings.dart';
@@ -232,6 +238,105 @@ class GetPointsCubit extends Cubit<GetPointsState> {
           "AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad MohsenAHmad Mohsen  AHmad Mohsen AHmad Mohsen");
       emit(state.copyWith(Data: response));
     } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+}
+
+class evaluationCubit extends Cubit<evaluationsState> {
+  final evaluationsRepo eevaluationsRepo;
+
+  evaluationCubit({required this.eevaluationsRepo}) : super(evaluationsState());
+
+  //?==================== formFields change ====================
+
+  onRateChange(var value) => emit(state.copyWith(rate: value));
+  onshowEvaluationPopUpChange() =>
+      emit(state.copyWith(showEvaluationPopUp: state.showEvaluationPopUp + 1));
+
+  Future<void> sendEvaluation(BuildContext context, var advertiser_id,
+      var user_id, Function _onSendCommentPressed) async {
+    try {
+      Map<String, dynamic> body = {
+        "advertiser_id": "${advertiser_id}",
+        "user_id": "${user_id}",
+        "rate": "${state.rate}",
+      };
+
+      evaluationsModel response =
+          await eevaluationsRepo.sendEvaluation(body: body);
+      emit(state.copyWith(showEvaluationPopUp: state.showEvaluationPopUp + 1));
+      _onSendCommentPressed();
+      print(response);
+    } catch (e) {
+      print(e.toString());
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  ///validate on fields
+  void fieldsValidation() {
+    if (state.rate == null) {
+      throw ("قم بتقييم الجلسة");
+    }
+  }
+}
+
+///////////////////////////////////
+
+class ReportsCubit extends Cubit<ReportsState> {
+  final ReportsRepo repositry;
+
+  ReportsCubit({required this.repositry}) : super(ReportsState());
+
+  //?==================== formFields change ====================
+
+  // onRateChange(var value) => emit(state.copyWith(rate: value));
+
+  Future<void> GetReports() async {
+    try {
+      Map<String, dynamic> body = {};
+
+      ReportsModel response = await repositry.getReports(body: body);
+      emit(state.copyWith(reportsForDoctors: response.success.doctorReports));
+      emit(state.copyWith(reportsForPatient: response.success.reports));
+      print("\\\\\\\\\\\\\\\\");
+      print(state.reportsForDoctors);
+      print("\\\\\\\\\\\\\\\\");
+    } catch (e) {
+      print(e.toString());
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  ///validate on fields
+  void fieldsValidation() {}
+}
+
+///////////////////////////////////////////// NEW CLASS //////////////////////////////
+class AddReportCubit extends Cubit<AddReportState> {
+  final AddReportRepo repositry;
+
+  AddReportCubit({required this.repositry}) : super(AddReportState());
+
+  //?==================== formFields change ====================
+
+  Future<void> sendReport(BuildContext context, var image, var title) async {
+    List<File> images = [];
+    images.add(image);
+    try {
+      Map<String, String> body = {};
+
+      body['rep_title'] = title;
+
+      AddReportModel response =
+          await repositry.sendReport(body: body, Files: images);
+      await context.read<ReportsCubit>().GetReports();
+      ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
+
+      print(response);
+    } catch (e) {
+      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

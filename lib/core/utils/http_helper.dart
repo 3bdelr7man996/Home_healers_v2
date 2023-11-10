@@ -63,6 +63,7 @@ class ApiBaseHelper {
       {Object? body, Map<String, String>? headers}) async {
     Map<String, dynamic>? responseJson;
     Uri urlRequest = Uri.parse("$baseUrl$url");
+    print(urlRequest);
     try {
       final http.Response response = await http.post(urlRequest,
           body: jsonEncode(body), headers: headers ?? baseHeaders);
@@ -105,8 +106,8 @@ class ApiBaseHelper {
         request.fields[key] = value;
       });
       //init file data eg,pdf,img,..
+
       if (files != null) {
-        print(files);
         for (int i = 0; i < files.length; i++) {
           request.files.add(
             await http.MultipartFile.fromPath(
@@ -131,7 +132,6 @@ class ApiBaseHelper {
           );
         }
       }
-
       var result = await request.send();
 
       responseJson = _returnResponse(
@@ -141,6 +141,9 @@ class ApiBaseHelper {
           ),
           url: urlRequest.toString(),
           request: "POST");
+      print("Ghaith");
+
+      print(responseJson);
     } on SocketException {
       throw FetchDataException('لا يوجد اتصال بالانترنت');
     }

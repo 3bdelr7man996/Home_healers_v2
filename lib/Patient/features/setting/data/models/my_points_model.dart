@@ -7,11 +7,11 @@ class MyPointsModel {
     required this.walletBalance,
     required this.newPointsNotifications,
   });
-  late final int userId;
+  late var userId;
   late final String name;
-  late final int points;
-  late final num pointsInSAR;
-  late final int walletBalance;
+  late var points;
+  late var pointsInSAR;
+  late var walletBalance;
   late final List<NewPointsNotifications> newPointsNotifications;
 
   MyPointsModel.fromJson(Map<String, dynamic>? json) {
@@ -52,7 +52,7 @@ class NewPointsNotifications {
   late final String id;
   late final String type;
   late final String notifiableType;
-  late final int notifiableId;
+  late var notifiableId;
   late final Data data;
   late final Null readAt;
   late final String createdAt;
@@ -93,7 +93,7 @@ class Data {
   late final String icon;
   late final String title;
   late final String body;
-  late final int pointsInSAR;
+  late var pointsInSAR;
 
   Data.fromJson(Map<String, dynamic>? json) {
     icon = json?['icon'];

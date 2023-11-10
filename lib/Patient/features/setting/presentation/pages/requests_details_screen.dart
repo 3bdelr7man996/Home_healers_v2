@@ -2,6 +2,7 @@
 
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/bill_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -104,6 +105,8 @@ class _RequestsDetailsScreenForPatientState
       }
     }
 
+    print("ghaith");
+    print(widget.oneOrder.canReview);
     return Scaffold(
       appBar: customAppBar(context, backButton: true, title: "order_details"),
       body: Stack(
@@ -164,7 +167,13 @@ class _RequestsDetailsScreenForPatientState
                                   ),
                                   padding: const EdgeInsets.all(16),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  AppConstants.customNavigation(
+                                      context,
+                                      BillScreen(oneOrder: widget.oneOrder),
+                                      0,
+                                      0);
+                                },
                                 child: const Text('إظهار الفاتورة'),
                               ),
                               if (widget.oneOrder.canReview == 1)
@@ -183,7 +192,8 @@ class _RequestsDetailsScreenForPatientState
                                       showModalBottomSheet(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return const BottomSheetForEvalute();
+                                          return BottomSheetForEvalute(
+                                              oneOrder: widget.oneOrder);
                                         },
                                       );
                                     });
@@ -231,7 +241,7 @@ class _RequestsDetailsScreenForPatientState
                   if (widget.num == 2)
                     ElevatedButton(
                       onPressed: () {
-                        _toggleVisibility();
+                        // _toggleVisibility();
                         AppConstants.customNavigation(
                             context,
                             PaymentDetailsScreen(

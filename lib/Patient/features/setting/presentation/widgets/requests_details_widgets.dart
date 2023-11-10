@@ -8,6 +8,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/doctor/features/chats/presentation/pages/one_chat_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -216,10 +217,20 @@ class _TowSectionState extends State<TowSection> {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                "assets/icons/message_icon.svg",
-                width: 35,
-                height: 35,
+              InkWell(
+                onTap: () {
+                  AppConstants.customNavigation(
+                      context,
+                      OneChatScreen(
+                          SenderInfo: widget.listOfOrders, fromPatient: true),
+                      -1,
+                      0);
+                },
+                child: SvgPicture.asset(
+                  "assets/icons/message_icon.svg",
+                  width: 35,
+                  height: 35,
+                ),
               ),
               5.pw,
               SvgPicture.asset(
@@ -737,10 +748,26 @@ class _FiveStarRatingState extends State<FiveStarRating> {
 }
 
 class BottomSheetForEvalute extends StatelessWidget {
-  const BottomSheetForEvalute({super.key});
+  var oneOrder;
+  BottomSheetForEvalute({super.key, this.oneOrder});
 
   @override
   Widget build(BuildContext context) {
+    void _onSendCommentPressed() {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: SvgPicture.asset("assets/icons/correct_icon.svg"),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("تم إرسال تعليقك"),
+            ],
+          ),
+        ),
+      );
+    }
+
     return SizedBox(
         height: 350,
         child: Padding(
@@ -758,7 +785,9 @@ class BottomSheetForEvalute extends StatelessWidget {
               15.ph,
               FiveStarRating(
                 rating: 0,
-                onRatingChanged: (rating) {},
+                onRatingChanged: (rating) async {
+                  await context.read<evaluationCubit>().onRateChange(rating);
+                },
               ),
               15.ph,
               TextFormField(
@@ -770,28 +799,38 @@ class BottomSheetForEvalute extends StatelessWidget {
                 ),
               ),
               15.ph,
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              BlocBuilder<evaluationCubit, evaluationsState>(
+                builder: (context, state) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<evaluationCubit>().sendEvaluation(
+                          context,
+                          oneOrder.advertiserId,
+                          oneOrder.userId,
+                          _onSendCommentPressed);
+                    },
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          AppColors.primaryColor),
+                      minimumSize: MaterialStateProperty.all<Size>(
+                        const Size(double.infinity, 50),
+                      ),
                     ),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                  minimumSize: MaterialStateProperty.all<Size>(
-                    const Size(double.infinity, 50),
-                  ),
-                ),
-                child: const Text(
-                  'إرسال التعليق',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
+                    child: const Text(
+                      'إرسال التعليق',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           ),

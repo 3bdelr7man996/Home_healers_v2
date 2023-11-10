@@ -154,8 +154,8 @@ class _OfferCardState extends State<OfferCard> {
                   onPressed: () {
                     IsUserGuest == true
                         ? null
-                        : AppConstants.customNavigation(
-                            context, OfferDetailsScreen(), -1, 0);
+                        : AppConstants.customNavigation(context,
+                            OfferDetailsScreen(Package: widget.Package), -1, 0);
                   },
                   child: const Text('استمتع بالعرض'),
                 ),
