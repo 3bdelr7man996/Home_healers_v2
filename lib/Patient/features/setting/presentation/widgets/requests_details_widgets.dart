@@ -28,7 +28,7 @@ class FirstSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,14 +75,13 @@ class FirstSection extends StatelessWidget {
                     )
                   : num == 3
                       ? Expanded(
-                          child: FittedBox(
-                            child: const Text(
-                              "مؤكدة \nتم الدفع",
-                              style: TextStyle(
-                                  color: AppColors.greenColor,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
+                          child: const Text(
+                            "مؤكدة \nتم الدفع",
+                            style: TextStyle(
+                                color: AppColors.greenColor,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
                           ),
                         )
                       : num == 4
@@ -110,14 +109,13 @@ class FirstSection extends StatelessWidget {
                                   ),
                                 )
                               : Expanded(
-                                  child: FittedBox(
-                                    child: const Text(
-                                      "ملغية \nتم الإلغاء",
-                                      style: TextStyle(
-                                          color: AppColors.redColor,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
+                                  child: const Text(
+                                    "ملغية \nتم الإلغاء",
+                                    style: TextStyle(
+                                        color: AppColors.redColor,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
                                   ),
                                 )
         ],
