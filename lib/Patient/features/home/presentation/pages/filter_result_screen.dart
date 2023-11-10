@@ -39,6 +39,7 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
                     itemCount: data.length,
                     itemBuilder: (BuildContext context, int index) {
                       return DoctorCard(
+                          fromFilter: true,
                           Data: data[index],
                           name: data[index]["name_ar"],
                           status: data[index]["status"],

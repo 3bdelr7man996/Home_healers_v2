@@ -4,17 +4,28 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TextFormFieldForChangePassword extends StatelessWidget {
   final int num;
   final String title;
   final String icon;
+  final bool obscure;
+  final void Function() onClick;
+  final void Function(String value) onchanged;
 
   TextFormFieldForChangePassword(
-      {super.key, required this.num, required this.title, required this.icon});
+      {super.key,
+      required this.num,
+      required this.title,
+      required this.icon,
+      required this.obscure,
+      required this.onClick,
+      required this.onchanged});
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +38,38 @@ class TextFormFieldForChangePassword extends StatelessWidget {
         ),
         5.ph,
         TextFormField(
+          onChanged: (value) {
+            onchanged(value);
+          },
+          obscureText: !obscure,
           decoration: InputDecoration(
-            suffixIcon: num == 4
-                ? SizedBox(
-                    height: 18,
-                    width: 18,
-                    child: AppConstants.customAssetSvg(
-                      imagePath: AppImages.showPasswordIcon,
-                      fit: BoxFit.none,
+            suffixIcon: obscure
+                ? GestureDetector(
+                    onTap: () {
+                      onClick();
+                    },
+                    child: SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: AppConstants.customAssetSvg(
+                        imagePath: AppImages.hiddenPassIcon,
+                        fit: BoxFit.none,
+                      ),
                     ),
                   )
-                : num == 5
-                    ? SizedBox(
-                        height: 18,
-                        width: 18,
-                        child: AppConstants.customAssetSvg(
-                          imagePath: AppImages.hiddenPassIcon,
-                          fit: BoxFit.none,
-                        ),
-                      )
-                    : null,
+                : GestureDetector(
+                    onTap: () {
+                      onClick();
+                    },
+                    child: SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: AppConstants.customAssetSvg(
+                        imagePath: AppImages.showPasswordIcon,
+                        fit: BoxFit.none,
+                      ),
+                    ),
+                  ),
             hintText: title.tr(),
             prefixIcon: SizedBox(
               height: 18,

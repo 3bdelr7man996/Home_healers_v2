@@ -27,17 +27,26 @@ import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/payment/data/datasources/payment_ds.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/setting/data/datasources/add_report_ds.dart';
+import 'package:dr/Patient/features/setting/data/datasources/evaluations_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/my_orders_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/my_points_ds.dart';
+import 'package:dr/Patient/features/setting/data/datasources/reports_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_info_ds.dart';
 import 'package:dr/Patient/features/setting/data/datasources/update_reservation_ds.dart';
+import 'package:dr/Patient/features/setting/data/repositories/add_report_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/evaluation_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
+import 'package:dr/doctor/features/chats/data/datasources/chats_ds.dart';
+import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/notification/data/data_source/notifications_ds.dart';
 import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
@@ -84,6 +93,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => SettingsDs(apiHelper: sl()));
   sl.registerLazySingleton(() => LoginDs(apiHelper: sl()));
   sl.registerLazySingleton(() => NotificationsDs(apiHelper: sl()));
+  sl.registerLazySingleton(() => ChatsDS(apiHelper: sl()));
 
   //REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -92,6 +102,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => SettingsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => LoginRepo(dataSource: sl()));
   sl.registerLazySingleton(() => NotificationsRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => ChatsRepo(dataSource: sl()));
 
   //CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -100,6 +111,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => SettingCubit(repository: sl()));
   sl.registerFactory(() => LoginCubit(repository: sl()));
   sl.registerFactory(() => NotificationCubit(repository: sl()));
+  sl.registerFactory(() => ChatsCubit(chatsRepo: sl()));
 
   //PATIENT DATA SOURCE
   sl.registerLazySingleton(() => PatientSignUpDS(apiHelper: sl()));
@@ -120,6 +132,9 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ForgetPasswordDs(apiHelper: sl()));
   sl.registerLazySingleton(() => ResetPasswordDS(apiHelper: sl()));
   sl.registerLazySingleton(() => MyPointsDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => evaluationsDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => ReportsDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => AddReportDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -141,6 +156,9 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ForgetPasswordRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ResetPasswordRepo(dataSource: sl()));
   sl.registerLazySingleton(() => GetPointsRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => evaluationsRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => ReportsRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => AddReportRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -161,4 +179,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => ForgetPasswordCubit(repository: sl()));
   sl.registerFactory(() => ResetPasswordCubit(repository: sl()));
   sl.registerFactory(() => GetPointsCubit(getPointrepo: sl()));
+  sl.registerFactory(() => evaluationCubit(eevaluationsRepo: sl()));
+  sl.registerFactory(() => ReportsCubit(repositry: sl()));
+  sl.registerFactory(() => AddReportCubit(repositry: sl()));
 }

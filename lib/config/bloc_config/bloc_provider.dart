@@ -14,11 +14,16 @@ import 'package:dr/Patient/features/offer/data/repositories/get_packages_repo.da
 import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/setting/data/repositories/add_report_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/evaluation_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
 import 'package:dr/doctor/features/home/data/repositories/reservation_orders_repo.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -142,6 +147,26 @@ MultiBlocProvider blocMultiProvider({required child}) {
       BlocProvider(
         create: (BuildContext context) => GetPointsCubit(
           getPointrepo: di.sl<GetPointsRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => evaluationCubit(
+          eevaluationsRepo: di.sl<evaluationsRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => ReportsCubit(
+          repositry: di.sl<ReportsRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => AddReportCubit(
+          repositry: di.sl<AddReportRepo>(),
+        ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => ChatsCubit(
+          chatsRepo: di.sl<ChatsRepo>(),
         ),
       ),
     ],

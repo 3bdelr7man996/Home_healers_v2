@@ -29,7 +29,9 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
           child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: IconsForSections(
-            formOffer: true, sessionCountForOffer: widget.Package.sessionCount),
+            formOffer: true,
+            sessionCountForOffer: widget.Package.sessionCount,
+            fromPackage: true),
       )),
     );
   }

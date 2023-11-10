@@ -20,7 +20,6 @@ class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<GetPointsCubit>().GetMyPoints(context);
   }
 
   @override
@@ -79,10 +78,22 @@ class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
                   ),
                 ],
               ),
-              Divider(
-                thickness: 0.5,
-              ),
-              for (int i = 0; i < 10; i++) Activity(),
+              BlocBuilder<GetPointsCubit, GetPointsState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      Divider(
+                        thickness: 0.5,
+                      ),
+                      for (int i = 0;
+                          i < state.Data.newPointsNotifications.length;
+                          i++)
+                        Activity(
+                            Notification: state.Data.newPointsNotifications[i]),
+                    ],
+                  );
+                },
+              )
             ],
           ),
         ),

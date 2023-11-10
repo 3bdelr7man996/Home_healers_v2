@@ -5,6 +5,7 @@ import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.d
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/Patient/features/home/presentation/pages/specialist_page_screen.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -30,10 +31,12 @@ class DoctorCard extends StatefulWidget {
   var offer;
   var sessionCountForOffer;
   var isFav;
+  var fromFilter;
   DoctorCard(
       {super.key,
       this.sessionCountForOffer,
       required this.isVisible,
+      this.fromFilter = false,
       this.isFav = false,
       this.status_id,
       this.Data,
@@ -214,6 +217,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     ),
               20.ph,
               ButtonForDoctorCard(
+                  fromFilter: widget.fromFilter,
                   sessionCountForOffer: widget.sessionCountForOffer,
                   Data: widget.Data,
                   status_id: widget.status_id,
@@ -222,44 +226,6 @@ class _DoctorCardState extends State<DoctorCard> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class Stars extends StatelessWidget {
-  const Stars({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star_half,
-          color: Colors.yellow,
-          size: 20,
-        ),
-        Icon(
-          Icons.star_border,
-          color: Colors.yellow,
-          size: 20,
-        ),
-      ],
     );
   }
 }
@@ -378,7 +344,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                     fontWeight: FontWeight.w500),
               ),
               5.ph,
-              const Stars(),
+              Stars(rating: widget.data['rating']),
               5.ph,
               names.isNotEmpty
                   ? DropdownButton<String>(
@@ -438,9 +404,11 @@ class ButtonForDoctorCard extends StatelessWidget {
   var status_id;
   bool fromOffer;
   var sessionCountForOffer;
+  var fromFilter;
   ButtonForDoctorCard(
       {super.key,
       this.Data,
+      this.fromFilter = false,
       this.sessionCountForOffer,
       this.status_id,
       this.fromOffer = false});
@@ -460,10 +428,11 @@ class ButtonForDoctorCard extends StatelessWidget {
         onPressed: () {
           AppConstants.customNavigation(
               context,
-              fromOffer
+              fromOffer || fromFilter
                   ? InjuryAreaScreen(
                       Data: Data,
                       status_id: status_id,
+                      fromFilter: fromFilter,
                       fromOffer: fromOffer,
                       sessionCountForOffer: sessionCountForOffer)
                   : specialistpageScreen(

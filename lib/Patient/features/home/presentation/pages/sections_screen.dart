@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,8 +17,6 @@ class SectionsScreen extends StatefulWidget {
   @override
   State<SectionsScreen> createState() => _SectionsScreenState();
 }
-
-int i = 0;
 
 class _SectionsScreenState extends State<SectionsScreen> {
   IsGuest() async {
@@ -38,23 +37,25 @@ class _SectionsScreenState extends State<SectionsScreen> {
       context.read<FavoriteCubit>().GetFavorite(context);
   }
 
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // if (i == 0) {
-    //   Future.delayed(Duration.zero, () {
-    //     showModalBottomSheet(
-    //       context: widget.context,
-    //       builder: (BuildContext context) {
-    //         return const BottomSheetForPatient();
-    //       },
-    //     );
-    //   });
-    // }
-    i++;
-  }
-
   @override
   Widget build(BuildContext context) {
+    void didChangeDependencies() {
+      super.didChangeDependencies();
+      if (context.select(
+              (evaluationCubit cubit) => cubit.state.showEvaluationPopUp) ==
+          1) {
+        Future.delayed(Duration.zero, () {
+          showModalBottomSheet(
+            context: widget.context,
+            builder: (BuildContext context) {
+              return const BottomSheetForPatient();
+            },
+          );
+        });
+        context.read<evaluationCubit>().onshowEvaluationPopUpChange();
+      }
+    }
+
     return Column(
       children: [
         const CustumAppBarForPatient(),

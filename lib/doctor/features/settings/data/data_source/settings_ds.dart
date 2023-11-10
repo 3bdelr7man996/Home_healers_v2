@@ -31,4 +31,12 @@ class SettingsDs {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>?> changePassword(body) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      '/api/resetAuthUserPassword',
+      body: body,
+    );
+    return response;
+  }
 }

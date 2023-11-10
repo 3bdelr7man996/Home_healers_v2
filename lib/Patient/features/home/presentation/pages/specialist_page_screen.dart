@@ -11,9 +11,11 @@ class specialistpageScreen extends StatefulWidget {
   var status_id;
   bool fromOffer;
   var sessionCountForOffer;
+  var fromFilter;
   specialistpageScreen(
       {super.key,
       this.Data,
+      this.fromFilter = false,
       this.status_id,
       this.fromOffer = false,
       this.sessionCountForOffer});
@@ -44,6 +46,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.Data);
     return Scaffold(
       body: Stack(
         children: [
@@ -88,6 +91,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                       sessionCountForOffer:
                                           widget.sessionCountForOffer,
                                       Data: widget.Data,
+                                      fromFilter: widget.fromFilter,
                                       status_id: widget.status_id,
                                       fromOffer: widget.fromOffer)
                                   : Container(

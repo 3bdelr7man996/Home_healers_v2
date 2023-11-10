@@ -149,6 +149,8 @@ class ReservationCubit extends Cubit<ReservationState> {
   decraseSessionsCount() =>
       {emit(state.copyWith(sessions_count: state.sessions_count! - 1))};
   OnChangeSessionCount(value) => {emit(state.copyWith(sessions_count: value))};
+  onAddressChange(var address) => {emit(state.copyWith(address: address))};
+  onLocationChange(var location) => {emit(state.copyWith(location: location))};
 
   onChangeadvertiserId(value) => {emit(state.copyWith(advertiser_id: value))};
   onChangestatus_id(value) => {emit(state.copyWith(status_id: value))};
@@ -193,23 +195,23 @@ class ReservationCubit extends Cubit<ReservationState> {
       emit(state.copyWith(Loading: true));
 
       Map<String, dynamic> body;
-      var lat, lng;
-      var permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        Geolocator.requestPermission();
-      }
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
+      // var lat, lng;
+      // var permission = await Geolocator.checkPermission();
+      // if (permission == LocationPermission.denied ||
+      //     permission == LocationPermission.deniedForever) {
+      //   Geolocator.requestPermission();
+      // }
+      // Position position = await Geolocator.getCurrentPosition(
+      //   desiredAccuracy: LocationAccuracy.high,
+      // );
 
-      print("location is ${position.latitude}");
+      // print("location is ${position.latitude}");
 
-      lat = position.latitude;
-      lng = position.longitude;
+      // lat = position.latitude;
+      // lng = position.longitude;
 
-      // You can use latitude and longitude for your desired purpose.
-      print("Latitude: ${lat}, Longitude: ${lng}");
+      // // You can use latitude and longitude for your desired purpose.
+      // print("Latitude: ${lat}, Longitude: ${lng}");
 
       if (withOffer) {
         print(state.offer.runtimeType);
@@ -222,16 +224,16 @@ class ReservationCubit extends Cubit<ReservationState> {
           "days": daysArray,
           "offer": state.offer,
           "advertiser_id": "${state.advertiser_id}",
-          "lat": "${lat}",
-          "lang": "${lng}",
+          "lat": "${state.location?.lat}",
+          "lang": "${state.location?.lng}",
           "user_id": "${userId}",
         };
       } else {
         print("asdf");
         body = {
           "advertiser_id": "${state.advertiser_id}",
-          "lat": "${lat}",
-          "lang": "${lng}",
+          "lat": "${state.location?.lat}",
+          "lang": "${state.location?.lng}",
           "user_id": "${userId}",
           "start_at": "${state.start_at}",
           "end_at": "${state.end_at}",
@@ -259,18 +261,24 @@ class ReservationCubit extends Cubit<ReservationState> {
 
       print(response);
       print("Ghaith");
-      AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
+
+      // AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       emit(state.copyWith(sessions_count: 1));
       emit(state.copyWith(days: []));
+      emit(state.copyWith(notes: ""));
       daysArray = [];
       sortedDates = [];
       makeNotesEmpty();
+      state.location = null;
       // ignore: use_build_context_synchronously
-      AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       body.removeWhere((key, value) => key.startsWith('days['));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyRequestsForPatient()),
+      );
     } catch (e) {
       emit(state.copyWith(Loading: false));
-
+      print(state.status_id);
       print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
@@ -278,11 +286,20 @@ class ReservationCubit extends Cubit<ReservationState> {
 
   ///validate on fields
   void fieldsValidation(bool withOffer) {
+    if (state.location == null) {
+      throw ("ادخل موقعك");
+    }
+    if (state.status_id == null) {
+      throw ("حدد الاختصاص ");
+    }
     if (state.sessions_count != state.days!.length) {
       throw ("عدد الجلسات لا يساوي الأيام المحددة");
     }
     if (state.sessions_count! > state.days!.length) {
       throw ("قم بتحديد الأيام التي تريد حجز موعد بها");
+    }
+    if (state.location == null) {
+      throw ("ادخل موقعك");
     }
     if (state.notes.length == 0 && !withOffer) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");

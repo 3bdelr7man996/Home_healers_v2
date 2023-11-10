@@ -9,6 +9,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -181,7 +182,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
                     ),
                   ),
                 5.ph,
-                const Stars(),
+                Stars(rating: widget.Data["rating"]),
                 5.ph,
                 widget.Data["status"] == "on"
                     ? const Text(
@@ -215,35 +216,36 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
 }
 
 class Stars extends StatelessWidget {
-  const Stars({super.key});
+  var rating;
+  Stars({super.key, this.rating});
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(
-          Icons.star,
+          rating >= 1 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star,
+          rating >= 2 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star,
+          rating >= 3 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star_half,
+          rating >= 4 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
         Icon(
-          Icons.star_border,
+          rating == 5 ? Icons.star : Icons.star_border,
           color: Colors.yellow,
           size: 20,
         ),
@@ -322,7 +324,7 @@ class _specialistInfoState extends State<specialistInfo> {
           children: [
             statisticsBox(
               text1: "جلسة طبية",
-              text2: "+100",
+              text2: "${widget.Data["rating"]}",
             ),
             statisticsBox(
               text1: "خبرة",
@@ -500,9 +502,8 @@ class _CertificatesState extends State<Certificates> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PDFViewer(
-                              filePath:
-                                  "${AppStrings.imageUrl}${pdfFiles[index]}"),
+                          builder: (context) => PhotoViewerRouteWrapper(
+                              filePath: "${pdfFiles[index]}"),
                         ),
                       );
                     },
@@ -557,9 +558,11 @@ class ButtonWithCounter extends StatefulWidget {
   var status_id;
   bool fromOffer;
   var sessionCountForOffer;
+  var fromFilter;
   ButtonWithCounter(
       {super.key,
       this.Data,
+      this.fromFilter,
       this.status_id,
       this.sessionCountForOffer,
       this.fromOffer = false});
@@ -646,6 +649,7 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                     context,
                     DateOfSessionScreen(
                         Data: widget.Data,
+                        fromFilter: widget.fromFilter,
                         status_id: widget.status_id,
                         fromOffer: widget.fromOffer),
                     -1,

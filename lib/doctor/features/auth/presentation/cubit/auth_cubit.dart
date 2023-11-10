@@ -198,7 +198,9 @@ class AuthCubit extends Cubit<AuthState> {
       if (state.statusList == null || state.statusList == []) {
         emit(state.copyWith(statusState: RequestState.loading));
         statusList = [];
+
         statusList = await signUpAdverRepo.getAllStatus();
+
         emit(state.copyWith(
           statusList: statusList,
           statusState: RequestState.success,

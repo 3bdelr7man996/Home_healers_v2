@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../../../core/utils/app_colors.dart';
 
-PreferredSizeWidget AppBarForChat(
-  BuildContext context, {
-  String title = '',
-}) {
+PreferredSizeWidget AppBarForChat(BuildContext context,
+    {String title = '', var fromPatient = false, var image}) {
   return AppBar(
     centerTitle: true,
     leading: Container(
@@ -26,8 +24,10 @@ PreferredSizeWidget AppBarForChat(
           color: AppColors.primaryColor,
         ),
         onPressed: () {
-          AppConstants.customNavigation(
-              context, HomeScreen(selectedIndex: 1), 0, -1);
+          fromPatient
+              ? Navigator.pop(context)
+              : AppConstants.customNavigation(
+                  context, HomeScreen(selectedIndex: 1), 0, -1);
         },
       ),
     ),
@@ -50,10 +50,29 @@ PreferredSizeWidget AppBarForChat(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const CircleAvatar(
-          backgroundImage: AssetImage("assets/images/doctor.png"),
-          radius: 20,
+        Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            image: image != null
+                ? DecorationImage(
+                    image: NetworkImage(
+                      image,
+                    ),
+                    fit: BoxFit.cover,
+                    onError: (exception, stackTrace) => {print(exception)},
+                  )
+                : DecorationImage(
+                    image: AssetImage("assets/images/doctor.png"),
+                    fit: BoxFit.cover,
+                  ),
+          ),
         ),
+        //  CircleAvatar(
+        //   backgroundImage:image==null ?AssetImage("assets/images/doctor.png"):NetworkImage(image),
+        //   radius: 20,
+        // ),
         10.pw,
         Text(
           title.tr(),
@@ -69,7 +88,8 @@ PreferredSizeWidget AppBarForChat(
 }
 
 class SenderMeesage extends StatelessWidget {
-  const SenderMeesage({super.key});
+  var content, createdAt;
+  SenderMeesage({super.key, this.content, this.createdAt});
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +119,8 @@ class SenderMeesage extends StatelessWidget {
               ),
             ),
             padding: EdgeInsets.all(10.0),
-            child: const Text(
-              "بكلم حضرتك بخصوص حالتي اللي بشتكي منها , كسر في رجلي الشمال عندما كنت امارس الرياضة ",
+            child: Text(
+              "$content",
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -112,7 +132,7 @@ class SenderMeesage extends StatelessWidget {
           ),
           5.pw,
           Text(
-            "10:13",
+            "${createdAt}",
           ),
         ])
       ],
@@ -121,7 +141,8 @@ class SenderMeesage extends StatelessWidget {
 }
 
 class ReciveMessage extends StatelessWidget {
-  const ReciveMessage({super.key});
+  var content, createdAt;
+  ReciveMessage({super.key, this.content, this.createdAt});
 
   @override
   Widget build(BuildContext context) {
@@ -150,18 +171,18 @@ class ReciveMessage extends StatelessWidget {
               ),
             ),
             padding: const EdgeInsets.all(10.0),
-            child: const Text(
-              "مفيش مشكلة كلمني اكتر عن حالتك الصحية حاليا وهفيدك بكل حاجة هتحتاجها لاتقلق ",
+            child: Text(
+              "$content",
               style: TextStyle(color: Colors.black),
             ),
           ),
         ),
-        const Row(
+        Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "10:13",
+                "$createdAt",
               ),
             ])
       ],
