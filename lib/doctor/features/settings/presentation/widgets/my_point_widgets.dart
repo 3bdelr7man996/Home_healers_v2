@@ -54,14 +54,18 @@ class Activity extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '${Notification.notifiableId} نقطة',
+                      Notification.notifiableId == null
+                          ? ''
+                          : '${Notification.notifiableId} نقطة',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.secondryColor),
                     ),
                     5.ph,
                     Text(
-                      '(${Notification.data.pointsInSAR} ر.س)',
+                      Notification.data.pointsInSAR == null
+                          ? ''
+                          : '(${Notification.data.pointsInSAR} ر.س)',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primaryColor),

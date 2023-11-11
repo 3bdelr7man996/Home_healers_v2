@@ -72,7 +72,11 @@ class MyPointsheaderForPatient extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context
+                            .read<GetPointsCubit>()
+                            .pointsToCashback(state.Data.points, context);
+                      },
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
