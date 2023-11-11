@@ -77,7 +77,7 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                         hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-              widget.fromFilter
+              widget.fromFilter || widget.fromOffer
                   ? names.isNotEmpty
                       ? DropdownButton<String>(
                           underline: Container(), // Hide the underline
