@@ -9,4 +9,14 @@ class MyPointsDS {
     Map<String, dynamic>? response = await apiHelper.get("/api/user/getWallet");
     return response;
   }
+
+  Future<Map<String, dynamic>?> pointsToCashback({
+    required Map<String, dynamic> body,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      '/api/user/pointsToCashback',
+      body: body,
+    );
+    return response;
+  }
 }

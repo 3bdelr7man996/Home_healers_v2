@@ -97,12 +97,12 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                               routeScreen: MyRequestsForPatient(),
                             ),
                             15.ph,
-                            const OneOptionForPatient(
-                              iconPath:
-                                  "assets/icons/budget_icon_for_payment.svg",
-                              title: "محفظتي",
-                              routeScreen: MyWalletScreen(),
-                            ),
+                            // const OneOptionForPatient(
+                            //   iconPath:
+                            //       "assets/icons/budget_icon_for_payment.svg",
+                            //   title: "محفظتي",
+                            //   routeScreen: MyWalletScreen(),
+                            // ),
                             15.ph,
                             const OneOptionForPatient(
                               iconPath:
