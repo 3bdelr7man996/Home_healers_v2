@@ -47,6 +47,7 @@ dependencies:
   barcode_widget: ^2.0.4
 
   printing: ^5.11.0
+  pusher_channels_flutter: ^2.2.0
 
 dev_dependencies:
   flutter_test:

@@ -88,8 +88,8 @@ PreferredSizeWidget AppBarForChat(BuildContext context,
 }
 
 class SenderMeesage extends StatelessWidget {
-  var content, createdAt;
-  SenderMeesage({super.key, this.content, this.createdAt});
+  final String content, createdAt;
+  SenderMeesage({super.key, required this.content, required this.createdAt});
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +141,8 @@ class SenderMeesage extends StatelessWidget {
 }
 
 class ReciveMessage extends StatelessWidget {
-  var content, createdAt;
-  ReciveMessage({super.key, this.content, this.createdAt});
+  final String content, createdAt;
+  ReciveMessage({super.key, this.content = '', this.createdAt = ''});
 
   @override
   Widget build(BuildContext context) {

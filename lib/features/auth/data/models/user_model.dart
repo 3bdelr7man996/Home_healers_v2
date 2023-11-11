@@ -3,13 +3,13 @@ import 'package:dr/doctor/features/diagnose_report/data/models/diagonse_form_mod
 import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
 
 class UserModel {
-  Success? success;
+  UserData? success;
 
   UserModel({this.success});
 
   UserModel.fromJson(Map<String, dynamic>? json) {
     success =
-        json?['success'] != null ? Success.fromJson(json?['success']) : null;
+        json?['success'] != null ? UserData.fromJson(json?['success']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +21,7 @@ class UserModel {
   }
 }
 
-class Success {
+class UserData {
   int? id;
   String? name;
   String? mobile;
@@ -35,7 +35,7 @@ class Success {
   List<DoctorReports>? doctorReports;
   List<DiagnoseForm>? diagnoseForms;
 
-  Success(
+  UserData(
       {this.id,
       this.name,
       this.mobile,
@@ -49,7 +49,7 @@ class Success {
       this.doctorReports,
       this.diagnoseForms});
 
-  Success.fromJson(Map<String, dynamic>? json) {
+  UserData.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
     name = json?['name'];
     mobile = json?['mobile'];
@@ -94,4 +94,28 @@ class Success {
     }
     return data;
   }
+
+  UserData copyWith({
+    int? id,
+    String? name,
+    String? mobile,
+    String? image,
+    String? fcmToken,
+    String? email,
+    String? gender,
+    int? cityId,
+    String? token,
+    Advertiser? advertiser,
+    List<DoctorReports>? doctorReports,
+    List<DiagnoseForm>? diagnoseForms,
+  }) =>
+      UserData(
+        advertiser: advertiser ?? this.advertiser,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        id: id ?? this.id,
+        image: image ?? this.image,
+        mobile: mobile ?? this.mobile,
+        fcmToken: fcmToken ?? this.fcmToken,
+      );
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -9,6 +10,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/chats/presentation/pages/one_chat_screen.dart';
+import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -126,7 +128,8 @@ class FirstSection extends StatelessWidget {
 
 class TowSection extends StatefulWidget {
   int num;
-  var listOfOrders, categories, selectedName;
+  OrderData? listOfOrders;
+  var categories, selectedName;
   TowSection(
       {super.key,
       required this.num,
@@ -161,7 +164,7 @@ class _TowSectionState extends State<TowSection> {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 child: AppConstants.customNetworkImage(
                   imagePath:
-                      "${AppStrings.imageUrl}${widget.listOfOrders.advertiser.image}",
+                      "${AppStrings.imageUrl}${widget.listOfOrders?.advertiser.image}",
                   imageError: "assets/images/doctor.png",
                   width: context.width * 0.25,
                   height: context.width * 0.25 - 10,
@@ -173,7 +176,7 @@ class _TowSectionState extends State<TowSection> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${widget.listOfOrders.advertiser.nameAr}",
+                      "${widget.listOfOrders?.advertiser.nameAr}",
                       style: const TextStyle(
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.w600,
@@ -220,7 +223,9 @@ class _TowSectionState extends State<TowSection> {
                   AppConstants.customNavigation(
                       context,
                       OneChatScreen(
-                          SenderInfo: widget.listOfOrders, fromPatient: true),
+                          recieverInfo: UserData().copyWith(
+                              advertiser: widget.listOfOrders?.advertiser),
+                          fromPatient: true),
                       -1,
                       0);
                 },

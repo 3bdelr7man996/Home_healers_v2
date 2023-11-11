@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -260,7 +261,9 @@ class AuthCubit extends Cubit<AuthState> {
         "address_en": "${state.address}",
         "password": "${state.password}",
         "c_password": "${state.confPassword}",
-        "fcm_token": "", //todo
+        "fcm_token":
+            await di.sl<FirebaseMessagingService>().getFirebaseToken() ??
+                "", //todo
       };
       if (state.selectedCategories != null) {
         for (var i = 0; i < state.selectedCategories!.length; i++) {
@@ -430,7 +433,8 @@ class AuthCubit extends Cubit<AuthState> {
         "address_ar": "${state.address}",
         "address_en": "${state.address}",
         "status": "${state.status}",
-        //"fcm_token": "",
+        "fcm_token":
+            await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? "",
       };
       if (state.selectedCategories != null) {
         for (var i = 0; i < state.selectedCategories!.length; i++) {

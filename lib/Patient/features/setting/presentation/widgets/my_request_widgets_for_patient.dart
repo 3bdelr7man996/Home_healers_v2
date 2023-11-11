@@ -52,7 +52,8 @@ class underProcessing extends StatelessWidget {
                         String selectedName = "";
                         names.add("الاختصاص :");
                         for (var item
-                            in listOfOrders[index].advertiser.categories) {
+                            in listOfOrders[index].advertiser.categories ??
+                                []) {
                           names.add(item.nameAr ?? "");
                         }
                         selectedName =
@@ -87,7 +88,7 @@ class Accepted extends StatelessWidget {
           itemBuilder: (context, index) {
             List<String> names = [];
             String selectedName = "";
-            for (var item in listOfOrders[index].advertiser.categories) {
+            for (var item in listOfOrders[index].advertiser.categories ?? []) {
               names.add(item.nameAr ?? "");
             }
             selectedName = names.isNotEmpty ? names[0] : 'No names available';
@@ -123,7 +124,8 @@ class Confirmed extends StatelessWidget {
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
-                  for (var item in listOfOrders[index].advertiser.categories) {
+                  for (var item
+                      in listOfOrders[index].advertiser.categories ?? []) {
                     names.add(item.nameAr ?? "");
                   }
                   selectedName =
@@ -161,7 +163,8 @@ class completed extends StatelessWidget {
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
-                  for (var item in listOfOrders[index].advertiser.categories) {
+                  for (var item
+                      in listOfOrders[index].advertiser.categories ?? []) {
                     names.add(item.nameAr ?? "");
                   }
                   selectedName =
@@ -199,7 +202,8 @@ class canceledRequests extends StatelessWidget {
                 itemBuilder: (context, index) {
                   List<String> names = [];
                   String selectedName = "";
-                  for (var item in listOfOrders[index].advertiser.categories) {
+                  for (var item
+                      in listOfOrders[index].advertiser.categories ?? []) {
                     names.add(item.nameAr ?? "");
                   }
                   selectedName =
@@ -241,7 +245,7 @@ class Pending extends StatelessWidget {
                   String selectedName = "";
                   if (listOfOrders[index].advertiser.categories != null)
                     for (var item
-                        in listOfOrders[index].advertiser.categories) {
+                        in listOfOrders[index].advertiser.categories ?? []) {
                       names.add(item.nameAr ?? "");
                     }
                   selectedName =

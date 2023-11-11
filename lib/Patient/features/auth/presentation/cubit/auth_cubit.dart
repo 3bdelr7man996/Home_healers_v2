@@ -6,6 +6,7 @@ import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
+import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
@@ -195,6 +196,12 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     print(stringUser);
     Map<String, dynamic> user = jsonDecode(stringUser);
     return user;
+  }
+
+  ///get user info as model
+  UserData getUserInfo() {
+    Map<String, dynamic> info = userInfo();
+    return UserData.fromJson(info);
   }
 
   /// check if user login or not

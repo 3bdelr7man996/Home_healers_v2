@@ -21,6 +21,8 @@ class AppStrings {
   static String appInfo = "/api/app_info";
   static String allNotifications = "/api/getAllNotifications";
   static String doctorsPoints = "/api/advertiser/getDoctorPoints";
+  static String sendMessage = "/api/chat/send";
+  static String allMessages = "/api/chat/retrieve";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";
@@ -43,6 +45,12 @@ class AppStrings {
   static String userMobile = "USER_MOBILE";
   static String userInfo = "USER_INFO";
   static String isAdvertise = "IS_ADVERTISE";
+
+  //APP CONFIGIRATION
+  static String PUSHER_APP_ID = '1692670';
+  static String PUSHER_APP_KEY = 'ec213d5069ce93fd3e9e';
+  static String PUSHER_APP_SECRET = 'a5c3beb9c925fbcfaa3d';
+  static String PUSHER_APP_CLUSTER = 'ap2';
 
   static String mapApiKey = "AIzaSyBL3got10NTJkmjKT9fgaDPraXxqgb33EQ";
   //Demo

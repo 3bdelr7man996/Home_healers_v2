@@ -1,14 +1,22 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/chats/data/models/all_chat_model.dart';
-import 'package:dr/doctor/features/chats/data/models/send_message_model.dart';
+import 'package:dr/doctor/features/chats/data/models/message_model.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
+import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'chats_state.dart';
+
+enum UserType { Advertiser, User }
 
 class ChatsCubit extends Cubit<ChatsState> {
   final ChatsRepo chatsRepo;
@@ -16,29 +24,66 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   onContentChange(String value) => emit(state.copyWith(content: value));
 
+  TextEditingController? msgFieldController = TextEditingController();
+  int? userId;
+  int? advId;
+  String? senderType;
+  String? recieverType;
+  String? recieverImg;
+  String? recieverName;
+
+  void disposeController() {
+    msgFieldController?.dispose();
+  }
+
+  void initChatData(BuildContext context, {required UserData recieverInfo}) {
+    if (CacheHelper.getData(key: AppStrings.isAdvertise)) {
+      advId = context.read<AuthCubit>().getAdvertiserInfo().id;
+      userId = recieverInfo.id;
+      senderType = 'Advertiser';
+      recieverType = 'User';
+      recieverImg = recieverInfo.image;
+      recieverName = recieverInfo.name;
+    } else {
+      advId = recieverInfo.advertiser?.id;
+      userId = context.read<AuthCubitForPatient>().getUserInfo().id;
+      senderType = 'User';
+      recieverType = 'Advertiser';
+      recieverImg = recieverInfo.advertiser?.image;
+      recieverName =
+          "${recieverInfo.advertiser?.firstnameAr} ${recieverInfo.advertiser?.lastnameAr}";
+    }
+  }
+
   ///Send A Message
-  Future<void> sendMessage(context, var user_id, var advertiser_id,
-      receiver_type, sender_type, _textFieldController) async {
+  Future<void> sendMessage(
+    BuildContext context,
+  ) async {
     try {
       fieldsValidation();
+      emit(state.copyWith(sendMsgState: RequestState.loading));
       Map<String, String> body = {
-        "user_id": "${user_id}",
-        "advertiser_id": "${advertiser_id}",
+        "user_id": '$userId',
+        "advertiser_id": '$advId',
         "content": "${state.content}",
-        "sender_type": "${sender_type}",
-        "receiver_type": "${receiver_type}",
+        "sender_type": senderType!,
+        "receiver_type": recieverType!,
       };
-      SendMessageModel response = await chatsRepo.sendMessage(
+      Messages response = await chatsRepo.sendMessage(
         body: body,
       );
-      print(response);
-      emit(state.copyWith(content: ""));
-      _textFieldController.clear();
-      await getAllMessage(user_id, advertiser_id);
-      log("send Success");
+      myMessages.add(response);
+      //print(response);
+      emit(state.copyWith(
+        sendMsgState: RequestState.success,
+        content: '',
+        messagesList: myMessages,
+      ));
+
+      msgFieldController?.clear();
     } catch (e) {
       log("send up error $e");
-
+      emit(state.copyWith(sendMsgState: RequestState.failed));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -48,16 +93,26 @@ class ChatsCubit extends Cubit<ChatsState> {
     if (state.content!.length == 0) throw ("ادخل رسالتك");
   }
 
+  List<Messages> myMessages = [];
+
   ///Get All Message
-  Future<void> getAllMessage(var user_id, var advertiser_id) async {
+  Future<void> getAllMessage() async {
     try {
-      print(user_id);
-      AllChatModel response =
-          await chatsRepo.getAllMessagesForChat(user_id, advertiser_id);
-      emit(state.copyWith(allMessages: response.messages));
-      print(state.allMessages);
-      log("Get All Messages Success");
+      emit(state.copyWith(getMsgState: RequestState.loading));
+      ChatModel response = await chatsRepo.getAllMessagesForChat(
+        advertiserId: advId!,
+        userId: userId!,
+      );
+      myMessages = [];
+      myMessages.addAll(response.messages?.toList() ?? []);
+      emit(state.copyWith(
+        getMsgState: RequestState.success,
+        messagesList: myMessages,
+      ));
     } catch (e) {
+      emit(state.copyWith(
+        getMsgState: RequestState.failed,
+      ));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

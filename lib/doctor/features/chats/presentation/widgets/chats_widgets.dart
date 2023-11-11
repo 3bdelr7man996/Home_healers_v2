@@ -1,8 +1,6 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/doctor/features/chats/presentation/pages/one_chat_screen.dart';
 import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
@@ -64,7 +62,7 @@ class OneChat extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10.0),
       child: InkWell(
         onTap: () {
-          AppConstants.customNavigation(context, OneChatScreen(), 0, 1);
+          // AppConstants.customNavigation(context, OneChatScreen(), 0, 1);
         },
         child: Container(
           width: context.width,

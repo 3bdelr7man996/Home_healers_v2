@@ -8,29 +8,27 @@ class ChatsDS {
 
   ChatsDS({required this.apiHelper});
 
-  Future<Map<String, dynamic>?> sendMessage(
-      {required Map<String, String> body,
-      String? fileKey,
-      List<File>? files,
-      List<File>? documents,
-      String? documentsKey,
-      bool isUpdateProfile = false}) async {
+  Future<Map<String, dynamic>?> sendMessage({
+    required Map<String, String> body,
+    String? fileKey,
+    List<File>? files,
+  }) async {
     Map<String, dynamic>? response = await apiHelper.multiPartRequest(
-      '/api/chat/send',
+      AppStrings.sendMessage,
       body: body,
       fileKey: fileKey ?? "",
       files: files,
-      documents: documents,
-      documentsKey: documentsKey,
     );
     return response;
   }
 
   ///GET All Message For Chat
   Future<Map<String, dynamic>?> allChatDS(
-      var user_id, var advertiser_id) async {
+      {required Map<String, dynamic>? queryParameters}) async {
     Map<String, dynamic>? response = await apiHelper.get(
-        "/api/chat/retrieve?user_id=${user_id}&advertiser_id=${advertiser_id}");
+      AppStrings.allMessages,
+      queryParameters: queryParameters,
+    );
     return response;
   }
 }

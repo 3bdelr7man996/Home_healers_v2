@@ -3,14 +3,17 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/one_chat_widgets.dart';
+import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class OneChatScreen extends StatefulWidget {
-  var SenderInfo, fromPatient;
-  OneChatScreen({Key? key, this.SenderInfo, this.fromPatient = false});
-  final _textFieldController = TextEditingController();
+  const OneChatScreen(
+      {super.key, required this.recieverInfo, this.fromPatient = false});
+  final UserData recieverInfo;
+  final bool fromPatient;
+
   @override
   State<OneChatScreen> createState() => _OneChatScreenState();
 }
@@ -18,20 +21,28 @@ class OneChatScreen extends StatefulWidget {
 class _OneChatScreenState extends State<OneChatScreen> {
   @override
   void initState() {
-    // TODO: implement initState
+    context.read<ChatsCubit>().initChatData(
+          context,
+          recieverInfo: widget.recieverInfo,
+        );
+    context.read<ChatsCubit>().getAllMessage();
     super.initState();
-    context.read<ChatsCubit>().getAllMessage(
-        widget.SenderInfo.userId, widget.SenderInfo.advertiserId);
+  }
+
+  @override
+  void dispose() {
+    // context.read<ChatsCubit>().disposeController();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarForChat(context,
-            title:
-                "${widget.SenderInfo.advertiser.firstnameAr} ${widget.SenderInfo.advertiser.lastnameAr}",
+            title: context.select<ChatsCubit, String>(
+                (cubit) => cubit.recieverName ?? ''),
             image:
-                "${AppStrings.imageUrl}${widget.SenderInfo.advertiser.image}",
+                "${AppStrings.imageUrl}${context.select<ChatsCubit, String>((cubit) => cubit.recieverImg ?? '')}",
             fromPatient: widget.fromPatient),
         body: BlocBuilder<ChatsCubit, ChatsState>(
           builder: (context, state) {
@@ -40,20 +51,17 @@ class _OneChatScreenState extends State<OneChatScreen> {
                 Expanded(
                   child: ListView.builder(
                     padding: EdgeInsets.all(8.0),
-                    itemCount: state.allMessages == null
-                        ? 0
-                        : state.allMessages
-                            .length, // Replace with your actual message count
+                    itemCount: state.messagesList?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (state.allMessages[index].senderType == "User") {
-                        return SenderMeesage(
-                            content: state.allMessages[index].content,
-                            createdAt: state.allMessages[index].createdAt);
-                      } else {
-                        return ReciveMessage(
-                            content: state.allMessages[index].content,
-                            createdAt: state.allMessages[index].createdAt);
-                      }
+                      return state.messagesList?[index].senderType == "User"
+                          ? SenderMeesage(
+                              content: state.messagesList?[index].content ?? '',
+                              createdAt:
+                                  state.messagesList?[index].createdAt ?? '')
+                          : ReciveMessage(
+                              content: state.messagesList?[index].content ?? '',
+                              createdAt:
+                                  state.messagesList?[index].createdAt ?? '');
                     },
                   ),
                 ),
@@ -71,7 +79,9 @@ class _OneChatScreenState extends State<OneChatScreen> {
                       5.pw,
                       Expanded(
                         child: TextField(
-                          controller: widget._textFieldController,
+                          controller: context
+                              .select<ChatsCubit, TextEditingController?>(
+                                  (cubit) => cubit.msgFieldController),
                           onChanged: (value) {
                             context.read<ChatsCubit>().onContentChange(value);
                           },
@@ -87,12 +97,8 @@ class _OneChatScreenState extends State<OneChatScreen> {
                           ? InkWell(
                               onTap: () {
                                 context.read<ChatsCubit>().sendMessage(
-                                    context,
-                                    widget.SenderInfo.userId,
-                                    widget.SenderInfo.advertiserId,
-                                    "Advertiser",
-                                    "User",
-                                    widget._textFieldController);
+                                      context,
+                                    );
                               },
                               child: Icon(
                                 Icons.send,

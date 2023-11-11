@@ -5,7 +5,9 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/reservastion_status_helper.dart';
+import 'package:dr/doctor/features/chats/presentation/pages/one_chat_screen.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
+import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -172,10 +174,25 @@ class PatientDetailsSection extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SvgPicture.asset(
-                      'assets/icons/message_icon.svg',
-                      width: 30,
-                      height: 30,
+                    GestureDetector(
+                      onTap: () {
+                        AppConstants.customNavigation(
+                            context,
+                            OneChatScreen(
+                                recieverInfo: UserData().copyWith(
+                              id: state.reservation?.user?.id,
+                              name: state.reservation?.user?.name,
+                              image: state.reservation?.user?.image,
+                              fcmToken: state.reservation?.user?.fcmToken,
+                            )),
+                            0,
+                            1);
+                      },
+                      child: SvgPicture.asset(
+                        'assets/icons/message_icon.svg',
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                     10.pw,
                     SvgPicture.asset(
