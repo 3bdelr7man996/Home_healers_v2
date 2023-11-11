@@ -7,6 +7,7 @@ import 'package:dr/Patient/features/setting/data/models/add_report_model.dart';
 import 'package:dr/Patient/features/setting/data/models/evaluations_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_points_model.dart';
+import 'package:dr/Patient/features/setting/data/models/points_to_cashback_model.dart';
 import 'package:dr/Patient/features/setting/data/models/reports_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_info_model.dart';
 import 'package:dr/Patient/features/setting/data/models/update_reservation_model.dart';
@@ -239,6 +240,32 @@ class GetPointsCubit extends Cubit<GetPointsState> {
       emit(state.copyWith(Data: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  Future<void> pointsToCashback(var points, BuildContext context) async {
+    try {
+      fieldsValidation(points);
+      Map<String, dynamic> body = {
+        "num_of_points": "${points}",
+      };
+
+      pointsToCashbackModel response =
+          await getPointrepo.pointsToCashback(body: body);
+      await GetMyPoints(context);
+      ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
+
+      print(response);
+    } catch (e) {
+      print(e.toString());
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  ///validate on fields
+  void fieldsValidation(var points) {
+    if (points == null || points == 0) {
+      throw ("لا يوجد لديك نقاط");
     }
   }
 }
