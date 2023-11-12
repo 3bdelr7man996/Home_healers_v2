@@ -1,9 +1,11 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TotalDetails extends StatelessWidget {
@@ -170,8 +172,6 @@ class WaysForPayment extends StatefulWidget {
 }
 
 class _WaysForPaymentState extends State<WaysForPayment> {
-  int? _selectedValue = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -209,19 +209,21 @@ class _WaysForPaymentState extends State<WaysForPayment> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  width: 25,
-                  height: 50,
-                  child: RadioListTile(
-                    activeColor: AppColors.primaryColor,
-                    value: 1,
-                    groupValue: _selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value;
-                      });
-                    },
-                  ),
+                BlocBuilder<PaymentCubit, PaymentState>(
+                  builder: (context, state) {
+                    return SizedBox(
+                      width: 25,
+                      height: 50,
+                      child: RadioListTile(
+                        activeColor: AppColors.primaryColor,
+                        value: PayType.wallet,
+                        groupValue: state.selectedPayType,
+                        onChanged: (value) {
+                          context.read<PaymentCubit>().onSelectPayType(value!);
+                        },
+                      ),
+                    );
+                  },
                 )
               ],
             ),
@@ -247,19 +249,21 @@ class _WaysForPaymentState extends State<WaysForPayment> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(
-                  width: 25,
-                  height: 50,
-                  child: RadioListTile(
-                    activeColor: AppColors.primaryColor,
-                    value: 2,
-                    groupValue: _selectedValue,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue = value;
-                      });
-                    },
-                  ),
+                BlocBuilder<PaymentCubit, PaymentState>(
+                  builder: (context, state) {
+                    return SizedBox(
+                      width: 25,
+                      height: 50,
+                      child: RadioListTile(
+                        activeColor: AppColors.primaryColor,
+                        value: PayType.visa,
+                        groupValue: state.selectedPayType,
+                        onChanged: (value) {
+                          context.read<PaymentCubit>().onSelectPayType(value!);
+                        },
+                      ),
+                    );
+                  },
                 )
               ],
             ),

@@ -48,6 +48,7 @@ dependencies:
 
   printing: ^5.11.0
   pusher_channels_flutter: ^2.2.0
+  map_launcher: ^3.0.1
 
 dev_dependencies:
   flutter_test:

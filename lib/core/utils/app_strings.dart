@@ -30,6 +30,7 @@ class AppStrings {
   static String visaPayment = "/api/payment";
   static String tamaraPayment = "/api/tamara-payment";
   static String pUpdateReservation = "/api/user/updateReservation";
+  static String payByWallet = "/api/user/pay-by-wallet";
 
   //assets url
   static String appName = "Home Healers";

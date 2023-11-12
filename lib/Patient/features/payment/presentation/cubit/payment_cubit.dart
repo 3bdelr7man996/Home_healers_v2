@@ -9,8 +9,10 @@ import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets
 import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets/exit_payment_dialog.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/http_custom_exception.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -20,6 +22,9 @@ part 'payment_state.dart';
 class PaymentCubit extends Cubit<PaymentState> {
   PaymentCubit({required this.repository}) : super(const PaymentState());
   final PaymentRepository repository;
+
+  void onSelectPayTypeRadioButton(int? index) =>
+      emit(state.copyWith(selectedPayIndexRadio: () => index));
   //?============================[ PAY BY VISA ]================================
   Future<bool> payByVisa({required int reservationParentId}) async {
     try {
@@ -129,6 +134,63 @@ class PaymentCubit extends Cubit<PaymentState> {
       }
     } catch (e) {
       log(e.toString());
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+//?================================[ PAY BY WALLET]=============================
+
+  payByWallet(
+    BuildContext context, {
+    required OrderData order,
+  }) async {
+    try {
+      emit(state.copyWith(payWalletState: RequestState.loading));
+      ResponseModel response = await repository.payByWallet(parentId: order.id);
+      emit(state.copyWith(payWalletState: RequestState.success));
+
+      if (response.paySuccess == true) {
+        await repository.confirmReservationStatus(myOrder: order);
+      }
+
+      if (context.mounted) {
+        AppConstants.pushRemoveNavigator(context,
+            screen: HomeScreenForPatient(
+              selectedIndex: 2,
+            ));
+      }
+      if (context.mounted) {
+        showCupertinoDialog(
+          context: context,
+          builder: (context) => ConfirmPayDialog(
+            order: order,
+            paymentResponse: response,
+          ),
+        );
+      }
+    } on BadRequestException catch (e) {
+      emit(state.copyWith(payWalletState: RequestState.failed));
+      log(e.toString());
+      if (e.toString().contains('Your balance is insufficient')) {
+        if (context.mounted) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) => ConfirmPayDialog(
+              order: order,
+              paymentResponse: ResponseModel(
+                paySuccess: false,
+                message: "balance_is_insufficient".tr(),
+              ),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      emit(state.copyWith(payWalletState: RequestState.failed));
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 }
+
+
+// RESPONSE[400] => DATA: {"status":true,"message":"The payment was completed successfully"}

@@ -77,4 +77,17 @@ class PaymentRepository {
     });
     return response;
   }
+
+  Future<ResponseModel> payByWallet({required int parentId}) async {
+    Map<String, dynamic>? respone =
+        await dataSource.payByWallet(parentId: parentId);
+    return ResponseModel(
+      paySuccess: respone?['status'],
+      message: respone?['message'] == "Your balance is insufficient"
+          ? "balance_is_insufficient".tr()
+          : respone?['status'] == true
+              ? "reservation_been_confirmed".tr()
+              : "reservation_failed".tr(),
+    );
+  }
 }

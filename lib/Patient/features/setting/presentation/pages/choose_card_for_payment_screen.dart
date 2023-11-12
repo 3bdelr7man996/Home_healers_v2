@@ -82,10 +82,9 @@ class ChooseCardScreen extends StatelessWidget {
                 return CardWay(
                   iconPath: "assets/icons/visa_card_icon.svg",
                   title: "Visa",
-                  selected: state.selectedPayType == PayType.visa,
-                  onTap: () => context
-                      .read<PaymentCubit>()
-                      .onSelectPayType(PayType.visa),
+                  selected: state.selectedPayType == PayType.tap,
+                  onTap: () =>
+                      context.read<PaymentCubit>().onSelectPayType(PayType.tap),
                 );
               },
             ),
@@ -113,7 +112,7 @@ class ChooseCardScreen extends StatelessWidget {
                       ),
                       onPressed: () async {
                         switch (state.selectedPayType) {
-                          case PayType.visa:
+                          case PayType.tap:
                             await context
                                 .read<PaymentCubit>()
                                 .payByVisa(reservationParentId: order.id)

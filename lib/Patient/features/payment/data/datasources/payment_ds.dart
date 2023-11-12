@@ -39,6 +39,15 @@ class PaymentDataSource {
     return response;
   }
 
+  ///pay by wallet
+  Future<Map<String, dynamic>?> payByWallet({
+    required int parentId,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper
+        .post(AppStrings.payByWallet, body: {"parent_id": parentId});
+    return response;
+  }
+
   Future<Map<String, dynamic>?> updateReservationStatus({
     required Map<String, dynamic> body,
   }) async {

@@ -161,5 +161,6 @@
   "city": "city",
   "return":"Return",
   "sorry":"Sorry !",
-  "ok":"OK"
+  "ok":"OK",
+  "balance_is_insufficient":"Your balance is insufficient"
 }

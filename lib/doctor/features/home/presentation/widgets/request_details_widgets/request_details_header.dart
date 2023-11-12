@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -12,6 +14,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 class RequestsDetailsHeader extends StatelessWidget {
   const RequestsDetailsHeader({
@@ -142,30 +145,52 @@ class PatientDetailsSection extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 10.ph,
-                const Row(
-                  children: [
-                    Icon(
-                      Icons.location_on, //todo
-                      color: AppColors.primaryColor,
-                    ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black,
-                            width: 1.0,
+                if (state.reservation?.lat != null &&
+                    state.reservation?.lang != null)
+                  GestureDetector(
+                    onTap: () async {
+                      log("tapeed");
+                      final availableMaps = await MapLauncher.installedMaps;
+                      await availableMaps.firstWhere(
+                        (element) {
+                          return element.mapType == MapType.google;
+                        },
+                        orElse: (() {
+                          AppConstants.launchURL(
+                              'https://www.google.com/maps/search/?api=1&query=${state.reservation?.lat},${state.reservation?.lang}');
+                          return availableMaps.first;
+                        }),
+                      ).showDirections(
+                          destination: Coords(
+                              double.parse(state.reservation!.lat!),
+                              double.parse(state.reservation!.lang!)),
+                          destinationTitle: "عنوان المريض");
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.location_on, //todo
+                          color: AppColors.primaryColor,
+                        ),
+                        DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'موقع المريض',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                            ),
                           ),
                         ),
-                      ),
-                      child: Text(
-                        'موقع المريض',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
-                )
+                  )
               ],
             ),
             if (state.reservation?.status == "confirmed")
@@ -195,10 +220,14 @@ class PatientDetailsSection extends StatelessWidget {
                       ),
                     ),
                     10.pw,
-                    SvgPicture.asset(
-                      'assets/icons/call_icon.svg',
-                      width: 30,
-                      height: 30,
+                    GestureDetector(
+                      onTap: () => AppConstants.launchURL(
+                          'tel:${state.reservation?.user?.mobile}'),
+                      child: SvgPicture.asset(
+                        'assets/icons/call_icon.svg',
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ],
                 ),

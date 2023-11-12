@@ -1,5 +1,8 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
+import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/choose_card_for_payment_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/payment_details_widgets.dart';
@@ -7,8 +10,11 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PaymentDetailsScreen extends StatefulWidget {
@@ -25,6 +31,12 @@ class PaymentDetailsScreen extends StatefulWidget {
 }
 
 class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
+  @override
+  void initState() {
+    context.read<PaymentCubit>().resetPayData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,26 +82,55 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               10.ph,
               const WaysForPayment(),
               15.ph,
-              SizedBox(
-                width: context.width,
-                height: 50,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        AppColors.primaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              BlocBuilder<PaymentCubit, PaymentState>(
+                builder: (context, state) {
+                  if (state.payWalletState == RequestState.loading) {
+                    return CustomLoader(
+                      padding: 0,
+                    );
+                  } else {
+                    return SizedBox(
+                      width: context.width,
+                      height: 50,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.primaryColor),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          log('${context.read<PaymentCubit>().state.selectedPayType}');
+                          if (context
+                                  .read<PaymentCubit>()
+                                  .state
+                                  .selectedPayType ==
+                              null) {
+                            return;
+                          }
+                          if (context
+                                  .read<PaymentCubit>()
+                                  .state
+                                  .selectedPayType ==
+                              PayType.wallet) {
+                            context
+                                .read<PaymentCubit>()
+                                .payByWallet(context, order: widget.order);
+                          } else {
+                            AppConstants.customNavigation(context,
+                                ChooseCardScreen(order: widget.order), -1, 0);
+                          }
+                        },
+                        child: const Text('تابع'),
                       ),
-                    ),
-                  ),
-                  onPressed: () {
-                    AppConstants.customNavigation(
-                        context, ChooseCardScreen(order: widget.order), -1, 0);
-                  },
-                  child: const Text('تابع'),
-                ),
-              ),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),
