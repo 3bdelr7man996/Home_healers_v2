@@ -7,6 +7,7 @@ import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/chats/data/models/all_chat_model.dart';
+import 'package:dr/doctor/features/chats/data/models/conversations_model.dart';
 import 'package:dr/doctor/features/chats/data/models/message_model.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
 import 'package:dr/features/auth/data/models/user_model.dart';
@@ -114,6 +115,41 @@ class ChatsCubit extends Cubit<ChatsState> {
         getMsgState: RequestState.failed,
       ));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  //?=======================[GET CONVERSATIONS HOME ]===========================
+
+  List<Conversations>? conversationsList = [];
+  List<OnlineUsers>? onlineUsers = [];
+
+  getAllConversations() async {
+    try {
+      emit(state.copyWith(conversationState: RequestState.loading));
+      ConversationsModel response = await chatsRepo.getAllConversations();
+      conversationsList = response.conversations;
+      onlineUsers = response.onlineUsers;
+
+      emit(state.copyWith(
+        conversationState: RequestState.success,
+        conversationsList: conversationsList,
+        onlineUsers: onlineUsers,
+      ));
+    } catch (e) {
+      emit(state.copyWith(conversationState: RequestState.failed));
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  //?=======================[ SEARCH IN CONVERSATION LIST]======================
+  void searchConversation({String name = ''}) {
+    if (name.isNotEmpty) {
+      emit(state.copyWith(
+          conversationsList: conversationsList
+              ?.where((conv) => conv.name!.contains(name))
+              .toList()));
+    } else {
+      emit(state.copyWith(conversationsList: conversationsList));
     }
   }
 }

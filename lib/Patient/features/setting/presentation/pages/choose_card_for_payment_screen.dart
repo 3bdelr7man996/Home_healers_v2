@@ -20,6 +20,61 @@ class ChooseCardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, title: "choose_card", backButton: true),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: BlocBuilder<PaymentCubit, PaymentState>(
+        builder: (context, state) {
+          if (state.payState == RequestState.loading) {
+            return const CustomLoader(
+              padding: 0,
+            );
+          } else {
+            return Container(
+              width: context.width,
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              height: 50,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(AppColors.primaryColor),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                onPressed: () async {
+                  switch (state.selectedPayType) {
+                    case PayType.tap:
+                      await context
+                          .read<PaymentCubit>()
+                          .payByVisa(reservationParentId: order.id)
+                          .then((value) {
+                        if (value == true) {
+                          AppConstants.customNavigation(
+                              context, VisaPaymentScreen(myOrder: order), 0, 1);
+                        }
+                      });
+                      break;
+                    case PayType.tamara:
+                      await context
+                          .read<PaymentCubit>()
+                          .payByTamara(reservationParentId: order.id)
+                          .then((value) {
+                        if (value == true) {
+                          AppConstants.customNavigation(
+                              context, VisaPaymentScreen(myOrder: order), 0, 1);
+                        }
+                      });
+                      break;
+                    default:
+                  }
+                },
+                child: const Text('تابع'),
+              ),
+            );
+          }
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -29,7 +84,6 @@ class ChooseCardScreen extends StatelessWidget {
               "اختر الكارد الخاصة بك :",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0),
             ),
-
             20.ph,
             BlocBuilder<PaymentCubit, PaymentState>(
               buildWhen: (previous, current) =>
@@ -45,35 +99,6 @@ class ChooseCardScreen extends StatelessWidget {
                 );
               },
             ),
-
-            // 20.ph,
-            // CardWay(
-            //   iconPath: "assets/icons/paypal_icon.svg",
-            //   title: "PayPal",
-            // ),
-            //?============================================================
-            // 20.ph,
-            // BlocBuilder<PaymentCubit, PaymentState>(
-            // buildWhen: (previous, current) =>
-            //     previous.selectedPayType != current.selectedPayType,
-            //   builder: (context, state) {
-            //     return CardWay(
-            //       iconPath: "assets/icons/Apple_pay_icon.svg",
-            //       title: "Apple PAy",
-            //       selected: state.selectedPayType == PayType.apple,
-            //       onTap: () => context
-            //           .read<PaymentCubit>()
-            //           .onSelectPayType(PayType.apple),
-            //     );
-            //   },
-            // ),
-            //?==============================================================
-            // 20.ph,
-            // CardWay(
-            //   iconPath: "assets/images/stc_pay.png",
-            //   num: 1,
-            //   title: "Stc Pay",
-            // ),
             20.ph,
             BlocBuilder<PaymentCubit, PaymentState>(
               // buildWhen: (previous, current) =>
@@ -89,60 +114,6 @@ class ChooseCardScreen extends StatelessWidget {
               },
             ),
             20.ph,
-            BlocBuilder<PaymentCubit, PaymentState>(
-              builder: (context, state) {
-                if (state.payState == RequestState.loading) {
-                  return const CustomLoader(
-                    padding: 0,
-                  );
-                } else {
-                  return SizedBox(
-                    width: context.width,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColors.primaryColor),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      onPressed: () async {
-                        switch (state.selectedPayType) {
-                          case PayType.tap:
-                            await context
-                                .read<PaymentCubit>()
-                                .payByVisa(reservationParentId: order.id)
-                                .then((value) {
-                              if (value == true) {
-                                AppConstants.customNavigation(context,
-                                    VisaPaymentScreen(myOrder: order), 0, 1);
-                              }
-                            });
-                            break;
-                          case PayType.tamara:
-                            await context
-                                .read<PaymentCubit>()
-                                .payByTamara(reservationParentId: order.id)
-                                .then((value) {
-                              if (value == true) {
-                                AppConstants.customNavigation(context,
-                                    VisaPaymentScreen(myOrder: order), 0, 1);
-                              }
-                            });
-                            break;
-                          default:
-                        }
-                      },
-                      child: const Text('تابع'),
-                    ),
-                  );
-                }
-              },
-            )
           ],
         ),
       ),

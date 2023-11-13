@@ -42,6 +42,7 @@ import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart'
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/config/pusher_config/pusher_config.dart';
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
 import 'package:dr/doctor/features/chats/data/datasources/chats_ds.dart';
@@ -62,6 +63,7 @@ import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'config/notifications_config/firebase_messages.dart';
 import 'config/notifications_config/local_notification_config.dart';
 import 'core/utils/app_strings.dart';
@@ -79,8 +81,11 @@ final sl = GetIt.instance;
 
 Future<void> serviceLocatorInit() async {
   sl.allowReassignment = true;
+  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  sl.registerLazySingleton(() => pusher);
 
   // Core
+  sl.registerLazySingleton(() => PusherConfiguration(pusher: sl()));
   sl.registerLazySingleton(() => ApiBaseHelper(AppStrings.divUrl));
   sl.registerLazySingleton(() => LocalNotificationsService());
   sl.registerLazySingleton(

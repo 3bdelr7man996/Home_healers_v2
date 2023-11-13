@@ -1,7 +1,6 @@
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
@@ -55,8 +54,7 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: AppConstants.customNetworkImage(
-                                imagePath:
-                                    "${AppStrings.imageUrl}${state.myDocuments?[index]}"),
+                                imagePath: "${state.myDocuments?[index]}"),
                           ));
                     },
                   ),

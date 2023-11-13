@@ -54,7 +54,7 @@ class AdvertiserReports extends StatelessWidget {
                         },
                         child: Card(
                           child: AppConstants.customNetworkImage(
-                            imagePath: '${AppStrings.imageUrl}${report?.file}',
+                            imagePath: '${report?.file}',
                             fit: BoxFit.cover,
                           ),
                         ),

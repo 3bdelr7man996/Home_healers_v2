@@ -122,7 +122,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                 .payByWallet(context, order: widget.order);
                           } else {
                             AppConstants.customNavigation(context,
-                                ChooseCardScreen(order: widget.order), -1, 0);
+                                ChooseCardScreen(order: widget.order), 0, 1);
                           }
                         },
                         child: const Text('تابع'),

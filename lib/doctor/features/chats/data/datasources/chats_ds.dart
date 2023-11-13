@@ -31,4 +31,12 @@ class ChatsDS {
     );
     return response;
   }
+
+  ///GET ALL CONVERSATIONS OF CHAT HOME
+  Future<Map<String, dynamic>?> getAllConversations() async {
+    Map<String, dynamic>? response = await apiHelper.get(
+      AppStrings.allConversations,
+    );
+    return response;
+  }
 }

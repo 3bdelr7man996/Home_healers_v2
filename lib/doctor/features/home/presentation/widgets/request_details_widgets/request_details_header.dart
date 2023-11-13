@@ -5,7 +5,6 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/reservastion_status_helper.dart';
 import 'package:dr/doctor/features/chats/presentation/pages/one_chat_screen.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -128,8 +127,7 @@ class PatientDetailsSection extends StatelessWidget {
                 child: AppConstants.customNetworkImage(
                     imageError: AppImages.patientImg,
                     fit: BoxFit.contain,
-                    imagePath:
-                        "${AppStrings.imageUrl}${state.reservation?.user?.image ?? ""}"),
+                    imagePath: "${state.reservation?.user?.image ?? ""}"),
               ),
             ),
             10.pw,

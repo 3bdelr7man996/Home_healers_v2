@@ -6,7 +6,7 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -435,9 +435,8 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                       child: AppConstants.customNetworkImage(
                         width: 75,
                         height: 70,
-                        imageError: "assets/images/doctor.png",
-                        imagePath:
-                            "${AppStrings.imageUrl}${widget.listOfOrders.advertiser.image}",
+                        imageError: AppImages.doctorPlaceholder,
+                        imagePath: "${widget.listOfOrders.advertiser.image}",
                       ),
                     ),
                     // : const DecorationImage(

@@ -1,7 +1,6 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +52,7 @@ class AppBarForHome extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(35)),
                 child: AppConstants.customNetworkImage(
                   imagePath:
-                      "${AppStrings.imageUrl}${context.read<AuthCubit>().getAdvertiserInfo().image}",
+                      "${context.read<AuthCubit>().getAdvertiserInfo().image}",
                   placeholder: AppImages.avatar,
                   imageError: AppImages.avatar,
                   width: 70,

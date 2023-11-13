@@ -23,6 +23,7 @@ class AppStrings {
   static String doctorsPoints = "/api/advertiser/getDoctorPoints";
   static String sendMessage = "/api/chat/send";
   static String allMessages = "/api/chat/retrieve";
+  static String allConversations = "/api/chatStatus";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";

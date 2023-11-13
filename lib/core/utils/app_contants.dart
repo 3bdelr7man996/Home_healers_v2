@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dr/doctor/features/home/data/models/tab_info.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 
@@ -126,6 +126,7 @@ class AppConstants {
 
   static customNetworkImage({
     required String imagePath,
+    String imgBaseUrl = "https://dev.home-healers.com/upload/",
     String placeholder = "assets/images/placeholder.png",
     String imageError = "assets/images/logo.png",
     double? height,
@@ -133,7 +134,7 @@ class AppConstants {
     BoxFit? fit = BoxFit.fill,
   }) {
     return FadeInImage.assetNetwork(
-      image: imagePath,
+      image: imgBaseUrl + imagePath,
       fit: fit,
       height: height,
       width: width,
@@ -154,6 +155,8 @@ class AppConstants {
       BoxFit fit = BoxFit.cover}) {
     return Container(
       margin: margin,
+      width: width,
+      height: height,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(radius)),
@@ -169,8 +172,8 @@ class AppConstants {
   }
 
   static customNavigation(
-      BuildContext context, Widget screen, double x, double y) {
-    Navigator.push(
+      BuildContext context, Widget screen, double x, double y) async {
+    await Navigator.push(
       context,
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 500),

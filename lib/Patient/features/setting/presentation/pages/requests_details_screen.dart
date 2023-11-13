@@ -3,7 +3,6 @@
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/bill_screen.dart';
-import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -13,7 +12,6 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class RequestsDetailsScreenForPatient extends StatefulWidget {
   int num;
@@ -105,15 +103,6 @@ class _RequestsDetailsScreenForPatientState
             .read<UpdateReservationCubit>()
             .updateSelectedReservation(context);
       }
-    }
-
-    showBottomSheetForEarnPoints() {
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SheetForEarnMoney();
-        },
-      );
     }
 
     print("ghaith");

@@ -77,69 +77,71 @@ class _VisaPaymentScreenState extends State<VisaPaymentScreen> {
                 ),
               ),
               state.payState != RequestState.loading
-                  ? InAppWebView(
-                      initialUrlRequest:
-                          URLRequest(url: Uri.parse(state.visaUrl!)),
-                      initialOptions: options,
-                      onWebViewCreated:
-                          (InAppWebViewController webViewController) {
-                        controllerGlobal = webViewController;
-                        // _controller.future.then((value) =>
-                        //     controllerGlobal = value);
-                        // _controller
-                        //     .complete(webViewController);
-                      },
-                      onReceivedServerTrustAuthRequest:
-                          (controller, challenge) async {
-                        controller.android.clearSslPreferences();
-                        if (kDebugMode) {
-                          print(challenge);
-                        }
-                        return ServerTrustAuthResponse(
-                            action: ServerTrustAuthResponseAction.PROCEED);
-                      },
-                      shouldOverrideUrlLoading:
-                          (controller, navigationAction) async {
-                        // Intercept the URL request and fetch the URL
+                  ? SafeArea(
+                      child: InAppWebView(
+                        initialUrlRequest:
+                            URLRequest(url: Uri.parse(state.visaUrl!)),
+                        initialOptions: options,
+                        onWebViewCreated:
+                            (InAppWebViewController webViewController) {
+                          controllerGlobal = webViewController;
+                          // _controller.future.then((value) =>
+                          //     controllerGlobal = value);
+                          // _controller
+                          //     .complete(webViewController);
+                        },
+                        onReceivedServerTrustAuthRequest:
+                            (controller, challenge) async {
+                          controller.android.clearSslPreferences();
+                          if (kDebugMode) {
+                            print(challenge);
+                          }
+                          return ServerTrustAuthResponse(
+                              action: ServerTrustAuthResponseAction.PROCEED);
+                        },
+                        shouldOverrideUrlLoading:
+                            (controller, navigationAction) async {
+                          // Intercept the URL request and fetch the URL
 
-                        if (navigationAction.request.url
-                            .toString()
-                            .contains(AppStrings.visaBaseUrl)) {
-                          log("get payment respoooo ${navigationAction.request.url}");
-                          await context.read<PaymentCubit>().getVisaResponse(
-                                context,
-                                path: navigationAction.request.url.toString(),
-                                myOrder: widget.myOrder,
-                              );
-                          return NavigationActionPolicy.CANCEL;
-                        }
+                          if (navigationAction.request.url
+                              .toString()
+                              .contains(AppStrings.visaBaseUrl)) {
+                            log("get payment respoooo ${navigationAction.request.url}");
+                            await context.read<PaymentCubit>().getVisaResponse(
+                                  context,
+                                  path: navigationAction.request.url.toString(),
+                                  myOrder: widget.myOrder,
+                                );
+                            return NavigationActionPolicy.CANCEL;
+                          }
 
-                        // Proceed with the URL request
-                        return NavigationActionPolicy.ALLOW;
-                      },
-                      onUpdateVisitedHistory:
-                          (controller, url, androidIsReload) async {
-                        // url.toString().contains(
-                        //     paymentProvider.thwateId)
-                        // if (url
-                        //     .toString()
-                        //     .contains(AppConstants.BASE_URL)) {
-                        //   await controllerGlobal.goBack();
-                        //   await paymentProvider.getPaymentResponse(
-                        //       path: url.toString(),
-                        //       callBack: callBack);
-                        // }
-                      },
-                      onLoadStart: (controller, url) async {
-                        //print(response);
-                      },
-                      onLoadStop: (controller, url) {
-                        if (url
-                            .toString()
-                            .contains("sandbox.payments.tap.company")) {
-                          //paymentProvider.onChangeLoad(true);
-                        }
-                      },
+                          // Proceed with the URL request
+                          return NavigationActionPolicy.ALLOW;
+                        },
+                        onUpdateVisitedHistory:
+                            (controller, url, androidIsReload) async {
+                          // url.toString().contains(
+                          //     paymentProvider.thwateId)
+                          // if (url
+                          //     .toString()
+                          //     .contains(AppConstants.BASE_URL)) {
+                          //   await controllerGlobal.goBack();
+                          //   await paymentProvider.getPaymentResponse(
+                          //       path: url.toString(),
+                          //       callBack: callBack);
+                          // }
+                        },
+                        onLoadStart: (controller, url) async {
+                          //print(response);
+                        },
+                        onLoadStop: (controller, url) {
+                          if (url
+                              .toString()
+                              .contains("sandbox.payments.tap.company")) {
+                            //paymentProvider.onChangeLoad(true);
+                          }
+                        },
+                      ),
                     )
                   : const ios.SizedBox.shrink(),
             ],

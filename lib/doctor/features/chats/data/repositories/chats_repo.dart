@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dr/doctor/features/chats/data/datasources/chats_ds.dart';
 import 'package:dr/doctor/features/chats/data/models/all_chat_model.dart';
+import 'package:dr/doctor/features/chats/data/models/conversations_model.dart';
 import 'package:dr/doctor/features/chats/data/models/message_model.dart';
 
 class ChatsRepo {
@@ -37,6 +38,13 @@ class ChatsRepo {
         },
       ),
     );
+    return response;
+  }
+
+  //?=======================[ GET ALL CONVERSATIONS ]===========================
+  Future<ConversationsModel> getAllConversations() async {
+    ConversationsModel response =
+        ConversationsModel.fromJson(await dataSource.getAllConversations());
     return response;
   }
 }

@@ -57,8 +57,7 @@ class PatientReportsImages extends StatelessWidget {
                             },
                             child: Card(
                               child: AppConstants.customNetworkImage(
-                                imagePath:
-                                    '${AppStrings.imageUrl}${report.repImage}',
+                                imagePath: '${report.repImage}',
                                 fit: BoxFit.cover,
                               ),
                             ),

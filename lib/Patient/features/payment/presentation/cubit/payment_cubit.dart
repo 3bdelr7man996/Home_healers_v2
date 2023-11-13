@@ -7,6 +7,7 @@ import 'package:dr/Patient/features/payment/data/models/visa_pay_model.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets/confirm_pay_dialog.dart';
 import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets/exit_payment_dialog.dart';
+import 'package:dr/Patient/features/payment/presentation/widgets/points_bott/earn_points_bottom_sheet.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_custom_exception.dart';
@@ -15,6 +16,7 @@ import 'package:dr/core/utils/toast_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 part 'payment_state.dart';
@@ -151,14 +153,14 @@ class PaymentCubit extends Cubit<PaymentState> {
 
       if (response.paySuccess == true) {
         await repository.confirmReservationStatus(myOrder: order);
+        if (context.mounted) {
+          AppConstants.pushRemoveNavigator(context,
+              screen: HomeScreenForPatient(
+                selectedIndex: 2,
+              ));
+        }
       }
 
-      if (context.mounted) {
-        AppConstants.pushRemoveNavigator(context,
-            screen: HomeScreenForPatient(
-              selectedIndex: 2,
-            ));
-      }
       if (context.mounted) {
         showCupertinoDialog(
           context: context,
@@ -189,6 +191,19 @@ class PaymentCubit extends Cubit<PaymentState> {
       emit(state.copyWith(payWalletState: RequestState.failed));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
+  }
+
+  //?==========================[ EARN NEW POINTS ]==============================
+  void showBottomSheetForEarnPoints(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (BuildContext context) {
+        return SheetForEarnMoney();
+      },
+    );
   }
 }
 

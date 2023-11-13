@@ -1,7 +1,6 @@
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,8 +36,7 @@ class ProfileImg extends StatelessWidget {
                       height: 150);
                 } else {
                   return AppConstants.customNetworkImage(
-                    imagePath:
-                        "${AppStrings.imageUrl}${state.advertiser?.image}",
+                    imagePath: "${state.advertiser?.image}",
                     imageError: AppImages.avatar,
                     width: 150,
                     height: 150,

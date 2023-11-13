@@ -1,15 +1,17 @@
+import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/notification/presentation/widgets/notification_widgets.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationScreen extends StatefulWidget {
-  var fromPatient;
+  final bool fromPatient;
   NotificationScreen({super.key, this.fromPatient = false});
 
   @override
@@ -88,8 +90,13 @@ class NotificationBody extends StatelessWidget {
               return Expanded(
                 child: Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("asset/images/notificationsEmpty.png"),
+                      //Image.asset("asset/images/notificationsEmpty.png"),
+                      AppConstants.customAssetSvg(
+                        imagePath: AppImages.emptyNotifications,
+                      ),
+                      10.ph,
                       Text("لا توجد إشعارات في الوقت الحالي")
                     ],
                   ),
