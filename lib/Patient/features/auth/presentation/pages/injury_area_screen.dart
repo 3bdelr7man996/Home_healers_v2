@@ -156,10 +156,12 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                                 checkedValues[item] = value!;
                               });
                             },
-                            title: Text(item),
-                            contentPadding: EdgeInsets.only(
-                                left:
-                                    30), // Set the contentPadding to a negative value to bring the text closer to the checkbox.
+                            title: Text(
+                              item,
+                              style: TextStyle(
+                                  fontSize: 14.0, fontWeight: FontWeight.w500),
+                            ),
+                            contentPadding: EdgeInsets.only(left: 35),
                           )).toList(),
                     ),
                   ),
