@@ -126,9 +126,15 @@ class SettingCubit extends Cubit<SettingState> {
   Future<void> changePassword(Function _toggleVisibility) async {
     try {
       fieldsValidation();
-      var body = {"password": "${state.newPasswordValue}"};
+      var body = {
+        "oldPassword": "${state.oldPasswordValue}",
+        "newPassword": "${state.newPasswordValue}"
+      };
       ChangePasswordModel response = await repository.changePassword(body);
       emit(state.copyWith(changePasswordData: response));
+      emit(state.copyWith(oldPasswordValue: ""));
+      emit(state.copyWith(newPasswordValue: ""));
+      emit(state.copyWith(confirmPasswordValue: ""));
       _toggleVisibility();
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -145,13 +151,14 @@ class SettingCubit extends Cubit<SettingState> {
     // if (password != state.oldPasswordValue) {
     //   throw ("كلمتك السر غير صحيحة");
     // }
-    if (state.newPasswordValue == null) {
+    if (state.newPasswordValue == null || state.newPasswordValue?.length == 0) {
       throw ("ادخل كلمة السر الجديدة");
     }
-    if (state.confirmPasswordValue == null) {
+    if (state.confirmPasswordValue == null ||
+        state.confirmPasswordValue?.length == 0) {
       throw ("أكد كلمة السر الجديدة");
     }
-    if (state.oldPasswordValue == null) {
+    if (state.oldPasswordValue == null || state.oldPasswordValue?.length == 0) {
       throw ("ادخل كلمة السر القديمة");
     }
     if (state.newPasswordValue != state.confirmPasswordValue) {
