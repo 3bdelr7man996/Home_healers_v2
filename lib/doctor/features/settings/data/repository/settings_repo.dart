@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
 import 'package:dr/doctor/features/settings/data/models/app_info_model.dart';
 import 'package:dr/doctor/features/settings/data/models/change_password_model.dart';
-import 'package:dr/doctor/features/settings/data/models/change_password_model.dart';
 import 'package:dr/doctor/features/settings/data/models/doctor_points_model.dart';
 import 'package:dr/doctor/features/settings/data/models/documents_model.dart';
+import 'package:dr/doctor/features/settings/data/models/status_model.dart';
 
 class SettingsRepo {
   final SettingsDs dataSource;
@@ -32,6 +32,13 @@ class SettingsRepo {
   Future<ChangePasswordModel> changePassword(body) async {
     ChangePasswordModel response =
         ChangePasswordModel.fromJson(await dataSource.changePassword(body));
+    return response;
+  }
+
+  Future<AdvertiseActiveModel> changeActiveStatus(
+      {required dynamic status}) async {
+    AdvertiseActiveModel response = AdvertiseActiveModel.fromJson(
+        await dataSource.changeActiveStatus(status: status));
     return response;
   }
 }

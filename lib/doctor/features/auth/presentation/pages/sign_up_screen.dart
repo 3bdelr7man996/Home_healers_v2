@@ -20,6 +20,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
+    context.read<AuthCubit>().initRegisterData();
     super.initState();
   }
 

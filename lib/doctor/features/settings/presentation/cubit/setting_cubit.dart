@@ -1,17 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/settings/data/models/app_info_model.dart';
 import 'package:dr/doctor/features/settings/data/models/change_password_model.dart';
 import 'package:dr/doctor/features/settings/data/models/doctor_points_model.dart';
+import 'package:dr/doctor/features/settings/data/models/status_model.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'setting_state.dart';
 
@@ -156,6 +156,34 @@ class SettingCubit extends Cubit<SettingState> {
     }
     if (state.newPasswordValue != state.confirmPasswordValue) {
       throw ("قم بمطابقة كلمة السر الجديدة مع تأكيد كلمة السر");
+    }
+  }
+
+  //?========================[ CHANGE ACTIVE STATUS ]===========================
+
+  Future<void> changeActiveStatus() async {
+    try {
+      AdvertiseActiveModel response = await repository.changeActiveStatus(
+          status: state.userActive ? "off" : "on");
+      if (response.success == true) {
+        emit(state.copyWith(userActive: response.data == "on"));
+        await CacheHelper.saveData(
+          key: AppStrings.isActive,
+          value: response.data == "on",
+        );
+      }
+    } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  void getActiveStatus() {
+    if (CacheHelper.dataSaved(key: AppStrings.isActive)) {
+      emit(state.copyWith(
+        userActive: CacheHelper.getData(key: AppStrings.isActive),
+      ));
+    } else {
+      changeActiveStatus();
     }
   }
 }

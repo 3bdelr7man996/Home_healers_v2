@@ -17,14 +17,12 @@ class FetchDataException extends AppException {
 
 class BadRequestException extends AppException {
   BadRequestException([ResponseFailure? message])
-      : super(message?.data?.descAr?.first ?? "",
-            "Invalid Request: ${message?.message} ");
+      : super('${message?.message}', "Invalid Request: ");
 }
 
 class UnauthorisedException extends AppException {
   UnauthorisedException([ResponseFailure? message])
-      : super(message?.data?.descAr?.first ?? "",
-            "Unauthorised  ${message?.message}");
+      : super(' ${message?.message}', "Unauthorised ");
 }
 
 class InvalidInputException extends AppException {
@@ -38,10 +36,10 @@ class ResponseFailure {
 
   ResponseFailure({this.success, this.message, this.data});
 
-  ResponseFailure.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    message = json['message'];
-    data = json['data'] != null ? ErrorData.fromJson(json['data']) : null;
+  ResponseFailure.fromJson(Map<String, dynamic>? json) {
+    success = json?['success'];
+    message = json?['message'];
+    data = json?['data'] != null ? ErrorData.fromJson(json?['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -56,12 +54,12 @@ class ResponseFailure {
 }
 
 class ErrorData {
-  List<String>? descAr;
+  List<String?>? descAr;
 
   ErrorData({this.descAr});
 
-  ErrorData.fromJson(Map<String, dynamic> json) {
-    descAr = json['desc_ar'].cast<String>();
+  ErrorData.fromJson(Map<String, dynamic>? json) {
+    descAr = json?['desc_ar'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -69,4 +67,68 @@ class ErrorData {
     data['desc_ar'] = descAr;
     return data;
   }
+}
+
+class ValidationErrorModel {
+  List<Errors>? errors;
+
+  ValidationErrorModel({this.errors});
+
+  ValidationErrorModel.fromJson(Map<String, dynamic>? json) {
+    if (json?['errors'] != null) {
+      errors = <Errors>[];
+      json?['errors'].forEach((v) {
+        errors!.add(new Errors.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.errors != null) {
+      data['errors'] = this.errors!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Errors {
+  String? code;
+  String? message;
+
+  Errors({this.code, this.message});
+
+  Errors.fromJson(Map<String, dynamic>? json) {
+    code = json?['code'];
+    message = json?['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['message'] = this.message;
+    return data;
+  }
+}
+
+ResponseFailure handleError(dynamic response) {
+  var error;
+  List<Errors> errors = [Errors(code: "", message: "")];
+
+  if (response['message'] != null) {
+    error = ResponseFailure.fromJson(response);
+  } else if (response['errors'] != null) {
+    errors = ValidationErrorModel.fromJson(response).errors ??
+        [Errors(code: "", message: "")];
+    error = ResponseFailure(
+      success: false,
+      message: errors.first.message,
+    );
+  } else {
+    error = ResponseFailure(
+      success: false,
+      message: "",
+    );
+  }
+  return error;
 }

@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
-import 'package:dr/Patient/features/setting/presentation/pages/my_wallet_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/settings_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -20,6 +21,7 @@ import 'package:dr/shared_widgets/html_body.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -140,9 +142,19 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                         AppConstants.launchURL("https://home-healers.com"),
                   ),
                   15.ph,
-                  const OneOptionForPatient(
+                  OneOptionForPatient(
                     iconPath: "assets/icons/share_setting_icon.svg",
                     title: "مشاركة التطبيق",
+                    onPressed: () async {
+                      await FlutterShare.share(
+                        title: 'Home Healers',
+                        text:
+                            'خدمات العلاج الطبيعي المنزلي والذي يساعدك على تحسين حالتك الصحية والجسدية',
+                        linkUrl: Platform.isIOS
+                            ? "https://rb.gy/nzkpxe"
+                            : "https://rb.gy/quhcf4", //todo ios link
+                      );
+                    },
                   ),
                   15.ph,
                   const OneOptionForPatient(

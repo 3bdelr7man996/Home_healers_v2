@@ -44,7 +44,10 @@ class OneOptionForPatient extends StatelessWidget {
           ),
           IconButton(
             onPressed: onPressed,
-            icon: const Icon(Icons.arrow_back_ios_new),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),

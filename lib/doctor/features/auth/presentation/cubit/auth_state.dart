@@ -98,7 +98,7 @@ class AuthState extends Equatable {
         status
       ];
   AuthState copyWith({
-    Advertiser? advertiser,
+    Advertiser? Function()? advertiser,
     String? email,
     String? firstName,
     areasList,
@@ -131,7 +131,7 @@ class AuthState extends Equatable {
     RequestState? citiesState,
   }) =>
       AuthState(
-        advertiser: advertiser ?? this.advertiser,
+        advertiser: advertiser != null ? advertiser() : this.advertiser,
         email: email ?? this.email,
         advertiseDocuments: advertiseDocuments ?? this.advertiseDocuments,
         firstName: firstName ?? this.firstName,

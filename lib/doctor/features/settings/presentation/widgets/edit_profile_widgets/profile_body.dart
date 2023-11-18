@@ -88,14 +88,23 @@ class ProfileBody extends StatelessWidget {
                       title: "city".tr(),
                     ),
                     30.ph,
-                    TiteldTextFormField(
-                      //todo
-                      title: "identification_number_residence".tr(),
-                      keyboardType: TextInputType.number,
-                      validate: true,
-                      validateMsg: "required".tr(),
-                      onChanged: (p0) =>
-                          context.read<AuthCubit>().onIdentificationChange(p0),
+                    BlocBuilder<AuthCubit, AuthState>(
+                      buildWhen: (previous, current) =>
+                          previous.identification != current.identification ||
+                          previous.advertiser != current.advertiser,
+                      builder: (context, state) {
+                        return TiteldTextFormField(
+                          //todo
+                          title: "identification_number_residence".tr(),
+                          initialValue: state.advertiser?.nationalId,
+                          keyboardType: TextInputType.number,
+                          validate: true,
+                          validateMsg: "required".tr(),
+                          onChanged: (p0) => context
+                              .read<AuthCubit>()
+                              .onIdentificationChange(p0),
+                        );
+                      },
                     ),
                     30.ph,
                     BlocBuilder<AuthCubit, AuthState>(

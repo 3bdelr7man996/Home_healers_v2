@@ -1,5 +1,6 @@
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -59,7 +60,7 @@ class ContactUsScreen extends StatelessWidget {
                 ),
                 10.pw,
                 SocialIcon(
-                  imagePath: "assets/icons/twitter_icon.svg",
+                  imagePath: AppImages.xicon,
                   socialUrl: appInfo?.tw ?? "",
                 )
               ],

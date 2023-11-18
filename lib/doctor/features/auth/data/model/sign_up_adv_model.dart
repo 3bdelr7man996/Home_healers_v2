@@ -25,6 +25,8 @@ class User {
     required this.mobile,
     required this.token,
     required this.advertiser,
+    required this.message,
+    required this.activationCode,
   });
   late final int id;
   late final String? name;
@@ -32,6 +34,8 @@ class User {
   late final String? mobile;
   late final String? token;
   late final Advertiser? advertiser;
+  late final String? message;
+  late final String? activationCode;
 
   User.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -40,6 +44,8 @@ class User {
     mobile = json?['mobile'];
     token = json?['token'];
     advertiser = Advertiser.fromJson(json?['advertiser']);
+    message = json?['message'];
+    activationCode = json?['activation_code'];
   }
 
   Map<String, dynamic> toJson() {

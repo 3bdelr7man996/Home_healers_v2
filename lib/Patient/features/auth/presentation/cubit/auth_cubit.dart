@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -100,6 +101,8 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
         "birthday": "${formattedDate}",
         "country_code": "${state.country_code}",
         "region": "${state.address}",
+        "fcm_token":
+            await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       };
 
       emit(state.copyWith(registerState: RequestState.loading));

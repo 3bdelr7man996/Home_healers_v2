@@ -261,6 +261,7 @@ class AuthCubit extends Cubit<AuthState> {
         "address_en": "${state.address}",
         "password": "${state.password}",
         "c_password": "${state.confPassword}",
+        "national_id": "${state.identification}",
         "fcm_token":
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ??
                 "", //todo
@@ -362,6 +363,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   void initRegisterData() {
     emit(state.copyWith(
+      advertiser: () => null,
       email: "",
       address: "",
       confPassword: "",
@@ -388,13 +390,14 @@ class AuthCubit extends Cubit<AuthState> {
   void initProfileData() {
     Advertiser advertiser = getAdvertiserInfo();
     emit(state.copyWith(
-      advertiser: advertiser,
+      advertiser: () => advertiser,
       email: advertiser.email,
       address: advertiser.addressAr,
       firstName: advertiser.firstnameAr,
       lastName: advertiser.lastnameAr,
       gender: advertiser.gender,
       iban: advertiser.iban,
+      identification: advertiser.nationalId,
       location: () => Location(
           lat: double.parse(advertiser.lat ?? "0"),
           lng: double.parse(advertiser.lng ?? "0")),
@@ -408,8 +411,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   //?============================[ UPDATE PROFILE ]===========================
   ///Register new advertiser
-  onStatusChange(bool value) =>
-      emit(state.copyWith(status: value ? "on" : "off"));
+
   Future<void> updateProfile() async {
     try {
       fieldsValidation(false);
@@ -433,6 +435,7 @@ class AuthCubit extends Cubit<AuthState> {
         "address_ar": "${state.address}",
         "address_en": "${state.address}",
         "status": "${state.status}",
+        "national_id": "${state.identification}",
         "fcm_token":
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? "",
       };

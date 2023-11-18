@@ -188,28 +188,14 @@ class ApiBaseHelper {
         return responseJson;
       case 400:
         var responseJson = json.decode(response.body.toString());
-        if (responseJson['message'] != null) {
-          error = ResponseFailure.fromJson(responseJson);
-        } else {
-          error = ResponseFailure(
-              success: false,
-              message: response.body.toString(),
-              data: ErrorData(descAr: []));
-        }
+        error = handleError(responseJson);
         logger.i("RESPONSE[${response.statusCode}] => DATA: ${response.body}");
         throw BadRequestException(error);
       case 401:
       case 403:
       case 422:
         var responseJson = json.decode(response.body.toString());
-        if (responseJson['message'] != null) {
-          error = ResponseFailure.fromJson(responseJson);
-        } else {
-          error = ResponseFailure(
-              success: false,
-              message: response.body.toString(),
-              data: ErrorData(descAr: []));
-        }
+        error = handleError(responseJson);
         logger.i(
             "REQUEST[$request] => PATH: $url RESPONSE[${response.statusCode}] => DATA: ${response.body}");
         throw UnauthorisedException(error);

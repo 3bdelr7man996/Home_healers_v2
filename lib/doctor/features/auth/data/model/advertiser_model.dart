@@ -28,6 +28,7 @@ class Advertiser {
     this.endat,
     this.sessionPrice,
     this.sessionDur,
+    this.nationalId,
     this.lat,
     this.lng,
     this.status,
@@ -57,6 +58,7 @@ class Advertiser {
   late final String? addressEn;
   late final String? gender;
   late final String? iban;
+  late final String? nationalId;
   late final String? location;
   late final int? bundleId;
   late final int? countryId;
@@ -97,6 +99,7 @@ class Advertiser {
     addressEn = json?["address_en"];
     gender = json?['gender'];
     iban = json?['iban'];
+    nationalId = json?['national_id'];
     location = json?["location"];
     bundleId = json?["bundle_id"];
     countryId = json?['country_id'];
@@ -150,6 +153,7 @@ class Advertiser {
     data['address_en'] = addressEn;
     data['gender'] = gender;
     data['iban'] = iban;
+    data['national_id'] = nationalId;
     data['location'] = location;
     data['bundle_id'] = bundleId;
     data['country_id'] = countryId;

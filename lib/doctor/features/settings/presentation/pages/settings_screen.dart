@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/home/presentation/pages/all_requests.dart';
+import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/certificates_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
@@ -16,6 +20,7 @@ import 'package:dr/doctor/features/settings/presentation/widgets/settings_widget
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -26,6 +31,13 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  @override
+  void initState() {
+    context.read<SettingCubit>().getActiveStatus();
+    context.read<AuthCubit>().initProfileData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -96,6 +108,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     iconPath: AppImages.settingShare,
                     title: "share_app".tr(),
+                    onPressed: () async {
+                      await FlutterShare.share(
+                        title: 'Home Healers',
+                        text:
+                            'خدمات العلاج الطبيعي المنزلي والذي يساعدك على تحسين حالتك الصحية والجسدية',
+                        linkUrl: Platform.isIOS
+                            ? "https://rb.gy/nzkpxe"
+                            : "https://rb.gy/quhcf4", //todo ios link
+                      );
+                    },
                   ),
                   15.ph,
                   OneOption(

@@ -24,6 +24,7 @@ class AppStrings {
   static String sendMessage = "/api/chat/send";
   static String allMessages = "/api/chat/retrieve";
   static String allConversations = "/api/chatStatus";
+  static String activeStatus = "/api/advertiser/updateStatus";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";
@@ -47,6 +48,7 @@ class AppStrings {
   static String userMobile = "USER_MOBILE";
   static String userInfo = "USER_INFO";
   static String isAdvertise = "IS_ADVERTISE";
+  static String isActive = "USER_ACTIVE";
 
   //APP CONFIGIRATION
   static String PUSHER_APP_ID = '1692670';

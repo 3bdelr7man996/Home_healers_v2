@@ -1,28 +1,15 @@
 import 'dart:developer';
 
 import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Personalinfo extends StatefulWidget {
+class Personalinfo extends StatelessWidget {
   Personalinfo({Key? key}) : super(key: key);
-
-  @override
-  State<Personalinfo> createState() => _PersonalinfoState();
-}
-
-class _PersonalinfoState extends State<Personalinfo> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    context.read<AuthCubit>().initProfileData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +20,7 @@ class _PersonalinfoState extends State<Personalinfo> {
           "personal_info".tr(),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        BlocBuilder<AuthCubit, AuthState>(
+        BlocBuilder<SettingCubit, SettingState>(
           builder: (context, state) {
             return Column(
               children: [
@@ -41,7 +28,7 @@ class _PersonalinfoState extends State<Personalinfo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      state.status == "on" ? "نشط الآن" : "غير نشط",
+                      state.userActive ? "نشط الآن" : "غير نشط",
                       style: const TextStyle(fontWeight: FontWeight.w500),
                     ),
                     Switch(
@@ -49,10 +36,9 @@ class _PersonalinfoState extends State<Personalinfo> {
                       inactiveTrackColor:
                           const Color.fromARGB(174, 244, 67, 54),
                       activeColor: Colors.green,
-                      value: state.status == "on" ? true : false,
+                      value: state.userActive,
                       onChanged: (value) async {
-                        await context.read<AuthCubit>().onStatusChange(value);
-                        await context.read<AuthCubit>().updateProfile();
+                        context.read<SettingCubit>().changeActiveStatus();
                       },
                     ),
                   ],
@@ -114,7 +100,7 @@ class OneOption extends StatelessWidget {
             onPressed: onPressed,
             icon: const Icon(
               Icons.arrow_back_ios_new,
-              color: AppColors.textGrey,
+              color: Colors.grey,
             ),
           ),
           //const Icon(Icons.arrow_back_ios_new)

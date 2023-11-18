@@ -39,4 +39,12 @@ class SettingsDs {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>?> changeActiveStatus({required status}) async {
+    Map<String, dynamic>? response =
+        await apiHelper.post(AppStrings.activeStatus, body: {
+      "status": status,
+    });
+    return response;
+  }
 }

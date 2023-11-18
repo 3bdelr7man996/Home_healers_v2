@@ -29,6 +29,7 @@ class AppImages {
   static String chatVideo = 'assets/icons/chat_video_icon.svg';
   static String mikeIcon = 'assets/icons/mike_icon.svg';
   static String emptyNotifications = "assets/icons/no_notifications.svg";
+  static String xicon = "assets/icons/xicon.svg";
 
   // ignore: non_constant_identifier_names
   static String sports_muscle_injuries_icon =

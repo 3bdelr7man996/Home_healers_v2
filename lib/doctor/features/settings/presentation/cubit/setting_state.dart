@@ -1,21 +1,23 @@
 part of 'setting_cubit.dart';
 
 class SettingState extends Equatable {
-  const SettingState(
-      {this.changePasswordData,
-      this.docFile,
-      this.pushStatus = RequestState.initial,
-      this.myDocuments,
-      this.pullStatus = RequestState.initial,
-      this.appInfo,
-      this.pointsData,
-      this.pointState = RequestState.initial,
-      this.showOldPassword = false,
-      this.showNewPassword = false,
-      this.showConfirmPassword = false,
-      this.oldPasswordValue,
-      this.newPasswordValue,
-      this.confirmPasswordValue});
+  const SettingState({
+    this.changePasswordData,
+    this.docFile,
+    this.pushStatus = RequestState.initial,
+    this.myDocuments,
+    this.pullStatus = RequestState.initial,
+    this.appInfo,
+    this.pointsData,
+    this.pointState = RequestState.initial,
+    this.showOldPassword = false,
+    this.showNewPassword = false,
+    this.showConfirmPassword = false,
+    this.oldPasswordValue,
+    this.newPasswordValue,
+    this.confirmPasswordValue,
+    this.userActive = false,
+  });
 
   final List<File>? docFile;
   final RequestState pushStatus;
@@ -31,6 +33,7 @@ class SettingState extends Equatable {
   final String? oldPasswordValue;
   final String? newPasswordValue;
   final String? confirmPasswordValue;
+  final bool userActive;
 
   @override
   List<Object?> get props => [
@@ -47,7 +50,8 @@ class SettingState extends Equatable {
         showConfirmPassword,
         oldPasswordValue,
         newPasswordValue,
-        confirmPasswordValue
+        confirmPasswordValue,
+        userActive,
       ];
   SettingState copyWith({
     List<File>? docFile,
@@ -64,6 +68,7 @@ class SettingState extends Equatable {
     String? oldPasswordValue,
     String? newPasswordValue,
     String? confirmPasswordValue,
+    bool? userActive,
   }) =>
       SettingState(
         docFile: docFile ?? this.docFile,
@@ -80,5 +85,6 @@ class SettingState extends Equatable {
         oldPasswordValue: oldPasswordValue ?? this.oldPasswordValue,
         newPasswordValue: newPasswordValue ?? this.newPasswordValue,
         confirmPasswordValue: confirmPasswordValue ?? this.confirmPasswordValue,
+        userActive: userActive ?? this.userActive,
       );
 }
