@@ -54,9 +54,13 @@ class LocationInput extends StatelessWidget {
 
                           control.text = result.formattedAddress ?? "";
                         }
-                        Navigator.of(context).pop();
+                        Future.delayed(
+                          Duration(seconds: 1),
+                          () => Navigator.of(context).pop(),
+                        );
                       },
                       location: state.location,
+                      origin: state.location,
                       currentLatLng: LatLng(
                           state.location?.lat ?? 24.70281458492638,
                           state.location?.lng ?? 46.704172412998915),

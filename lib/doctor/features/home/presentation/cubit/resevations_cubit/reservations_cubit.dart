@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -34,14 +32,15 @@ class ReservationsCubit extends Cubit<ReservationsState> {
   //?========================[ GET RESERVATION DETAILS ]========================
 
   List<ReservationData>? reservationsList = [];
-  Future<void> getReservations({required int? statusId}) async {
+  Future<void> getReservations({required int statusId}) async {
     try {
       emit(state.copyWith(
         reservationState: RequestState.loading,
         filterState: RequestState.loading,
       ));
       reservationsList = [];
-      reservationsList = await repository.getReservationDetails();
+      reservationsList =
+          await repository.getStatusReservations(statusId: statusId);
       if (reservationsList != null && reservationsList!.isNotEmpty) {
         filtredList = reservationsList?.where((reservation) {
           return (reservation.statusId == statusId &&
@@ -107,25 +106,25 @@ class ReservationsCubit extends Cubit<ReservationsState> {
 
       //!====================== DELETE WHEN HANDLED BY BKND ========================
       //?============ THIS SECTION TO UPDATE ALL SUB RESERVATIONS ===================
-      if (subReservation) {
-        List<ReservationData>? subReservations = [];
-        // state.filteredReservList
-        //     ?.where((e) => reservation.id == e.parentId)
-        //     .toList();
-        for (int i = 0; i < state.filteredReservList!.length; i++) {
-          if (state.filteredReservList![i].parentId == reservation.id) {
-            subReservations.add(state.filteredReservList![i]);
-          }
-        }
-        log("sub reservation list $subReservations");
-        for (int i = 0; i < subReservations.length; i++) {
-          await repository.updateResevation(
-              body: subReservations[i]
-                  .copyWith(status: reservation.status)
-                  .toData());
-        }
-      }
-      await getReservations(statusId: state.painStatusId);
+      // if (subReservation) {
+      //   List<ReservationData>? subReservations = [];
+      //   // state.filteredReservList
+      //   //     ?.where((e) => reservation.id == e.parentId)
+      //   //     .toList();
+      //   for (int i = 0; i < state.filteredReservList!.length; i++) {
+      //     if (state.filteredReservList![i].parentId == reservation.id) {
+      //       subReservations.add(state.filteredReservList![i]);
+      //     }
+      //   }
+      //   log("sub reservation list $subReservations");
+      //   for (int i = 0; i < subReservations.length; i++) {
+      //     await repository.updateResevation(
+      //         body: subReservations[i]
+      //             .copyWith(status: reservation.status)
+      //             .toData());
+      //   }
+      // }
+      await getReservations(statusId: state.painStatusId!);
       // onSelectedTab(selectedTap)
       // filterReservation(
       //     statusId: state.painStatusId, tabValue: ResevationStep.wait_confirm);

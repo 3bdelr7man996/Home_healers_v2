@@ -32,8 +32,8 @@ class RequestsDetailsHeader extends StatelessWidget {
         20.ph,
         const PatientDetailsSection(),
         20.ph,
-        const Text(
-          "نوع الإصابة : قدم", //todo
+        Text(
+          "نوع الإصابة : ${context.read<ReservationsCubit>().state.reservation?.painPlace ?? ''}", //todo
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
         10.ph,

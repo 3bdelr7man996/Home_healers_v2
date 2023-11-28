@@ -679,18 +679,19 @@ class OneSessionInfoForPatient extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: Center(
-                    child: Text(
-                      ' ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(date))}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
+                if (date != null)
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Center(
+                      child: Text(
+                        ' ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(date))}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

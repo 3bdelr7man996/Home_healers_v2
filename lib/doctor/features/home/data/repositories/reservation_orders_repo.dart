@@ -12,16 +12,20 @@ class ReservationOrdersRepo {
     List<ReservationStatus> reservList = [];
     if (response?['success'] == true) {
       for (int i = 0; i < response?['data'].length; i++) {
-        reservList.add(
-          ReservationStatus.fromJson(response?['data'][i]),
-        );
+        if (response?['data'][i]["status"] != null) {
+          reservList.add(
+            ReservationStatus.fromJson(response?['data'][i]),
+          );
+        }
       }
     }
     return reservList;
   }
 
-  Future<List<ReservationData>>? getReservationDetails() async {
-    Map<String, dynamic>? response = await dataSource.getReservationDetails();
+  Future<List<ReservationData>>? getStatusReservations(
+      {required int statusId}) async {
+    Map<String, dynamic>? response =
+        await dataSource.getStatusReservations(statusId: statusId);
     List<ReservationData> reservList = [];
     if (response?['success'] == true && response?['data'] != null) {
       for (int i = 0; i < response!['data']!.length; i++) {

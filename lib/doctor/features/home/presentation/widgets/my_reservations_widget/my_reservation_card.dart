@@ -22,7 +22,7 @@ class MyReservationCard extends StatelessWidget {
           CardHeader(reservation: reservation),
           const Divider(thickness: 1),
           PatientInfo(reservation: reservation),
-          const Text("نوع الإصابة : قدم", //todo
+          Text("نوع الإصابة : ${reservation?.painPlace ?? ''}", //todo
               style: TextStyle(fontWeight: FontWeight.w500)),
           10.ph,
           SessionsCount(reservation: reservation),

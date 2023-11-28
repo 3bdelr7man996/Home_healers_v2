@@ -2,6 +2,7 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -37,12 +38,12 @@ class RequestCard extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              height: 100,
-              width: 100,
-              child: AppConstants.customAssetSvg(
-                imagePath: pathImage,
-                fit: BoxFit.none,
-              ),
+              height: 80,
+              width: 80,
+              child: AppConstants.customNetworkImage(
+                  imagePath: pathImage,
+                  fit: BoxFit.none,
+                  imageError: detectStatusImg(title)),
             ),
             20.pw,
             Expanded(
@@ -67,5 +68,33 @@ class RequestCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String detectStatusImg(String statusName) {
+    String imgPath = AppImages.sts_muscle_pain;
+    switch (statusName) {
+      case "Musculoskeletal pains" || "آلام العضلات والمفاصل":
+        imgPath = AppImages.sts_muscle_pain;
+        break;
+      case "Sport Injuries" || "الاصابات الرياضية":
+        imgPath = AppImages.sts_sports_injur;
+        break;
+      case "Post-op rehabilitation" || "التأهيل بعد العمليات الجراحية":
+        imgPath = AppImages.sts_Post_rehab;
+        break;
+      case "Pediatric rehabilitation" || "تأهيل الأطفال":
+        imgPath = AppImages.sts_rehab_child;
+        break;
+      case "Cardiopulmonary rehabilitation" || "التأهيل القلبي الرئوي":
+        imgPath = AppImages.sts_card_rehab;
+        break;
+      case "Neurological Injuries" || "اصابات الجهاز العصبي":
+        imgPath = AppImages.sts_nervous_injur;
+        break;
+      case "Women Health" || "مشاكل صحة المرأة":
+        imgPath = AppImages.sts_women_health;
+        break;
+    }
+    return imgPath;
   }
 }

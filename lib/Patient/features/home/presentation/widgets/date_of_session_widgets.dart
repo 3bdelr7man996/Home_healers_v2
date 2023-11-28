@@ -6,7 +6,6 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
-import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -149,7 +148,10 @@ class LocationInput extends StatelessWidget {
                               );
                           control.text = result.formattedAddress ?? "";
                         }
-                        Navigator.of(context).pop();
+                        Future.delayed(
+                          Duration(seconds: 1),
+                          () => Navigator.of(context).pop(),
+                        );
                       },
                       location: state.location,
                       currentLatLng: LatLng(

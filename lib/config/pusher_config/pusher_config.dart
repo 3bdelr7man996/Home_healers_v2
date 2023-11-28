@@ -5,6 +5,8 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 class PusherConfiguration {
   final PusherChannelsFlutter pusher;
+  // static PusherChannel? chatChannel;
+
   PusherConfiguration({required this.pusher}) {
     initPusher();
   }
@@ -24,11 +26,31 @@ class PusherConfiguration {
         onMemberAdded: onMemberAdded,
         onMemberRemoved: onMemberRemoved,
         onSubscriptionCount: onSubscriptionCount,
+        // authEndpoint: "${AppStrings.divUrl}/chat/auth",
+        // authParams: {
+        //   "headers": {
+        //     'Authorization': 'Bearer ${CacheHelper.getData(
+        //       key: AppStrings.userToken,
+        //     )}'
+        //   }
+        // },
       );
     } catch (e) {
       log("PUSHER Exception $e");
     }
   }
+
+  // static Future<void> triggerEvent(
+  //     {required String userId, required String msg}) async {
+  //   await chatChannel?.trigger(PusherEvent(
+  //       userId: userId,
+  //       channelName: "chat.",
+  //       eventName: "ChatMessageSent",
+  //       data: {
+  //         "id": userId,
+  //         "msg": msg,
+  //       }));
+  // }
 
   void onConnectionStateChange(dynamic currentState, dynamic previousState) {
     log("Connection: $currentState");
@@ -40,11 +62,13 @@ class PusherConfiguration {
 
   void onEvent(PusherEvent event) {
     log("onEvent: $event");
+    log("channel name ${event.channelName}");
+    log("event name ${event.eventName}");
   }
 
   void onSubscriptionSucceeded(String channelName, dynamic data) {
     log("onSubscriptionSucceeded: $channelName data: $data");
-    final me = pusher.getChannel(channelName)?.me;
+    final me = pusher.getChannel(channelName)?.members;
     log("Me: $me");
   }
 

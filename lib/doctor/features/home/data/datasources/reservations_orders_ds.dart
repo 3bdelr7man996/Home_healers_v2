@@ -12,9 +12,12 @@ class ReservationOrdersDS {
     return response;
   }
 
-  Future<Map<String, dynamic>?> getReservationDetails() async {
+  Future<Map<String, dynamic>?> getStatusReservations(
+      {required int statusId}) async {
     Map<String, dynamic>? response =
-        await apiHelper.get(AppStrings.reservationDetails);
+        await apiHelper.get(AppStrings.statusReservations, queryParameters: {
+      'status_id': '$statusId',
+    });
     return response;
   }
 

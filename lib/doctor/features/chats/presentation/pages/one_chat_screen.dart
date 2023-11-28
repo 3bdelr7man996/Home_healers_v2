@@ -1,5 +1,4 @@
 import 'package:dr/config/pusher_config/pusher_config.dart';
-import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/chat_widgets/chat_appbar.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dr/di_container.dart' as di;
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 class OneChatScreen extends StatefulWidget {
   const OneChatScreen(
@@ -25,20 +25,20 @@ class OneChatScreen extends StatefulWidget {
 
 class _OneChatScreenState extends State<OneChatScreen> {
   ScrollController _scrollController = ScrollController();
-
+  PusherChannel? myChannel;
   @override
   void initState() {
     context.read<ChatsCubit>().initChatData(
           context,
           recieverInfo: widget.recieverInfo,
         );
-    context.read<ChatsCubit>().getAllMessage().then((value) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-      });
-    });
-    di.sl<PusherConfiguration>().pusher.subscribe(channelName: '');
-    di.sl<PusherConfiguration>().pusher.connect();
+    context.read<ChatsCubit>().getAllMessage();
+    //.then((value) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    // });
+    // });
+    context.read<ChatsCubit>().subscribeChannel();
     super.initState();
   }
 
@@ -56,8 +56,8 @@ class _OneChatScreenState extends State<OneChatScreen> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 244, 243, 243),
         appBar: AppBarForChat(context, fromPatient: widget.fromPatient),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: SenderMessageSection(),
+        //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: SenderMessageSection(),
         body: BlocBuilder<ChatsCubit, ChatsState>(
           builder: (context, state) {
             if (state.getMsgState == RequestState.loading) {
@@ -65,9 +65,11 @@ class _OneChatScreenState extends State<OneChatScreen> {
             } else if (state.getMsgState == RequestState.success &&
                 state.messagesList!.isNotEmpty) {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: ListView.builder(
+                      reverse: true,
                       dragStartBehavior: DragStartBehavior.down,
                       controller: _scrollController,
                       padding: EdgeInsets.all(8.0),
@@ -88,7 +90,7 @@ class _OneChatScreenState extends State<OneChatScreen> {
                       },
                     ),
                   ),
-                  80.ph,
+                  SenderMessageSection(),
                 ],
               );
             } else {

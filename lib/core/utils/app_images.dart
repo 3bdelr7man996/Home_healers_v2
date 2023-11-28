@@ -9,6 +9,15 @@ class AppImages {
   static String pointsPurchase = 'assets/images/purchases.png';
   static String pointsClothes = 'assets/images/clothes.png';
   static String pointsDonaites = 'assets/images/Donations.png';
+  static String sts_rehab_child = "assets/images/rehabilitation_children.png";
+  static String sts_muscle_pain = "assets/images/muscle_pain.png";
+  static String sts_sports_injur = "assets/images/sports_injuries.png";
+  static String sts_nervous_injur = "assets/images/nervous_injuries.png";
+  static String sts_card_rehab =
+      "assets/images/cardiopulmonary_rehabilitation.png";
+  static String sts_Post_rehab =
+      "assets/images/Post_operative_rehabilitation.png";
+  static String sts_women_health = "assets/images/women_health.png";
 
   //icons
   static String iconPath = "assets/icons/";

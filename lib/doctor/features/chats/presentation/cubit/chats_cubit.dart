@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/config/pusher_config/pusher_config.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -14,6 +15,7 @@ import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dr/di_container.dart' as di;
 
 part 'chats_state.dart';
 
@@ -28,6 +30,7 @@ class ChatsCubit extends Cubit<ChatsState> {
   TextEditingController? msgFieldController = TextEditingController();
   int? userId;
   int? advId;
+  int? recieverId;
   String? senderType;
   String? recieverType;
   String? recieverImg;
@@ -41,6 +44,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     if (CacheHelper.getData(key: AppStrings.isAdvertise)) {
       advId = context.read<AuthCubit>().getAdvertiserInfo().id;
       userId = recieverInfo.id;
+      recieverId = recieverInfo.id;
       senderType = 'Advertiser';
       recieverType = 'User';
       recieverImg = recieverInfo.image;
@@ -48,6 +52,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     } else {
       advId = recieverInfo.advertiser?.id;
       userId = context.read<AuthCubitForPatient>().getUserInfo().id;
+      recieverId = recieverInfo.advertiser?.id;
       senderType = 'User';
       recieverType = 'Advertiser';
       recieverImg = recieverInfo.advertiser?.image;
@@ -69,19 +74,29 @@ class ChatsCubit extends Cubit<ChatsState> {
         "content": "${state.content}",
         "sender_type": senderType!,
         "receiver_type": recieverType!,
+        "reciver_id": "$recieverId"
       };
       Messages response = await chatsRepo.sendMessage(
         body: body,
       );
       myMessages.add(response);
-      //print(response);
+
       emit(state.copyWith(
         sendMsgState: RequestState.success,
         content: '',
-        messagesList: myMessages,
+        messagesList: myMessages.reversed.toList(),
       ));
 
       msgFieldController?.clear();
+      // await di.sl<PusherConfiguration>().pusher.trigger(PusherEvent(
+      //         userId: "$userId",
+      //         channelName: "chat.$userId",
+      //         eventName: "ChatMessageSent",
+      //         data: {
+      //           "id": "$userId",
+      //           "msg": state.content,
+      //         }));
+      print(response);
     } catch (e) {
       log("send up error $e");
       emit(state.copyWith(sendMsgState: RequestState.failed));
@@ -108,7 +123,7 @@ class ChatsCubit extends Cubit<ChatsState> {
       myMessages.addAll(response.messages?.toList() ?? []);
       emit(state.copyWith(
         getMsgState: RequestState.success,
-        messagesList: myMessages,
+        messagesList: myMessages.reversed.toList(),
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -151,5 +166,24 @@ class ChatsCubit extends Cubit<ChatsState> {
     } else {
       emit(state.copyWith(conversationsList: conversationsList));
     }
+  }
+
+  //?=====================[ SUBSCRIBE IN PUSHER CHANNEL ]=======================
+  Future<void> subscribeChannel() async {
+    await di.sl<PusherConfiguration>().pusher.subscribe(
+        channelName: 'chat.$recieverId',
+        onSubscriptionSucceeded: (channelName) {
+          print("Subscribed to $channelName  success --------------");
+        },
+        onMemberAdded: (member) {
+          print("Member added: $member");
+        },
+        onMemberRemoved: (member) {
+          print("Member removed: $member");
+        },
+        onEvent: (event) {
+          print("Got channel event: $event");
+        });
+    await di.sl<PusherConfiguration>().pusher.connect();
   }
 }

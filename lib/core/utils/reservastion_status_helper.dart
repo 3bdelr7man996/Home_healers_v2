@@ -20,7 +20,7 @@ ModleStatus statusText({required String status}) {
   } else if (status == 'completed') {
     modleStatus = ModleStatus('مكتمل', Colors.lightBlue.shade200);
   } else if (status == 'canceled') {
-    modleStatus = ModleStatus('الغاء', Colors.redAccent.shade200);
+    modleStatus = ModleStatus('ملغي', Colors.redAccent.shade200);
   }
   return modleStatus;
 }

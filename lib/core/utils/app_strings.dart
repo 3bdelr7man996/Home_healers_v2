@@ -11,7 +11,8 @@ class AppStrings {
   static String advStatus = "/api/status";
   static String advAllCities = "/api/Cities_Areas";
   static String resOrdersStatus = "/api/reservaionGetStatus";
-  static String reservationDetails = "/api/advertiser/reservations";
+  static String allReservations = "/api/advertiser/reservations";
+  static String statusReservations = "/api/reservaionGet";
   static String advUpdateReservation = "/api/advertiser/updateReservation";
   static String addDiagnoseReport = "/api/advertiser/addDiagnose";
   static String diagnoseSections = "/api/diagnose_form";
@@ -51,10 +52,10 @@ class AppStrings {
   static String isActive = "USER_ACTIVE";
 
   //APP CONFIGIRATION
-  static String PUSHER_APP_ID = '1692670';
-  static String PUSHER_APP_KEY = 'ec213d5069ce93fd3e9e';
-  static String PUSHER_APP_SECRET = 'a5c3beb9c925fbcfaa3d';
-  static String PUSHER_APP_CLUSTER = 'ap2';
+  static String PUSHER_APP_ID = '1714511';
+  static String PUSHER_APP_KEY = '7256046f50a9f3e2a17a';
+  static String PUSHER_APP_SECRET = '21720d29ec15b4099ca2';
+  static String PUSHER_APP_CLUSTER = 'eu';
 
   static String mapApiKey = "AIzaSyBL3got10NTJkmjKT9fgaDPraXxqgb33EQ";
   //Demo

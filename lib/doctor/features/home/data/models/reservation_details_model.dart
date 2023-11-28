@@ -56,6 +56,7 @@ class ReservationData {
   int? statusId;
   int? canReview;
   String? qrCode;
+  String? painPlace;
   List<DoctorReports>? reports;
   DiagnoseForm? diagnoseForm;
   Advertiser? advertiser;
@@ -84,6 +85,7 @@ class ReservationData {
       this.statusId,
       this.canReview,
       this.qrCode,
+      this.painPlace,
       this.reports,
       this.diagnoseForm,
       this.advertiser,
@@ -112,6 +114,7 @@ class ReservationData {
     statusId = json?['status_id'];
     canReview = json?['can_review'];
     qrCode = json?['qr_code'];
+    painPlace = json?['pain_place'];
     if (json?['reports'] != null) {
       reports = [];
       json?['reports'].forEach((v) {
@@ -150,6 +153,7 @@ class ReservationData {
     data['lat'] = lat;
     data['lang'] = lang;
     data['status_id'] = statusId;
+    data['pain_place'] = painPlace;
     data['can_review'] = canReview;
     data['qr_code'] = qrCode;
     if (reports != null) {

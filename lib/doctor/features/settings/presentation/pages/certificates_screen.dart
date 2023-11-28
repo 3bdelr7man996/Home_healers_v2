@@ -5,6 +5,7 @@ import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
+import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,13 +50,21 @@ class _CertificatesScreenState extends State<CertificatesScreen> {
                     ),
                     itemCount: state.myDocuments?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: AppConstants.customNetworkImage(
-                                imagePath: "${state.myDocuments?[index]}"),
-                          ));
+                      return GestureDetector(
+                        onTap: () => AppConstants.customNavigation(
+                            context,
+                            PhotoViewerRouteWrapper(
+                                filePath: '${state.myDocuments?[index]}'),
+                            0,
+                            0),
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: AppConstants.customNetworkImage(
+                                  imagePath: "${state.myDocuments?[index]}"),
+                            )),
+                      );
                     },
                   ),
                 );

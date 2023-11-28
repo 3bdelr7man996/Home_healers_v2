@@ -4,10 +4,11 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 class SenderMessageSection extends StatelessWidget {
-  const SenderMessageSection({super.key});
-
+  const SenderMessageSection({super.key, this.mychannel});
+  final PusherChannel? mychannel;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,8 +45,16 @@ class SenderMessageSection extends StatelessWidget {
           context.select<ChatsCubit, Widget>((cubit) {
             return cubit.state.content!.length > 0
                 ? InkWell(
-                    onTap: () {
-                      cubit.sendMessage(context);
+                    onTap: () async {
+                      await cubit.sendMessage(context);
+                      // await mychannel
+                      //     ?.trigger(PusherEvent(
+                      //         channelName: "chat.265",
+                      //         eventName: 'chat',
+                      //         data: {}))
+                      //     .catchError((e) {
+                      //   log(e.toString());
+                      // });
                     },
                     child: Icon(
                       Icons.send,

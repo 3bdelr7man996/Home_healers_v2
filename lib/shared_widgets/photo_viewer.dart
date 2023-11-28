@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -46,34 +47,38 @@ class PhotoViewerRouteWrapper extends StatefulWidget {
 
 class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
   get http => null;
+  late File Pfile;
+
+  @override
+  void initState() {
+    log("file path ${widget.filePath}");
+    if (widget.filePath!.endsWith("pdf")) {
+      log("load network ---------");
+      loadNetwork();
+    }
+
+    super.initState();
+  }
+
+  Future<void> loadNetwork() async {
+    setState(() {});
+    var url = '${AppStrings.imageUrl}${widget.filePath}';
+    final response = await http.get(Uri.parse(url));
+    final bytes = response.bodyBytes;
+    final filename = basename(url);
+    final dir = await getApplicationDocumentsDirectory();
+    var file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    setState(() {
+      Pfile = file;
+    });
+
+    print(Pfile);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    late File Pfile;
-    Future<void> loadNetwork() async {
-      setState(() {});
-      var url = '${AppStrings.imageUrl}${widget.filePath}';
-      final response = await http.get(Uri.parse(url!));
-      final bytes = response.bodyBytes;
-      final filename = basename(url);
-      final dir = await getApplicationDocumentsDirectory();
-      var file = File('${dir.path}/$filename');
-      await file.writeAsBytes(bytes, flush: true);
-      setState(() {
-        Pfile = file;
-      });
-
-      print(Pfile);
-      setState(() {});
-    }
-
-    @override
-    void initState() {
-      if (widget.typeOfFile == "pdf") loadNetwork();
-
-      super.initState();
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,

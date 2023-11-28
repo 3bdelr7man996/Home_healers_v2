@@ -45,16 +45,22 @@ class RequestsCardList extends StatelessWidget {
                           0,
                           1);
                     },
-                    child: RequestCard(
-                      title: context.locale.languageCode == "ar"
-                          ? state.resrvationStatusList![index].status!.nameAr ??
-                              ""
-                          : state.resrvationStatusList![index].status!.nameEn ??
-                              "",
-                      pathImage: "assets/icons/muscle_icon.svg",
-                      requestsCount:
-                          state.resrvationStatusList![index].count ?? 0,
-                    ),
+                    child: state.resrvationStatusList![index].status != null
+                        ? RequestCard(
+                            title: context.locale.languageCode == "ar"
+                                ? state.resrvationStatusList![index].status!
+                                        .nameAr ??
+                                    ""
+                                : state.resrvationStatusList![index].status!
+                                        .nameEn ??
+                                    "",
+                            pathImage: state.resrvationStatusList![index].status
+                                    ?.image ??
+                                '', //todo
+                            requestsCount:
+                                state.resrvationStatusList![index].count ?? 0,
+                          )
+                        : const SizedBox.shrink(),
                   );
                 },
               ),

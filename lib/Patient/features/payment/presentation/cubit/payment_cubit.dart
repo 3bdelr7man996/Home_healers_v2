@@ -47,7 +47,8 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
-  //?============================[ PAY BY TAMARA ]================================
+  //?============================[ PAY BY TAMARA ]==============================
+
   Future<bool> payByTamara({required int reservationParentId}) async {
     try {
       emit(state.copyWith(payState: RequestState.loading));
@@ -140,9 +141,9 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
-//?================================[ PAY BY WALLET]=============================
-
-  payByWallet(
+  //?=============================[ PAY BY WALLET]==============================
+  ///PAY BY WALLET
+  Future<void> payByWallet(
     BuildContext context, {
     required OrderData order,
   }) async {
@@ -193,7 +194,9 @@ class PaymentCubit extends Cubit<PaymentState> {
     }
   }
 
-  //?==========================[ EARN NEW POINTS ]==============================
+  //?============================[ EARN NEW POINTS ]============================
+
+  ///SHOW BOTTOMSHEET TO EARN POINTS
   void showBottomSheetForEarnPoints(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -207,5 +210,8 @@ class PaymentCubit extends Cubit<PaymentState> {
   }
 }
 
-
-// RESPONSE[400] => DATA: {"status":true,"message":"The payment was completed successfully"}
+// RESPONSE[400] => DATA: 
+// {
+// "status":true,
+// "message":"The payment was completed successfully",
+//}

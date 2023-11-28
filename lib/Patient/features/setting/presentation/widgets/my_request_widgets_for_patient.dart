@@ -330,13 +330,15 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                            FittedBox(
-                              child: Text(
-                                "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(widget.listOfOrders.startAt))}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 14),
-                              ),
-                            )
+                            if (widget.listOfOrders.startAt != null)
+                              FittedBox(
+                                child: Text(
+                                  "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(widget.listOfOrders.startAt))}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14),
+                                ),
+                              )
                           ],
                         ),
                       ),

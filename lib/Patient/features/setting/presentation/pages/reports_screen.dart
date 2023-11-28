@@ -4,7 +4,6 @@ import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dar
 import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';

@@ -1,9 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/date_of_session_screen.dart';
-import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
