@@ -7,7 +7,6 @@ import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.d
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
-import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/search_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -208,7 +207,7 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
                       image: jsonData != null && jsonData["image"] != null
                           ? DecorationImage(
                               image: NetworkImage(
-                                "${AppStrings.divUrl}/upload/${jsonData["image"]}",
+                                "${AppStrings.baseUrl}/upload/${jsonData["image"]}",
                               ),
                               fit: BoxFit.cover,
                               onError: (exception, stackTrace) =>

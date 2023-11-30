@@ -86,7 +86,7 @@ Future<void> serviceLocatorInit() async {
 
   // Core
   sl.registerLazySingleton(() => PusherConfiguration(pusher: sl()));
-  sl.registerLazySingleton(() => ApiBaseHelper(AppStrings.divUrl));
+  sl.registerLazySingleton(() => ApiBaseHelper(AppStrings.baseUrl));
   sl.registerLazySingleton(() => LocalNotificationsService());
   sl.registerLazySingleton(
       () => FirebaseMessagingService(localNotification: sl()));

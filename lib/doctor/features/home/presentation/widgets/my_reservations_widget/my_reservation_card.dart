@@ -3,7 +3,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/reservastion_status_helper.dart';
-import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/requests_details_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -220,8 +220,8 @@ class ShowDetailsButton extends StatelessWidget {
         ),
         onPressed: () {
           context.read<ReservationsCubit>().onReservationChange(reservation!);
-          AppConstants.customNavigation(
-              context, const RequestsDetailsScreen(), 1, 0);
+          AppConstants.customNavigation(context,
+              const RequestsDetailsScreen(fromNotification: false), 1, 0);
         },
         child: Text('order_details'.tr()),
       ),

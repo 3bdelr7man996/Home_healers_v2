@@ -277,19 +277,21 @@ class SessionsPrice extends StatelessWidget {
         builder: (context, state) {
           return Row(
             children: [
-              const Text(
-                " حساب الجلسات  :",
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
+              if (state.reservation?.parentId == 0)
+                const Text(
+                  " حساب الجلسات  :",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
               5.pw,
-              Text(
-                state.reservation!.parentId == 0
-                    ? "${state.reservation?.amount ?? 0} ${"sar".tr()}"
-                    : "${state.reservation!.advertiser!.sessionPrice! * state.reservation!.sessionsCount!} ${"sar".tr()}",
-                style: const TextStyle(
-                    color: AppColors.secondryColor,
-                    fontWeight: FontWeight.bold),
-              ),
+              if (state.reservation?.parentId == 0)
+                Text(
+                  // state.reservation!.parentId == 0
+                  "${state.reservation?.amount ?? 0} ${"sar".tr()}",
+                  //: "${state.reservation!.advertiser!.sessionPrice! * state.reservation!.sessionsCount!} ${"sar".tr()}",
+                  style: const TextStyle(
+                      color: AppColors.secondryColor,
+                      fontWeight: FontWeight.bold),
+                ),
             ],
           );
         });

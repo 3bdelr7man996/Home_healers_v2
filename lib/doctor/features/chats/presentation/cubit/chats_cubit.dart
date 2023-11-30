@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
@@ -31,6 +32,7 @@ class ChatsCubit extends Cubit<ChatsState> {
   int? userId;
   int? advId;
   int? recieverId;
+  int? myId;
   String? senderType;
   String? recieverType;
   String? recieverImg;
@@ -45,6 +47,7 @@ class ChatsCubit extends Cubit<ChatsState> {
       advId = context.read<AuthCubit>().getAdvertiserInfo().id;
       userId = recieverInfo.id;
       recieverId = recieverInfo.id;
+      myId = advId;
       senderType = 'Advertiser';
       recieverType = 'User';
       recieverImg = recieverInfo.image;
@@ -53,6 +56,7 @@ class ChatsCubit extends Cubit<ChatsState> {
       advId = recieverInfo.advertiser?.id;
       userId = context.read<AuthCubitForPatient>().getUserInfo().id;
       recieverId = recieverInfo.advertiser?.id;
+      myId = userId;
       senderType = 'User';
       recieverType = 'Advertiser';
       recieverImg = recieverInfo.advertiser?.image;
@@ -76,6 +80,7 @@ class ChatsCubit extends Cubit<ChatsState> {
         "receiver_type": recieverType!,
         "reciver_id": "$recieverId"
       };
+      msgFieldController?.clear();
       Messages response = await chatsRepo.sendMessage(
         body: body,
       );
@@ -87,7 +92,6 @@ class ChatsCubit extends Cubit<ChatsState> {
         messagesList: myMessages.reversed.toList(),
       ));
 
-      msgFieldController?.clear();
       // await di.sl<PusherConfiguration>().pusher.trigger(PusherEvent(
       //         userId: "$userId",
       //         channelName: "chat.$userId",
@@ -171,7 +175,7 @@ class ChatsCubit extends Cubit<ChatsState> {
   //?=====================[ SUBSCRIBE IN PUSHER CHANNEL ]=======================
   Future<void> subscribeChannel() async {
     await di.sl<PusherConfiguration>().pusher.subscribe(
-        channelName: 'chat.$recieverId',
+        channelName: 'chat.$myId',
         onSubscriptionSucceeded: (channelName) {
           print("Subscribed to $channelName  success --------------");
         },
@@ -182,7 +186,27 @@ class ChatsCubit extends Cubit<ChatsState> {
           print("Member removed: $member");
         },
         onEvent: (event) {
-          print("Got channel event: $event");
+          //PusherEvent myevent;
+          //print("Got channel event: $event");
+          log("event type ${event.runtimeType}");
+          try {
+            if (event.data != null && event.data.isNotEmpty) {
+              // log("channel event ${json.decode(event.data)}");
+              var msg = Messages.fromJson(json.decode(event.data));
+
+              if (msg.reciverId == myId &&
+                  msg.userId == userId &&
+                  msg.advertiserId == advId) {
+                myMessages.add(msg);
+                emit(state.copyWith(
+                  getMsgState: RequestState.success,
+                  messagesList: myMessages.reversed.toList(),
+                ));
+              }
+            }
+          } catch (e) {
+            log("recieve pusher error $e");
+          }
         });
     await di.sl<PusherConfiguration>().pusher.connect();
   }

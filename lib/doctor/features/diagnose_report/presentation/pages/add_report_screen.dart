@@ -4,7 +4,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
-import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

@@ -2,13 +2,15 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
+import 'package:dr/doctor/features/home/presentation/pages/requests_details_screen.dart';
 import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/notification/presentation/widgets/notification_widgets.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationScreen extends StatefulWidget {
   final bool fromPatient;
@@ -21,21 +23,12 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   late bool IsUserGuest;
 
-  IsGuest() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    setState(() {
-      IsUserGuest = prefs.containsKey('guest');
-      print(prefs.containsKey('guest'));
-    });
-    if (IsUserGuest == false)
-      context.read<NotificationCubit>().getAllNotifications();
-  }
-
   @override
   void initState() {
-    IsUserGuest = false;
-    IsGuest();
+    IsUserGuest = !context.read<AuthCubit>().hasToken();
+    if (IsUserGuest == false) {
+      context.read<NotificationCubit>().getAllNotifications();
+    }
     print(IsUserGuest);
 
     super.initState();
@@ -56,7 +49,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
 class NotificationBody extends StatelessWidget {
   const NotificationBody({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -76,12 +68,28 @@ class NotificationBody extends StatelessWidget {
                     itemCount: state.notifList?.length,
                     itemBuilder: (context, index) {
                       return OneNotification(
-                          title: state.notifList?[index].data?.title ?? "",
-                          imagePath:
-                              "${state.notifList?[index].data?.icon ?? 'notif_purple'}.svg",
-                          date: state.notifList?[index].createdAt ?? "",
-                          description:
-                              state.notifList?[index].data?.body ?? "");
+                        title: state.notifList?[index].data?.title ?? "",
+                        imagePath:
+                            "${state.notifList?[index].data?.icon ?? 'notif_purple'}.svg",
+                        date: state.notifList?[index].createdAt ?? "",
+                        description: state.notifList?[index].data?.body ?? "",
+                        onTap: () async {
+                          if (state.notifList![index].type!
+                                  .contains("OrderStatus2") ||
+                              state.notifList![index].type!
+                                  .contains("DoctorNewReservation")) {
+                            await context
+                                .read<ReservationsCubit>()
+                                .getReservDetails(
+                                    reservId: state.notifList![index].data?.id);
+                            AppConstants.customNavigation(
+                                context,
+                                RequestsDetailsScreen(fromNotification: true),
+                                0,
+                                1);
+                          }
+                        },
+                      );
                     },
                   ),
                 ),

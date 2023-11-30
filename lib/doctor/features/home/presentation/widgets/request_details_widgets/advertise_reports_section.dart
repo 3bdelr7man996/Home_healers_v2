@@ -1,7 +1,7 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:easy_localization/easy_localization.dart';

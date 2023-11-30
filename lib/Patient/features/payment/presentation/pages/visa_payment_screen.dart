@@ -105,7 +105,7 @@ class _VisaPaymentScreenState extends State<VisaPaymentScreen> {
 
                           if (navigationAction.request.url
                               .toString()
-                              .contains(AppStrings.visaBaseUrl)) {
+                              .contains(AppStrings.divSecondUrl)) {
                             log("get payment respoooo ${navigationAction.request.url}");
                             await context.read<PaymentCubit>().getVisaResponse(
                                   context,

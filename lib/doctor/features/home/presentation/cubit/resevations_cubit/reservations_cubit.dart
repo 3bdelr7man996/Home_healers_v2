@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/home/data/models/resevations_status_model.dart';
 import 'package:dr/doctor/features/home/data/repositories/reservation_orders_repo.dart';
 import 'package:equatable/equatable.dart';
@@ -37,6 +40,7 @@ class ReservationsCubit extends Cubit<ReservationsState> {
       emit(state.copyWith(
         reservationState: RequestState.loading,
         filterState: RequestState.loading,
+        reservDetailsState: RequestState.initial,
       ));
       reservationsList = [];
       reservationsList =
@@ -140,7 +144,7 @@ class ReservationsCubit extends Cubit<ReservationsState> {
     }
   }
 
-//?========================[ ON CHANGE SECTION ]========================
+//?========================[ ON CHANGE SECTION ]================================
 
   onSelectedTab(ResevationStep selectedTap) =>
       emit(state.copyWith(selectedTap: selectedTap));
@@ -150,4 +154,44 @@ class ReservationsCubit extends Cubit<ReservationsState> {
 
   onPainStatusIdChange(int painStatusId) =>
       emit(state.copyWith(painStatusId: painStatusId));
+
+  String? getReservationsDate(
+      {required int index, required bool fromNotification}) {
+    String? status = "";
+    if (fromNotification) {
+      if (state.reservChilds != null && state.reservChilds!.isNotEmpty) {
+        status = index == 0
+            ? state.reservation?.status
+            : state.reservChilds?[index - 1].status;
+      }
+    } else {
+      status = state
+              .reservationsList![state.reservationsList!
+                      .indexWhere((e) => e.id == state.reservation?.id) +
+                  index]
+              .status ??
+          "";
+    }
+    return status;
+  }
+
+//?===================[ GET SPECIFIC RESERVATION DETAILS ]======================
+  Future<void> getReservDetails({required reservId}) async {
+    try {
+      emit(state.copyWith(reservDetailsState: RequestState.loading));
+      ReservationDetailsModel response =
+          await repository.getReservDetails(reservId: reservId);
+      if (response.success == true &&
+          response.data!.userReservations!.isNotEmpty) {
+        emit(state.copyWith(
+          reservation: response.data?.userReservations?.first,
+          reservChilds: response.data?.userReservationsChilds ?? [],
+          reservDetailsState: RequestState.success,
+        ));
+      }
+    } catch (e) {
+      log("GET RESERVATION DATA ERROR: $e ");
+      emit(state.copyWith(reservDetailsState: RequestState.failed));
+    }
+  }
 }

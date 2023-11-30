@@ -1,5 +1,5 @@
 import '../../../diagnose_report/data/models/diagonse_form_model.dart';
-import 'reservation_details_model.dart';
+import 'reservations_model.dart';
 
 class UserReservation {
   int? id;

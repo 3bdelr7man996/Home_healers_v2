@@ -6,7 +6,7 @@ import 'dart:ui' as ui;
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/diagnose_report/data/models/diagonse_form_model.dart';
-import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/diagnose_report/data/repositories/diagnose_report_repo.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';

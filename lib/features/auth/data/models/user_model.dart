@@ -1,6 +1,6 @@
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/diagnose_report/data/models/diagonse_form_model.dart';
-import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 
 class UserModel {
   UserData? success;

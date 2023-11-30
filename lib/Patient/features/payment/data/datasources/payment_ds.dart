@@ -11,7 +11,7 @@ class PaymentDataSource {
   }) async {
     Map<String, dynamic>? response = await apiHelper.get(
       AppStrings.visaPayment,
-      newBaseUrl: AppStrings.visaBaseUrl,
+      newBaseUrl: AppStrings.divSecondUrl,
       queryParameters: body,
     );
     return response;
@@ -22,7 +22,7 @@ class PaymentDataSource {
   }) async {
     Map<String, dynamic>? response = await apiHelper.get(
       AppStrings.tamaraPayment,
-      newBaseUrl: AppStrings.visaBaseUrl,
+      newBaseUrl: AppStrings.divSecondUrl,
       queryParameters: body,
     );
     return response;

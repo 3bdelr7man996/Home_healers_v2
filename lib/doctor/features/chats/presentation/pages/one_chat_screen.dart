@@ -46,7 +46,7 @@ class _OneChatScreenState extends State<OneChatScreen> {
   void dispose() {
     // context.read<ChatsCubit>().disposeController();
     _scrollController.dispose();
-    di.sl<PusherConfiguration>().pusher.unsubscribe(channelName: '');
+    di.sl<PusherConfiguration>().pusher.unsubscribe(channelName: 'chat.213');
     di.sl<PusherConfiguration>().pusher.disconnect();
     super.dispose();
   }

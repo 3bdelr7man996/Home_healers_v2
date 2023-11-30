@@ -27,4 +27,11 @@ class ReservationOrdersDS {
         await apiHelper.post(AppStrings.advUpdateReservation, body: body);
     return response;
   }
+
+  Future<Map<String, dynamic>?> getReservDetails({required reservId}) async {
+    Map<String, dynamic>? response = await apiHelper.get(
+        AppStrings.reservationDetails,
+        queryParameters: {"id": "$reservId"});
+    return response;
+  }
 }

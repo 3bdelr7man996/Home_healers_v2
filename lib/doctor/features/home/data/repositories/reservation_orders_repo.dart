@@ -1,5 +1,6 @@
 import 'package:dr/doctor/features/home/data/datasources/reservations_orders_ds.dart';
 import 'package:dr/doctor/features/home/data/models/reservation_details_model.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/home/data/models/resevations_status_model.dart';
 
 class ReservationOrdersRepo {
@@ -47,5 +48,11 @@ class ReservationOrdersRepo {
       reservation = ReservationData.fromJson(response?['data']);
     }
     return reservation;
+  }
+
+  Future<ReservationDetailsModel> getReservDetails({required reservId}) async {
+    ReservationDetailsModel response = ReservationDetailsModel.fromJson(
+        await dataSource.getReservDetails(reservId: reservId));
+    return response;
   }
 }

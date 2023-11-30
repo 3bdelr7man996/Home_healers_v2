@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SessionInfo extends StatelessWidget {
-  const SessionInfo({super.key});
-
+  const SessionInfo({super.key, required this.fromNotification});
+  final bool fromNotification;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReservationsCubit, ReservationsState>(
@@ -37,13 +37,12 @@ class SessionInfo extends StatelessWidget {
                     return OneSessionInfo(
                       title: convertIntToText(context, index + 1),
                       date: state.reservation!.days![index],
-                      status: state
-                              .reservationsList![state.reservationsList!
-                                      .indexWhere((e) =>
-                                          e.id == state.reservation?.id) +
-                                  index]
-                              .status ??
-                          "", //todo back end edit
+                      status: context
+                              .read<ReservationsCubit>()
+                              .getReservationsDate(
+                                  index: index,
+                                  fromNotification: fromNotification) ??
+                          '', //todo back end edit
                     );
                   },
                 ),

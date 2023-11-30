@@ -74,7 +74,7 @@ class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
                           borderRadius: BorderRadius.circular(80),
                           image: DecorationImage(
                             image: NetworkImage(
-                              "${AppStrings.divUrl}/upload/${jsonData["image"]}",
+                              "${AppStrings.baseUrl}/upload/${jsonData["image"]}",
                             ),
                             fit: BoxFit.cover,
                             onError: (exception, stackTrace) =>

@@ -82,12 +82,14 @@ class ApiBaseHelper {
     required Map<String, String>? body,
     required List<File>? files,
     required String fileKey,
+    String? newBaseUrl,
     List<File>? documents,
     String? documentsKey,
     Map<String, String>? headers,
   }) async {
     Map<String, dynamic>? responseJson;
-    Uri urlRequest = Uri.parse(baseUrl + url);
+    Uri urlRequest = Uri.parse("${newBaseUrl ?? baseUrl}$url");
+    //Uri urlRequest = Uri.parse(baseUrl + url);
     log(urlRequest.toString());
     try {
       var request = http.MultipartRequest(

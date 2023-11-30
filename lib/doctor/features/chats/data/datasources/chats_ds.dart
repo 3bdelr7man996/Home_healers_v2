@@ -15,6 +15,7 @@ class ChatsDS {
   }) async {
     Map<String, dynamic>? response = await apiHelper.multiPartRequest(
       AppStrings.sendMessage,
+      newBaseUrl: AppStrings.divSecondUrl,
       body: body,
       fileKey: fileKey ?? "",
       files: files,
