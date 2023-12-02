@@ -13,15 +13,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart' as intl;
 
-class underProcessing extends StatelessWidget {
-  const underProcessing({super.key});
+// widget to show all orders in this section
+class ListOfOrder extends StatelessWidget {
+  int activeIndex;
+  ListOfOrder({super.key, required this.activeIndex});
 
   @override
   Widget build(BuildContext context) {
-    var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.reviewingOrders) ??
-            [];
-    print(listOfOrders);
+    var listOfOrders;
+    if (activeIndex == 0)
+      listOfOrders = context
+              .select((MyOrdersCubit cubit) => cubit.state.reviewingOrders) ??
+          [];
+    else if (activeIndex == 1)
+      listOfOrders = context
+              .select((MyOrdersCubit cubit) => cubit.state.waitConfirmOrders) ??
+          [];
+    else if (activeIndex == 2)
+      listOfOrders = context
+              .select((MyOrdersCubit cubit) => cubit.state.confirmedOrders) ??
+          [];
+    else if (activeIndex == 3)
+      listOfOrders = context
+              .select((MyOrdersCubit cubit) => cubit.state.completedOrders) ??
+          [];
+    else if (activeIndex == 4)
+      listOfOrders =
+          context.select((MyOrdersCubit cubit) => cubit.state.canceledOrders) ??
+              [];
+    else if (activeIndex == 5)
+      listOfOrders =
+          context.select((MyOrdersCubit cubit) => cubit.state.pendingOrders) ??
+              [];
     return listOfOrders.length == 0
         ? Center(
             child: Column(
@@ -62,7 +85,7 @@ class underProcessing extends StatelessWidget {
                           listOfOrders: listOfOrders[index],
                           categories: names,
                           selectedName: selectedName,
-                          num: 1,
+                          num: activeIndex,
                         );
                       },
                     ),
@@ -71,198 +94,7 @@ class underProcessing extends StatelessWidget {
   }
 }
 
-class Accepted extends StatelessWidget {
-  const Accepted({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var listOfOrders = context
-            .select((MyOrdersCubit cubit) => cubit.state.waitConfirmOrders) ??
-        [];
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: context.width,
-        height: context.height * 0.75,
-        child: ListView.builder(
-          itemCount: listOfOrders.length,
-          itemBuilder: (context, index) {
-            List<String> names = [];
-            String selectedName = "";
-            for (var item in listOfOrders[index].advertiser.categories ?? []) {
-              names.add(item.nameAr ?? "");
-            }
-            selectedName = names.isNotEmpty ? names[0] : 'No names available';
-            return CardsForRequests(
-              categories: names,
-              selectedName: selectedName,
-              listOfOrders: listOfOrders[index],
-              num: 2,
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class Confirmed extends StatelessWidget {
-  const Confirmed({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.confirmedOrders) ??
-            [];
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: context.width,
-        height: context.height * 0.75,
-        child: listOfOrders.isEmpty
-            ? const SizedBox()
-            : ListView.builder(
-                itemCount: listOfOrders.length,
-                itemBuilder: (context, index) {
-                  List<String> names = [];
-                  String selectedName = "";
-                  for (var item
-                      in listOfOrders[index].advertiser.categories ?? []) {
-                    names.add(item.nameAr ?? "");
-                  }
-                  selectedName =
-                      names.isNotEmpty ? names[0] : 'No names available';
-
-                  return CardsForRequests(
-                    categories: names,
-                    selectedName: selectedName,
-                    listOfOrders: listOfOrders[index],
-                    num: 3,
-                  );
-                },
-              ),
-      ),
-    );
-  }
-}
-
-class completed extends StatelessWidget {
-  const completed({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.completedOrders) ??
-            [];
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: context.width,
-        height: context.height * 0.75,
-        child: listOfOrders.isEmpty
-            ? const SizedBox()
-            : ListView.builder(
-                itemCount: listOfOrders.length,
-                itemBuilder: (context, index) {
-                  List<String> names = [];
-                  String selectedName = "";
-                  for (var item
-                      in listOfOrders[index].advertiser.categories ?? []) {
-                    names.add(item.nameAr ?? "");
-                  }
-                  selectedName =
-                      names.isNotEmpty ? names[0] : 'No names available';
-                  return CardsForRequests(
-                    categories: names,
-                    selectedName: selectedName,
-                    listOfOrders: listOfOrders[index],
-                    num: 4,
-                  );
-                },
-              ),
-      ),
-    );
-  }
-}
-
-class canceledRequests extends StatelessWidget {
-  const canceledRequests({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.canceledOrders) ??
-            [];
-    print(listOfOrders);
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: context.width,
-        height: context.height * 0.75,
-        child: listOfOrders.isEmpty
-            ? const SizedBox()
-            : ListView.builder(
-                itemCount: listOfOrders.length,
-                itemBuilder: (context, index) {
-                  List<String> names = [];
-                  String selectedName = "";
-                  for (var item
-                      in listOfOrders[index].advertiser.categories ?? []) {
-                    names.add(item.nameAr ?? "");
-                  }
-                  selectedName =
-                      names.isNotEmpty ? names[0] : 'No names available';
-                  return CardsForRequests(
-                    categories: names,
-                    selectedName: selectedName,
-                    listOfOrders: listOfOrders[index],
-                    num: 5,
-                  );
-                },
-              ),
-      ),
-    );
-  }
-}
-
-class Pending extends StatelessWidget {
-  const Pending({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    var listOfOrders =
-        context.select((MyOrdersCubit cubit) => cubit.state.pendingOrders) ??
-            [];
-    print("asdfafsdfasdfasdf");
-    print("asdfafsdfasdfasdf");
-
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: context.width,
-        height: context.height * 0.75,
-        child: listOfOrders.isEmpty
-            ? const SizedBox()
-            : ListView.builder(
-                itemCount: listOfOrders.length,
-                itemBuilder: (context, index) {
-                  List<String> names = [];
-                  String selectedName = "";
-                  if (listOfOrders[index].advertiser.categories != null)
-                    for (var item
-                        in listOfOrders[index].advertiser.categories ?? []) {
-                      names.add(item.nameAr ?? "");
-                    }
-                  selectedName =
-                      names.isNotEmpty ? names[0] : 'No names available';
-                  return CardsForRequests(
-                    categories: names,
-                    selectedName: selectedName,
-                    listOfOrders: listOfOrders[index],
-                    num: 6,
-                  );
-                },
-              ),
-      ),
-    );
-  }
-}
-
+// widget to show one order in list of requests
 class CardsForRequests extends StatefulWidget {
   int num;
   var listOfOrders, categories, selectedName;
@@ -343,78 +175,31 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         ),
                       ),
                       10.pw,
-                      widget.num == 1
-                          ? Expanded(
-                              child: FittedBox(
-                                child: const Text(
-                                  "قيد المراجعة \nفي انتظار القبول",
-                                  style: TextStyle(
-                                      color: AppColors.yellowColor,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            )
-                          : widget.num == 2
-                              ? Expanded(
-                                  child: FittedBox(
-                                    child: const Text(
-                                      "مقبولة \nفي انتظار الدفع",
-                                      style: TextStyle(
-                                          color: AppColors.greenColor,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                )
-                              : widget.num == 3
-                                  ? Expanded(
-                                      child: const Text(
-                                        "مؤكدة \nتم الدفع",
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: AppColors.greenColor,
-                                            fontWeight: FontWeight.bold),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )
-                                  : widget.num == 4
-                                      ? Expanded(
-                                          child: FittedBox(
-                                            child: const Text(
-                                              "مكتملة \nتم إنهاء الزيارة",
-                                              style: TextStyle(
-                                                  color: AppColors.greenColor,
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        )
-                                      : widget.num == 6
-                                          ? Expanded(
-                                              child: FittedBox(
-                                                child: const Text(
-                                                  "الجلسة \n قيد الانتظار",
-                                                  style: TextStyle(
-                                                      color:
-                                                          AppColors.greenColor,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            )
-                                          : Expanded(
-                                              child: const Text(
-                                                "ملغية \nتم الإلغاء",
-                                                style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: AppColors.redColor,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            )
+                      Expanded(
+                        child: FittedBox(
+                          child: Text(
+                            widget.num == 0
+                                ? "قيد المراجعة \nفي انتظار القبول"
+                                : widget.num == 1
+                                    ? "مقبولة \nفي انتظار الدفع"
+                                    : widget.num == 2
+                                        ? "مؤكدة \nتم الدفع"
+                                        : widget.num == 3
+                                            ? "مكتملة \nتم إنهاء الزيارة"
+                                            : widget.num == 4
+                                                ? "ملغية \nتم الإلغاء"
+                                                : "الجلسة \n قيد الانتظار",
+                            style: TextStyle(
+                                color: widget.num == 0
+                                    ? AppColors.yellowColor
+                                    : widget.num == 4
+                                        ? AppColors.redColor
+                                        : AppColors.greenColor,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -430,8 +215,6 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // widget.listOfOrders.advertiser.image != null
-                    //     ?
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       child: AppConstants.customNetworkImage(
@@ -441,10 +224,6 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         imagePath: "${widget.listOfOrders.advertiser.image}",
                       ),
                     ),
-                    // : const DecorationImage(
-                    //     image: AssetImage("assets/images/doctor.png"),
-                    //     fit: BoxFit.cover,
-                    //   ),
                     5.pw,
                     Expanded(
                       child: Column(
@@ -457,13 +236,11 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16),
                           ),
-                          //5.ph,
                           if (categories != null)
                             categories.isNotEmpty
                                 ? DropdownButton<String>(
                                     padding: EdgeInsets.zero,
-                                    underline: SizedBox(), // Hide the underline
-                                    // icon: const SizedBox(), // Hide the arrow icon
+                                    underline: SizedBox(),
                                     value: selectedName,
                                     onChanged: (String? newValue) {
                                       setState(() {
@@ -566,73 +343,16 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                           selectedName = names.isNotEmpty
                               ? names[0]
                               : 'No names available';
-                          if (widget.num == 1) {
-                            AppConstants.customNavigation(
-                                context,
-                                RequestsDetailsScreenForPatient(
-                                  oneOrder: widget.listOfOrders,
-                                  categories: names,
-                                  selectedName: selectedName,
-                                  num: 1,
-                                ),
-                                -1,
-                                0);
-                          } else if (widget.num == 2) {
-                            AppConstants.customNavigation(
-                                context,
-                                RequestsDetailsScreenForPatient(
-                                  num: 2,
-                                  oneOrder: widget.listOfOrders,
-                                  categories: names,
-                                  selectedName: selectedName,
-                                ),
-                                -1,
-                                0);
-                          } else if (widget.num == 3) {
-                            AppConstants.customNavigation(
-                                context,
-                                RequestsDetailsScreenForPatient(
-                                  num: 3,
-                                  oneOrder: widget.listOfOrders,
-                                  categories: names,
-                                  selectedName: selectedName,
-                                ),
-                                -1,
-                                0);
-                          } else if (widget.num == 4) {
-                            AppConstants.customNavigation(
-                                context,
-                                RequestsDetailsScreenForPatient(
-                                  num: 4,
-                                  oneOrder: widget.listOfOrders,
-                                  categories: names,
-                                  selectedName: selectedName,
-                                ),
-                                -1,
-                                0);
-                          } else if (widget.num == 6) {
-                            AppConstants.customNavigation(
-                                context,
-                                RequestsDetailsScreenForPatient(
-                                  num: 6,
-                                  oneOrder: widget.listOfOrders,
-                                  categories: names,
-                                  selectedName: selectedName,
-                                ),
-                                -1,
-                                0);
-                          } else {
-                            AppConstants.customNavigation(
-                                context,
-                                RequestsDetailsScreenForPatient(
-                                  num: 5,
-                                  oneOrder: widget.listOfOrders,
-                                  categories: names,
-                                  selectedName: selectedName,
-                                ),
-                                -1,
-                                0);
-                          }
+                          AppConstants.customNavigation(
+                              context,
+                              RequestsDetailsScreenForPatient(
+                                oneOrder: widget.listOfOrders,
+                                categories: names,
+                                selectedName: selectedName,
+                                num: widget.num,
+                              ),
+                              -1,
+                              0);
                         },
                         child: Text('order_details'.tr()),
                       ),

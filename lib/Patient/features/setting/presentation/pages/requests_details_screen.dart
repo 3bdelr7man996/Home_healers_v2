@@ -105,8 +105,6 @@ class _RequestsDetailsScreenForPatientState
       }
     }
 
-    print("ghaith");
-    print(widget.oneOrder.canReview);
     return Scaffold(
       appBar: customAppBar(context, backButton: true, title: "order_details"),
       body: Stack(
@@ -137,10 +135,10 @@ class _RequestsDetailsScreenForPatientState
                   const Divider(
                     thickness: 1,
                   ),
-                  widget.num == 2 ||
+                  widget.num == 1 ||
+                          widget.num == 2 ||
                           widget.num == 3 ||
-                          widget.num == 4 ||
-                          num == 5
+                          widget.num == 4
                       ? SessionInfoForPatient(
                           MainOrder: widget.oneOrder,
                         )
@@ -154,8 +152,8 @@ class _RequestsDetailsScreenForPatientState
                     listOfOrders: widget.oneOrder,
                   ),
                   30.ph,
-                  if (widget.num != 5)
-                    widget.num == 4
+                  if (widget.num != 4)
+                    widget.num == 3 || widget.num == 2
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -176,7 +174,8 @@ class _RequestsDetailsScreenForPatientState
                                 },
                                 child: const Text('إظهار الفاتورة'),
                               ),
-                              if (widget.oneOrder.canReview == 1)
+                              if (widget.oneOrder.canReview == 1 &&
+                                  widget.num != 2)
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       side: const BorderSide(
@@ -206,7 +205,7 @@ class _RequestsDetailsScreenForPatientState
                                 ),
                             ],
                           )
-                        : widget.num != 2 && widget.num != 6
+                        : widget.num != 1 && widget.num != 5
                             ? widget.oneOrder.startAt == widget.oneOrder.endAt
                                 ? SizedBox()
                                 : ElevatedButton(
@@ -238,7 +237,7 @@ class _RequestsDetailsScreenForPatientState
                                     ),
                                   )
                             : const SizedBox(),
-                  if (widget.num == 2)
+                  if (widget.num == 1)
                     ElevatedButton(
                       onPressed: () {
                         // _toggleVisibility();
@@ -271,7 +270,7 @@ class _RequestsDetailsScreenForPatientState
                         ),
                       ),
                     ),
-                  if (widget.num == 6)
+                  if (widget.num == 5)
                     ElevatedButton(
                       onPressed: () async {
                         selectDateTimeAndSave();

@@ -52,17 +52,7 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
               updateActiveIndex(index);
             },
           ),
-          activeIndex == 0
-              ? const underProcessing()
-              : activeIndex == 1
-                  ? const Accepted()
-                  : activeIndex == 2
-                      ? const Confirmed()
-                      : activeIndex == 3
-                          ? const completed()
-                          : activeIndex == 4
-                              ? const canceledRequests()
-                              : const Pending()
+          ListOfOrder(activeIndex: activeIndex)
         ],
       ),
     );

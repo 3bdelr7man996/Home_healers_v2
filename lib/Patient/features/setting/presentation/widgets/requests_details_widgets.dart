@@ -50,75 +50,31 @@ class FirstSection extends StatelessWidget {
             ),
           ),
           10.pw,
-          num == 1
-              ? Expanded(
-                  child: FittedBox(
-                    child: const Text(
-                      "قيد المراجعة \nفي انتظار القبول",
-                      style: TextStyle(
-                          color: AppColors.yellowColor,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              : num == 2
-                  ? Expanded(
-                      child: FittedBox(
-                        child: const Text(
-                          "مقبولة \nفي انتظار الدفع",
-                          style: TextStyle(
-                              color: AppColors.greenColor,
-                              fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    )
-                  : num == 3
-                      ? Expanded(
-                          child: const Text(
-                            "مؤكدة \nتم الدفع",
-                            style: TextStyle(
-                                color: AppColors.greenColor,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : num == 4
-                          ? Expanded(
-                              child: FittedBox(
-                                child: const Text(
-                                  "مكتملة \nتم إنهاء الزيارة",
-                                  style: TextStyle(
-                                      color: AppColors.greenColor,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            )
-                          : num == 6
-                              ? Expanded(
-                                  child: FittedBox(
-                                    child: const Text(
-                                      "الجلسة \n قيد الانتظار",
-                                      style: TextStyle(
-                                          color: AppColors.greenColor,
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                )
-                              : Expanded(
-                                  child: const Text(
-                                    "ملغية \nتم الإلغاء",
-                                    style: TextStyle(
-                                        color: AppColors.redColor,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                )
+          Expanded(
+            child: FittedBox(
+              child: Text(
+                num == 0
+                    ? "قيد المراجعة \nفي انتظار القبول"
+                    : num == 1
+                        ? "مقبولة \nفي انتظار الدفع"
+                        : num == 2
+                            ? "مؤكدة \nتم الدفع"
+                            : num == 3
+                                ? "مكتملة \nتم إنهاء الزيارة"
+                                : num == 4
+                                    ? "ملغية \nتم الإلغاء"
+                                    : "الجلسة \n قيد الانتظار",
+                style: TextStyle(
+                    color: num == 0
+                        ? AppColors.yellowColor
+                        : num == 4
+                            ? AppColors.redColor
+                            : AppColors.greenColor,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -211,7 +167,7 @@ class _TowSectionState extends State<TowSection> {
             ],
           ),
         ),
-        if (widget.num == 3 || widget.num == 4)
+        if (widget.num == 2 || widget.num == 3)
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -477,9 +433,6 @@ class _FirstPopUpState extends State<FirstPopUp> {
                 padding: const EdgeInsets.all(16),
               ),
               onPressed: () async {
-                print(widget.listOfOrders.id.toString());
-                print(widget.listOfOrders.startAt.toString());
-                print(widget.listOfOrders.endAt.toString());
                 await context
                     .read<UpdateReservationCubit>()
                     .onIdChange(widget.listOfOrders.id.toString());
@@ -582,8 +535,6 @@ class SessionInfoForPatient extends StatelessWidget {
   var sessionsInfo = [];
   @override
   Widget build(BuildContext context) {
-    print("ghaith");
-    print(MainOrder.parentId);
     var allOrders =
         context.select((MyOrdersCubit cubit) => cubit.state.allOrders) ?? [];
     if (MainOrder.parentId == 0) {
@@ -600,7 +551,6 @@ class SessionInfoForPatient extends StatelessWidget {
     sessionsInfo.sort((a, b) {
       return DateTime.parse(a.startAt).compareTo(DateTime.parse(b.startAt));
     });
-    print(sessionsInfo.length);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
