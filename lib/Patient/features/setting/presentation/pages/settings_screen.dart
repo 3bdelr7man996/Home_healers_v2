@@ -40,9 +40,10 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
 
   IsGuest() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('guest') == false)
+    if (prefs.containsKey('guest') == false) {
       context.read<GetPointsCubit>().GetMyPoints(context);
-
+      context.read<ReportsCubit>().GetReports();
+    }
     setState(() {
       IsUserGuest = prefs.containsKey('guest');
     });
@@ -54,7 +55,6 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
     super.initState();
     IsUserGuest = false;
     IsGuest();
-    context.read<ReportsCubit>().GetReports();
   }
 
   @override
