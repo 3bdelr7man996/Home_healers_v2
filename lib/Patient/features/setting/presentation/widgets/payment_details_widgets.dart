@@ -130,12 +130,14 @@ class TotalDetails extends StatelessWidget {
             5.ph,
             withOffer
                 ? SizedBox()
-                : const Row(
+                : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("سعر الجلسة :"),
                       Text(
-                        "250 ريال",
+                        order.advertiser.sessionPrice != null
+                            ? "${order.advertiser.sessionPrice} ريال"
+                            : "",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             color: AppColors.secondryColor),
@@ -145,19 +147,25 @@ class TotalDetails extends StatelessWidget {
             5.ph,
             withOffer
                 ? SizedBox()
-                : const Row(
+                : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "كود الخصم :",
                         style: TextStyle(color: AppColors.primaryColor),
                       ),
-                      Text(
-                        "لا يوجد",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primaryColor),
-                      ),
+                      order.coupon == null
+                          ? Text(
+                              "لا يوجد",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.primaryColor),
+                            )
+                          : Text(
+                              "${order.coupon}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w600),
+                            )
                     ],
                   ),
             5.ph,
@@ -184,7 +192,7 @@ class TotalDetails extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  order.advertiser.sessionPrice != null ||
+                  order.advertiser.sessionPrice != null &&
                           order.sessionsCount != null
                       ? "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
                       : "",
