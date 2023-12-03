@@ -65,30 +65,8 @@ class FirebaseMessagingService {
     //?========================[ HANDLE ON SELECT NOTIF ]=======================
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      //todo handle mchat notification route
-      if (message.notification?.title == 'ربحت نقاط جديدة') {
-        AppConstants.pushRemoveNavigator(
-          context,
-          screen: CacheHelper.getData(key: AppStrings.isAdvertise)
-              ? HomeScreen(
-                  selectedIndex: 2,
-                )
-              : HomeScreenForPatient(
-                  selectedIndex: 1,
-                ),
-        );
-      } else {
-        AppConstants.pushRemoveNavigator(
-          context,
-          screen: CacheHelper.getData(key: AppStrings.isAdvertise)
-              ? HomeScreen(
-                  selectedIndex: 2,
-                )
-              : HomeScreenForPatient(
-                  selectedIndex: 1,
-                ),
-        );
-      }
+      //todo handle chat notification route
+      handleRoute(context, message);
     });
 
     //?=============[ HANDLE ONSELECT NOTIF WHEN APP IS CLOSED]=================
@@ -96,22 +74,40 @@ class FirebaseMessagingService {
     firebaseMessaging.getInitialMessage().then((message) {
       if (message != null) {
         //todo handle chat notification route
-        AppConstants.pushRemoveNavigator(
-          context,
-          screen: CacheHelper.getData(key: AppStrings.isAdvertise)
-              ? HomeScreen(
-                  selectedIndex: 2,
-                )
-              : HomeScreenForPatient(
-                  selectedIndex: 1,
-                ),
-        );
+        handleRoute(context, message);
       }
     });
   }
 
+  ///get fiebase token 'fcm'
   Future<String?> getFirebaseToken() async {
     return await firebaseMessaging.getToken();
+  }
+
+  void handleRoute(BuildContext context, RemoteMessage message) {
+    if (message.notification?.title == 'ربحت نقاط جديدة') {
+      AppConstants.pushRemoveNavigator(
+        context,
+        screen: CacheHelper.getData(key: AppStrings.isAdvertise)
+            ? HomeScreen(
+                selectedIndex: 2,
+              )
+            : HomeScreenForPatient(
+                selectedIndex: 1,
+              ),
+      );
+    } else {
+      AppConstants.pushRemoveNavigator(
+        context,
+        screen: CacheHelper.getData(key: AppStrings.isAdvertise)
+            ? HomeScreen(
+                selectedIndex: 2,
+              )
+            : HomeScreenForPatient(
+                selectedIndex: 1,
+              ),
+      );
+    }
   }
 }
 

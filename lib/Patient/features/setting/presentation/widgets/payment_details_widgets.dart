@@ -212,100 +212,98 @@ class _WaysForPaymentState extends State<WaysForPayment> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: context.width,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: [
-                SvgPicture.asset("assets/icons/budget_icon_for_payment.svg"),
-                20.pw,
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "عن طريق المحفظة",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                      5.ph,
-                      const Text(
-                        "رصيدك 1500 ريال سعودي",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: AppColors.secondryColor,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ),
-                BlocBuilder<PaymentCubit, PaymentState>(
-                  builder: (context, state) {
-                    return SizedBox(
-                      width: 25,
-                      height: 50,
-                      child: RadioListTile(
-                        activeColor: AppColors.primaryColor,
-                        value: PayType.wallet,
-                        groupValue: state.selectedPayType,
-                        onChanged: (value) {
-                          context.read<PaymentCubit>().onSelectPayType(value!);
-                        },
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
+        PaymentTypeTile(
+          title: "عن طريق المحفظة الاليكترونية",
+          balance: 0, //todo
+          value: PayType.wallet,
+          icon: AppImages.walletIcon,
         ),
         10.ph,
-        Container(
-          width: context.width,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                    "assets/icons/budget_outline_icon_for_payment.svg"),
-                20.pw,
-                const Expanded(
-                  child: Text(
-                    "عن طريق البطاقة الائتمانية",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                BlocBuilder<PaymentCubit, PaymentState>(
-                  builder: (context, state) {
-                    return SizedBox(
-                      width: 25,
-                      height: 50,
-                      child: RadioListTile(
-                        activeColor: AppColors.primaryColor,
-                        value: PayType.visa,
-                        groupValue: state.selectedPayType,
-                        onChanged: (value) {
-                          context.read<PaymentCubit>().onSelectPayType(value!);
-                        },
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
-          ),
+        PaymentTypeTile(
+          title: "عن طريق البطاقة الائتمانية",
+          value: PayType.visa,
+          icon: AppImages.budgetIcon,
+        ),
+        10.ph,
+        PaymentTypeTile(
+          title: "عن طريق تمارا",
+          value: PayType.tamara,
+          icon: AppImages.budgetIcon,
         ),
       ],
+    );
+  }
+}
+
+class PaymentTypeTile extends StatelessWidget {
+  const PaymentTypeTile({
+    super.key,
+    this.balance,
+    required this.title,
+    required this.icon,
+    required this.value,
+  });
+
+  final String title;
+  final num? balance;
+  final String icon;
+  final PayType value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: context.width,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Row(
+          children: [
+            SvgPicture.asset(icon),
+            20.pw,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                  5.ph,
+                  if (balance != null)
+                    Text(
+                      "رصيدك ${balance} ريال سعودي",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.secondryColor,
+                          fontWeight: FontWeight.w500),
+                    ),
+                ],
+              ),
+            ),
+            BlocBuilder<PaymentCubit, PaymentState>(
+              builder: (context, state) {
+                return SizedBox(
+                  width: 25,
+                  height: 50,
+                  child: RadioListTile(
+                    activeColor: AppColors.primaryColor,
+                    value: value, //  PayType.wallet,
+                    groupValue: state.selectedPayType,
+                    onChanged: (value) {
+                      context.read<PaymentCubit>().onSelectPayType(value!);
+                    },
+                  ),
+                );
+              },
+            )
+          ],
+        ),
+      ),
     );
   }
 }

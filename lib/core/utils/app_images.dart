@@ -39,7 +39,8 @@ class AppImages {
   static String mikeIcon = 'assets/icons/mike_icon.svg';
   static String emptyNotifications = "assets/icons/no_notifications.svg";
   static String xicon = "assets/icons/xicon.svg";
-
+  static String walletIcon = 'assets/icons/budget_icon_for_payment.svg';
+  static String budgetIcon = "assets/icons/budget_outline_icon_for_payment.svg";
   // ignore: non_constant_identifier_names
   static String sports_muscle_injuries_icon =
       "assets/icons/sports_muscle_injuries_icon.svg";
