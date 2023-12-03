@@ -214,10 +214,6 @@ class ReservationCubit extends Cubit<ReservationState> {
       // print("Latitude: ${lat}, Longitude: ${lng}");
 
       if (withOffer) {
-        print(state.offer.runtimeType);
-        print(state.start_at.runtimeType);
-        print(state.end_at.runtimeType);
-        print(daysArray.runtimeType);
         body = {
           "start_at": "${state.start_at}",
           "end_at": "${state.end_at}",
