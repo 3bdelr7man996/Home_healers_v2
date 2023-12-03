@@ -11,6 +11,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
@@ -40,9 +41,11 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
 
   IsGuest() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('guest') == false)
+    if (prefs.containsKey('guest') == false) {
       context.read<GetPointsCubit>().GetMyPoints(context);
-
+      context.read<ReportsCubit>().GetReports();
+      context.read<AuthCubit>().getAllCities();
+    }
     setState(() {
       IsUserGuest = prefs.containsKey('guest');
     });
@@ -54,7 +57,6 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
     super.initState();
     IsUserGuest = false;
     IsGuest();
-    context.read<ReportsCubit>().GetReports();
   }
 
   @override

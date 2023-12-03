@@ -1,19 +1,32 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TotalDetails extends StatelessWidget {
   bool withOffer;
-  TotalDetails({super.key, required this.withOffer});
+  var selectedName;
+  final OrderData order;
+  var categories;
+  TotalDetails(
+      {super.key,
+      required this.withOffer,
+      required this.order,
+      this.selectedName,
+      this.categories});
 
   @override
   Widget build(BuildContext context) {
+    print(categories);
+    print(selectedName);
     return Container(
       width: context.width,
       decoration: BoxDecoration(
@@ -26,27 +39,47 @@ class TotalDetails extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(
-                  "assets/images/person2.png",
-                  width: 100,
-                  height: 75,
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  child: AppConstants.customNetworkImage(
+                    imagePath: "${order.advertiser.image}",
+                    imageError: AppImages.doctorPlaceholder,
+                    width: context.width * 0.25,
+                    height: context.width * 0.25 - 10,
+                  ),
                 ),
                 5.pw,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "فارس الفارس",
+                      Text(
+                        order.advertiser.nameAr!,
                         style: TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 18),
                       ),
                       withOffer ? 5.ph : 10.ph,
-                      const Text(
-                        "أخصائي علاج طبيعي",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300, fontSize: 14),
-                      ),
+                      categories.isNotEmpty
+                          ? SizedBox(
+                              height: 35,
+                              child: DropdownButton<String>(
+                                padding: EdgeInsets.zero,
+                                underline: SizedBox(), // Hide the underline
+                                value: selectedName,
+                                onChanged: (String? newValue) {},
+                                items: categories.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                      style: TextStyle(fontSize: 14.0),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            )
+                          : const Text('No Data available'),
                       withOffer ? 5.ph : 0.ph,
                       withOffer
                           ? Row(
@@ -84,12 +117,12 @@ class TotalDetails extends StatelessWidget {
               ],
             ),
             5.ph,
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("عدد الجلسات :"),
                 Text(
-                  "4",
+                  order.sessionsCount != null ? "${order.sessionsCount}" : "",
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
               ],
@@ -128,22 +161,22 @@ class TotalDetails extends StatelessWidget {
                     ],
                   ),
             5.ph,
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("الضريبة :"),
-                Text(
-                  "0 ريال",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            5.ph,
+            // const Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Text("الضريبة :"),
+            //     Text(
+            //       "0 ريال",
+            //       style: TextStyle(fontWeight: FontWeight.w500),
+            //     ),
+            //   ],
+            // ),
+            // 5.ph,
             const Divider(
               thickness: 1,
             ),
             5.ph,
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -151,7 +184,10 @@ class TotalDetails extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "1000 ريال",
+                  order.advertiser.sessionPrice != null ||
+                          order.sessionsCount != null
+                      ? "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
+                      : "",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

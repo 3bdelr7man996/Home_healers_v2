@@ -1,5 +1,4 @@
 import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
