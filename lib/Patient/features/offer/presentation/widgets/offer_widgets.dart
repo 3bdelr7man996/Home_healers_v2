@@ -1,9 +1,13 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
 import 'package:dr/Patient/features/offer/presentation/pages/packages_details.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -20,6 +24,7 @@ class _OfferCardState extends State<OfferCard> {
 
   IsGuest() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    context.read<AuthCubit>().getAllStatus();
 
     setState(() {
       IsUserGuest = prefs.containsKey('guest');
@@ -42,8 +47,19 @@ class _OfferCardState extends State<OfferCard> {
       onTap: () {
         IsUserGuest == true
             ? null
-            : AppConstants.customNavigation(
-                context, OfferDetailsScreen(Package: widget.Package), -1, 0);
+            : (
+                AppConstants.customNavigation(
+                    context,
+                    SectionDetailsScreen(
+                      fromOffer: true,
+                      SectiondetailsTitle: "اختر الأخصائي ",
+                      sessionCountForOffer: widget.Package.sessionCount,
+                      numberOfIcon: widget.Package.status_id,
+                    ),
+                    -1,
+                    0),
+                context.read<ReservationCubit>().OnOfferChange(widget.Package)
+              );
       },
       child: Container(
         margin: const EdgeInsets.all(10),
@@ -154,8 +170,22 @@ class _OfferCardState extends State<OfferCard> {
                   onPressed: () {
                     IsUserGuest == true
                         ? null
-                        : AppConstants.customNavigation(context,
-                            OfferDetailsScreen(Package: widget.Package), -1, 0);
+                        : (
+                            AppConstants.customNavigation(
+                                context,
+                                SectionDetailsScreen(
+                                  fromOffer: true,
+                                  SectiondetailsTitle: "اختر الأخصائي ",
+                                  sessionCountForOffer:
+                                      widget.Package.sessionCount,
+                                  numberOfIcon: widget.Package.status_id,
+                                ),
+                                -1,
+                                0),
+                            context
+                                .read<ReservationCubit>()
+                                .OnOfferChange(widget.Package)
+                          );
                   },
                   child: const Text('استمتع بالعرض'),
                 ),

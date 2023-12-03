@@ -31,6 +31,7 @@ class Packages {
     required this.updatedAt,
     required this.sessionCount,
     required this.price,
+    required this.status_id,
     this.advertiserId,
     required this.type,
     required this.description,
@@ -42,7 +43,8 @@ class Packages {
   late final String updatedAt;
   late final int sessionCount;
   late final int price;
-  late final Null advertiserId;
+  late var status_id;
+  late var advertiserId;
   late final String type;
   late final String description;
   late final int oldPrice;
@@ -54,7 +56,8 @@ class Packages {
     updatedAt = json?['updated_at'];
     sessionCount = json?['session_count'];
     price = json?['price'];
-    advertiserId = null;
+    status_id = json?['status_id'];
+    advertiserId = json?['advertiser_id'];
     type = json?['type'];
     description = json?['description'];
     oldPrice = json?['old_price'];
@@ -68,6 +71,7 @@ class Packages {
     _data['updated_at'] = updatedAt;
     _data['session_count'] = sessionCount;
     _data['price'] = price;
+    _data['status_id'] = status_id;
     _data['advertiser_id'] = advertiserId;
     _data['type'] = type;
     _data['description'] = description;
