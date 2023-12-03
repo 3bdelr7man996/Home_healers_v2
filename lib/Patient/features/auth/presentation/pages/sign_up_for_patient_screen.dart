@@ -87,7 +87,7 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                     IntlPhoneField(
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
-                        hintText: ' رقم الموبايل',
+                        hintText: ' رقم الجوال',
                         suffixIcon: const Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(),

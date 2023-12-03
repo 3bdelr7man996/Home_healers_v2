@@ -45,7 +45,7 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
               "المؤكدة",
               "المكتملة",
               "الملغية",
-              "قيد الانتظار",
+              // "قيد الانتظار",
             ],
             activeIndex: activeIndex,
             onIndexChanged: (index) {

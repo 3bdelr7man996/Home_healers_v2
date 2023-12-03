@@ -11,6 +11,7 @@ import 'package:dr/shared_widgets/submit_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 import 'bottom_sheet.dart';
 import 'location_input.dart';
@@ -65,16 +66,32 @@ class SignUpBody extends StatelessWidget {
                           context.read<AuthCubit>().onEmailChange(p0),
                     ),
                     30.ph,
-                    TiteldTextFormField(
-                      title: "mobile_number".tr(),
-                      keyboardType: TextInputType.phone,
-                      prefixIconPath: AppImages.phoneIcon,
-                      validate: true,
-                      validateMsg: "required".tr(),
-                      onChanged: (p0) =>
-                          context.read<AuthCubit>().onPhoneChange(p0),
+                    IntlPhoneField(
+                      textAlign: TextAlign.right,
+                      decoration: InputDecoration(
+                        hintText: ' رقم الجوال',
+                        suffixIcon: const Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(),
+                        ),
+                      ),
+                      initialCountryCode: 'SA',
+                      onChanged: (phone) {
+                        context
+                            .read<AuthCubit>()
+                            .onPhoneChange(phone.completeNumber);
+                      },
                     ),
-                    30.ph,
+                    // TiteldTextFormField(
+                    //   title: "mobile_number".tr(),
+                    //   keyboardType: TextInputType.phone,
+                    //   prefixIconPath: AppImages.phoneIcon,
+                    //   validate: true,
+                    //   validateMsg: "required".tr(),
+                    //   onChanged: (p0) =>
+                    //       context.read<AuthCubit>().onPhoneChange(p0),
+                    // ),
+                    15.ph,
                     BlocBuilder<AuthCubit, AuthState>(
                       buildWhen: (previous, current) =>
                           previous.obscurePass != current.obscurePass,

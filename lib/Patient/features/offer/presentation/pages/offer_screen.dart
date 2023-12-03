@@ -21,8 +21,6 @@ class _OfferScreenState extends State<OfferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("aha");
-    print(widget.Offers['offers'][0]['advertiser']['status_advisor']);
     var data = widget.Offers['offers'];
     return Expanded(
       child: ListView.builder(

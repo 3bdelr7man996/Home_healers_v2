@@ -41,8 +41,6 @@ class _EditProfileScreenForPatientState
     getAttributeFromSharedPreferences().then((value) {
       setState(() {
         userInfo = value;
-        print("asdf");
-        print(value);
 
         jsonData = jsonDecode(userInfo);
         List<String> words = jsonData["name"].split(" ");
@@ -51,25 +49,33 @@ class _EditProfileScreenForPatientState
         email = jsonData["email"];
         mobile = jsonData["mobile"];
       });
+      context
+          .read<UpdateInfoCubit>()
+          .onCityIdChange(jsonData!["city_id"].toString());
+      context
+          .read<UpdateInfoCubit>()
+          .onFullNameChange(jsonData["name"].toString());
+      context
+          .read<UpdateInfoCubit>()
+          .onEmailChange(jsonData["email"].toString());
+      context
+          .read<UpdateInfoCubit>()
+          .onNumberChange(jsonData["mobile"].toString());
+      context
+          .read<UpdateInfoCubit>()
+          .onGenderChange(jsonData["gender"].toString());
     });
   }
 
-  var city = "";
   int x = 0;
   @override
   Widget build(BuildContext context) {
-    List<String?> citiesForDropDown = [];
-
     var cities = context.select((AuthCubit cubit) => cubit.state.citiesList);
-    if (jsonData != null && cities != null)
-      for (int i = 0; i < cities.length; i++) {
-        citiesForDropDown.add(cities[i].nameAr);
-        if (x == 0) if (cities[i].id == jsonData?["city_id"]) {
-          city = cities[i].nameAr!;
-          x++;
-        }
-        ;
-      }
+    for (int i = 0; i < cities!.length; i++) {
+      if (cities[i].id.toString() == jsonData?["city_id"])
+        context.read<UpdateInfoCubit>().oncitySelectedChange(cities[i].nameAr!);
+    }
+    print(jsonData);
 
     return Scaffold(
         appBar: customAppBar(
@@ -133,7 +139,7 @@ class _EditProfileScreenForPatientState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "choose_nationality".tr(),
+                                  "اختر الجنس".tr(),
                                   style:
                                       bigBlackFont(fontWeight: FontWeight.w500),
                                 ),
@@ -156,27 +162,42 @@ class _EditProfileScreenForPatientState
                             ),
                           ),
                           30.ph,
-                          Container(
-                            width: context.width,
-                            child: DropdownButton<String>(
-                              value: city,
-                              items: citiesForDropDown
-                                  .map((citty) => DropdownMenuItem(
-                                      value: citty, child: Text(citty!)))
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  city = value!;
-                                  var val;
-                                  for (int i = 0; i < cities.length; i++)
-                                    if (cities[i].nameAr == city)
-                                      val = cities[i].id;
-                                  context
-                                      .read<UpdateInfoCubit>()
-                                      .onCityIdChange(val.toString());
-                                });
-                              },
-                            ),
+                          BlocBuilder<AuthCubit, AuthState>(
+                            builder: (context, state) {
+                              return Container(
+                                width: context.width,
+                                child: BlocBuilder<UpdateInfoCubit,
+                                    UpdateInfoState>(
+                                  builder: (context, updateInfoState) {
+                                    return DropdownButton<String>(
+                                      value: updateInfoState.citySelected,
+                                      items: state.citiesList
+                                          ?.map((city) => DropdownMenuItem(
+                                              value: city.nameAr,
+                                              child: Text(city.nameAr!)))
+                                          .toList(),
+                                      onChanged: (value) {
+                                        context
+                                            .read<UpdateInfoCubit>()
+                                            .oncitySelectedChange(value);
+
+                                        var val;
+                                        for (int i = 0;
+                                            i < cities.length;
+                                            i++) {
+                                          if (cities[i].nameAr == value) {
+                                            val = cities[i].id;
+                                          }
+                                        }
+                                        context
+                                            .read<UpdateInfoCubit>()
+                                            .onCityIdChange(val.toString());
+                                      },
+                                    );
+                                  },
+                                ),
+                              );
+                            },
                           ),
                           30.ph,
                           SizedBox(

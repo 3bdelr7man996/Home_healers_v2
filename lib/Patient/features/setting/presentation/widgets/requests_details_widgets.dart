@@ -275,20 +275,20 @@ class Bill extends StatelessWidget {
           ],
         ),
         20.ph,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "الضريبة :",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            Text(
-              "0 ريال",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            )
-          ],
-        ),
-        20.ph,
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     Text(
+        //       "الضريبة :",
+        //       style: TextStyle(fontWeight: FontWeight.w500),
+        //     ),
+        //     Text(
+        //       "0 ريال",
+        //       style: TextStyle(fontWeight: FontWeight.w600),
+        //     )
+        //   ],
+        // ),
+        // 20.ph,
         const Divider(
           thickness: 1,
         ),
@@ -598,7 +598,7 @@ class OneSessionInfoForPatient extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: context.width * 0.25,
+            width: context.width * 0.3,
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black, width: 1),
               borderRadius: BorderRadius.circular(10),

@@ -36,7 +36,7 @@ class _OfferCardState extends State<OfferCard> {
 
   @override
   Widget build(BuildContext context) {
-    var newPrice = widget.Package.oldPrice - int.parse(widget.Package.discount);
+    // var newPrice = widget.Package.oldPrice - int.parse(widget.Package.discount);
 
     return InkWell(
       onTap: () {
@@ -79,7 +79,7 @@ class _OfferCardState extends State<OfferCard> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10, right: 5),
                               child: Text(
-                                "${widget.Package.discount}",
+                                "${widget.Package.discount} %",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -114,7 +114,7 @@ class _OfferCardState extends State<OfferCard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "${newPrice} SAR",
+                    "${widget.Package.price} SAR",
                     style: TextStyle(
                         color: AppColors.secondryColor,
                         fontWeight: FontWeight.bold,

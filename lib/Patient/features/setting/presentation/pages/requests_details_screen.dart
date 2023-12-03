@@ -206,36 +206,32 @@ class _RequestsDetailsScreenForPatientState
                             ],
                           )
                         : widget.num != 1 && widget.num != 5
-                            ? widget.oneOrder.startAt == widget.oneOrder.endAt
-                                ? SizedBox()
-                                : ElevatedButton(
-                                    onPressed: () {
-                                      _toggleVisibility();
-                                    },
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                        AppColors.primaryColor,
-                                      ),
-                                      minimumSize: MaterialStateProperty.all(
-                                        const Size(double.infinity, 50),
-                                      ),
+                            ? ElevatedButton(
+                                onPressed: () {
+                                  _toggleVisibility();
+                                },
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    child: const Text(
-                                      'الغاء الطلب',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    AppColors.primaryColor,
+                                  ),
+                                  minimumSize: MaterialStateProperty.all(
+                                    const Size(double.infinity, 50),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'الغاء الطلب',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
                             : const SizedBox(),
                   if (widget.num == 1)
                     ElevatedButton(
@@ -244,7 +240,10 @@ class _RequestsDetailsScreenForPatientState
                         AppConstants.customNavigation(
                             context,
                             PaymentDetailsScreen(
-                                withOffer: true, order: widget.oneOrder),
+                                selectedName: widget.selectedName,
+                                withOffer: true,
+                                order: widget.oneOrder,
+                                categories: widget.categories),
                             -1,
                             0);
                       },

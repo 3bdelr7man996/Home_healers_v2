@@ -91,15 +91,15 @@ class UpdateReservationState extends Equatable {
 ////////////////////////////////////////////////////////// NEW CLASS //////////////////////////////
 
 class UpdateInfoState extends Equatable {
-  UpdateInfoState({
-    this.Loading = false,
-    this.fullName,
-    this.email,
-    this.mobile,
-    this.gender,
-    this.cityId,
-    this.image,
-  });
+  UpdateInfoState(
+      {this.Loading = false,
+      this.fullName,
+      this.email,
+      this.mobile,
+      this.gender,
+      this.cityId,
+      this.image,
+      this.citySelected});
   final bool Loading;
   final String? fullName;
   final String? email;
@@ -107,11 +107,12 @@ class UpdateInfoState extends Equatable {
   final String? gender;
   final String? cityId;
   var image;
+  var citySelected;
 
   @override
   @override
   List<Object?> get props =>
-      [Loading, fullName, email, mobile, gender, cityId, image];
+      [Loading, fullName, email, mobile, gender, cityId, image, citySelected];
   UpdateInfoState copyWith({
     bool? Loading,
     String? fullName,
@@ -120,6 +121,7 @@ class UpdateInfoState extends Equatable {
     String? gender,
     String? cityId,
     var image,
+    var citySelected,
   }) =>
       UpdateInfoState(
           Loading: Loading ?? this.Loading,
@@ -128,6 +130,7 @@ class UpdateInfoState extends Equatable {
           gender: gender ?? this.gender,
           image: image ?? this.image,
           cityId: cityId ?? this.cityId,
+          citySelected: citySelected ?? this.citySelected,
           fullName: fullName ?? this.fullName);
 }
 
@@ -194,7 +197,6 @@ class AddReportState extends Equatable {
     this.Data = false,
   });
   var Data;
-
   @override
   @override
   List<Object?> get props => [
