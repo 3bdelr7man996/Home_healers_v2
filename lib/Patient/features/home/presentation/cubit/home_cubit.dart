@@ -249,7 +249,8 @@ class ReservationCubit extends Cubit<ReservationState> {
       var response;
       if (withOffer) {
         response = await reservationWithOfferRepo.MakeReservation(body: body);
-        print("lad phg hguvmqq");
+        print(body);
+        print("ghaith");
       } else {
         response = await reservationRepo.MakeReservation(body: body);
       }
