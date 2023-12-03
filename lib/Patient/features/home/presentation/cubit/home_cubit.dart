@@ -159,7 +159,11 @@ class ReservationCubit extends Cubit<ReservationState> {
   onChangeNotes(value) => {emit(state.copyWith(notes: value))};
   makeNotesEmpty() => {emit(state.copyWith(notes: ""))};
   onChangePainPlace(value) => {emit(state.copyWith(painPlace: value))};
-  OnOfferChange(var offer) => emit(state.copyWith(offer: offer));
+  OnOfferChange(var offer) => {
+        emit(state.copyWith(offer: offer)),
+        print(state.offer),
+        print("Ahmad"),
+      };
 
   Future<void> MakeReservation(BuildContext context, bool withOffer) async {
     var userId = await CacheHelper.getData(key: AppStrings.userId);

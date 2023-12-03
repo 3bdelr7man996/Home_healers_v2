@@ -64,8 +64,7 @@ class _DoctorCardState extends State<DoctorCard> {
   @override
   void initState() {
     super.initState();
-    if (widget.offer != null)
-      context.read<ReservationCubit>().OnOfferChange(widget.offer);
+
     names.add("الأقسام :");
     for (var item in widget.statusAdvisor) {
       names.add(item['name_ar']);
@@ -217,6 +216,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     ),
               20.ph,
               ButtonForDoctorCard(
+                  offer: widget.offer,
                   fromFilter: widget.fromFilter,
                   sessionCountForOffer: widget.sessionCountForOffer,
                   Data: widget.Data,
@@ -405,9 +405,11 @@ class ButtonForDoctorCard extends StatelessWidget {
   bool fromOffer;
   var sessionCountForOffer;
   var fromFilter;
+  var offer;
   ButtonForDoctorCard(
       {super.key,
       this.Data,
+      this.offer,
       this.fromFilter = false,
       this.sessionCountForOffer,
       this.status_id,
@@ -426,6 +428,8 @@ class ButtonForDoctorCard extends StatelessWidget {
       width: context.width,
       child: ElevatedButton(
         onPressed: () {
+          if (offer != null)
+            context.read<ReservationCubit>().OnOfferChange(offer);
           AppConstants.customNavigation(
               context,
               fromOffer || fromFilter

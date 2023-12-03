@@ -48,16 +48,19 @@ class _OfferCardState extends State<OfferCard> {
         IsUserGuest == true
             ? null
             : (
-                AppConstants.customNavigation(
-                    context,
-                    SectionDetailsScreen(
-                      fromOffer: true,
-                      SectiondetailsTitle: "اختر الأخصائي ",
-                      sessionCountForOffer: widget.Package.sessionCount,
-                      numberOfIcon: widget.Package.status_id,
-                    ),
-                    -1,
-                    0),
+                widget.Package.status_id == null
+                    ? AppConstants.customNavigation(context,
+                        OfferDetailsScreen(Package: widget.Package), -1, 0)
+                    : AppConstants.customNavigation(
+                        context,
+                        SectionDetailsScreen(
+                          fromOffer: true,
+                          SectiondetailsTitle: "اختر الأخصائي ",
+                          sessionCountForOffer: widget.Package.sessionCount,
+                          numberOfIcon: widget.Package.status_id,
+                        ),
+                        -1,
+                        0),
                 context.read<ReservationCubit>().OnOfferChange(widget.Package)
               );
       },
@@ -171,17 +174,23 @@ class _OfferCardState extends State<OfferCard> {
                     IsUserGuest == true
                         ? null
                         : (
-                            AppConstants.customNavigation(
-                                context,
-                                SectionDetailsScreen(
-                                  fromOffer: true,
-                                  SectiondetailsTitle: "اختر الأخصائي ",
-                                  sessionCountForOffer:
-                                      widget.Package.sessionCount,
-                                  numberOfIcon: widget.Package.status_id,
-                                ),
-                                -1,
-                                0),
+                            widget.Package.status_id == null
+                                ? AppConstants.customNavigation(
+                                    context,
+                                    OfferDetailsScreen(Package: widget.Package),
+                                    -1,
+                                    0)
+                                : AppConstants.customNavigation(
+                                    context,
+                                    SectionDetailsScreen(
+                                      fromOffer: true,
+                                      SectiondetailsTitle: "اختر الأخصائي ",
+                                      sessionCountForOffer:
+                                          widget.Package.sessionCount,
+                                      numberOfIcon: widget.Package.status_id,
+                                    ),
+                                    -1,
+                                    0),
                             context
                                 .read<ReservationCubit>()
                                 .OnOfferChange(widget.Package)
