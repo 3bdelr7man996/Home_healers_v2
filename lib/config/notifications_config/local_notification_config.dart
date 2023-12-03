@@ -41,14 +41,17 @@ class LocalNotificationsService {
 
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveBackgroundNotificationResponse: _selectNotification,
-      onDidReceiveNotificationResponse: _selectNotification,
+      // onDidReceiveBackgroundNotificationResponse: _selectNotification,
+      // onDidReceiveNotificationResponse: _selectNotification,
     );
   }
 
   static void _selectNotification(NotificationResponse notificationResponse) {
     // Handle when a user taps the local notification
     // Customize this method for your app's needs
+    print("Selected Local Notifcation===");
+    print("local Notification============== ${notificationResponse.payload}");
+    dev.log("select local notificatiomn");
     dev.log(
         "Select Notification method payload ${notificationResponse.payload}");
     dev.log(
@@ -64,6 +67,7 @@ class LocalNotificationsService {
       'homeHealers_channel_id',
       'HomeHealers_channel',
       importance: Importance.high,
+      priority: Priority.high,
       // sound: RawResourceAndroidNotificationSound(
       //     'custom_sound'),
     );

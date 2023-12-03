@@ -1,3 +1,4 @@
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:dr/doctor/features/home/presentation/widgets/all_request_widgets
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dr/di_container.dart' as di;
 
 class Allrequests extends StatefulWidget {
   const Allrequests({super.key});
@@ -19,6 +21,7 @@ class _AllrequestsState extends State<Allrequests> {
 
   @override
   void initState() {
+    di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<ReservationsCubit>().getReservationStatus();
     super.initState();
   }

@@ -490,8 +490,8 @@ class Advertiser {
   late final String addressAr;
   late final String addressEn;
   late final String gender;
-  late final String iban;
-  late final String location;
+  late final String? iban;
+  late final String? location;
   late var bundleId;
   late var countryId;
   late var cityId;

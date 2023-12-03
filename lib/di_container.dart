@@ -62,6 +62,7 @@ import 'package:dr/features/auth/data/repositories/reset_password_repo.dart';
 import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'config/notifications_config/firebase_messages.dart';
@@ -81,15 +82,18 @@ final sl = GetIt.instance;
 
 Future<void> serviceLocatorInit() async {
   sl.allowReassignment = true;
-  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  final PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
   sl.registerLazySingleton(() => pusher);
 
   // Core
   sl.registerLazySingleton(() => PusherConfiguration(pusher: sl()));
   sl.registerLazySingleton(() => ApiBaseHelper(AppStrings.baseUrl));
   sl.registerLazySingleton(() => LocalNotificationsService());
-  sl.registerLazySingleton(
-      () => FirebaseMessagingService(localNotification: sl()));
+  sl.registerLazySingleton(() => FirebaseMessagingService(
+        firebaseMessaging: _firebaseMessaging,
+        localNotification: sl(),
+      ));
 
   //data source class
   sl.registerLazySingleton(() => AdvertiseSignUpDS(apiHelper: sl()));

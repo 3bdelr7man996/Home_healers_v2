@@ -13,6 +13,7 @@ import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dr/di_container.dart' as di;
 
@@ -26,6 +27,7 @@ class LoginCubit extends Cubit<LoginState> {
     CacheHelper.clearData(key: AppStrings.userInfo);
     CacheHelper.clearData(key: AppStrings.userToken);
     CacheHelper.clearData(key: AppStrings.isAdvertise);
+    FirebaseMessaging.instance.deleteToken();
   }
 
   //?====================[ SIGN IN USER ]===================

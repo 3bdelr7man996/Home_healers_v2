@@ -7,8 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SheetForEarnMoney extends StatelessWidget {
-  const SheetForEarnMoney({super.key});
-
+  const SheetForEarnMoney({
+    super.key,
+    required this.title,
+    required this.body,
+  });
+  final String? body;
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,35 +25,22 @@ class SheetForEarnMoney extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "مبروك !",
+                "$title",
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primaryColor),
               ),
               10.ph,
-              Text("لقد حصلت علي مزيد من النقاط لاستخدامك التطبيق"),
+              Text(
+                body ?? '',
+                maxLines: 3,
+              ),
               10.ph,
               SvgPicture.asset(
                 "assets/icons/congrate_for_points.svg",
                 width: context.width,
                 height: 120,
-              ),
-              10.ph,
-              Text(
-                "50 نقطة",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.secondryColor),
-              ),
-              10.ph,
-              Text(
-                "(15 ل.س)",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor),
               ),
               20.ph,
               Container(

@@ -197,14 +197,21 @@ class PaymentCubit extends Cubit<PaymentState> {
   //?============================[ EARN NEW POINTS ]============================
 
   ///SHOW BOTTOMSHEET TO EARN POINTS
-  void showBottomSheetForEarnPoints(BuildContext context) {
+  void showBottomSheetForEarnPoints(
+    BuildContext context, {
+    required String? title,
+    required String? body,
+  }) {
     showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
       ),
       builder: (BuildContext context) {
-        return SheetForEarnMoney();
+        return SheetForEarnMoney(
+          title: title,
+          body: body,
+        );
       },
     );
   }

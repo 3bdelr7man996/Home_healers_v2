@@ -5,7 +5,9 @@ import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dar
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dr/di_container.dart' as di;
 
 class SectionsScreen extends StatefulWidget {
   final BuildContext context;
@@ -24,9 +26,8 @@ class _SectionsScreenState extends State<SectionsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
+    di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<GetAllAdsCubit>().GetAllAds(context);
     var isGuestExist = IsGuest();
     print(isGuestExist);

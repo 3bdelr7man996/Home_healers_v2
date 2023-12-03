@@ -143,6 +143,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   GestureDetector(
                     onTap: () {
                       context.read<LoginCubit>().logOut();
+
                       AppConstants.pushRemoveNavigator(context,
                           screen: const SelectRollForSignIn());
                     },
