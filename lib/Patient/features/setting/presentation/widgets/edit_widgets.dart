@@ -47,10 +47,8 @@ class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
         _imageFile = File(pickedImage.path);
         showSelectedPhoto = false;
         context.read<UpdateInfoCubit>().onimageChange(_imageFile);
-        print(_imageFile);
       } else {
         _imageFile = File('assets/images/doctor.png');
-        print('No image selected.');
       }
     });
   }
@@ -77,8 +75,7 @@ class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
                               "${AppStrings.baseUrl}/upload/${jsonData["image"]}",
                             ),
                             fit: BoxFit.cover,
-                            onError: (exception, stackTrace) =>
-                                {print(exception)},
+                            onError: (exception, stackTrace) => {},
                           )),
                     )
                   : CircleAvatar(

@@ -31,7 +31,6 @@ class _ReportsForMeState extends State<ReportsForMe> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  print("as");
                   AppConstants.customNavigation(
                       context,
                       PhotoViewerRouteWrapper(
@@ -94,7 +93,6 @@ class _specialist_reportsState extends State<specialist_reports> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  print("as");
                   AppConstants.customNavigation(
                       context,
                       PhotoViewerRouteWrapper(

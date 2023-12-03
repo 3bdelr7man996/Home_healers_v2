@@ -140,6 +140,7 @@ class UpdateInfoCubit extends Cubit<UpdateInfoState> {
   onGenderChange(String value) => emit(state.copyWith(gender: value));
   onCityIdChange(String value) => emit(state.copyWith(cityId: value));
   onimageChange(var value) => emit(state.copyWith(image: value));
+  oncitySelectedChange(var value) => emit(state.copyWith(citySelected: value));
 
   Future<void> UpdateInfoForUser(BuildContext context) async {
     List<File> images = [];

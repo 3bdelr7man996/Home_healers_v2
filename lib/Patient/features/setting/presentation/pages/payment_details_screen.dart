@@ -20,10 +20,14 @@ import 'package:flutter_svg/svg.dart';
 class PaymentDetailsScreen extends StatefulWidget {
   bool withOffer;
   final OrderData order;
+  var categories;
+  var selectedName;
   PaymentDetailsScreen({
     super.key,
     this.withOffer = false,
     required this.order,
+    this.categories,
+    this.selectedName,
   });
 
   @override
@@ -39,6 +43,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.order);
     return Scaffold(
       appBar: customAppBar(context, title: "payment_details", backButton: true),
       body: Padding(
@@ -54,7 +59,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                 ),
               ),
               10.ph,
-              TotalDetails(withOffer: widget.withOffer),
+              TotalDetails(
+                  withOffer: false,
+                  order: widget.order,
+                  selectedName: widget.selectedName,
+                  categories: widget.categories),
               widget.withOffer ? 0.ph : 20.ph,
               widget.withOffer
                   ? const SizedBox.shrink()
