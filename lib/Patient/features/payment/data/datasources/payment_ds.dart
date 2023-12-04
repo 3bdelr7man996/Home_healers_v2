@@ -57,4 +57,11 @@ class PaymentDataSource {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>?> getWalletBalance() async {
+    Map<String, dynamic>? response = await apiHelper.get(
+      AppStrings.walletBalance,
+    );
+    return response;
+  }
 }

@@ -60,4 +60,8 @@ class AppImages {
   static String logOutIcon = "assets/icons/log_out_setting_icon.svg";
   static String pointsPayIcon = 'assets/icons/pay_icon.svg';
   static String errorIcon = "assets/icons/error_icon.svg";
+  static String masterCard = 'assets/icons/master_card_icon.svg';
+  static String visaCard = 'assets/icons/visa_card_icon.svg';
+  static String madaCard = 'assets/icons/mada_card.svg';
+  static String americanExCard = 'assets/icons/american_ex_card.svg';
 }

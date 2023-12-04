@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/payment/presentation/pages/visa_payment_screen.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/choose_card_for_payment_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/payment_details_widgets.dart';
@@ -93,7 +94,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               15.ph,
               BlocBuilder<PaymentCubit, PaymentState>(
                 builder: (context, state) {
-                  if (state.payWalletState == RequestState.loading) {
+                  if (state.payWalletState == RequestState.loading ||
+                      state.payState == RequestState.loading) {
                     return CustomLoader(
                       padding: 0,
                     );
@@ -112,26 +114,37 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                             ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           log('${context.read<PaymentCubit>().state.selectedPayType}');
-                          if (context
-                                  .read<PaymentCubit>()
-                                  .state
-                                  .selectedPayType ==
-                              null) {
+                          if (state.selectedPayType == null) {
                             return;
                           }
-                          if (context
+                          switch (state.selectedPayType) {
+                            case PayType.wallet:
+                              context
                                   .read<PaymentCubit>()
-                                  .state
-                                  .selectedPayType ==
-                              PayType.wallet) {
-                            context
-                                .read<PaymentCubit>()
-                                .payByWallet(context, order: widget.order);
-                          } else {
-                            AppConstants.customNavigation(context,
-                                ChooseCardScreen(order: widget.order), 0, 1);
+                                  .payByWallet(context, order: widget.order);
+                              break;
+                            case PayType.visa:
+                              AppConstants.customNavigation(context,
+                                  ChooseCardScreen(order: widget.order), 0, 1);
+                              break;
+                            case PayType.tamara:
+                              await context
+                                  .read<PaymentCubit>()
+                                  .payByTamara(
+                                      reservationParentId: widget.order.id)
+                                  .then((value) {
+                                if (value == true) {
+                                  AppConstants.customNavigation(
+                                      context,
+                                      VisaPaymentScreen(myOrder: widget.order),
+                                      0,
+                                      1);
+                                }
+                              });
+                              break;
+                            default:
                           }
                         },
                         child: const Text('تابع'),

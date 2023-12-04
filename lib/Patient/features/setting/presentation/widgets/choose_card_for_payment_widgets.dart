@@ -119,6 +119,7 @@ class CardWay extends StatelessWidget {
             iconPath.endsWith('svg')
                 ? AppConstants.customAssetSvg(
                     imagePath: iconPath,
+                    width: 45,
                   )
                 : AppConstants.customAssetImage(
                     imagePath: iconPath,

@@ -7,6 +7,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -192,10 +193,12 @@ class TotalDetails extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  order.advertiser.sessionPrice != null &&
-                          order.sessionsCount != null
-                      ? "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
-                      : "",
+                  order.amount != null && order.amount != 0
+                      ? "${order.amount} ريال"
+                      : order.advertiser.sessionPrice != null &&
+                              order.sessionsCount != null
+                          ? "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
+                          : "",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -220,11 +223,17 @@ class _WaysForPaymentState extends State<WaysForPayment> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PaymentTypeTile(
-          title: "عن طريق المحفظة الاليكترونية",
-          balance: 0, //todo
-          value: PayType.wallet,
-          icon: AppImages.walletIcon,
+        BlocBuilder<PaymentCubit, PaymentState>(
+          builder: (context, state) {
+            return PaymentTypeTile(
+              title: "عن طريق المحفظة الاليكترونية",
+              balance: state.balanceState == RequestState.loading
+                  ? ""
+                  : state.walletBalance ?? '0', //todo
+              value: PayType.wallet,
+              icon: AppImages.walletIcon,
+            );
+          },
         ),
         10.ph,
         PaymentTypeTile(
@@ -253,7 +262,7 @@ class PaymentTypeTile extends StatelessWidget {
   });
 
   final String title;
-  final num? balance;
+  final String? balance;
   final String icon;
   final PayType value;
 
