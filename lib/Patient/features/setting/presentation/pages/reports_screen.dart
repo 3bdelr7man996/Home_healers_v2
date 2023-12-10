@@ -22,7 +22,9 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
     pickAndUploadPDF() async {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['pdf', 'jpg', 'png'],
+        allowedExtensions: ['jpg', 'png'],
+
+        // allowedExtensions: ['pdf', 'jpg', 'png'],
       );
 
       if (result != null) {

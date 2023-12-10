@@ -14,7 +14,6 @@ import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:map_location_picker/map_location_picker.dart';
 
 import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
 import '../../data/models/get_all_ads_model.dart';
@@ -227,6 +226,8 @@ class ReservationCubit extends Cubit<ReservationState> {
           "lat": "${state.location?.lat}",
           "lang": "${state.location?.lng}",
           "user_id": "${userId}",
+          "pain_place": "${state.painPlace}",
+          "status_id": "${state.status_id}",
         };
       } else {
         print("asdf");

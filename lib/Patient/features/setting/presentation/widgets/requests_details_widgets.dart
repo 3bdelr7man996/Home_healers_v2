@@ -209,6 +209,7 @@ class Bill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(listOfOrders);
     return Column(
       children: [
         Row(
@@ -302,7 +303,9 @@ class Bill extends StatelessWidget {
               listOfOrders.sessionsCount == null ||
                       listOfOrders.advertiser.sessionPrice == null
                   ? ""
-                  : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
+                  : listOfOrders.amount != 0
+                      ? "${listOfOrders.amount}"
+                      : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
               style: const TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.secondryColor),
             )
@@ -551,6 +554,7 @@ class SessionInfoForPatient extends StatelessWidget {
     sessionsInfo.sort((a, b) {
       return DateTime.parse(a.startAt).compareTo(DateTime.parse(b.startAt));
     });
+    print(allOrders);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -563,7 +567,7 @@ class SessionInfoForPatient extends StatelessWidget {
           height: context.height * 0.15,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: sessionsInfo.length,
+            itemCount: sessionsInfo.length - 1,
             itemBuilder: (context, index) {
               var number = index + 1;
               return OneSessionInfoForPatient(
