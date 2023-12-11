@@ -530,7 +530,6 @@ const sessions = [
   {"الخامسة", "22-5-2023"},
   {"السادسة", "22-5-2023"},
 ];
-const checked = [true, true, false, false, false];
 
 class SessionInfoForPatient extends StatelessWidget {
   var MainOrder;
@@ -554,7 +553,7 @@ class SessionInfoForPatient extends StatelessWidget {
     sessionsInfo.sort((a, b) {
       return DateTime.parse(a.startAt).compareTo(DateTime.parse(b.startAt));
     });
-    print(allOrders);
+    print(sessionsInfo.length);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -567,13 +566,13 @@ class SessionInfoForPatient extends StatelessWidget {
           height: context.height * 0.15,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: sessionsInfo.length - 1,
+            itemCount: sessionsInfo.length,
             itemBuilder: (context, index) {
               var number = index + 1;
               return OneSessionInfoForPatient(
-                  title: number.toString(),
-                  date: sessionsInfo[index].startAt ?? "",
-                  checked: checked[index]);
+                title: number.toString(),
+                date: sessionsInfo[index].startAt ?? "",
+              );
             },
           ),
         ),
@@ -585,12 +584,10 @@ class SessionInfoForPatient extends StatelessWidget {
 
 class OneSessionInfoForPatient extends StatelessWidget {
   var title, date;
-  bool checked;
   OneSessionInfoForPatient({
     super.key,
     required this.title,
     required this.date,
-    required this.checked,
   });
 
   @override
