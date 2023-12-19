@@ -45,52 +45,63 @@ class ListOfOrder extends StatelessWidget {
       listOfOrders =
           context.select((MyOrdersCubit cubit) => cubit.state.pendingOrders) ??
               [];
-    return listOfOrders.length == 0
-        ? Center(
-            child: Column(
-              children: [
-                SvgPicture.asset(
-                  "assets/images/noOrders.svg",
-                  width: 200,
-                  height: 200,
-                ),
-                10.ph,
-                Text(
-                  "لا يوجد طلبات في الوقت الحالي",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          )
-        : SingleChildScrollView(
-            child: SizedBox(
-              width: context.width,
-              height: context.height * 0.75,
-              child: listOfOrders.isEmpty
-                  ? SizedBox()
-                  : ListView.builder(
-                      itemCount: listOfOrders.length,
-                      itemBuilder: (context, index) {
-                        List<String> names = [];
-                        String selectedName = "";
-                        names.add("الاختصاص :");
-                        for (var item
-                            in listOfOrders[index].advertiser.categories ??
-                                []) {
-                          names.add(item.nameAr ?? "");
-                        }
-                        selectedName =
-                            names.isNotEmpty ? names[0] : 'No names available';
-                        return CardsForRequests(
-                          listOfOrders: listOfOrders[index],
-                          categories: names,
-                          selectedName: selectedName,
-                          num: activeIndex,
-                        );
-                      },
+    return BlocBuilder<MyOrdersCubit, MyOrdersState>(
+      builder: (context, state) {
+        return state.loading == true
+            ? Container(
+                height: context.height / 2,
+                child: Center(child: CircularProgressIndicator()),
+              )
+            : listOfOrders.length == 0
+                ? Center(
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/images/noOrders.svg",
+                          width: 200,
+                          height: 200,
+                        ),
+                        10.ph,
+                        Text(
+                          "لا يوجد طلبات في الوقت الحالي",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
+                      ],
                     ),
-            ),
-          );
+                  )
+                : SingleChildScrollView(
+                    child: SizedBox(
+                      width: context.width,
+                      height: context.height * 0.75,
+                      child: listOfOrders.isEmpty
+                          ? SizedBox()
+                          : ListView.builder(
+                              itemCount: listOfOrders.length,
+                              itemBuilder: (context, index) {
+                                List<String> names = [];
+                                String selectedName = "";
+                                names.add("الاختصاص :");
+                                for (var item in listOfOrders[index]
+                                        .advertiser
+                                        .categories ??
+                                    []) {
+                                  names.add(item.nameAr ?? "");
+                                }
+                                selectedName = names.isNotEmpty
+                                    ? names[0]
+                                    : 'No names available';
+                                return CardsForRequests(
+                                  listOfOrders: listOfOrders[index],
+                                  categories: names,
+                                  selectedName: selectedName,
+                                  num: activeIndex,
+                                );
+                              },
+                            ),
+                    ),
+                  );
+      },
+    );
   }
 }
 

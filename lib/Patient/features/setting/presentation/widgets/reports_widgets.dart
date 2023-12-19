@@ -6,6 +6,9 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:photo_view/photo_view.dart';
+
+import '../../../../../core/utils/app_strings.dart';
 
 class ReportsForMe extends StatefulWidget {
   ReportsForMe({super.key});
@@ -54,7 +57,13 @@ class _ReportsForMeState extends State<ReportsForMe> {
                                     4) ==
                             "pdf"
                         ? Center(child: Text("file"))
-                        : Center(child: Text("photo")),
+                        : Center(
+                            child: PhotoView(
+                              imageProvider: NetworkImage(
+                                '${AppStrings.imageUrl}${state.reportsForPatient[index].repImage}',
+                              ),
+                            ),
+                          ),
                     width: 200,
                     height: 200,
                     color: const Color.fromARGB(122, 158, 158, 158),

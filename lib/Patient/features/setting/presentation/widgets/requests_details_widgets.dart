@@ -209,6 +209,7 @@ class Bill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(listOfOrders);
     return Column(
       children: [
         Row(
@@ -302,7 +303,9 @@ class Bill extends StatelessWidget {
               listOfOrders.sessionsCount == null ||
                       listOfOrders.advertiser.sessionPrice == null
                   ? ""
-                  : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
+                  : listOfOrders.amount != 0
+                      ? "${listOfOrders.amount}"
+                      : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
               style: const TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.secondryColor),
             )
@@ -527,7 +530,6 @@ const sessions = [
   {"الخامسة", "22-5-2023"},
   {"السادسة", "22-5-2023"},
 ];
-const checked = [true, true, false, false, false];
 
 class SessionInfoForPatient extends StatelessWidget {
   var MainOrder;
@@ -551,6 +553,7 @@ class SessionInfoForPatient extends StatelessWidget {
     sessionsInfo.sort((a, b) {
       return DateTime.parse(a.startAt).compareTo(DateTime.parse(b.startAt));
     });
+    print(sessionsInfo.length);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -567,9 +570,9 @@ class SessionInfoForPatient extends StatelessWidget {
             itemBuilder: (context, index) {
               var number = index + 1;
               return OneSessionInfoForPatient(
-                  title: number.toString(),
-                  date: sessionsInfo[index].startAt ?? "",
-                  checked: checked[index]);
+                title: number.toString(),
+                date: sessionsInfo[index].startAt ?? "",
+              );
             },
           ),
         ),
@@ -581,12 +584,10 @@ class SessionInfoForPatient extends StatelessWidget {
 
 class OneSessionInfoForPatient extends StatelessWidget {
   var title, date;
-  bool checked;
   OneSessionInfoForPatient({
     super.key,
     required this.title,
     required this.date,
-    required this.checked,
   });
 
   @override

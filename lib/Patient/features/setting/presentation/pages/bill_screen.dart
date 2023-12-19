@@ -1,4 +1,3 @@
-
 import 'package:dr/Patient/features/setting/presentation/widgets/bill_widgets.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -92,7 +91,7 @@ class _BillScreenState extends State<BillScreen> {
                       barcode: Barcode.qrCode(
                         errorCorrectLevel: BarcodeQRCorrectionLevel.high,
                       ),
-                      data: '12345',
+                      data: 'https://github.com/',
                       width: context.width * 0.7,
                       height: context.height * 0.2,
                     ),

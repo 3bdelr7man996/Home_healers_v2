@@ -193,12 +193,13 @@ class TotalDetails extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  order.amount != null && order.amount != 0
-                      ? "${order.amount} ريال"
-                      : order.advertiser.sessionPrice != null &&
-                              order.sessionsCount != null
-                          ? "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
-                          : "",
+                  order.advertiser.sessionPrice != null &&
+                          order.sessionsCount != null
+                      ? order.amount != 0
+                          ? "${order.amount}"
+                          : "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
+                      : "",
+
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
