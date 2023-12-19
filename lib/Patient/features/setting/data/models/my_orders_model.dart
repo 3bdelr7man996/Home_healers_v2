@@ -83,7 +83,7 @@ class OrderData {
   late var statusId;
   late var canReview;
   late var qrCode;
-  late final List<dynamic> reports;
+  late var reports;
   late var diagnoseForm;
   late final Advertiser advertiser;
 
@@ -114,7 +114,7 @@ class OrderData {
     statusId = json?['status_id'];
     canReview = json?['can_review'];
     qrCode = json?['qr_code'];
-    reports = List.castFrom<dynamic, dynamic>(json?['reports']);
+    reports = List.castFrom<dynamic, dynamic>(json?['reports'] ?? []);
     diagnoseForm = json?['diagnose_form'];
     advertiser = Advertiser.fromJson(json?['advertiser']);
   }

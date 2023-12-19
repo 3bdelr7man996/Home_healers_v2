@@ -10,9 +10,12 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+import '../../../../../core/utils/deep_link_util.dart';
+import '../../data/models/my_orders_model.dart';
+
 class BillScreen extends StatefulWidget {
-  var oneOrder;
-  BillScreen({super.key, this.oneOrder});
+  OrderData oneOrder;
+  BillScreen({super.key, required this.oneOrder});
 
   @override
   State<BillScreen> createState() => _BillScreenState();
@@ -53,6 +56,7 @@ class _BillScreenState extends State<BillScreen> {
       });
     }
 
+    print(widget.oneOrder.runtimeType);
     return Scaffold(
       appBar: customAppBar(context, title: "الفاتورة", backButton: true),
       body: SingleChildScrollView(
@@ -91,7 +95,11 @@ class _BillScreenState extends State<BillScreen> {
                       barcode: Barcode.qrCode(
                         errorCorrectLevel: BarcodeQRCorrectionLevel.high,
                       ),
-                      data: 'https://github.com/',
+                      data: DeepLinkHandler.generateDeepLink(
+                          page: "receipt",
+                          parameters: {
+                            'id': '${widget.oneOrder.id}',
+                          }),
                       width: context.width * 0.7,
                       height: context.height * 0.2,
                     ),

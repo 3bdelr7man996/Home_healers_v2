@@ -11,3 +11,15 @@ class MyOrdersDS {
     return response;
   }
 }
+
+class ShowBillDS {
+  final ApiBaseHelper apiHelper;
+
+  ShowBillDS({required this.apiHelper});
+
+  Future<Map<String, dynamic>?> ShowBillScreen(var id) async {
+    Map<String, dynamic>? response =
+        await apiHelper.get("/api/reservaionGetByID?id=${id}");
+    return response!['data']['userReservations'][0];
+  }
+}
