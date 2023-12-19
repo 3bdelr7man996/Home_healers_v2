@@ -34,6 +34,8 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
 
   Future<void> GetOrders(BuildContext context) async {
     try {
+      emit(state.copyWith(loading: true));
+
       MyOrdersModel response = await myOrdersRepo.GetMyOrders();
       emit(state.copyWith(allOrders: response.data));
 
@@ -68,8 +70,11 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       debugPrint("${state.waitConfirmOrders}");
       print("asd");
       // print(state.ReviewingOrders);
+      emit(state.copyWith(loading: false));
     } catch (e) {
       print(e);
+      emit(state.copyWith(loading: false));
+
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
