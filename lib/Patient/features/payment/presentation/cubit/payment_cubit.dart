@@ -11,6 +11,7 @@ import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets
 import 'package:dr/Patient/features/payment/presentation/widgets/points_bott/earn_points_bottom_sheet.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/http_custom_exception.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
@@ -124,8 +125,12 @@ class PaymentCubit extends Cubit<PaymentState> {
       if (response.paySuccess == true) {
         //Map<String, dynamic>? statusResponse =
         await repository.confirmReservationStatus(myOrder: myOrder);
+        FirebaseAnalyticUtil.logGoToCheckoutSuccessEvent();
+
         // log("order Status ${statusResponse}");
         //log("order ${statusResponse}")
+      } else {
+        FirebaseAnalyticUtil.logGoToCheckoutFailedEvent();
       }
       if (context.mounted) {
         AppConstants.pushRemoveNavigator(context,

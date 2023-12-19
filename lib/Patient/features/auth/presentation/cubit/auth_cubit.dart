@@ -5,6 +5,7 @@ import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.d
 import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/features/auth/data/models/user_model.dart';
@@ -116,6 +117,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
 
       showPopUpAfterSignUp();
       emit(state.copyWith(requestStatus: false));
+      FirebaseAnalyticUtil.logSignUpEvent();
       log("Register Success");
     } catch (e) {
       print(e);

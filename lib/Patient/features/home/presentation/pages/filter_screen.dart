@@ -1,6 +1,7 @@
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_widgets.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -97,6 +98,7 @@ class _FiterScreenState extends State<FiterScreen> {
         child: ElevatedButton(
           onPressed: () async {
             await context.read<FilterCubit>().GetFilterResult(context);
+            FirebaseAnalyticUtil.logSearchEvent();
             // AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
           },
           style: ElevatedButton.styleFrom(

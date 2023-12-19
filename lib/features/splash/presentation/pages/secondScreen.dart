@@ -1,7 +1,6 @@
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/third_screen.dart';
-import 'package:dr/features/splash/presentation/pages/first_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

@@ -5,6 +5,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
@@ -30,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
       context.read<AuthCubit>().getAllCities(),
       context.read<AuthCubit>().getCurrentPosition(),
     ]);
+    FirebaseAnalyticUtil.logAppOpen();
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/deep_link_util.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/all_request_widgets/all_request_appbar.dart';
@@ -21,6 +22,7 @@ class _AllrequestsState extends State<Allrequests> {
 
   @override
   void initState() {
+    DeepLinkHandler().init(context);
     di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<ReservationsCubit>().getReservationStatus();
     super.initState();

@@ -7,6 +7,7 @@ import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
@@ -28,6 +29,7 @@ class LoginCubit extends Cubit<LoginState> {
     CacheHelper.clearData(key: AppStrings.userToken);
     CacheHelper.clearData(key: AppStrings.isAdvertise);
     FirebaseMessaging.instance.deleteToken();
+    FirebaseAnalyticUtil.logLogoutEvent();
   }
 
   //?====================[ SIGN IN USER ]===================
@@ -44,6 +46,7 @@ class LoginCubit extends Cubit<LoginState> {
       await cacheData(user);
       di.sl<ApiBaseHelper>().updateHeader();
       emit(state.copyWith(loginState: RequestState.success));
+      FirebaseAnalyticUtil.logLogin();
       if (user?.success?.advertiser?.id != null) {
         if (context.mounted) {
           AppConstants.pushRemoveNavigator(

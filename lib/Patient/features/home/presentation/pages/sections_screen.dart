@@ -3,6 +3,7 @@ import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/deep_link_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
@@ -27,6 +28,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
   @override
   void initState() {
     super.initState();
+    DeepLinkHandler().init(context);
     di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<GetAllAdsCubit>().GetAllAds(context);
     var isGuestExist = IsGuest();

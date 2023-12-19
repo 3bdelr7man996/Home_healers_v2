@@ -50,6 +50,9 @@ dependencies:
   pusher_channels_flutter: ^2.2.0
   map_launcher: ^3.0.1
   flutter_share: ^2.0.0
+  firebase_analytics: ^10.7.4
+  uni_links: ^0.5.1
+  uri: ^1.0.0
 
 dev_dependencies:
   flutter_test:

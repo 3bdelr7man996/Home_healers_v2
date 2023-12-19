@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
-
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/payment/presentation/pages/visa_payment_screen.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
@@ -115,7 +113,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                           ),
                         ),
                         onPressed: () async {
-                          log('${context.read<PaymentCubit>().state.selectedPayType}');
+                          //log('${context.read<PaymentCubit>().state.selectedPayType}');
                           if (state.selectedPayType == null) {
                             return;
                           }

@@ -6,6 +6,7 @@ import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widg
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
         return name.contains(query.toLowerCase());
       }).toList();
     });
+    FirebaseAnalyticUtil.logSearchEvent(param: {'term': query});
   }
 
   var Data;
