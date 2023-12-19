@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/Patient/features/payment/data/models/response_model.dart';
 import 'package:dr/Patient/features/payment/data/models/visa_pay_model.dart';
+import 'package:dr/Patient/features/payment/data/models/wallet_balance_model.dart';
 import 'package:dr/Patient/features/payment/data/repositories/payment_repo.dart';
 import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets/confirm_pay_dialog.dart';
 import 'package:dr/Patient/features/payment/presentation/widgets/dialogs_widgets/exit_payment_dialog.dart';
@@ -80,6 +81,12 @@ class PaymentCubit extends Cubit<PaymentState> {
   void onSelectPayType(PayType type) {
     if (state.payState != RequestState.loading) {
       emit(state.copyWith(selectedPayType: () => type));
+    }
+  }
+
+  void onSelectPayCard(PayCard type) {
+    if (state.payState != RequestState.loading) {
+      emit(state.copyWith(selectedPayCard: () => type));
     }
   }
 
@@ -215,8 +222,24 @@ class PaymentCubit extends Cubit<PaymentState> {
       },
     );
   }
-}
 
+//?=========================[GET WALLET BALANCE]================================
+  Future<void> getBalance() async {
+    try {
+      emit(state.copyWith(balanceState: RequestState.loading));
+      WalletBalanceModel? response = await repository.getWalletBalance();
+      emit(state.copyWith(
+        balanceState: RequestState.success,
+        walletBalance: response?.walletBalance ?? "0",
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        balanceState: RequestState.failed,
+        walletBalance: "0",
+      ));
+    }
+  }
+}
 // RESPONSE[400] => DATA: 
 // {
 // "status":true,

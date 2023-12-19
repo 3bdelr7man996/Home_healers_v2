@@ -5,6 +5,7 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
@@ -43,31 +44,15 @@ class ChooseCardScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  switch (state.selectedPayType) {
-                    case PayType.tap:
-                      await context
-                          .read<PaymentCubit>()
-                          .payByVisa(reservationParentId: order.id)
-                          .then((value) {
-                        if (value == true) {
-                          AppConstants.customNavigation(
-                              context, VisaPaymentScreen(myOrder: order), 0, 1);
-                        }
-                      });
-                      break;
-                    case PayType.tamara:
-                      await context
-                          .read<PaymentCubit>()
-                          .payByTamara(reservationParentId: order.id)
-                          .then((value) {
-                        if (value == true) {
-                          AppConstants.customNavigation(
-                              context, VisaPaymentScreen(myOrder: order), 0, 1);
-                        }
-                      });
-                      break;
-                    default:
-                  }
+                  await context
+                      .read<PaymentCubit>()
+                      .payByVisa(reservationParentId: order.id)
+                      .then((value) {
+                    if (value == true) {
+                      AppConstants.customNavigation(
+                          context, VisaPaymentScreen(myOrder: order), 0, 1);
+                    }
+                  });
                 },
                 child: const Text('تابع'),
               ),
@@ -87,29 +72,60 @@ class ChooseCardScreen extends StatelessWidget {
             20.ph,
             BlocBuilder<PaymentCubit, PaymentState>(
               buildWhen: (previous, current) =>
-                  previous.selectedPayType != current.selectedPayType,
+                  previous.selectedPayCard != current.selectedPayCard,
               builder: (context, state) {
                 return CardWay(
-                  iconPath: "assets/images/tamara.png",
-                  title: "Tamara",
-                  selected: state.selectedPayType == PayType.tamara,
+                  iconPath: AppImages.masterCard,
+                  title: "ماستر كارد",
+                  selected: state.selectedPayCard == PayCard.master,
                   onTap: () => context
                       .read<PaymentCubit>()
-                      .onSelectPayType(PayType.tamara),
+                      .onSelectPayCard(PayCard.master),
                 );
               },
             ),
             20.ph,
             BlocBuilder<PaymentCubit, PaymentState>(
-              // buildWhen: (previous, current) =>
-              //     previous.selectedPayType != current.selectedPayType,
+              buildWhen: (previous, current) =>
+                  previous.selectedPayCard != current.selectedPayCard,
               builder: (context, state) {
                 return CardWay(
-                  iconPath: "assets/icons/visa_card_icon.svg",
-                  title: "Visa",
-                  selected: state.selectedPayType == PayType.tap,
-                  onTap: () =>
-                      context.read<PaymentCubit>().onSelectPayType(PayType.tap),
+                  iconPath: AppImages.visaCard,
+                  title: "فيزة كارد",
+                  selected: state.selectedPayCard == PayCard.visa,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayCard(PayCard.visa),
+                );
+              },
+            ),
+            20.ph,
+            BlocBuilder<PaymentCubit, PaymentState>(
+              buildWhen: (previous, current) =>
+                  previous.selectedPayCard != current.selectedPayCard,
+              builder: (context, state) {
+                return CardWay(
+                  iconPath: AppImages.madaCard,
+                  title: "مدى كارد",
+                  selected: state.selectedPayCard == PayCard.mada,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayCard(PayCard.mada),
+                );
+              },
+            ),
+            20.ph,
+            BlocBuilder<PaymentCubit, PaymentState>(
+              buildWhen: (previous, current) =>
+                  previous.selectedPayCard != current.selectedPayCard,
+              builder: (context, state) {
+                return CardWay(
+                  iconPath: AppImages.americanExCard,
+                  title: "أمريكان إكسبريس كارد",
+                  selected: state.selectedPayCard == PayCard.american,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayCard(PayCard.american),
                 );
               },
             ),

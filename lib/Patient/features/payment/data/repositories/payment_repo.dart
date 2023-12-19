@@ -1,6 +1,7 @@
 import 'package:dr/Patient/features/payment/data/datasources/payment_ds.dart';
 import 'package:dr/Patient/features/payment/data/models/response_model.dart';
 import 'package:dr/Patient/features/payment/data/models/visa_pay_model.dart';
+import 'package:dr/Patient/features/payment/data/models/wallet_balance_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -21,6 +22,11 @@ class PaymentRepository {
   ) async {
     Map<String, dynamic>? response = await dataSource.tamaraPayment(body: body);
     return VisaPayModel.fromJson(response);
+  }
+
+  Future<WalletBalanceModel>? getWalletBalance() async {
+    Map<String, dynamic>? response = await dataSource.getWalletBalance();
+    return WalletBalanceModel.fromJson(response);
   }
 
   Future<ResponseModel> visaPayResult({

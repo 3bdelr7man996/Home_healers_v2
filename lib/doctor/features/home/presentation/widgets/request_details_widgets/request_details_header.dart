@@ -286,8 +286,12 @@ class SessionsPrice extends StatelessWidget {
               if (state.reservation?.parentId == 0)
                 Text(
                   // state.reservation!.parentId == 0
-                  "${state.reservation?.amount ?? 0} ${"sar".tr()}",
-                  //: "${state.reservation!.advertiser!.sessionPrice! * state.reservation!.sessionsCount!} ${"sar".tr()}",
+                  state.reservation?.amount != null &&
+                          state.reservation?.amount != 0
+                      ? "${state.reservation?.amount ?? 0} ${"sar".tr()}"
+                      : state.reservation?.advertiser?.sessionPrice != null
+                          ? "${state.reservation!.advertiser!.sessionPrice! * state.reservation!.sessionsCount!} ${"sar".tr()}"
+                          : "0 ${"sar".tr()}",
                   style: const TextStyle(
                       color: AppColors.secondryColor,
                       fontWeight: FontWeight.bold),

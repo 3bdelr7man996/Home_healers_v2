@@ -112,10 +112,12 @@ class OneSessionInfo extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: Center(
-                      child: Text(
-                        date.replaceAll(RegExp(r'(\d{2}:\d{2}:\d{2})'), ""),
-                        style: const TextStyle(
-                          fontSize: 16,
+                      child: FittedBox(
+                        child: Text(
+                          date.replaceAll(RegExp(r'(\d{2}:\d{2}:\d{2})'), ""),
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),

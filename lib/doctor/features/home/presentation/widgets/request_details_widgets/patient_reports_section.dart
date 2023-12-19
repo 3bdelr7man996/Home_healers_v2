@@ -52,10 +52,14 @@ class PatientReportsImages extends StatelessWidget {
                                 ),
                               );
                             },
-                            child: Card(
-                              child: AppConstants.customNetworkImage(
-                                imagePath: '${report.repImage}',
-                                fit: BoxFit.cover,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: Card(
+                                child: AppConstants.customNetworkImage(
+                                  imagePath: '${report.repImage}',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           );

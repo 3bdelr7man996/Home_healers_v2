@@ -39,7 +39,8 @@ class AppImages {
   static String mikeIcon = 'assets/icons/mike_icon.svg';
   static String emptyNotifications = "assets/icons/no_notifications.svg";
   static String xicon = "assets/icons/xicon.svg";
-
+  static String walletIcon = 'assets/icons/budget_icon_for_payment.svg';
+  static String budgetIcon = "assets/icons/budget_outline_icon_for_payment.svg";
   // ignore: non_constant_identifier_names
   static String sports_muscle_injuries_icon =
       "assets/icons/sports_muscle_injuries_icon.svg";
@@ -59,4 +60,8 @@ class AppImages {
   static String logOutIcon = "assets/icons/log_out_setting_icon.svg";
   static String pointsPayIcon = 'assets/icons/pay_icon.svg';
   static String errorIcon = "assets/icons/error_icon.svg";
+  static String masterCard = 'assets/icons/master_card_icon.svg';
+  static String visaCard = 'assets/icons/visa_card_icon.svg';
+  static String madaCard = 'assets/icons/mada_card.svg';
+  static String americanExCard = 'assets/icons/american_ex_card.svg';
 }
