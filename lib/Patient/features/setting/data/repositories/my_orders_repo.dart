@@ -13,3 +13,16 @@ class MyOrdersRepo {
     return MyOrdersResponse;
   }
 }
+
+class ShowBillRepo {
+  final ShowBillDS dataSource;
+
+  ShowBillRepo({required this.dataSource});
+
+  Future<OrderData> ShowBillScreen(var id) async {
+    OrderData MyOrdersResponse = OrderData.fromJson(
+      await dataSource.ShowBillScreen(id),
+    );
+    return MyOrdersResponse;
+  }
+}

@@ -25,12 +25,35 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../pages/bill_screen.dart';
+
 part 'setting_state.dart';
 
 class MyOrdersCubit extends Cubit<MyOrdersState> {
   final MyOrdersRepo myOrdersRepo;
+  final ShowBillRepo showBillRepo;
 
-  MyOrdersCubit({required this.myOrdersRepo}) : super(MyOrdersState());
+  MyOrdersCubit({required this.myOrdersRepo, required this.showBillRepo})
+      : super(MyOrdersState());
+
+  Future<void> ShowBillScreen(BuildContext context, var id) async {
+    try {
+      OrderData response = await showBillRepo.ShowBillScreen(id);
+
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+            builder: (context) => BillScreen(
+                  oneOrder: response,
+                )),
+        (Route route) => false,
+      );
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(loading: false));
+
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
 
   Future<void> GetOrders(BuildContext context) async {
     try {
