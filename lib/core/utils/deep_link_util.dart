@@ -63,9 +63,7 @@ class DeepLinkHandler {
     final uri =
         UriTemplate('homehealerr://$page{?id*}').expand(parameters ?? {});
     log("Generated Link is ${uri.toString()}");
-    await launchUrl(Uri.parse(uri)).then((value) {
-      print(value);
-    });
+
     return uri.toString();
   }
 }

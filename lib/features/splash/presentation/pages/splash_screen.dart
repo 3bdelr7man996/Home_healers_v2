@@ -24,6 +24,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> initConfigData() async {
+    FirebaseAnalyticUtil.logAppOpen();
     await Future.wait([
       context.read<SettingCubit>().getAppInfo(),
       context.read<AuthCubit>().getAllDepartements(),
@@ -31,7 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
       context.read<AuthCubit>().getAllCities(),
       context.read<AuthCubit>().getCurrentPosition(),
     ]);
-    FirebaseAnalyticUtil.logAppOpen();
   }
 
   @override

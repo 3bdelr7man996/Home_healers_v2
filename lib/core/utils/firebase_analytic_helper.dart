@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 FirebaseAnalytics analytics = FirebaseAnalytics.instance;
@@ -34,6 +36,7 @@ class FirebaseAnalyticUtil {
   }
 
   static void logSearchEvent({Map<String, Object>? param}) {
+    log("Search --------");
     analytics.logEvent(name: "make_search", parameters: param);
   }
 
