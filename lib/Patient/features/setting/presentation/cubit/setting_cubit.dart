@@ -25,6 +25,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/inVoice_model.dart';
 import '../pages/bill_screen.dart';
 
 part 'setting_state.dart';
@@ -32,8 +33,12 @@ part 'setting_state.dart';
 class MyOrdersCubit extends Cubit<MyOrdersState> {
   final MyOrdersRepo myOrdersRepo;
   final ShowBillRepo showBillRepo;
+  final GetInvoiceRepo getInvoiceRepo;
 
-  MyOrdersCubit({required this.myOrdersRepo, required this.showBillRepo})
+  MyOrdersCubit(
+      {required this.myOrdersRepo,
+      required this.showBillRepo,
+      required this.getInvoiceRepo})
       : super(MyOrdersState());
 
   Future<void> ShowBillScreen(BuildContext context, var id) async {
@@ -98,6 +103,18 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       print(e);
       emit(state.copyWith(loading: false));
 
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+
+  Future<void> GetInvoiceDetails(int id) async {
+    try {
+      inVoiceModel response = await getInvoiceRepo.Getinvoice(id);
+      emit(state.copyWith(inVoice: response));
+
+      print(response);
+    } catch (e) {
+      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

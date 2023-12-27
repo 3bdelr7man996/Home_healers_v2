@@ -6,12 +6,14 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 import '../../../../../core/utils/deep_link_util.dart';
 import '../../data/models/my_orders_model.dart';
+import '../cubit/setting_cubit.dart';
 
 class BillScreen extends StatefulWidget {
   OrderData oneOrder;
@@ -22,6 +24,13 @@ class BillScreen extends StatefulWidget {
 }
 
 class _BillScreenState extends State<BillScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<MyOrdersCubit>().GetInvoiceDetails(widget.oneOrder.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     // String randomString() {

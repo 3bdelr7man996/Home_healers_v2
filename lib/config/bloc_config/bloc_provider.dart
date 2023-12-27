@@ -96,9 +96,9 @@ MultiBlocProvider blocMultiProvider({required child}) {
       ),
       BlocProvider(
         create: (BuildContext context) => MyOrdersCubit(
-          showBillRepo: di.sl<ShowBillRepo>(),
-          myOrdersRepo: di.sl<MyOrdersRepo>(),
-        ),
+            showBillRepo: di.sl<ShowBillRepo>(),
+            myOrdersRepo: di.sl<MyOrdersRepo>(),
+            getInvoiceRepo: di.sl<GetInvoiceRepo>()),
       ),
       BlocProvider(
         create: (BuildContext context) => UpdateReservationCubit(
