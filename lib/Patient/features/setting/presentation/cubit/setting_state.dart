@@ -12,6 +12,7 @@ class MyOrdersState extends Equatable {
     this.completedOrders,
     this.canceledOrders,
     this.loading = false,
+    this.inVoice,
   });
 
   List<OrderData>? reviewingOrders,
@@ -22,7 +23,7 @@ class MyOrdersState extends Equatable {
       completedOrders,
       canceledOrders;
   bool loading;
-
+  var inVoice;
   @override
   List<Object?> get props => [
         reviewingOrders,
@@ -33,17 +34,18 @@ class MyOrdersState extends Equatable {
         completedOrders,
         canceledOrders,
         loading,
+        inVoice
       ];
-  MyOrdersState copyWith({
-    List<OrderData>? reviewingOrders,
-    confirmedOrders,
-    waitConfirmOrders,
-    allOrders,
-    pendingOrders,
-    completedOrders,
-    canceledOrders,
-    loading,
-  }) =>
+  MyOrdersState copyWith(
+          {List<OrderData>? reviewingOrders,
+          confirmedOrders,
+          waitConfirmOrders,
+          allOrders,
+          pendingOrders,
+          completedOrders,
+          canceledOrders,
+          loading,
+          inVoice}) =>
       MyOrdersState(
         reviewingOrders: reviewingOrders ?? this.reviewingOrders,
         confirmedOrders: confirmedOrders ?? this.confirmedOrders,
@@ -53,6 +55,7 @@ class MyOrdersState extends Equatable {
         canceledOrders: canceledOrders ?? this.canceledOrders,
         allOrders: allOrders ?? this.allOrders,
         loading: loading ?? this.loading,
+        inVoice: inVoice ?? this.inVoice,
       );
 }
 
