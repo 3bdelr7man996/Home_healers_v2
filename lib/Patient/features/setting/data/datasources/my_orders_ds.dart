@@ -23,3 +23,15 @@ class ShowBillDS {
     return response!['data']['userReservations'][0];
   }
 }
+
+class GetInvoiceDS {
+  final ApiBaseHelper apiHelper;
+
+  GetInvoiceDS({required this.apiHelper});
+
+  Future<Map<String, dynamic>?> GetInvoice(int id) async {
+    Map<String, dynamic>? response =
+        await apiHelper.get("/api/reservationInvoice?id=${id}");
+    return response;
+  }
+}

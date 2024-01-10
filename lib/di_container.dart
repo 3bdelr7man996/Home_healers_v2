@@ -145,6 +145,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ReportsDS(apiHelper: sl()));
   sl.registerLazySingleton(() => AddReportDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ShowBillDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => GetInvoiceDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -170,6 +171,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ReportsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => AddReportRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ShowBillRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => GetInvoiceRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -178,8 +180,8 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => FilterCubit(filterRepo: sl()));
   sl.registerFactory(() =>
       ReservationCubit(reservationRepo: sl(), reservationWithOfferRepo: sl()));
-  sl.registerFactory(
-      () => MyOrdersCubit(myOrdersRepo: sl(), showBillRepo: sl()));
+  sl.registerFactory(() => MyOrdersCubit(
+      myOrdersRepo: sl(), showBillRepo: sl(), getInvoiceRepo: sl()));
   sl.registerFactory(() => UpdateReservationCubit(updateReservationRepo: sl()));
   sl.registerFactory(() => UpdateInfoCubit(UpdateInfo: sl()));
   sl.registerFactory(() => FavoriteCubit(favoriteRepo: sl()));
