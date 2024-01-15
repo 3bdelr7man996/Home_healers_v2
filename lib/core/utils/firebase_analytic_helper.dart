@@ -1,8 +1,8 @@
-import 'dart:developer';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+FirebaseAnalyticsObserver getAnalyticObsever() =>
+    FirebaseAnalyticsObserver(analytics: analytics);
 
 class FirebaseAnalyticUtil {
   static void logAppOpen() async {
@@ -11,12 +11,12 @@ class FirebaseAnalyticUtil {
 
   static void logLogin({Map<String, Object>? param}) {
     analytics.logLogin(
-      loginMethod: "manual",
+      loginMethod: "email",
     );
   }
 
   static void logSignUpEvent({Map<String, Object>? param}) {
-    analytics.logEvent(name: "sign_up", parameters: param);
+    analytics.logSignUp(signUpMethod: "sign_up", parameters: param);
   }
 
   static void logLoginFacebookEvent({Map<String, Object>? param}) {
@@ -35,25 +35,28 @@ class FirebaseAnalyticUtil {
     analytics.logEvent(name: "Login_Apple", parameters: param);
   }
 
-  static void logSearchEvent({Map<String, Object>? param}) {
-    log("Search --------");
-    analytics.logEvent(name: "make_search", parameters: param);
+  static void logSearchEvent(
+      {required String term, Map<String, Object>? param}) {
+    analytics.logSearch(searchTerm: term, parameters: param);
   }
 
-  static void logAddToCartButtonEvent({Map<String, Object>? param}) {
-    analytics.logEvent(name: "add_to_cart", parameters: param);
+  static void logAddToCartButtonEvent(
+      {List<AnalyticsEventItem>? items, Map<String, Object>? param}) {
+    analytics.logAddToCart(items: items, parameters: param);
   }
 
-  static void logAddReservationEvent({Map<String, Object>? param}) {
-    analytics.logEvent(name: "make_reservation", parameters: param);
+  static void logAddReservationEvent(
+      {List<AnalyticsEventItem>? items, Map<String, Object>? param}) {
+    analytics.logEvent(name: "add_reservation", parameters: param);
   }
 
   static void logGoTOCartEvent({Map<String, Object>? param}) {
     analytics.logEvent(name: "go_to_cart", parameters: param);
   }
 
-  static void logGoToCheckoutEvent({Map<String, Object>? param}) {
-    analytics.logEvent(name: "go_to_checkout", parameters: param);
+  static void logGoToCheckoutEvent(
+      {String? currency, Map<String, Object>? param}) {
+    analytics.logBeginCheckout(currency: currency, parameters: param);
   }
 
   static void logGoToCheckoutSuccessEvent({Map<String, Object>? param}) {

@@ -54,8 +54,13 @@ class AddReportAndFinishButton extends StatelessWidget {
           width: context.width * 0.4,
           child: ElevatedButton(
             onPressed: () {
+              context
+                  .read<ReservationsCubit>()
+                  .onSelectedTab(ResevationStep.completed);
               context.read<ReservationsCubit>().updateReservation(
-                  state.reservation!.copyWith(status: 'completed'));
+                    state.reservation!.copyWith(status: 'completed'),
+                    ResevationStep.completed,
+                  );
             },
             style: ButtonStyle(
               backgroundColor:

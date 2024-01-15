@@ -11,6 +11,7 @@ import 'package:dr/Patient/features/home/presentation/pages/filter_result_screen
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,7 +91,11 @@ class FilterCubit extends Cubit<FilterState> {
       emit(state.copyWith(city_id: -1));
       emit(state.copyWith(area_id: -1));
       emit(state.copyWith(gender: "-1"));
-
+      FirebaseAnalyticUtil.logSearchEvent(term: "Filter", param: {
+        "area_id": "${state.area_id}",
+        "category_id": "${state.category_id}",
+        "cityId": "${state.city_id}",
+      });
       AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -274,6 +279,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       state.location = null;
       // ignore: use_build_context_synchronously
       body.removeWhere((key, value) => key.startsWith('days['));
+      FirebaseAnalyticUtil.logAddReservationEvent();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyRequestsForPatient()),

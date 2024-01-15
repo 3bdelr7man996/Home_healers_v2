@@ -53,7 +53,7 @@ class AppBarForHome extends StatelessWidget {
                 child: AppConstants.customNetworkImage(
                   imagePath:
                       "${context.read<AuthCubit>().getAdvertiserInfo().image}",
-                  placeholder: AppImages.avatar,
+                  //placeholder: AppImages.avatar,
                   imageError: AppImages.avatar,
                   width: 70,
                   height: 70,

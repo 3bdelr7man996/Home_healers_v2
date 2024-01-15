@@ -3,6 +3,9 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -49,7 +52,12 @@ class SheetForEarnMoney extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                     AppConstants.customNavigation(
-                        context, MyPointScreenForPatient(), 0, -1);
+                        context,
+                        CacheHelper.getData(key: AppStrings.isAdvertise)
+                            ? MyPointScreen()
+                            : MyPointScreenForPatient(),
+                        0,
+                        -1);
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

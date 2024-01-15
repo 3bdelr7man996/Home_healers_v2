@@ -35,7 +35,10 @@ class ReservationsCubit extends Cubit<ReservationsState> {
   //?========================[ GET RESERVATION DETAILS ]========================
 
   List<ReservationData>? reservationsList = [];
-  Future<void> getReservations({required int statusId}) async {
+  Future<void> getReservations({
+    required int statusId,
+    ResevationStep reservationStep = ResevationStep.reviewing,
+  }) async {
     try {
       emit(state.copyWith(
         reservationState: RequestState.loading,
@@ -48,7 +51,7 @@ class ReservationsCubit extends Cubit<ReservationsState> {
       if (reservationsList != null && reservationsList!.isNotEmpty) {
         filtredList = reservationsList?.where((reservation) {
           return (reservation.statusId == statusId &&
-              reservation.status == ResevationStep.reviewing.name);
+              reservation.status == reservationStep.name);
         }).toList();
       }
 
@@ -101,8 +104,11 @@ class ReservationsCubit extends Cubit<ReservationsState> {
 
 //?========================[ UPDATE RESERVATION ]========================
   /// subReservation true if want change all sub reservation status
-  Future<void> updateReservation(ReservationData reservation,
-      {bool subReservation = false}) async {
+  Future<void> updateReservation(
+    ReservationData reservation,
+    ResevationStep reservationStep, {
+    bool subReservation = false,
+  }) async {
     try {
       emit(state.copyWith(updateReservationState: RequestState.loading));
       ReservationData? response =
@@ -128,7 +134,10 @@ class ReservationsCubit extends Cubit<ReservationsState> {
       //             .toData());
       //   }
       // }
-      await getReservations(statusId: state.painStatusId!);
+      await getReservations(
+        statusId: state.painStatusId!,
+        reservationStep: reservationStep,
+      );
       // onSelectedTab(selectedTap)
       // filterReservation(
       //     statusId: state.painStatusId, tabValue: ResevationStep.wait_confirm);
@@ -167,8 +176,7 @@ class ReservationsCubit extends Cubit<ReservationsState> {
     } else {
       status = state
               .reservationsList![state.reservationsList!
-                      .indexWhere((e) => e.id == state.reservation?.id) +
-                  index]
+                  .indexWhere((e) => e.id == state.reservation?.id)]
               .status ??
           "";
     }

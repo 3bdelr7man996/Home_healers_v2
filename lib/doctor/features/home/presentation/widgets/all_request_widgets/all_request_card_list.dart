@@ -1,4 +1,6 @@
+import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/my_reservations_screen.dart';
@@ -20,11 +22,14 @@ class RequestsCardList extends StatelessWidget {
             previous.reservStatusState != current.reservStatusState,
         builder: (context, state) {
           if (state.reservStatusState == RequestState.loading) {
-            return const CustomLoader(
-              padding: 0.34,
+            return Expanded(
+              child: const CustomLoader(
+                padding: 0,
+              ),
             );
           } else if (state.reservStatusState == RequestState.success &&
-              state.resrvationStatusList != null) {
+              state.resrvationStatusList != null &&
+              state.resrvationStatusList!.isNotEmpty) {
             return Expanded(
               // height: context.height - 0.25 - 145,
               child: ListView.builder(
@@ -66,7 +71,29 @@ class RequestsCardList extends StatelessWidget {
               ),
             );
           } else {
-            return const SizedBox.shrink();
+            return Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppConstants.customAssetImage(
+                  imagePath: AppImages.task_icon,
+                  width: 100,
+                  height: 150,
+                  fit: BoxFit.contain,
+                  //color: Color.fromARGB(255, 235, 236, 236)
+                ),
+                10.ph,
+                Text(
+                  "لا يوجد طلبات في الوقت الراهن",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 179, 181, 181),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ));
           }
         });
   }

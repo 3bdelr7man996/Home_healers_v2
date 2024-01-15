@@ -47,18 +47,23 @@ class LocationInput extends StatelessWidget {
                     builder: (context) => MapLocationPicker(
                       apiKey: AppStrings.mapApiKey, // Put YOUR OWN KEY here.
                       onNext: (result) {
-                        if (result != null) {
-                          context.read<AuthCubit>().onAddressChange(
-                              address: result.formattedAddress,
-                              location: result.geometry.location);
+                        Future.delayed(Duration(seconds: 1), () {
+                          if (result != null) {
+                            context.read<AuthCubit>().onAddressChange(
+                                address: result.formattedAddress,
+                                location: result.geometry.location);
 
-                          control.text = result.formattedAddress ?? "";
-                        }
-                        Future.delayed(
-                          Duration(seconds: 1),
-                          () => Navigator.of(context).pop(),
-                        );
+                            control.text = result.formattedAddress ?? "";
+                          }
+                          Future.delayed(
+                            Duration.zero,
+                            () => Navigator.of(context).pop(),
+                          );
+                        });
                       },
+                      language: "ar",
+                      hideMapTypeButton: true,
+                      hideMoreOptions: true,
                       location: state.location,
                       origin: state.location,
                       currentLatLng: LatLng(

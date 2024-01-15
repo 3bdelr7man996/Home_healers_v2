@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'app_logger.dart';
 import 'cache_helper.dart';
+import 'firebase_analytic_helper.dart';
 import 'http_custom_exception.dart';
 
 enum RequestState { initial, loading, success, failed }
@@ -192,6 +193,8 @@ class ApiBaseHelper {
         var responseJson = json.decode(response.body.toString());
         error = handleError(responseJson);
         logger.i("RESPONSE[${response.statusCode}] => DATA: ${response.body}");
+        FirebaseAnalyticUtil.logAPIErrorEvent(
+            param: {"status": "400", "url": url});
         throw BadRequestException(error);
       case 401:
       case 403:
@@ -200,11 +203,15 @@ class ApiBaseHelper {
         error = handleError(responseJson);
         logger.i(
             "REQUEST[$request] => PATH: $url RESPONSE[${response.statusCode}] => DATA: ${response.body}");
+        FirebaseAnalyticUtil.logAPIErrorEvent(
+            param: {"status": "${response.statusCode}", "url": url});
         throw UnauthorisedException(error);
       case 500:
       default:
         logger.i(
             "REQUEST [$request] => PATH: $url => \nSTATUS CODE[${response.statusCode}] => \nDATA: ${response.body}");
+        FirebaseAnalyticUtil.logAPIErrorEvent(
+            param: {"status": "${response.statusCode}", "url": url});
         throw FetchDataException(
             'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }

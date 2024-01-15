@@ -75,6 +75,8 @@ class OneOption extends StatelessWidget {
         if (routeScreen != null) {
           log("route screen != null");
           AppConstants.customNavigation(context, routeScreen!, -1, 0);
+        } else if (onPressed != null) {
+          onPressed!();
         }
       },
       child: Row(

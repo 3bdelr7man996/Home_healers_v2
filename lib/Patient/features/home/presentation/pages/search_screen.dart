@@ -50,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
         return name.contains(query.toLowerCase());
       }).toList();
     });
-    FirebaseAnalyticUtil.logSearchEvent(param: {'term': query});
+    FirebaseAnalyticUtil.logSearchEvent(term: query);
   }
 
   var Data;

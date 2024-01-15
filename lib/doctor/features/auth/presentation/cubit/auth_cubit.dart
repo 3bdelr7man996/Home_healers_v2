@@ -60,10 +60,12 @@ class AuthCubit extends Cubit<AuthState> {
     Location? location,
   }) {
     log("current address $address");
-    emit(state.copyWith(
-      location: () => location,
-      address: address,
-    ));
+    Future.delayed(
+        Duration.zero,
+        () => emit(state.copyWith(
+              location: () => location,
+              address: address,
+            )));
   }
 
   onGenderChange(String gender) => emit(state.copyWith(gender: gender));

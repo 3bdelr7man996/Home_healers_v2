@@ -1,4 +1,5 @@
-import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/points_widgets/points_activities.dart';
@@ -14,13 +15,15 @@ class AllActivitiesSection extends StatelessWidget {
     return BlocBuilder<SettingCubit, SettingState>(
       builder: (context, state) {
         if (state.pointState == RequestState.loading) {
-          return const CustomLoader(
-            padding: 0,
+          return Expanded(
+            child: const CustomLoader(
+              padding: 0,
+            ),
           );
         } else if (state.pointState == RequestState.success &&
-            state.pointsData?.newPointsNotifications != null) {
-          return SizedBox(
-            height: context.height * 0.5,
+            state.pointsData?.newPointsNotifications != null &&
+            state.pointsData!.newPointsNotifications!.isNotEmpty) {
+          return Expanded(
             child: ListView.builder(
               itemCount: state.pointsData?.newPointsNotifications?.length,
               itemBuilder: (context, index) {
@@ -39,7 +42,12 @@ class AllActivitiesSection extends StatelessWidget {
             ),
           );
         } else {
-          return const SizedBox.shrink();
+          return Expanded(
+              child: Center(
+            child: AppConstants.customAssetImage(
+              imagePath: AppImages.activityIcon,
+            ),
+          ));
         }
       },
     );

@@ -127,22 +127,61 @@ class AppConstants {
   static customNetworkImage({
     required String imagePath,
     String imgBaseUrl = "https://dev.home-healers.com/upload/",
-    String placeholder = "assets/images/placeholder.png",
-    String imageError = "assets/images/logo.png",
+    String imageError = 'assets/images/logo.png',
     double? height,
     double? width,
     BoxFit? fit = BoxFit.fill,
   }) {
-    return FadeInImage.assetNetwork(
-      image: imgBaseUrl + imagePath,
+    return Image.network(
+      imgBaseUrl + imagePath,
       fit: fit,
       height: height,
       width: width,
-      placeholder: placeholder,
-      imageErrorBuilder: (BuildContext context, x, u) =>
-          customAssetImage(imagePath: imageError),
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Center(
+          child: SizedBox(
+            height: 20.0,
+            width: 20.0,
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          ),
+        );
+      },
+      errorBuilder: (context, x, u) => customAssetImage(
+        imagePath: imageError,
+        height: height,
+        width: width,
+      ),
     );
   }
+
+  // static customNetworkImage({
+  //   required String imagePath,
+  //   String imgBaseUrl = "https://dev.home-healers.com/upload/",
+  //   String placeholder = "assets/images/placeholder.png",
+  //   String imageError = "assets/images/logo.png",
+  //   double? height,
+  //   double? width,
+  //   BoxFit? fit = BoxFit.fill,
+  // }) {
+  //   return FadeInImage.assetNetwork(
+  //     image: imgBaseUrl + imagePath,
+  //     fit: fit,
+  //     height: height,
+  //     width: width,
+  //     placeholder: placeholder,
+  //     imageErrorBuilder: (BuildContext context, x, u) =>
+  //         customAssetImage(imagePath: imageError),
+  //   );
+  // }
 
   ///show asset svg
   static customAssetSvg(
@@ -176,6 +215,7 @@ class AppConstants {
     await Navigator.push(
       context,
       PageRouteBuilder(
+        settings: RouteSettings(name: screen.toString()),
         transitionDuration: const Duration(milliseconds: 500),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
@@ -197,6 +237,7 @@ class AppConstants {
     Navigator.pushAndRemoveUntil(
       context,
       PageRouteBuilder(
+        settings: RouteSettings(name: screen.toString()),
         transitionDuration: const Duration(milliseconds: 500),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
