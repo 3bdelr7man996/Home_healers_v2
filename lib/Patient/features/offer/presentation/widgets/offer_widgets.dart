@@ -33,7 +33,6 @@ class _OfferCardState extends State<OfferCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     IsUserGuest = false;
     IsGuest();
@@ -162,7 +161,7 @@ class _OfferCardState extends State<OfferCard> {
                 width: context.width,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
+                    backgroundColor: AppColors.primaryColor,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10.0),

@@ -78,7 +78,7 @@ class _ActivationCodeScreenState extends State<ActivationCodeScreen> {
                         context, const ConfirmPasswordScreen(), -1, 0);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: AppColors.primaryColor,
+                    backgroundColor: AppColors.primaryColor,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),

@@ -105,10 +105,8 @@ class _TableClenderForSessionState extends State<TableClenderForSession> {
 }
 
 class LocationInput extends StatelessWidget {
-  final TextEditingController control = TextEditingController();
-  LocationInput({
-    super.key,
-  });
+  TextEditingController control;
+  LocationInput({super.key, required this.control});
 
   @override
   Widget build(BuildContext context) {

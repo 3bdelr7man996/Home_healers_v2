@@ -89,7 +89,7 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
                                 .resetPass(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: state.loading
+                        backgroundColor: state.loading
                             ? Colors.grey
                             : AppColors.primaryColor,
                         elevation: 0,

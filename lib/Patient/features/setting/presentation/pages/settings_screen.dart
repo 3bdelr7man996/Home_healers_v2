@@ -53,7 +53,6 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     IsUserGuest = false;
     IsGuest();
@@ -189,7 +188,7 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              primary: AppColors.primaryColor,
+                              backgroundColor: AppColors.primaryColor,
                             ),
                             onPressed: () async {
                               SharedPreferences prefs =

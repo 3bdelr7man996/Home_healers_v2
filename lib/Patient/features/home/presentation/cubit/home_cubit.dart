@@ -64,13 +64,11 @@ class FilterCubit extends Cubit<FilterState> {
   //?==================== formFields change ====================
   showConfPassword() => emit(state.copyWith(Loading: !state.Loading));
 
-  changeSectionNumber(int num) =>
-      {emit(state.copyWith(status_id: num)), print(state.status_id)};
+  changeSectionNumber(int num) => emit(state.copyWith(status_id: num));
   changeCategoryNumber(int num) => {emit(state.copyWith(category_id: num))};
   changeGender(String gender) => emit(state.copyWith(gender: gender));
   changeCity(int city) => emit(state.copyWith(city_id: city));
-  changeArea(int area) =>
-      {emit(state.copyWith(area_id: area)), print(state.area_id)};
+  changeArea(int area) => emit(state.copyWith(area_id: area));
 
   Future<void> GetFilterResult(BuildContext context) async {
     try {
@@ -163,15 +161,16 @@ class ReservationCubit extends Cubit<ReservationState> {
   onChangeNotes(value) => {emit(state.copyWith(notes: value))};
   makeNotesEmpty() => {emit(state.copyWith(notes: ""))};
   onChangePainPlace(value) => {emit(state.copyWith(painPlace: value))};
-  OnOfferChange(var offer) => {
-        emit(state.copyWith(offer: offer)),
-        print(state.offer),
-        print("Ahmad"),
-      };
+  OnOfferChange(var offer) => emit(state.copyWith(offer: offer));
 
-  Future<void> MakeReservation(BuildContext context, bool withOffer) async {
+  Future<void> MakeReservation(
+    BuildContext context,
+    bool withOffer,
+  ) async {
     var userId = await CacheHelper.getData(key: AppStrings.userId);
     try {
+      fieldsValidation(withOffer);
+
       List<DateTime>? sortedDates = state.days;
       sortedDates?.sort((a, b) => a.compareTo(b));
       String start_at;
@@ -199,7 +198,7 @@ class ReservationCubit extends Cubit<ReservationState> {
           .map((date) =>
               date.toString().substring(0, date.toString().length - 4))
           .toList();
-      fieldsValidation(withOffer);
+
       emit(state.copyWith(Loading: true));
 
       Map<String, dynamic> body;
@@ -235,7 +234,6 @@ class ReservationCubit extends Cubit<ReservationState> {
           "status_id": "${state.status_id}",
         };
       } else {
-        print("asdf");
         body = {
           "advertiser_id": "${state.advertiser_id}",
           "lat": "${state.location?.lat}",
@@ -259,24 +257,23 @@ class ReservationCubit extends Cubit<ReservationState> {
       var response;
       if (withOffer) {
         response = await reservationWithOfferRepo.MakeReservation(body: body);
-        print(body);
-        print("ghaith");
+        print(response);
       } else {
         response = await reservationRepo.MakeReservation(body: body);
       }
       emit(state.copyWith(Loading: false));
-
-      print(response);
-      print("Ghaith");
-
       // AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
       emit(state.copyWith(sessions_count: 1));
       emit(state.copyWith(days: []));
+      emit(state.copyWith(location: []));
       emit(state.copyWith(notes: ""));
+      emit(state.copyWith(address: ""));
+      emit(state.copyWith(status_id: -1));
       daysArray = [];
       sortedDates = [];
       makeNotesEmpty();
       state.location = null;
+
       // ignore: use_build_context_synchronously
       body.removeWhere((key, value) => key.startsWith('days['));
       FirebaseAnalyticUtil.logAddReservationEvent();
@@ -286,36 +283,48 @@ class ReservationCubit extends Cubit<ReservationState> {
       );
     } catch (e) {
       emit(state.copyWith(Loading: false));
-      print(state.status_id);
-      print(e.toString());
+
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
 
-  ///validate on fields
+  ///////////////////////////////////////// validate on fields /////////////////////////////////////////
   void fieldsValidation(bool withOffer) {
     if (state.location == null) {
       throw ("ادخل موقعك");
     }
     if (state.status_id == null) {
       throw ("حدد الاختصاص ");
+    } else {
+      if (state.status_id == -1) {
+        throw ("حدد الاختصاص ");
+      }
     }
-    if (state.sessions_count != state.days!.length) {
-      throw ("عدد الجلسات لا يساوي الأيام المحددة");
+    if (state.days == null) {
+      throw (" حدد الأيام ");
+    } else {
+      if (state.days!.length == 0) {
+        throw (" حدد الأيام ");
+      }
+      if (state.sessions_count != state.days!.length) {
+        throw ("عدد الجلسات لا يساوي الأيام المحددة");
+      }
+      if (state.sessions_count! > state.days!.length) {
+        throw ("قم بتحديد الأيام التي تريد حجز موعد بها");
+      }
     }
-    if (state.sessions_count! > state.days!.length) {
-      throw ("قم بتحديد الأيام التي تريد حجز موعد بها");
-    }
+
     if (state.location == null) {
       throw ("ادخل موقعك");
     }
+
     if (state.notes.length == 0 && !withOffer) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");
     }
   }
 }
 
-/////////////// ⁡⁢⁣⁢New Class For ADs /////////////////////////////////////////
+///////////////////////////////////////// ⁡⁢⁣⁢New Class For ADs /////////////////////////////////////////
 class GetAllAdsCubit extends Cubit<GetAllAdsState> {
   final GetAllAdsRepo getAllAdsRepo;
 
@@ -324,8 +333,7 @@ class GetAllAdsCubit extends Cubit<GetAllAdsState> {
   Future<void> GetAllAds(BuildContext context) async {
     try {
       GetAllAdsModel response = await getAllAdsRepo.GetAllAds();
-      print(
-          "AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad MohsenAHmad Mohsen  AHmad Mohsen AHmad Mohsen");
+
       emit(state.copyWith(data: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);

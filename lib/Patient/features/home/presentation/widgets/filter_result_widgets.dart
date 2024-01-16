@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
@@ -10,7 +9,6 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -281,20 +279,25 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             Container(
               width: 145,
               height: 100,
+              child: AppConstants.customNetworkImage(
+                imagePath: "${widget.image}",
+                fit: BoxFit.cover,
+                imageError: "assets/images/doctor.png",
+              ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                image: widget.image != null
-                    ? DecorationImage(
-                        image: NetworkImage(
-                          "${AppStrings.imageUrl}${widget.image}",
-                        ),
-                        fit: BoxFit.cover,
-                        onError: (exception, stackTrace) => {print(exception)},
-                      )
-                    : DecorationImage(
-                        image: AssetImage("assets/images/doctor.png"),
-                        fit: BoxFit.cover,
-                      ),
+                // image: widget.image != null
+                //     ? DecorationImage(
+                //         image: NetworkImage(
+                //           "${AppStrings.imageUrl}${widget.image}",
+                //         ),
+                //         fit: BoxFit.cover,
+                //         onError: (exception, stackTrace) => {print(exception)},
+                //       )
+                //     : DecorationImage(
+                //         image: AssetImage("assets/images/doctor.png"),
+                //         fit: BoxFit.cover,
+                //       ),
               ),
             ),
             Positioned(
@@ -331,13 +334,14 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             ),
           ],
         ),
-        10.pw,
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.name,
+                textAlign: TextAlign.start,
                 style: TextStyle(
                     color: AppColors.primaryColor,
                     fontSize: 20.0,
@@ -347,23 +351,25 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               Stars(rating: widget.data['rating']),
               5.ph,
               names.isNotEmpty
-                  ? DropdownButton<String>(
-                      underline: Container(), // Hide the underline
+                  ? Container(
+                      child: DropdownButton<String>(
+                        underline: Container(), // Hide the underline
 
-                      // icon: const SizedBox(), // Hide the arrow icon
-                      value: selectedName,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedName = newValue!;
-                        });
-                      },
-                      items:
-                          names.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                        // icon: const SizedBox(), // Hide the arrow icon
+                        value: selectedName,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedName = newValue!;
+                          });
+                        },
+                        items:
+                            names.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
                     )
                   : Text('No Data available'),
               5.ph,
@@ -432,23 +438,16 @@ class ButtonForDoctorCard extends StatelessWidget {
             context.read<ReservationCubit>().OnOfferChange(offer);
           AppConstants.customNavigation(
               context,
-              fromOffer || fromFilter
-                  ? InjuryAreaScreen(
-                      Data: Data,
-                      status_id: status_id,
-                      fromFilter: fromFilter,
-                      fromOffer: fromOffer,
-                      sessionCountForOffer: sessionCountForOffer)
-                  : specialistpageScreen(
-                      Data: Data,
-                      status_id: status_id,
-                      fromOffer: fromOffer,
-                      sessionCountForOffer: sessionCountForOffer),
+              specialistpageScreen(
+                  Data: Data,
+                  status_id: status_id,
+                  fromOffer: fromOffer,
+                  sessionCountForOffer: sessionCountForOffer),
               -1,
               0);
         },
         style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),

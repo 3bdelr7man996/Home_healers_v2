@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/pages/date_of_session_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -11,6 +10,8 @@ import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../../../auth/presentation/pages/injury_area_screen.dart';
 
 class ApPBarForspecialistScreen extends StatelessWidget {
   const ApPBarForspecialistScreen({super.key});
@@ -325,10 +326,6 @@ class _specialistInfoState extends State<specialistInfo> {
               text2: "${widget.Data["rating"]}",
             ),
             statisticsBox(
-              text1: "خبرة",
-              text2: "+10 سنوات",
-            ),
-            statisticsBox(
               text1: "تقييم",
               text2: "${widget.Data["rating"]}",
             )
@@ -461,26 +458,12 @@ class Certificates extends StatefulWidget {
 }
 
 class _CertificatesState extends State<Certificates> {
-  List<String> imageList = [
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-    "assets/images/certificate.png",
-  ];
   var pdfFiles;
   @override
   void initState() {
     super.initState();
 
     pdfFiles = widget.Data;
-    print("pdFiles");
-    print(widget.Data);
   }
 
   @override
@@ -573,7 +556,6 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
   int number = 1;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.sessionCountForOffer != null)
       context
@@ -583,8 +565,6 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.status_id);
-    print("Aliiiii");
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -643,18 +623,38 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
             width: 250,
             child: ElevatedButton(
               onPressed: () {
-                AppConstants.customNavigation(
-                    context,
-                    DateOfSessionScreen(
-                        Data: widget.Data,
-                        fromFilter: widget.fromFilter,
-                        status_id: widget.status_id,
-                        fromOffer: widget.fromOffer),
-                    -1,
-                    0);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InjuryAreaScreen(
+                      sessionCountForOffer: widget.sessionCountForOffer,
+                      Data: widget.Data,
+                      fromFilter: false,
+                      fromOffer: false,
+                      fromPackage: false,
+                    ),
+                  ),
+                );
+                // AppConstants.customNavigation(
+                //     context,
+                //     InjuryAreaScreen(
+                //       sessionCountForOffer: widget.sessionCountForOffer,
+                //       Data: widget.Data,
+                //       fromFilter: false,
+                //       fromOffer: false,
+                //       fromPackage: false,
+                //     ),
+
+                // DateOfSessionScreen(
+                //     Data: widget.Data,
+                //     fromFilter: widget.fromFilter,
+                //     status_id: widget.status_id,
+                //     fromOffer: widget.fromOffer),
+                // -1,
+                // 0);
               },
               style: ElevatedButton.styleFrom(
-                primary: AppColors.primaryColor,
+                backgroundColor: AppColors.primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

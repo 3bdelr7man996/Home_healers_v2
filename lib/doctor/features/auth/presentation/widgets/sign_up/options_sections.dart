@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/http_helper.dart';

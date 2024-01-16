@@ -182,7 +182,7 @@ class _SignInScreen extends State<SignInScreen> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                primary: AppColors.primaryColor,
+                                backgroundColor: AppColors.primaryColor,
                               ),
                               onPressed: () async {
                                 final prefs =

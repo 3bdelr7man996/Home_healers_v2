@@ -101,7 +101,7 @@ class _FiterScreenState extends State<FiterScreen> {
             // AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
           },
           style: ElevatedButton.styleFrom(
-            primary: AppColors.primaryColor,
+            backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),

@@ -415,67 +415,78 @@ class _FirstPopUpState extends State<FirstPopUp> {
       showPopUp = context
           .select((UpdateReservationCubit cubit) => cubit.state.showPoUp);
     });
-    return Column(
-      children: [
-        const Text(
-          "هل ترغب حقا في \nحذف الطلب ؟",
-          style:
-              TextStyle(fontSize: 18, fontWeight: FontWeight.bold, height: 1.5),
-          textAlign: TextAlign.center,
-        ),
-        20.ph,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: AppColors.primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.all(16),
-              ),
-              onPressed: () async {
-                await context
-                    .read<UpdateReservationCubit>()
-                    .onIdChange(widget.listOfOrders.id.toString());
-                await context
-                    .read<UpdateReservationCubit>()
-                    .onStartAtChange(widget.listOfOrders.startAt.toString());
-                await context
-                    .read<UpdateReservationCubit>()
-                    .onEndAtChange(widget.listOfOrders.endAt.toString());
-                await context
-                    .read<UpdateReservationCubit>()
-                    .onStatusChange("canceled");
-                await context
-                    .read<UpdateReservationCubit>()
-                    .updateSelectedReservation(context);
-                if (showPopUp) widget.changePopUp();
-              },
-              child: const Text('حذف'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.primaryColor),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+    return BlocBuilder<UpdateReservationCubit, UpdateReservationState>(
+      builder: (context, state) {
+        return state.loadingUpdateResevation
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                children: [
+                  const Text(
+                    "هل ترغب حقا في \nحذف الطلب ؟",
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold, height: 1.5),
+                    textAlign: TextAlign.center,
                   ),
-                  elevation: 0,
-                  padding: const EdgeInsets.all(16),
-                  backgroundColor: Colors.transparent),
-              onPressed: () {
-                Navigator.pop(context);
-                widget.toggleVisibility();
-              },
-              child: const Text(
-                'عودة',
-                style: TextStyle(color: AppColors.primaryColor),
-              ),
-            ),
-          ],
-        )
-      ],
+                  20.ph,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.all(16),
+                        ),
+                        onPressed: () async {
+                          await context
+                              .read<UpdateReservationCubit>()
+                              .onIdChange(widget.listOfOrders.id.toString());
+                          await context
+                              .read<UpdateReservationCubit>()
+                              .onStartAtChange(
+                                  widget.listOfOrders.startAt.toString());
+                          await context
+                              .read<UpdateReservationCubit>()
+                              .onEndAtChange(
+                                  widget.listOfOrders.endAt.toString());
+                          await context
+                              .read<UpdateReservationCubit>()
+                              .onStatusChange("canceled");
+                          await context
+                              .read<UpdateReservationCubit>()
+                              .updateSelectedReservation(context);
+                          if (showPopUp) widget.changePopUp();
+                        },
+                        child: const Text('حذف'),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            side:
+                                const BorderSide(color: AppColors.primaryColor),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 0,
+                            padding: const EdgeInsets.all(16),
+                            backgroundColor: Colors.transparent),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          widget.toggleVisibility();
+                        },
+                        child: const Text(
+                          'عودة',
+                          style: TextStyle(color: AppColors.primaryColor),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              );
+      },
     );
   }
 }

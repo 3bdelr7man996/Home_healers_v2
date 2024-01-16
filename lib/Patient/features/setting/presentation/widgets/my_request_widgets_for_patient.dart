@@ -69,37 +69,33 @@ class ListOfOrder extends StatelessWidget {
                       ],
                     ),
                   )
-                : SingleChildScrollView(
-                    child: SizedBox(
-                      width: context.width,
-                      height: context.height * 0.75,
-                      child: listOfOrders.isEmpty
-                          ? SizedBox()
-                          : ListView.builder(
-                              itemCount: listOfOrders.length,
-                              itemBuilder: (context, index) {
-                                List<String> names = [];
-                                String selectedName = "";
-                                names.add("الاختصاص :");
-                                for (var item in listOfOrders[index]
-                                        .advertiser
-                                        .categories ??
+                : listOfOrders.isEmpty
+                    ? SizedBox()
+                    : Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: listOfOrders.length,
+                          itemBuilder: (context, index) {
+                            List<String> names = [];
+                            String selectedName = "";
+                            names.add("الاختصاص :");
+                            for (var item
+                                in listOfOrders[index].advertiser.categories ??
                                     []) {
-                                  names.add(item.nameAr ?? "");
-                                }
-                                selectedName = names.isNotEmpty
-                                    ? names[0]
-                                    : 'No names available';
-                                return CardsForRequests(
-                                  listOfOrders: listOfOrders[index],
-                                  categories: names,
-                                  selectedName: selectedName,
-                                  num: activeIndex,
-                                );
-                              },
-                            ),
-                    ),
-                  );
+                              names.add(item.nameAr ?? "");
+                            }
+                            selectedName = names.isNotEmpty
+                                ? names[0]
+                                : 'No names available';
+                            return CardsForRequests(
+                              listOfOrders: listOfOrders[index],
+                              categories: names,
+                              selectedName: selectedName,
+                              num: activeIndex,
+                            );
+                          },
+                        ),
+                      );
       },
     );
   }

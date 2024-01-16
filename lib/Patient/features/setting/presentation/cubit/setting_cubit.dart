@@ -1,7 +1,8 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/Patient/features/setting/data/models/add_report_model.dart';
 import 'package:dr/Patient/features/setting/data/models/evaluations_model.dart';
@@ -139,6 +140,8 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
     print(state.end_at);
     print(state.status);
     try {
+      emit(state.copyWith(loadingUpdateResevation: true));
+      print(state.loadingUpdateResevation);
       print(state.id);
       print(state.start_at);
       print(state.end_at);
@@ -155,11 +158,14 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
           await updateReservationRepo.updateReservation(body: body);
       await context.read<MyOrdersCubit>().GetOrders(context);
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
+      emit(state.copyWith(loadingUpdateResevation: false));
 
       emit(state.copyWith(showPoUp: true));
       print(response);
     } catch (e) {
       print(e.toString());
+      emit(state.copyWith(loadingUpdateResevation: false));
+
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -397,6 +403,8 @@ class AddReportCubit extends Cubit<AddReportState> {
   Future<void> sendReport(BuildContext context, var image, var title) async {
     List<File> images = [];
     images.add(image);
+    print(title);
+    print(images);
     try {
       Map<String, String> body = {};
 
@@ -406,8 +414,6 @@ class AddReportCubit extends Cubit<AddReportState> {
           await repositry.sendReport(body: body, Files: images);
       await context.read<ReportsCubit>().GetReports();
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
-
-      print(response);
     } catch (e) {
       print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
