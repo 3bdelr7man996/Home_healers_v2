@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, deprecated_member_use
 
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
@@ -199,7 +199,6 @@ class TotalDetails extends StatelessWidget {
                           ? "${order.amount}"
                           : "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
                       : "",
-
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, deprecated_member_use
+
 import 'package:dr/Patient/features/setting/presentation/widgets/bill_widgets.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -26,7 +28,6 @@ class BillScreen extends StatefulWidget {
 class _BillScreenState extends State<BillScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<MyOrdersCubit>().GetInvoiceDetails(widget.oneOrder.id);
   }

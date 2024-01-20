@@ -64,7 +64,6 @@ class ApiBaseHelper {
       {Object? body, Map<String, String>? headers}) async {
     Map<String, dynamic>? responseJson;
     Uri urlRequest = Uri.parse("$baseUrl$url");
-    print(urlRequest);
     try {
       final http.Response response = await http.post(urlRequest,
           body: jsonEncode(body), headers: headers ?? baseHeaders);
@@ -103,6 +102,9 @@ class ApiBaseHelper {
       request.headers["Authorization"] = 'Bearer ${CacheHelper.getData(
         key: AppStrings.userToken,
       )}';
+      print("asdfasdfasdf");
+      print(request.headers);
+      print("asdfasdfasdf");
 
       //init form data eg,name,description,...
       body?.forEach((key, value) {
@@ -144,9 +146,6 @@ class ApiBaseHelper {
           ),
           url: urlRequest.toString(),
           request: "POST");
-      print("Ghaith");
-
-      print(responseJson);
     } on SocketException {
       throw FetchDataException('لا يوجد اتصال بالانترنت');
     }

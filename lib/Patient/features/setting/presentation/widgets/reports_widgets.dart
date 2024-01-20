@@ -22,57 +22,73 @@ class _ReportsForMeState extends State<ReportsForMe> {
   Widget build(BuildContext context) {
     return BlocBuilder<ReportsCubit, ReportsState>(
       builder: (context, state) {
-        return Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 30,
-            ),
-            itemCount: state.reportsForPatient == null
-                ? 0
-                : state.reportsForPatient.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  AppConstants.customNavigation(
-                      context,
-                      PhotoViewerRouteWrapper(
-                          filePath: state.reportsForPatient[index].repImage,
-                          typeOfFile: state.reportsForPatient[index].repImage
-                              .substring(
-                                  0,
-                                  state.reportsForPatient[index].repImage
-                                          .length -
-                                      4)),
-                      0,
-                      -1);
-                },
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 10.0),
-                  color: Colors.white,
-                  child: Container(
-                    child: state.reportsForPatient[index].repImage.substring(
+        return state.reportsForPatient == null
+            ? SizedBox()
+            : state.reportsForPatient.length == 0
+                ? Expanded(
+                    child: Center(
+                      child: Text(
+                        "لا يوجد تقارير لعرضها",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 30,
+                      ),
+                      itemCount: state.reportsForPatient == null
+                          ? 0
+                          : state.reportsForPatient.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            AppConstants.customNavigation(
+                                context,
+                                PhotoViewerRouteWrapper(
+                                    filePath:
+                                        state.reportsForPatient[index].repImage,
+                                    typeOfFile: state
+                                        .reportsForPatient[index].repImage
+                                        .substring(
+                                            0,
+                                            state.reportsForPatient[index]
+                                                    .repImage.length -
+                                                4)),
                                 0,
-                                state.reportsForPatient[index].repImage.length -
-                                    4) ==
-                            "pdf"
-                        ? Center(child: Text("file"))
-                        : Center(
-                            child: PhotoView(
-                              imageProvider: NetworkImage(
-                                '${AppStrings.imageUrl}${state.reportsForPatient[index].repImage}',
-                              ),
+                                -1);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            color: Colors.white,
+                            child: Container(
+                              child: state.reportsForPatient[index].repImage
+                                          .substring(
+                                              0,
+                                              state.reportsForPatient[index]
+                                                      .repImage.length -
+                                                  4) ==
+                                      "pdf"
+                                  ? Center(child: Text("file"))
+                                  : Center(
+                                      child: PhotoView(
+                                        imageProvider: NetworkImage(
+                                          '${AppStrings.imageUrl}${state.reportsForPatient[index].repImage}',
+                                        ),
+                                      ),
+                                    ),
+                              width: 200,
+                              height: 200,
+                              color: const Color.fromARGB(122, 158, 158, 158),
                             ),
                           ),
-                    width: 200,
-                    height: 200,
-                    color: const Color.fromARGB(122, 158, 158, 158),
-                  ),
-                ),
-              );
-            },
-          ),
-        );
+                        );
+                      },
+                    ),
+                  );
       },
     );
   }
@@ -90,50 +106,66 @@ class _specialist_reportsState extends State<specialist_reports> {
   Widget build(BuildContext context) {
     return BlocBuilder<ReportsCubit, ReportsState>(
       builder: (context, state) {
-        return Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 30,
-            ),
-            itemCount: state.reportsForDoctors == null
-                ? 0
-                : state.reportsForDoctors.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  AppConstants.customNavigation(
-                      context,
-                      PhotoViewerRouteWrapper(
-                          filePath: state.reportsForDoctors[index].file,
-                          typeOfFile: state.reportsForDoctors[index].file
-                              .substring(
-                                  0,
-                                  state.reportsForDoctors[index].file.length -
-                                      4)),
-                      0,
-                      -1);
-                },
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 10.0),
-                  color: Colors.white,
-                  child: Container(
-                    child: state.reportsForDoctors[index].file.substring(
+        return state.reportsForDoctors == null
+            ? SizedBox()
+            : state.reportsForDoctors.length == 0
+                ? Expanded(
+                    child: Center(
+                    child: Text(
+                      "لا يوجد تقارير لعرضها",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ))
+                : Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 30,
+                      ),
+                      itemCount: state.reportsForDoctors == null
+                          ? 0
+                          : state.reportsForDoctors.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            AppConstants.customNavigation(
+                                context,
+                                PhotoViewerRouteWrapper(
+                                    filePath:
+                                        state.reportsForDoctors[index].file,
+                                    typeOfFile: state
+                                        .reportsForDoctors[index].file
+                                        .substring(
+                                            0,
+                                            state.reportsForDoctors[index].file
+                                                    .length -
+                                                4)),
                                 0,
-                                state.reportsForDoctors[index].file.length -
-                                    4) ==
-                            "pdf"
-                        ? Center(child: Text("file"))
-                        : Center(child: Text("photo")),
-                    width: 200,
-                    height: 200,
-                    color: const Color.fromARGB(122, 158, 158, 158),
-                  ),
-                ),
-              );
-            },
-          ),
-        );
+                                -1);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            color: Colors.white,
+                            child: Container(
+                              child: state.reportsForDoctors[index].file
+                                          .substring(
+                                              0,
+                                              state.reportsForDoctors[index]
+                                                      .file.length -
+                                                  4) ==
+                                      "pdf"
+                                  ? Center(child: Text("file"))
+                                  : Center(child: Text("photo")),
+                              width: 200,
+                              height: 200,
+                              color: const Color.fromARGB(122, 158, 158, 158),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
       },
     );
   }

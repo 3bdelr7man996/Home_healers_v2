@@ -30,7 +30,6 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     IsUserGuest = false;
     IsGuest();
@@ -46,7 +45,6 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.Data);
     return Scaffold(
       body: Stack(
         children: [
@@ -103,7 +101,8 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                           });
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          primary: AppColors.primaryColor,
+                                          backgroundColor:
+                                              AppColors.primaryColor,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),

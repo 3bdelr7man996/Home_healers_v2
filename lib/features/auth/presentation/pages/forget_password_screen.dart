@@ -73,7 +73,7 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: AppColors.primaryColor,
+                        backgroundColor: AppColors.primaryColor,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

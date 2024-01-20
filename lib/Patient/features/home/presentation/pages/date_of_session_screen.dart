@@ -32,7 +32,6 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     context.read<ReservationCubit>().onChangeadvertiserId(widget.Data["id"]);
@@ -46,12 +45,9 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
   }
 
   late int id;
-
+  final TextEditingController control = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print("sss");
-    print(widget.Data["status_advisor"]);
-    print(widget.status_id);
     return Scaffold(
       appBar: customAppBar(context,
           title: "choose_your_reservation_date", backButton: true),
@@ -62,7 +58,7 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
             children: [
               TableClenderForSession(),
               30.ph,
-              LocationInput(),
+              LocationInput(control: control),
               30.ph,
               widget.fromOffer
                   ? SizedBox()
@@ -77,38 +73,33 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                         hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-              widget.fromFilter || widget.fromOffer
-                  ? names.isNotEmpty
-                      ? DropdownButton<String>(
-                          underline: Container(), // Hide the underline
-                          // icon: const SizedBox(), // Hide the arrow icon
-                          value: selectedName,
-                          onChanged: (String? newValue) async {
-                            for (var category
-                                in widget.Data["status_advisor"]) {
-                              if (category['name_ar'] == newValue) {
-                                id = category['id'];
-                                break;
-                              }
-                            }
-                            await context
-                                .read<ReservationCubit>()
-                                .onChangestatus_id(id);
-                            setState(() {
-                              selectedName = newValue!;
-                              print(selectedName);
-                              print("ss");
-                            });
-                          },
-                          items: names
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        )
-                      : SizedBox()
+              names.isNotEmpty
+                  ? DropdownButton<String>(
+                      underline: Container(), // Hide the underline
+                      // icon: const SizedBox(), // Hide the arrow icon
+                      value: selectedName,
+                      onChanged: (String? newValue) async {
+                        for (var category in widget.Data["status_advisor"]) {
+                          if (category['name_ar'] == newValue) {
+                            id = category['id'];
+                            break;
+                          }
+                        }
+                        await context
+                            .read<ReservationCubit>()
+                            .onChangestatus_id(id);
+                        setState(() {
+                          selectedName = newValue!;
+                        });
+                      },
+                      items:
+                          names.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    )
                   : SizedBox(),
               10.ph,
               BlocBuilder<ReservationCubit, ReservationState>(
@@ -123,16 +114,22 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                               if (widget.fromOffer) {
                                 context
                                     .read<ReservationCubit>()
-                                    .MakeReservation(context, true);
+                                    .MakeReservation(
+                                      context,
+                                      true,
+                                    );
                               } else
                                 context
                                     .read<ReservationCubit>()
-                                    .MakeReservation(context, false);
+                                    .MakeReservation(
+                                      context,
+                                      false,
+                                    );
                             },
                             child: Text('إتمام العملية'),
                             style: ElevatedButton.styleFrom(
-                              primary: AppColors.primaryColor,
-                              onPrimary: Colors.white,
+                              foregroundColor: Colors.white,
+                              backgroundColor: AppColors.primaryColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),

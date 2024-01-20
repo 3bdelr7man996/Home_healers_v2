@@ -160,7 +160,7 @@ class _RequestsDetailsScreenForPatientState
                             children: [
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: AppColors.primaryColor,
+                                  backgroundColor: AppColors.primaryColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),

@@ -35,7 +35,7 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
         // chars.removeAt(0);
         // String newString = chars.join('');
         // print('${photoName}');
-        print('${File(result.files.single.name)}');
+        // print('${File(result.files.single.name)}');
         File image = File(result.files.single.path!);
         String name = result.files.single.name;
         await context
