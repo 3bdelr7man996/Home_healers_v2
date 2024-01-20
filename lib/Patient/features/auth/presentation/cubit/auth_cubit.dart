@@ -81,8 +81,8 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   Future<void> signUpPatient(BuildContext context) async {
     try {
       fieldsValidation();
-      var inputFormat = DateFormat('MM/dd/yyyy');
-      var outputFormat = DateFormat('yyyy-MM-dd');
+      var inputFormat = DateFormat('MM/dd/yyyy', "en");
+      var outputFormat = DateFormat('yyyy-MM-dd', "en");
 
       var parsedDate = inputFormat.parse(state.birthday);
       var formattedDate = outputFormat.format(parsedDate);
