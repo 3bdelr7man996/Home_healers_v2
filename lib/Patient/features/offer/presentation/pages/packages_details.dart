@@ -15,7 +15,6 @@ class OfferDetailsScreen extends StatefulWidget {
 class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<ReservationCubit>().OnOfferChange(widget.Package.toJson());
   }

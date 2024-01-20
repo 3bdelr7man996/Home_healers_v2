@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
 
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
@@ -210,7 +212,7 @@ class _EditProfileScreenForPatientState
                                     .UpdateInfoForUser(context);
                               },
                               style: ElevatedButton.styleFrom(
-                                primary: AppColors.primaryColor,
+                                backgroundColor: AppColors.primaryColor,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),

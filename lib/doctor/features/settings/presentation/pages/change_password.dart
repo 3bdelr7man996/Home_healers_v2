@@ -112,7 +112,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 .changePassword(_toggleVisibility);
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: AppColors.primaryColor,
+                            backgroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),

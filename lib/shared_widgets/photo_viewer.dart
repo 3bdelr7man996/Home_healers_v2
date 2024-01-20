@@ -61,9 +61,11 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
   }
 
   Future<void> loadNetwork() async {
-    setState(() {});
     var url = '${AppStrings.imageUrl}${widget.filePath}';
+    print(url);
     final response = await http.get(Uri.parse(url));
+    print(url);
+
     final bytes = response.bodyBytes;
     final filename = basename(url);
     final dir = await getApplicationDocumentsDirectory();
@@ -72,9 +74,6 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
     setState(() {
       Pfile = file;
     });
-
-    print(Pfile);
-    setState(() {});
   }
 
   @override

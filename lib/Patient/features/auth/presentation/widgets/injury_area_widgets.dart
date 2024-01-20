@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 library human_anatomy;
 
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -67,7 +69,6 @@ class _HumanAnatomyState extends State<HumanAnatomy> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _bodyPartList.add("Head");
   }

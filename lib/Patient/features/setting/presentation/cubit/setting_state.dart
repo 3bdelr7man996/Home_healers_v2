@@ -23,6 +23,7 @@ class MyOrdersState extends Equatable {
       completedOrders,
       canceledOrders;
   bool loading;
+
   var inVoice;
   @override
   List<Object?> get props => [
@@ -69,6 +70,7 @@ class UpdateReservationState extends Equatable {
     this.end_at,
     this.status,
     this.showPoUp = false,
+    this.loadingUpdateResevation = false,
   });
   final bool Loading;
   String? id;
@@ -76,11 +78,21 @@ class UpdateReservationState extends Equatable {
   var end_at;
   String? status;
   bool showPoUp;
+  bool loadingUpdateResevation;
   @override
   @override
-  List<Object?> get props => [Loading, id, start_at, end_at, status, showPoUp];
+  List<Object?> get props => [
+        Loading,
+        id,
+        start_at,
+        end_at,
+        status,
+        showPoUp,
+        loadingUpdateResevation
+      ];
   UpdateReservationState copyWith({
     bool? Loading,
+    bool? loadingUpdateResevation,
     String? id,
     var start_at,
     var end_at,
@@ -91,6 +103,8 @@ class UpdateReservationState extends Equatable {
           Loading: Loading ?? this.Loading,
           id: id ?? this.id,
           end_at: end_at ?? this.end_at,
+          loadingUpdateResevation:
+              loadingUpdateResevation ?? this.loadingUpdateResevation,
           status: status ?? this.status,
           showPoUp: showPoUp ?? this.showPoUp,
           start_at: start_at ?? this.start_at);

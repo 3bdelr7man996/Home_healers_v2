@@ -10,9 +10,6 @@ class AddReportRepo {
 
   Future<AddReportModel> sendReport(
       {required Map<String, String> body, required List<File> Files}) async {
-    print("bodyyyy== $body");
-
-    print(Files);
     AddReportModel signUpResponse = AddReportModel.fromJson(
       await dataSource.sendReport(
         body: body,

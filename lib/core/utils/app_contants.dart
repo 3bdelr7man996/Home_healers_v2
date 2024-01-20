@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:dr/doctor/features/home/data/models/tab_info.dart';

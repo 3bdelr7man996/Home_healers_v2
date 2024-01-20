@@ -18,7 +18,6 @@ class MyPointScreenForPatient extends StatefulWidget {
 class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -34,39 +33,39 @@ class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
             children: [
               MyPointsheaderForPatient(),
               20.ph,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  10.pw,
-                  Text(
-                    "استمتع بالكاش باك",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
-                  ),
-                ],
-              ),
-              10.ph,
-              Image.asset(
-                'assets/images/restaurants.png',
-              ),
-              Image.asset(
-                'assets/images/purchases.png',
-                width: context.width,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(
-                    'assets/images/clothes.png',
-                    width: context.width * 0.4,
-                  ),
-                  Image.asset(
-                    'assets/images/Donations.png',
-                    width: context.width * 0.4,
-                  ),
-                ],
-              ),
-              20.ph,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   children: [
+              //     10.pw,
+              //     Text(
+              //       "استمتع بالكاش باك",
+              //       style:
+              //           TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+              //     ),
+              //   ],
+              // ),
+              // 10.ph,
+              // Image.asset(
+              //   'assets/images/restaurants.png',
+              // ),
+              // Image.asset(
+              //   'assets/images/purchases.png',
+              //   width: context.width,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Image.asset(
+              //       'assets/images/clothes.png',
+              //       width: context.width * 0.4,
+              //     ),
+              //     Image.asset(
+              //       'assets/images/Donations.png',
+              //       width: context.width * 0.4,
+              //     ),
+              //   ],
+              // ),
+              // 20.ph,
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -80,18 +79,32 @@ class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
               ),
               BlocBuilder<GetPointsCubit, GetPointsState>(
                 builder: (context, state) {
-                  return Column(
-                    children: [
-                      Divider(
-                        thickness: 0.5,
-                      ),
-                      for (int i = 0;
-                          i < state.Data.newPointsNotifications.length;
-                          i++)
-                        Activity(
-                            Notification: state.Data.newPointsNotifications[i]),
-                    ],
-                  );
+                  return state.Data.newPointsNotifications == null
+                      ? SizedBox()
+                      : state.Data.newPointsNotifications.length == 0
+                          ? SizedBox(
+                              height: 300,
+                              child: Center(
+                                  child: Text(
+                                "لا يوجد أنشطة لعرضها",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
+                            )
+                          : Column(
+                              children: [
+                                Divider(
+                                  thickness: 0.5,
+                                ),
+                                for (int i = 0;
+                                    i <
+                                        state
+                                            .Data.newPointsNotifications.length;
+                                    i++)
+                                  Activity(
+                                      Notification:
+                                          state.Data.newPointsNotifications[i]),
+                              ],
+                            );
                 },
               )
             ],
