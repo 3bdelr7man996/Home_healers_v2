@@ -19,6 +19,7 @@ import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dar
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
@@ -27,7 +28,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/inVoice_model.dart';
+import '../../data/repositories/show_notification_repo.dart';
 import '../pages/bill_screen.dart';
+import '../pages/requests_details_screen.dart';
 
 part 'setting_state.dart';
 
@@ -35,12 +38,50 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
   final MyOrdersRepo myOrdersRepo;
   final ShowBillRepo showBillRepo;
   final GetInvoiceRepo getInvoiceRepo;
+  final ShowNotificationRepo showNotificationRepo;
 
   MyOrdersCubit(
       {required this.myOrdersRepo,
       required this.showBillRepo,
+      required this.showNotificationRepo,
       required this.getInvoiceRepo})
       : super(MyOrdersState());
+  ////////////////////////// Show  Notification  ///////////////////////
+  Future<void> ShowNotification(BuildContext context, String id) async {
+    try {
+      var response = await showNotificationRepo.ShowNotification(id: id);
+      print(response['data']);
+      int num = 1;
+      if (response['data']['userReservations'][0]['status'] == 'reviewing') {
+        num = 0;
+      } else if (response['data']['userReservations'][0]['status'] ==
+          'wait_confirm') {
+        num = 1;
+      } else if (response['data']['userReservations'][0]['status'] ==
+          'confirmed') {
+        num = 2;
+      } else if (response['data']['userReservations'][0]['status'] ==
+          'completed') {
+        num = 3;
+      } else if (response['data']['userReservations'][0]['status'] ==
+          'canceled') {
+        num = 4;
+      }
+      print(num);
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => RequestsDetailsScreenForPatient(
+            fromNotification: true,
+            num: num,
+            notificationOrder: response['data']['userReservations']),
+      ));
+    } catch (e) {
+      print(e);
+      emit(state.copyWith(loading: false));
+
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
 
   Future<void> ShowBillScreen(BuildContext context, var id) async {
     try {
@@ -68,7 +109,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       MyOrdersModel response = await myOrdersRepo.GetMyOrders();
       emit(state.copyWith(allOrders: response.data));
 
-      print(response);
+      print(response.data![0].parentId.runtimeType);
       List<OrderData>? arrayForReviewing = [];
       List<OrderData>? arrayForConfirmed = [];
       List<OrderData>? arrayForWaitConfirmed = [];

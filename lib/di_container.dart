@@ -65,6 +65,8 @@ import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'Patient/features/setting/data/datasources/show_notification_ds.dart';
+import 'Patient/features/setting/data/repositories/show_notification_repo.dart';
 import 'config/notifications_config/firebase_messages.dart';
 import 'config/notifications_config/local_notification_config.dart';
 import 'core/utils/app_strings.dart';
@@ -146,6 +148,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => AddReportDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ShowBillDS(apiHelper: sl()));
   sl.registerLazySingleton(() => GetInvoiceDS(apiHelper: sl()));
+  sl.registerLazySingleton(() => ShowNotificationDS(apiHelper: sl()));
 
   //PATIENT REPOSITORIES
   sl.registerLazySingleton(() => SignUpAdvertiserRepo(dataSource: sl()));
@@ -172,6 +175,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => AddReportRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ShowBillRepo(dataSource: sl()));
   sl.registerLazySingleton(() => GetInvoiceRepo(dataSource: sl()));
+  sl.registerLazySingleton(() => ShowNotificationRepo(dataSource: sl()));
 
   //PATIENT CUBITS
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
@@ -181,7 +185,10 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() =>
       ReservationCubit(reservationRepo: sl(), reservationWithOfferRepo: sl()));
   sl.registerFactory(() => MyOrdersCubit(
-      myOrdersRepo: sl(), showBillRepo: sl(), getInvoiceRepo: sl()));
+      myOrdersRepo: sl(),
+      showBillRepo: sl(),
+      getInvoiceRepo: sl(),
+      showNotificationRepo: sl()));
   sl.registerFactory(() => UpdateReservationCubit(updateReservationRepo: sl()));
   sl.registerFactory(() => UpdateInfoCubit(UpdateInfo: sl()));
   sl.registerFactory(() => FavoriteCubit(favoriteRepo: sl()));
