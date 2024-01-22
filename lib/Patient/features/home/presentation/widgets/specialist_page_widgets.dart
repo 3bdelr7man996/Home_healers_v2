@@ -4,7 +4,6 @@ import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';

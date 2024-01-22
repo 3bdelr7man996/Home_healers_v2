@@ -287,8 +287,6 @@ class GetPointsCubit extends Cubit<GetPointsState> {
     try {
       MyPointsModel response = await getPointrepo.GetPoints();
       print(response);
-      print(
-          "AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad Mohsen AHmad MohsenAHmad Mohsen  AHmad Mohsen AHmad Mohsen");
       emit(state.copyWith(Data: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);

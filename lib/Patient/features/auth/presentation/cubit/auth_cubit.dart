@@ -26,6 +26,32 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
       : super(AuthStateForPatient());
 
   //?==================== formFields change ====================
+  ///TO DETECT CURRENT LOCATION(LAT,LONG)
+  Future<void> getCurrentPosition() async {
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        Geolocator.requestPermission();
+      }
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      log("location is ${position.latitude}");
+      emit(state.copyWith(
+          location: Location(
+        lat: position.latitude,
+        lng: position.longitude,
+      )));
+
+      // You can use latitude and longitude for your desired purpose.
+      log("Latitude: ${state.location?.lat}, Longitude: ${position.longitude}");
+    } catch (e) {
+      log("Error: $e");
+    }
+  }
+
   void onAddressChange({
     String? address,
     Location? location,
@@ -95,8 +121,8 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
         "password": "${state.password}",
         "c_password": "${state.confirmPassword}",
         "city_id": "${state.cityId}",
-        "line1": "${state.location.lat}",
-        "line2": "${state.location.lng}",
+        "line1": "${state.location?.lat}",
+        "line2": "${state.location?.lng}",
         "nationality": "${state.nationality}",
         "age": "${state.age}",
         "birthday": "${formattedDate}",

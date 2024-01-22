@@ -52,7 +52,7 @@ class PaymentRepository {
         response.success!.isNotEmpty &&
         response.message!.isNotEmpty) {
       if (response.success!.contains("true") &&
-          response.message!.contains("Message payment sucess")) {
+          response.message!.contains(" payment sucess")) {
         payResponse = ResponseModel(
           paySuccess: true,
           message: "reservation_been_confirmed".tr(),

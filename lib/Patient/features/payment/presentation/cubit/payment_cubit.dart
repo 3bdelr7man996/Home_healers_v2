@@ -122,6 +122,7 @@ class PaymentCubit extends Cubit<PaymentState> {
     try {
       //String? result =
       ResponseModel? response = await repository.visaPayResult(fullUrl: path);
+      log("Payment RESULT %%% ${response.success} -- ${response.paySuccess} ---- ${response.status}");
       if (response.paySuccess == true) {
         //Map<String, dynamic>? statusResponse =
         await repository.confirmReservationStatus(myOrder: myOrder);

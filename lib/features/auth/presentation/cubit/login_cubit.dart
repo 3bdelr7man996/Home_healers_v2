@@ -58,8 +58,10 @@ class LoginCubit extends Cubit<LoginState> {
         }
       } else {
         if (context.mounted) {
-          AppConstants.customNavigation(
-              context, HomeScreenForPatient(selectedIndex: 2), -1, 0);
+          AppConstants.pushRemoveNavigator(
+            context,
+            screen: HomeScreenForPatient(selectedIndex: 2),
+          );
         }
       }
     } catch (e) {

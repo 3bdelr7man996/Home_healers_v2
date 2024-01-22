@@ -574,7 +574,7 @@ class SessionInfoForPatient extends StatelessWidget {
         ),
         10.ph,
         Container(
-          height: context.height * 0.15,
+          height: context.height * 0.12,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: sessionsInfo.length,
@@ -587,7 +587,7 @@ class SessionInfoForPatient extends StatelessWidget {
             },
           ),
         ),
-        30.ph,
+        //30.ph,
       ],
     );
   }
@@ -633,6 +633,7 @@ class OneSessionInfoForPatient extends StatelessWidget {
                           title,
                           style: const TextStyle(
                             fontSize: 16,
+                            fontWeight: FontWeight.w600,
                             color: Colors.white,
                           ),
                         ),
@@ -649,7 +650,8 @@ class OneSessionInfoForPatient extends StatelessWidget {
                         ' ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(date))}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -657,7 +659,7 @@ class OneSessionInfoForPatient extends StatelessWidget {
               ],
             ),
           ),
-          10.ph,
+          //  10.ph,
         ],
       ),
     );
