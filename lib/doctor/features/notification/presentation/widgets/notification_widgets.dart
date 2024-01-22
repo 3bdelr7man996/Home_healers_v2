@@ -3,7 +3,7 @@ import 'package:dr/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class OneNotification extends StatelessWidget {
+class OneNotification extends StatefulWidget {
   final String imagePath, title, date, description;
   final void Function()? onTap;
   const OneNotification(
@@ -13,11 +13,15 @@ class OneNotification extends StatelessWidget {
       required this.date,
       required this.description,
       this.onTap});
+  @override
+  State<OneNotification> createState() => _OneNotificationState();
+}
 
+class _OneNotificationState extends State<OneNotification> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: widget.onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 5.0,
@@ -26,7 +30,7 @@ class OneNotification extends StatelessWidget {
           Row(
             children: [
               SvgPicture.asset(
-                "${AppImages.iconPath}$imagePath",
+                "${AppImages.iconPath}${widget.imagePath}",
                 // width: 75,
                 // height: 75,
               ),
@@ -35,13 +39,13 @@ class OneNotification extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    widget.title,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 18.0),
                   ),
                   //5.ph,
                   Text(
-                    convertDate(date),
+                    convertDate(widget.date),
                     style: const TextStyle(
                       fontSize: 16.0,
                       color: Color.fromARGB(255, 197, 198, 200),
@@ -52,7 +56,7 @@ class OneNotification extends StatelessWidget {
             ],
           ),
           15.ph,
-          Text(description),
+          Text(widget.description),
           const Divider(
             color: Color.fromARGB(74, 0, 0, 0),
             thickness: 0.3,

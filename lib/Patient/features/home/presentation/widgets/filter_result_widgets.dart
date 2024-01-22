@@ -260,7 +260,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   @override
   void initState() {
     super.initState();
-    names.add("الاختصاص :");
+    names.add("الاختصاص");
     for (var item in widget.categories) {
       names.add(item['name_ar']);
     }
@@ -279,10 +279,13 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             Container(
               width: 145,
               height: 100,
-              child: AppConstants.customNetworkImage(
-                imagePath: "${widget.image}",
-                fit: BoxFit.cover,
-                imageError: "assets/images/doctor.png",
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: AppConstants.customNetworkImage(
+                  imagePath: "${widget.image}",
+                  fit: BoxFit.cover,
+                  imageError: "assets/images/doctor.png",
+                ),
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -334,6 +337,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             ),
           ],
         ),
+        5.pw,
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -355,7 +359,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                       child: DropdownButton<String>(
                         underline: Container(), // Hide the underline
 
-                        // icon: const SizedBox(), // Hide the arrow icon
+                        icon: const SizedBox(), // Hide the arrow icon
                         value: selectedName,
                         onChanged: (String? newValue) {
                           setState(() {

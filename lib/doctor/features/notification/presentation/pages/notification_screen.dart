@@ -1,3 +1,5 @@
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/requests_details_screen.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
@@ -8,6 +10,8 @@ import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/res
 import 'package:dr/doctor/features/home/presentation/pages/requests_details_screen.dart';
 import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/notification/presentation/widgets/notification_widgets.dart';
+import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,6 +78,7 @@ class NotificationBody extends StatelessWidget {
                         date: state.notifList?[index].createdAt ?? "",
                         description: state.notifList?[index].data?.body ?? "",
                         onTap: () async {
+                          print(state.notifList![index].type!);
                           if (state.notifList![index].type!
                                   .contains("OrderStatus2") ||
                               state.notifList![index].type!
@@ -87,6 +92,18 @@ class NotificationBody extends StatelessWidget {
                                 RequestsDetailsScreen(fromNotification: true),
                                 0,
                                 1);
+                          } else if (state.notifList![index].type!
+                              .contains("UserNewReservation")) {
+                            await context
+                                .read<MyOrdersCubit>()
+                                .ShowNotification(
+                                    context,
+                                    state.notifList![index].data!.id!
+                                        .toString());
+                          } else if (state.notifList![index].type!
+                              .contains("newPoints")) {
+                            AppConstants.customNavigation(
+                                context, MyPointScreen(), -1, 0);
                           }
                         },
                       );

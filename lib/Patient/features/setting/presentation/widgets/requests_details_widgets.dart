@@ -19,7 +19,14 @@ import 'package:intl/intl.dart' as intl;
 class FirstSection extends StatelessWidget {
   int num;
   var listOfOrders;
-  FirstSection({super.key, required this.num, this.listOfOrders});
+  var notificationOrder;
+  bool fromNotification;
+  FirstSection(
+      {super.key,
+      required this.num,
+      this.listOfOrders,
+      this.notificationOrder,
+      this.fromNotification = false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +43,13 @@ class FirstSection extends StatelessWidget {
               children: [
                 FittedBox(
                   child: Text(
-                    "رقم الطلب : ${listOfOrders.id}",
+                    "رقم الطلب : ${fromNotification ? notificationOrder[0]['id'] : listOfOrders.id}",
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 ),
                 FittedBox(
                   child: Text(
-                    "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(listOfOrders.createdAt))}",
+                    "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(fromNotification ? notificationOrder[0]['created_at'] : listOfOrders.createdAt))}",
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                 )
@@ -84,11 +91,14 @@ class FirstSection extends StatelessWidget {
 class TowSection extends StatefulWidget {
   int num;
   OrderData? listOfOrders;
-  var categories, selectedName;
+  var categories, selectedName, notificationOrder;
+  bool fromNotification;
   TowSection(
       {super.key,
       required this.num,
       this.listOfOrders,
+      this.notificationOrder,
+      this.fromNotification = false,
       this.categories,
       this.selectedName});
 
@@ -102,8 +112,10 @@ class _TowSectionState extends State<TowSection> {
   @override
   void initState() {
     super.initState();
-    categories = widget.categories;
-    selectedName = widget.selectedName;
+    if (widget.fromNotification == false) {
+      categories = widget.categories;
+      selectedName = widget.selectedName;
+    }
   }
 
   @override
@@ -118,7 +130,8 @@ class _TowSectionState extends State<TowSection> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 child: AppConstants.customNetworkImage(
-                  imagePath: "${widget.listOfOrders?.advertiser.image}",
+                  imagePath:
+                      " ${widget.fromNotification ? widget.notificationOrder[0]['advertiser']['image'] : widget.listOfOrders?.advertiser.image}",
                   imageError: AppImages.doctorPlaceholder,
                   width: context.width * 0.25,
                   height: context.width * 0.25 - 10,
@@ -130,37 +143,40 @@ class _TowSectionState extends State<TowSection> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${widget.listOfOrders?.advertiser.nameAr}",
+                      "${widget.fromNotification ? widget.notificationOrder[0]['advertiser']['name_ar'] : widget.listOfOrders?.advertiser.nameAr}",
                       style: const TextStyle(
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.w600,
                           fontSize: 16),
                     ),
-                    categories.isNotEmpty
-                        ? SizedBox(
-                            height: 35,
-                            child: DropdownButton<String>(
-                              padding: EdgeInsets.zero,
-                              underline: SizedBox(), // Hide the underline
-                              value: selectedName,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  selectedName = newValue!;
-                                });
-                              },
-                              items: categories.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(fontSize: 14.0),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          )
-                        : const Text('No Data available'),
+                    widget.fromNotification
+                        ? SizedBox()
+                        : categories.isNotEmpty
+                            ? SizedBox(
+                                height: 35,
+                                child: DropdownButton<String>(
+                                  padding: EdgeInsets.zero,
+                                  underline: SizedBox(), // Hide the underline
+                                  value: selectedName,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedName = newValue!;
+                                    });
+                                  },
+                                  items: categories
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(fontSize: 14.0),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              )
+                            : const Text('No Data available'),
                   ],
                 ),
               )
@@ -204,12 +220,17 @@ class _TowSectionState extends State<TowSection> {
 
 class Bill extends StatelessWidget {
   var listOfOrders;
-
-  Bill({super.key, this.listOfOrders});
+  bool fromNotification;
+  var notificationOrder;
+  Bill({
+    super.key,
+    this.listOfOrders,
+    this.notificationOrder,
+    this.fromNotification = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    print(listOfOrders);
     return Column(
       children: [
         Row(
@@ -234,7 +255,7 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              "${listOfOrders.sessionsCount}",
+              "${fromNotification ? notificationOrder[0]['sessions_count'] : listOfOrders.sessionsCount}",
               style: const TextStyle(fontWeight: FontWeight.w600),
             )
           ],
@@ -248,9 +269,13 @@ class Bill extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             Text(
-              listOfOrders.advertiser.sessionPrice == null
-                  ? ""
-                  : "${listOfOrders.advertiser.sessionPrice} ريال",
+              fromNotification
+                  ? notificationOrder[0]['advertiser'] == null
+                      ? ""
+                      : "${notificationOrder[0]['advertiser']['session_price']}"
+                  : listOfOrders.advertiser.sessionPrice == null
+                      ? ""
+                      : "${listOfOrders.advertiser.sessionPrice} ريال",
               style: const TextStyle(
                   fontWeight: FontWeight.w600, color: AppColors.secondryColor),
             )
@@ -264,15 +289,25 @@ class Bill extends StatelessWidget {
               "كود الخصم :",
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
-            listOfOrders.coupon == null
-                ? const Text(
-                    "لا يوجد",
-                    style: TextStyle(fontWeight: FontWeight.w600),
-                  )
-                : Text(
-                    "${listOfOrders.coupon}",
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  )
+            fromNotification
+                ? notificationOrder[0]['coupon'] == null
+                    ? const Text(
+                        "لا يوجد",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      )
+                    : Text(
+                        "${notificationOrder[0]['coupon']}",
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      )
+                : listOfOrders.coupon == null
+                    ? const Text(
+                        "لا يوجد",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      )
+                    : Text(
+                        "${listOfOrders.coupon}",
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      )
           ],
         ),
         20.ph,
@@ -300,12 +335,20 @@ class Bill extends StatelessWidget {
             const Text("المجموع : ",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             Text(
-              listOfOrders.sessionsCount == null ||
-                      listOfOrders.advertiser.sessionPrice == null
-                  ? ""
-                  : listOfOrders.amount != 0
-                      ? "${listOfOrders.amount}"
-                      : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
+              fromNotification
+                  ? notificationOrder[0]['sessions_count'] == null ||
+                          notificationOrder[0]['advertiser']['session_price'] ==
+                              null
+                      ? ""
+                      : notificationOrder[0]['amount'] != 0
+                          ? "${notificationOrder[0]['amount']}"
+                          : "${(notificationOrder[0]['sessions_count'] * notificationOrder[0]['advertiser']['session_price']).toString()}"
+                  : listOfOrders.sessionsCount == null ||
+                          listOfOrders.advertiser.sessionPrice == null
+                      ? ""
+                      : listOfOrders.amount != 0
+                          ? "${listOfOrders.amount}"
+                          : "${listOfOrders.advertiser.sessionPrice * listOfOrders.sessionsCount} ريال",
               style: const TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.secondryColor),
             )
@@ -459,6 +502,9 @@ class _FirstPopUpState extends State<FirstPopUp> {
                           await context
                               .read<UpdateReservationCubit>()
                               .updateSelectedReservation(context);
+                          await Future.delayed(Duration(seconds: 1), () {
+                            Navigator.pop(context);
+                          });
                           if (showPopUp) widget.changePopUp();
                         },
                         child: const Text('حذف'),
