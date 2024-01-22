@@ -16,12 +16,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RequestsDetailsScreenForPatient extends StatefulWidget {
   int num;
-  OrderData oneOrder;
+  OrderData? oneOrder;
   var categories, selectedName;
+  bool fromNotification;
+  var notificationOrder;
   RequestsDetailsScreenForPatient(
       {super.key,
       required this.num,
-      required this.oneOrder,
+      this.notificationOrder,
+      this.oneOrder,
+      this.fromNotification = false,
       this.categories,
       this.selectedName});
 
@@ -94,12 +98,12 @@ class _RequestsDetailsScreenForPatientState
 
         await context
             .read<UpdateReservationCubit>()
-            .onIdChange(widget.oneOrder.id.toString());
+            .onIdChange(widget.oneOrder!.id.toString());
         await context.read<UpdateReservationCubit>().onStartAtChange(startAt);
         await context.read<UpdateReservationCubit>().onEndAtChange(endAt);
         await context
             .read<UpdateReservationCubit>()
-            .onStatusChange(widget.oneOrder.status!);
+            .onStatusChange(widget.oneOrder!.status!);
         await context
             .read<UpdateReservationCubit>()
             .updateSelectedReservation(context);
@@ -118,7 +122,9 @@ class _RequestsDetailsScreenForPatientState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FirstSection(
+                    fromNotification: widget.fromNotification,
                     num: widget.num,
+                    notificationOrder: widget.notificationOrder,
                     listOfOrders: widget.oneOrder,
                   ),
                   20.ph,
@@ -128,6 +134,8 @@ class _RequestsDetailsScreenForPatientState
                   20.ph,
                   TowSection(
                     num: widget.num,
+                    fromNotification: widget.fromNotification,
+                    notificationOrder: widget.notificationOrder,
                     listOfOrders: widget.oneOrder,
                     categories: widget.categories,
                     selectedName: widget.selectedName,
@@ -136,141 +144,149 @@ class _RequestsDetailsScreenForPatientState
                   const Divider(
                     thickness: 1,
                   ),
-                  widget.num == 1 ||
-                          widget.num == 2 ||
-                          widget.num == 3 ||
-                          widget.num == 4
-                      ? SessionInfoForPatient(
-                          MainOrder: widget.oneOrder,
-                        )
-                      : const SizedBox(),
+                  widget.fromNotification
+                      ? SizedBox()
+                      : widget.num == 1 ||
+                              widget.num == 2 ||
+                              widget.num == 3 ||
+                              widget.num == 4
+                          ? SessionInfoForPatient(
+                              MainOrder: widget.oneOrder,
+                            )
+                          : const SizedBox(),
                   const Text(
                     "تفاصيل الإجمالي",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                   20.ph,
                   Bill(
+                    fromNotification: widget.fromNotification,
+                    notificationOrder: widget.notificationOrder,
                     listOfOrders: widget.oneOrder,
                   ),
                   30.ph,
-                  if (widget.num != 4)
-                    widget.num == 3 || widget.num == 2
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  padding: const EdgeInsets.all(16),
-                                ),
-                                onPressed: () {
-                                  AppConstants.customNavigation(
-                                      context,
-                                      BillScreen(oneOrder: widget.oneOrder),
-                                      0,
-                                      0);
-                                },
-                                child: const Text('إظهار الفاتورة'),
-                              ),
-                              if (widget.oneOrder.canReview == 1 &&
-                                  widget.num != 2)
+                  if (widget.fromNotification == false)
+                    if (widget.num != 4)
+                      widget.num == 3 || widget.num == 2
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      side: const BorderSide(
-                                          color: AppColors.primaryColor),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      elevation: 0,
-                                      padding: const EdgeInsets.all(16),
-                                      backgroundColor: Colors.transparent),
-                                  onPressed: () {
-                                    Future.delayed(Duration.zero, () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return BottomSheetForEvalute(
-                                              oneOrder: widget.oneOrder);
-                                        },
-                                      );
-                                    });
-                                  },
-                                  child: const Text(
-                                    'تقييم الخدمة',
-                                    style: TextStyle(
-                                        color: AppColors.primaryColor),
-                                  ),
-                                ),
-                            ],
-                          )
-                        : widget.num != 1 && widget.num != 5
-                            ? ElevatedButton(
-                                onPressed: () {
-                                  _toggleVisibility();
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
+                                    backgroundColor: AppColors.primaryColor,
+                                    shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
+                                    padding: const EdgeInsets.all(16),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(
-                                    AppColors.primaryColor,
-                                  ),
-                                  minimumSize: MaterialStateProperty.all(
-                                    const Size(double.infinity, 50),
-                                  ),
+                                  onPressed: () {
+                                    AppConstants.customNavigation(
+                                        context,
+                                        BillScreen(oneOrder: widget.oneOrder!),
+                                        0,
+                                        0);
+                                  },
+                                  child: const Text('إظهار الفاتورة'),
                                 ),
-                                child: const Text(
-                                  'الغاء الطلب',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                if (widget.oneOrder!.canReview == 1 &&
+                                    widget.num != 2)
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        side: const BorderSide(
+                                            color: AppColors.primaryColor),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        elevation: 0,
+                                        padding: const EdgeInsets.all(16),
+                                        backgroundColor: Colors.transparent),
+                                    onPressed: () {
+                                      Future.delayed(Duration.zero, () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return BottomSheetForEvalute(
+                                                oneOrder: widget.oneOrder);
+                                          },
+                                        );
+                                      });
+                                    },
+                                    child: const Text(
+                                      'تقييم الخدمة',
+                                      style: TextStyle(
+                                          color: AppColors.primaryColor),
+                                    ),
                                   ),
-                                ),
-                              )
-                            : const SizedBox(),
+                              ],
+                            )
+                          : widget.num != 1 && widget.num != 5
+                              ? ElevatedButton(
+                                  onPressed: () {
+                                    _toggleVisibility();
+                                  },
+                                  style: ButtonStyle(
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    backgroundColor: MaterialStateProperty.all(
+                                      AppColors.primaryColor,
+                                    ),
+                                    minimumSize: MaterialStateProperty.all(
+                                      const Size(double.infinity, 50),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'الغاء الطلب',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox(),
                   if (widget.num == 1)
-                    ElevatedButton(
-                      onPressed: () {
-                        // _toggleVisibility();
-                        FirebaseAnalyticUtil.logGoToCheckoutEvent();
-                        AppConstants.customNavigation(
-                            context,
-                            PaymentDetailsScreen(
-                                selectedName: widget.selectedName,
-                                withOffer: true,
-                                order: widget.oneOrder,
-                                categories: widget.categories),
-                            -1,
-                            0);
-                      },
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                    widget.oneOrder!.parentId != 0
+                        ? SizedBox()
+                        : ElevatedButton(
+                            onPressed: () {
+                              // _toggleVisibility();
+                              FirebaseAnalyticUtil.logGoToCheckoutEvent();
+                              AppConstants.customNavigation(
+                                  context,
+                                  PaymentDetailsScreen(
+                                      selectedName: widget.selectedName,
+                                      withOffer: true,
+                                      order: widget.oneOrder!,
+                                      categories: widget.categories),
+                                  -1,
+                                  0);
+                            },
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  AppColors.primaryColor),
+                              minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(double.infinity, 50),
+                              ),
+                            ),
+                            child: const Text(
+                              'ادفع الآن',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColors.primaryColor),
-                        minimumSize: MaterialStateProperty.all<Size>(
-                          const Size(double.infinity, 50),
-                        ),
-                      ),
-                      child: const Text(
-                        'ادفع الآن',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                   if (widget.num == 5)
                     ElevatedButton(
                       onPressed: () async {

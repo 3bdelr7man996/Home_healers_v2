@@ -123,24 +123,51 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
         children: [
           Expanded(
             child: Container(
-              width: 150,
-              height: 100,
+              width: 145,
+              height: 175,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: AppConstants.customNetworkImage(
+                  imagePath: "${widget.Data["image"]}",
+                  fit: BoxFit.cover,
+                  imageError: "assets/images/doctor.png",
+                ),
+              ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                image: widget.Data["image"] != null
-                    ? DecorationImage(
-                        image: NetworkImage(
-                          "${AppStrings.imageUrl}${widget.Data["image"]}",
-                        ),
-                        fit: BoxFit.cover,
-                        onError: (exception, stackTrace) => {print(exception)},
-                      )
-                    : DecorationImage(
-                        image: AssetImage("assets/images/doctor.png"),
-                        fit: BoxFit.cover,
-                      ),
+                // image: widget.image != null
+                //     ? DecorationImage(
+                //         image: NetworkImage(
+                //           "${AppStrings.imageUrl}${widget.image}",
+                //         ),
+                //         fit: BoxFit.cover,
+                //         onError: (exception, stackTrace) => {print(exception)},
+                //       )
+                //     : DecorationImage(
+                //         image: AssetImage("assets/images/doctor.png"),
+                //         fit: BoxFit.cover,
+                //       ),
               ),
             ),
+            // child: Container(
+            //   width: 150,
+            //   height: 100,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(10),
+            //     image: widget.Data["image"] != null
+            //         ? DecorationImage(
+            //             image: NetworkImage(
+            //               "${AppStrings.imageUrl}${widget.Data["image"]}",
+            //             ),
+            //             fit: BoxFit.cover,
+            //             onError: (exception, stackTrace) => {print(exception)},
+            //           )
+            //         : DecorationImage(
+            //             image: AssetImage("assets/images/doctor.png"),
+            //             fit: BoxFit.cover,
+            //           ),
+            //   ),
+            // ),
           ),
           10.pw,
           Expanded(
@@ -422,27 +449,20 @@ class _specialistInfoState extends State<specialistInfo> {
           ],
         ),
         5.ph,
-        Container(
-          width: context.width,
-          alignment: Alignment.centerRight,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  color: AppColors.primaryColor,
-                ),
-                10.pw,
-                Text(
-                  "${widget.Data["address_ar"]}",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ],
+        Row(
+          children: [
+            const Icon(
+              Icons.location_on_outlined,
+              color: AppColors.primaryColor,
             ),
-          ),
+            10.pw,
+            Expanded(
+              child: Text(
+                "${widget.Data["address_ar"]}",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
         ),
       ],
     );

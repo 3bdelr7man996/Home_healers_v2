@@ -19,6 +19,7 @@ import 'package:dr/Patient/features/setting/data/repositories/evaluation_repo.da
 import 'package:dr/Patient/features/setting/data/repositories/my_orders_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
+import 'package:dr/Patient/features/setting/data/repositories/show_notification_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
@@ -96,6 +97,7 @@ MultiBlocProvider blocMultiProvider({required child}) {
       ),
       BlocProvider(
         create: (BuildContext context) => MyOrdersCubit(
+            showNotificationRepo: di.sl<ShowNotificationRepo>(),
             showBillRepo: di.sl<ShowBillRepo>(),
             myOrdersRepo: di.sl<MyOrdersRepo>(),
             getInvoiceRepo: di.sl<GetInvoiceRepo>()),
