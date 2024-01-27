@@ -93,6 +93,7 @@ class Advertiser {
     this.images,
     this.descAr,
     this.descEn,
+    this.years,
     required this.addressAr,
     required this.addressEn,
     required this.gender,
@@ -131,6 +132,7 @@ class Advertiser {
   late var email;
   late var image;
   late var images;
+  late var years;
   late var descAr;
   late var descEn;
   late final String addressAr;
@@ -168,6 +170,7 @@ class Advertiser {
     firstnameEn = json?['firstname_en'];
     lastnameAr = json?['lastname_ar'];
     lastnameEn = json?['lastname_en'];
+    years = json?['years'];
     mobile = json?['mobile'];
     email = json?['email'];
     image = json?['image'];
@@ -220,6 +223,7 @@ class Advertiser {
     _data['image'] = image;
     _data['images'] = images;
     _data['desc_ar'] = descAr;
+    _data['years'] = years;
     _data['desc_en'] = descEn;
     _data['address_ar'] = addressAr;
     _data['address_en'] = addressEn;

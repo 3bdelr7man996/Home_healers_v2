@@ -20,7 +20,7 @@ class DateOfSessionScreen extends StatefulWidget {
       this.Data,
       this.fromFilter,
       this.status_id,
-      this.fromOffer = false});
+      required this.fromOffer});
 
   @override
   _DateOfSessionScreenState createState() => _DateOfSessionScreenState();
@@ -48,6 +48,7 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
   final TextEditingController control = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    print(widget.fromOffer);
     return Scaffold(
       appBar: customAppBar(context,
           title: "choose_your_reservation_date", backButton: true),

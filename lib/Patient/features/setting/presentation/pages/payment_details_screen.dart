@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../offer/presentation/cubit/offer_cubit.dart';
+
 class PaymentDetailsScreen extends StatefulWidget {
   bool withOffer;
   final OrderData order;
@@ -34,13 +36,46 @@ class PaymentDetailsScreen extends StatefulWidget {
 }
 
 class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
+  // String? packageText;
+  // Future fetchData() async {
+  // await context.read<GetPackagesCubit>().GetPackages(context);
+  // await context.read<GetOffersCubit>().GetOffers(context);
+
+  //   if (widget.order.type != null) {
+  //     if (widget.order.type == "package") {
+  //       for (int i = 0; i < Packages.packages.length; i++) {
+  //         if (Packages.packages[i].id == widget.order.offer_id) {
+  //           setState(() {
+  //             packageText = Packages.packages[i].description;
+  //           });
+  //         }
+  //       }
+  //     } else {
+  //       for (int i = 0; i < Offers.offers.length; i++) {
+  //         if (Offers.offers[i].id == widget.order.offer_id) {
+  //           setState(() {
+  //             packageText = Offers.offers[i].description;
+  //           });
+  //         }
+  //       }
+  //     }
+  //   }
+  //   print("||||||||||||||||||||||||||||||||||||||||||||||||||||");
+  //   print(packageText);
+  //   print("||||||||||||||||||||||||||||||||||||||||||||||||||||");
+  // }
+
   @override
   void initState() {
     context.read<PaymentCubit>().resetPayData();
+    
     context.read<PaymentCubit>().getBalance();
+    context.read<GetPackagesCubit>().GetPackages(context);
+    context.read<GetOffersCubit>().GetOffers(context);
     super.initState();
   }
 
+  var Packages, Offers;
   @override
   Widget build(BuildContext context) {
     print(widget.order);
@@ -60,7 +95,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               ),
               10.ph,
               TotalDetails(
-                  withOffer: false,
+                  type: widget.order.type,
+                  offerId: widget.order.offer_id,
                   order: widget.order,
                   selectedName: widget.selectedName,
                   categories: widget.categories),
