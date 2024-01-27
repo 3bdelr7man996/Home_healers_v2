@@ -38,6 +38,7 @@ class Data {
     this.descEn,
     required this.addressAr,
     this.addressEn,
+    this.years,
     required this.gender,
     required this.iban,
     this.location,
@@ -73,6 +74,7 @@ class Data {
   late final String? mobile;
   late final String? email;
   late final String? image;
+  late final years;
   var images;
   late final String? descAr;
   late final String? descEn;
@@ -113,6 +115,7 @@ class Data {
     lastnameEn = json?['lastname_en'];
     mobile = json?['mobile'];
     email = json?['email'];
+    years = json?['years'];
     image = json?['image'];
     images = json?['images'];
     descAr = json?['desc_ar'];
@@ -161,6 +164,7 @@ class Data {
     _data['mobile'] = mobile;
     _data['email'] = email;
     _data['image'] = image;
+    _data['years'] = years;
     _data['images'] = images;
     _data['desc_ar'] = descAr;
     _data['desc_en'] = descEn;
