@@ -277,30 +277,18 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
         Stack(
           children: [
             Container(
-              width: 145,
-              height: 100,
+              width: 100,
+              height: 110,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(20.0),
                 child: AppConstants.customNetworkImage(
                   imagePath: "${widget.image}",
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   imageError: "assets/images/doctor.png",
                 ),
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                // image: widget.image != null
-                //     ? DecorationImage(
-                //         image: NetworkImage(
-                //           "${AppStrings.imageUrl}${widget.image}",
-                //         ),
-                //         fit: BoxFit.cover,
-                //         onError: (exception, stackTrace) => {print(exception)},
-                //       )
-                //     : DecorationImage(
-                //         image: AssetImage("assets/images/doctor.png"),
-                //         fit: BoxFit.cover,
-                //       ),
               ),
             ),
             Positioned(
@@ -337,7 +325,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             ),
           ],
         ),
-        5.pw,
+        10.pw,
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -375,7 +363,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                         }).toList(),
                       ),
                     )
-                  : Text('No Data available'),
+                  : Text(''),
               5.ph,
               widget.status == "on"
                   ? Text(

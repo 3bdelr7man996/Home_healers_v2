@@ -232,13 +232,18 @@ class PaymentCubit extends Cubit<PaymentState> {
 //?=========================[GET WALLET BALANCE]================================
   Future<void> getBalance() async {
     try {
+      log("GET BALANCEEEEEEE");
       emit(state.copyWith(balanceState: RequestState.loading));
       WalletBalanceModel? response = await repository.getWalletBalance();
+
       emit(state.copyWith(
         balanceState: RequestState.success,
         walletBalance: response?.walletBalance ?? "0",
       ));
+
+      log("Wallet Balance ___________");
     } catch (e) {
+      log("Wallet Balance ${e.toString()}");
       emit(state.copyWith(
         balanceState: RequestState.failed,
         walletBalance: "0",

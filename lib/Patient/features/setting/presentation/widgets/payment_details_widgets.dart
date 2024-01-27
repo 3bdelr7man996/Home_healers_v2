@@ -198,7 +198,7 @@ class TotalDetails extends StatelessWidget {
                       ? order.amount != 0
                           ? "${order.amount}"
                           : "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
-                      : "",
+                      : "0",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

@@ -46,7 +46,7 @@ class ReservationData {
   int? sessionsCount;
   int? subTotal;
   String? vat;
-  int? fees;
+  num? fees;
   int? amount;
   int? isPaid;
   String? paymentDetails;
