@@ -68,6 +68,7 @@ class Advertiser {
     this.image,
     this.images,
     this.descAr,
+    this.years,
     this.descEn,
     required this.addressAr,
     this.addressEn,
@@ -106,6 +107,7 @@ class Advertiser {
   late final String mobile;
   late final String email;
   late final String? image;
+  late final years;
   late final List<String>? images;
   late final String? descAr;
   late final String? descEn;
@@ -146,6 +148,7 @@ class Advertiser {
     lastnameEn = json?['lastname_en'];
     mobile = json?['mobile'];
     email = json?['email'];
+    years = json?['years'];
     image = null;
     images = null;
     descAr = null;
@@ -192,6 +195,7 @@ class Advertiser {
     _data['lastname_ar'] = lastnameAr;
     _data['lastname_en'] = lastnameEn;
     _data['mobile'] = mobile;
+    _data['years'] = years;
     _data['email'] = email;
     _data['image'] = image;
     _data['images'] = images;

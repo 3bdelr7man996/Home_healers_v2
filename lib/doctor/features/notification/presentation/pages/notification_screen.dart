@@ -1,4 +1,5 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/requests_details_screen.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -103,7 +104,7 @@ class NotificationBody extends StatelessWidget {
                           } else if (state.notifList![index].type!
                               .contains("newPoints")) {
                             AppConstants.customNavigation(
-                                context, MyPointScreen(), -1, 0);
+                                context, MyPointScreenForPatient(), -1, 0);
                           }
                         },
                       );

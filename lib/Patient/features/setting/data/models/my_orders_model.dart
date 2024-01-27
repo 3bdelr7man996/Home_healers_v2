@@ -53,6 +53,8 @@ class OrderData {
     this.statusId,
     required this.canReview,
     this.qrCode,
+    this.type,
+    this.offer_id,
     required this.reports,
     this.diagnoseForm,
     required this.advertiser,
@@ -61,6 +63,8 @@ class OrderData {
   late var parentId;
   late var userId;
   late var advertiserId;
+  late var offer_id;
+  late var type;
   late var notes;
   late var coupon;
   late var days;
@@ -91,6 +95,8 @@ class OrderData {
     id = json?['id'];
     parentId = json?['parent_id'];
     userId = json?['user_id'];
+    type = json?['type'];
+    offer_id = json?['offer_id'];
     advertiserId = json?['advertiser_id'];
     notes = json?['notes'];
     coupon = json?['coupon'];
@@ -126,6 +132,8 @@ class OrderData {
     _data['user_id'] = userId;
     _data['advertiser_id'] = advertiserId;
     _data['notes'] = notes;
+    _data['offer_id'] = offer_id;
+    _data['type'] = type;
     _data['coupon'] = coupon;
     _data['days'] = days;
     _data['start_at'] = startAt;

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -13,200 +14,248 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class TotalDetails extends StatelessWidget {
-  bool withOffer;
   var selectedName;
+  var type;
+  var offerId;
   final OrderData order;
   var categories;
   TotalDetails(
       {super.key,
-      required this.withOffer,
+      required this.type,
+      required this.offerId,
       required this.order,
       this.selectedName,
       this.categories});
 
   @override
   Widget build(BuildContext context) {
-    print(categories);
-    print(selectedName);
-    return Container(
-      width: context.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
+    print(type);
+    return BlocBuilder<GetOffersCubit, GetOffersState>(
+      builder: (context, state) {
+        return Container(
+          width: context.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  child: AppConstants.customNetworkImage(
-                    imagePath: "${order.advertiser.image}",
-                    imageError: AppImages.doctorPlaceholder,
-                    width: context.width * 0.25,
-                    height: context.width * 0.25 - 10,
-                  ),
-                ),
-                5.pw,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        order.advertiser.nameAr!,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500, fontSize: 18),
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      child: AppConstants.customNetworkImage(
+                        imagePath: "${order.advertiser.image}",
+                        imageError: AppImages.doctorPlaceholder,
+                        width: context.width * 0.25,
+                        height: context.width * 0.25 - 10,
                       ),
-                      withOffer ? 5.ph : 10.ph,
-                      categories.isNotEmpty
-                          ? SizedBox(
-                              height: 35,
-                              child: DropdownButton<String>(
-                                padding: EdgeInsets.zero,
-                                underline: SizedBox(), // Hide the underline
-                                value: selectedName,
-                                onChanged: (String? newValue) {},
-                                items: categories.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: TextStyle(fontSize: 14.0),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            )
-                          : const Text('No Data available'),
-                      withOffer ? 5.ph : 0.ph,
-                      withOffer
-                          ? Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/offer_icon.svg",
-                                  color: AppColors.primaryColor,
-                                  width: 20,
-                                  height: 20,
-                                ),
-                                5.pw,
-                                Expanded(
-                                    child: Text("عرض 12 جلسة - عمود فقري")),
-                              ],
-                            )
-                          : SizedBox()
-                    ],
-                  ),
-                )
-              ],
-            ),
-            5.ph,
-            const Divider(
-              thickness: 1,
-            ),
-            5.ph,
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("مدة الجلسة :"),
-                Text(
-                  "30 : 60 دقيقة",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            5.ph,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("عدد الجلسات :"),
-                Text(
-                  order.sessionsCount != null ? "${order.sessionsCount}" : "",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            5.ph,
-            withOffer
-                ? SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("سعر الجلسة :"),
-                      Text(
-                        order.advertiser.sessionPrice != null
-                            ? "${order.advertiser.sessionPrice} ريال"
-                            : "",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.secondryColor),
+                    ),
+                    5.pw,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            order.advertiser.nameAr!,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 18),
+                          ),
+                          type != null ? 5.ph : 10.ph,
+                          categories.isNotEmpty
+                              ? SizedBox(
+                                  height: 35,
+                                  child: DropdownButton<String>(
+                                    padding: EdgeInsets.zero,
+                                    underline: SizedBox(), // Hide the underline
+                                    value: selectedName,
+                                    onChanged: (String? newValue) {},
+                                    items: categories
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(fontSize: 14.0),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                )
+                              : const Text('No Data available'),
+                          type != null ? 5.ph : 0.ph,
+                          type != null
+                              ? BlocBuilder<GetPackagesCubit, GetPackagesState>(
+                                  builder: (context, value) {
+                                    return state.AllOffers == null &&
+                                            value.AllPackages == null
+                                        ? SizedBox()
+                                        : Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/icons/offer_icon.svg",
+                                                color: AppColors.primaryColor,
+                                                width: 20,
+                                                height: 20,
+                                              ),
+                                              5.pw,
+                                              if (type == "offer")
+                                                for (int i = 0;
+                                                    i <
+                                                        state
+                                                            .AllOffers![
+                                                                'offers']
+                                                            .length;
+                                                    i++)
+                                                  state.AllOffers!['offers'][i]
+                                                              ['id'] ==
+                                                          offerId
+                                                      ? Expanded(
+                                                          child: Text(state
+                                                                          .AllOffers![
+                                                                      'offers'][i]
+                                                                  [
+                                                                  'description'] ??
+                                                              "عن طريق العرض"))
+                                                      : SizedBox(),
+                                              if (type == "package")
+                                                for (int i = 0;
+                                                    i <
+                                                        value.AllPackages!
+                                                            .packages.length;
+                                                    i++)
+                                                  value.AllPackages.packages[i]
+                                                              .id ==
+                                                          offerId
+                                                      ? Expanded(
+                                                          child: Text(value
+                                                                  .AllPackages!
+                                                                  .packages[i]
+                                                                  .description ??
+                                                              "عن طريق الباكدج"))
+                                                      : SizedBox()
+                                            ],
+                                          );
+                                  },
+                                )
+                              : SizedBox()
+                        ],
                       ),
-                    ],
-                  ),
-            5.ph,
-            withOffer
-                ? SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "كود الخصم :",
-                        style: TextStyle(color: AppColors.primaryColor),
-                      ),
-                      order.coupon == null
-                          ? Text(
-                              "لا يوجد",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColor),
-                            )
-                          : Text(
-                              "${order.coupon}",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w600),
-                            )
-                    ],
-                  ),
-            5.ph,
-            // const Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Text("الضريبة :"),
-            //     Text(
-            //       "0 ريال",
-            //       style: TextStyle(fontWeight: FontWeight.w500),
-            //     ),
-            //   ],
-            // ),
-            // 5.ph,
-            const Divider(
-              thickness: 1,
-            ),
-            5.ph,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "الإجمالي",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
-                Text(
-                  order.advertiser.sessionPrice != null &&
-                          order.sessionsCount != null
-                      ? order.amount != 0
-                          ? "${order.amount}"
-                          : "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
-                      : "",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                5.ph,
+                const Divider(
+                  thickness: 1,
                 ),
+                5.ph,
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("مدة الجلسة :"),
+                    Text(
+                      "30 : 60 دقيقة",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                5.ph,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("عدد الجلسات :"),
+                    Text(
+                      order.sessionsCount != null
+                          ? "${order.sessionsCount}"
+                          : "",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                5.ph,
+                // type!=null
+                //     ? SizedBox()
+                //     : Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Text("سعر الجلسة :"),
+                //           Text(
+                //             order.advertiser.sessionPrice != null
+                //                 ? "${order.advertiser.sessionPrice} ريال"
+                //                 : "",
+                //             style: TextStyle(
+                //                 fontWeight: FontWeight.w500,
+                //                 color: AppColors.secondryColor),
+                //           ),
+                //         ],
+                //       ),
+                // 5.ph,
+                // type!=null
+                //     ? SizedBox()
+                //     : Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Text(
+                //             "كود الخصم :",
+                //             style: TextStyle(color: AppColors.primaryColor),
+                //           ),
+                //           order.coupon == null
+                //               ? Text(
+                //                   "لا يوجد",
+                //                   style: TextStyle(
+                //                       fontWeight: FontWeight.w500,
+                //                       color: AppColors.primaryColor),
+                //                 )
+                //               : Text(
+                //                   "${order.coupon}",
+                //                   style:
+                //                       const TextStyle(fontWeight: FontWeight.w600),
+                //                 )
+                //         ],
+                //       ),
+                // 5.ph,
+                // const Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text("الضريبة :"),
+                //     Text(
+                //       "0 ريال",
+                //       style: TextStyle(fontWeight: FontWeight.w500),
+                //     ),
+                //   ],
+                // ),
+                // 5.ph,
+                const Divider(
+                  thickness: 1,
+                ),
+                5.ph,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "الإجمالي",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      order.advertiser.sessionPrice != null &&
+                              order.sessionsCount != null
+                          ? order.amount != 0
+                              ? "${order.amount}"
+                              : "${order.advertiser.sessionPrice! * order.sessionsCount} ريال"
+                          : "",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                10.ph,
               ],
             ),
-            10.ph,
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

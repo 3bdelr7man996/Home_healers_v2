@@ -352,6 +352,12 @@ class _specialistInfoState extends State<specialistInfo> {
               text1: "جلسة طبية",
               text2: "${widget.Data["rating"]}",
             ),
+            widget.Data["years"] == null
+                ? SizedBox()
+                : statisticsBox(
+                    text1: "سنوات الخبرة",
+                    text2: "${widget.Data["years"]}",
+                  ),
             statisticsBox(
               text1: "تقييم",
               text2: "${widget.Data["rating"]}",
@@ -650,7 +656,7 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                       sessionCountForOffer: widget.sessionCountForOffer,
                       Data: widget.Data,
                       fromFilter: false,
-                      fromOffer: false,
+                      fromOffer: widget.fromOffer,
                       fromPackage: false,
                     ),
                   ),
