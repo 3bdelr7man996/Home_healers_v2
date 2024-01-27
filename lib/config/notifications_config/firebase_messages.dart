@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
+import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -36,6 +40,9 @@ class FirebaseMessagingService {
 
   ///HANDLE ON SELECT NOTIFICATION AND SHOW EARN POPUP
   void onRecieveNotification(BuildContext context) {
+    log("***********ON RECIEVE NOTIFICATION INTIALIZATION ************");
+    log("______________________________________________________________");
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (kDebugMode) {
         print('===Got a message whilst in the foreground!=====');
@@ -47,13 +54,15 @@ class FirebaseMessagingService {
         }
       }
       if (message.notification?.title == 'ربحت نقاط جديدة') {
-        if (context.mounted) {
-          context.read<PaymentCubit>().showBottomSheetForEarnPoints(
-                context,
-                title: message.notification?.title,
-                body: message.notification?.body,
-              );
-        }
+        Future.delayed(Duration(seconds: 5), () {
+          if (context.mounted) {
+            context.read<PaymentCubit>().showBottomSheetForEarnPoints(
+                  context,
+                  title: message.notification?.title,
+                  body: message.notification?.body,
+                );
+          }
+        });
       }
       di.sl<LocalNotificationsService>().showLocalNotification(
             title: message.notification?.title ?? "",
@@ -65,6 +74,7 @@ class FirebaseMessagingService {
     //?========================[ HANDLE ON SELECT NOTIF ]=======================
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      log("Listen Notification onMessageOpenedApp");
       //todo handle chat notification route
       handleRoute(context, message);
     });
@@ -72,6 +82,7 @@ class FirebaseMessagingService {
     //?=============[ HANDLE ONSELECT NOTIF WHEN APP IS CLOSED]=================
 
     firebaseMessaging.getInitialMessage().then((message) {
+      log("Handle notification getInitialMessage ");
       if (message != null) {
         //todo handle chat notification route
         handleRoute(context, message);
@@ -85,16 +96,13 @@ class FirebaseMessagingService {
   }
 
   void handleRoute(BuildContext context, RemoteMessage message) {
+    log("Handle Routeee");
     if (message.notification?.title == 'ربحت نقاط جديدة') {
       AppConstants.pushRemoveNavigator(
         context,
         screen: CacheHelper.getData(key: AppStrings.isAdvertise)
-            ? HomeScreen(
-                selectedIndex: 2,
-              )
-            : HomeScreenForPatient(
-                selectedIndex: 1,
-              ),
+            ? MyPointScreen()
+            : MyPointScreenForPatient(),
       );
     } else {
       AppConstants.pushRemoveNavigator(

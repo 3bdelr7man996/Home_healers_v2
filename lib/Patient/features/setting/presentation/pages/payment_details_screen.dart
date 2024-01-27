@@ -68,6 +68,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   @override
   void initState() {
     context.read<PaymentCubit>().resetPayData();
+    
+    context.read<PaymentCubit>().getBalance();
     context.read<GetPackagesCubit>().GetPackages(context);
     context.read<GetOffersCubit>().GetOffers(context);
     super.initState();

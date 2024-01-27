@@ -280,6 +280,7 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
+        locale: Locale("en"),
         initialDate: DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
@@ -287,7 +288,8 @@ class _BirthdayPickerState extends State<BirthdayPicker> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _birthdayController.text = DateFormat('MM/dd/yyyy').format(picked);
+        _birthdayController.text =
+            DateFormat('MM/dd/yyyy', 'en').format(picked);
         _age = DateTime.now().year - picked.year;
         print(_selectedDate);
         print(_birthdayController.text);

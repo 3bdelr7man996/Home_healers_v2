@@ -15,6 +15,7 @@ class PatientSignUpDS {
     List<File>? documents,
     String? documentsKey,
   }) async {
+    print("body===>  $body");
     Map<String, dynamic>? response = await apiHelper.multiPartRequest(
       "/api/user/register",
       body: body,

@@ -437,7 +437,7 @@ class AuthCubit extends Cubit<AuthState> {
         "address_ar": "${state.address}",
         "address_en": "${state.address}",
         "status": "${state.status}",
-        "national_id": "${state.identification}",
+        //"national_id": "${state.identification}",
         "fcm_token":
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? "",
       };
