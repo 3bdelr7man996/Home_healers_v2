@@ -202,6 +202,21 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                           //     fromOffer: widget.fromOffer),
                           //     1,
                           //     0);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: AppColors.redColor,
+                              padding: EdgeInsets.only(
+                                  bottom: 50, top: 50, left: 50, right: 50),
+                              content: Text(
+                                'يرجى تحديد مكان الإصابة',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              duration: const Duration(
+                                  seconds: 2), // Optional duration
+                            ),
+                          );
                         }
                       },
                       child: Padding(
