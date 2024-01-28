@@ -2,11 +2,15 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/reservastion_status_helper.dart';
 import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/requests_details_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:intl/intl.dart' as intl;
+import 'package:map_launcher/map_launcher.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,8 +26,9 @@ class MyReservationCard extends StatelessWidget {
           CardHeader(reservation: reservation),
           const Divider(thickness: 1),
           PatientInfo(reservation: reservation),
-          Text("نوع الإصابة : ${reservation?.painPlace ?? ''}", //todo
-              style: TextStyle(fontWeight: FontWeight.w500)),
+          if (reservation?.painPlace != null)
+            Text("نوع الإصابة : ${reservation?.painPlace ?? ''}", //todo
+                style: TextStyle(fontWeight: FontWeight.w500)),
           10.ph,
           SessionsCount(reservation: reservation),
           10.ph,
@@ -81,7 +86,7 @@ class CardHeader extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "تاريخ الطلب : ${reservation?.startAt}",
+                  "تاريخ الطلب :${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(reservation?.startAt ?? ''))}",
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 )
               ],
@@ -123,54 +128,85 @@ class PatientInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 115,
-            height: 90,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/person.png'), //todo
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          (reservation?.user?.image != null && reservation?.user?.image != "")
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: AppConstants.customNetworkImage(
+                    imagePath: reservation?.user?.image ?? "",
+                    width: 80,
+                    height: 90,
+                  ),
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: AppConstants.customAssetImage(
+                    imagePath: AppImages.patientImg,
+                    width: 80,
+                    height: 90,
+                  ),
+                ),
           10.pw,
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                reservation?.user?.name ?? "",
-                style: const TextStyle(
-                    color: AppColors.primaryColor, fontWeight: FontWeight.w500),
-              ),
-              10.ph,
-              Row(
-                children: [
-                  const Icon(
-                    //todo
-                    Icons.location_on,
-                    color: AppColors.primaryColor,
-                  ),
-                  5.pw,
-                  const DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.black,
-                          width: 1.0,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  reservation?.user?.name ?? "",
+                  style: const TextStyle(
+                      color: AppColors.primaryColor,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w600),
+                ),
+                10.ph,
+                if (reservation?.lat != null && reservation?.lang != null)
+                  GestureDetector(
+                    onTap: () async {
+                      final availableMaps = await MapLauncher.installedMaps;
+                      await availableMaps.firstWhere(
+                        (element) {
+                          return element.mapType == MapType.google;
+                        },
+                        orElse: (() {
+                          AppConstants.launchURL(
+                              'https://www.google.com/maps/search/?api=1&query=${reservation?.lat},${reservation?.lang}');
+                          return availableMaps.first;
+                        }),
+                      ).showDirections(
+                          destination: Coords(double.parse(reservation!.lat!),
+                              double.parse(reservation!.lang!)),
+                          destinationTitle: "عنوان المريض");
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          //todo
+                          Icons.location_on,
+                          size: 18.0,
+                          color: AppColors.primaryColor,
                         ),
-                      ),
+                        5.pw,
+                        const DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'موقع المريض',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      'موقع المريض',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
+                  )
+              ],
+            ),
           )
         ],
       ),

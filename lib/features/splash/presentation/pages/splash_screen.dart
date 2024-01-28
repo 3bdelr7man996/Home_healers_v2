@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -30,7 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
       context.read<AuthCubit>().getAllDepartements(),
       context.read<AuthCubit>().getAllStatus(),
       context.read<AuthCubit>().getAllCities(),
-      context.read<AuthCubit>().getCurrentPosition(),
+      CacheHelper.dataSaved(key: AppStrings.isAdvertise)
+          ? CacheHelper.getData(key: AppStrings.isAdvertise)
+              ? context.read<AuthCubit>().getCurrentPosition()
+              : context.read<AuthCubitForPatient>().getCurrentPosition()
+          : context.read<AuthCubitForPatient>().getCurrentPosition(),
     ]);
   }
 

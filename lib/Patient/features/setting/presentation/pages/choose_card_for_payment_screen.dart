@@ -66,7 +66,7 @@ class ChooseCardScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "اختر الكارد الخاصة بك :",
+              "اختار بطاقة الدفع الخاصة بك :",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18.0),
             ),
             20.ph,
@@ -91,7 +91,7 @@ class ChooseCardScreen extends StatelessWidget {
               builder: (context, state) {
                 return CardWay(
                   iconPath: AppImages.visaCard,
-                  title: "فيزة كارد",
+                  title: "فيزا",
                   selected: state.selectedPayCard == PayCard.visa,
                   onTap: () => context
                       .read<PaymentCubit>()
@@ -106,7 +106,7 @@ class ChooseCardScreen extends StatelessWidget {
               builder: (context, state) {
                 return CardWay(
                   iconPath: AppImages.madaCard,
-                  title: "مدى كارد",
+                  title: "مدى",
                   selected: state.selectedPayCard == PayCard.mada,
                   onTap: () => context
                       .read<PaymentCubit>()
@@ -121,7 +121,7 @@ class ChooseCardScreen extends StatelessWidget {
               builder: (context, state) {
                 return CardWay(
                   iconPath: AppImages.americanExCard,
-                  title: "أمريكان إكسبريس كارد",
+                  title: "أمريكان إكسبريس",
                   selected: state.selectedPayCard == PayCard.american,
                   onTap: () => context
                       .read<PaymentCubit>()

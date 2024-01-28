@@ -78,7 +78,7 @@ class ListOfOrder extends StatelessWidget {
                           itemBuilder: (context, index) {
                             List<String> names = [];
                             String selectedName = "";
-                            names.add("الاختصاص :");
+                            names.add("الاختصاص");
                             for (var item
                                 in listOfOrders[index].advertiser.categories ??
                                     []) {
@@ -231,7 +231,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         imagePath: "${widget.listOfOrders.advertiser.image}",
                       ),
                     ),
-                    5.pw,
+                    10.pw,
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,24 +249,25 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                     padding: EdgeInsets.zero,
                                     underline: SizedBox(),
                                     value: selectedName,
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        selectedName = newValue!;
-                                      });
-                                    },
+                                    //iconEnabledColor: Colors.white,
+                                    // isExpanded: true,
+                                    onChanged: (String? newValue) {},
                                     items: categories
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
-                                        child: Text(
-                                          value,
-                                          style: TextStyle(fontSize: 14.0),
+                                        child: SizedBox(
+                                          width: 70.0,
+                                          child: Text(
+                                            value,
+                                            style: TextStyle(fontSize: 14.0),
+                                          ),
                                         ),
                                       );
                                     }).toList(),
                                   )
-                                : const Text('No Data available'),
+                                : const Text(''),
                         ],
                       ),
                     )
@@ -286,26 +287,28 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                 const EdgeInsets.symmetric(horizontal: 20.0),
                             child: Row(
                               children: [
-                                Expanded(
-                                  child: FittedBox(
-                                    child: const Text(
-                                      "سعر الجلسة",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
+                                const Text(
+                                  "السعر الكلي: ",
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 5.pw,
-                                Text(
-                                  widget.listOfOrders.sessionsCount == null ||
-                                          widget.listOfOrders.advertiser
-                                                  .sessionPrice ==
-                                              null
-                                      ? ""
-                                      : "${widget.listOfOrders.sessionsCount * widget.listOfOrders.advertiser.sessionPrice}",
-                                  style: const TextStyle(
-                                      color: AppColors.secondryColor,
-                                      fontWeight: FontWeight.bold),
+                                Flexible(
+                                  child: Text(
+                                    widget.listOfOrders.amount != null &&
+                                            widget.listOfOrders.amount != 0
+                                        ? "${widget.listOfOrders.amount ?? 0} ${"sar".tr()}"
+                                        : widget.listOfOrders.advertiser
+                                                    ?.sessionPrice !=
+                                                null
+                                            ? "${widget.listOfOrders.advertiser.sessionPrice * widget.listOfOrders.sessionsCount} ${"sar".tr()}"
+                                            : "0 ${"sar".tr()}",
+                                    style: const TextStyle(
+                                        fontSize: 12.0,
+                                        color: AppColors.secondryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ],
                             ),
@@ -313,19 +316,17 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                         10.ph,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: FittedBox(
-                            child: Text(
-                              "عدد الجلسات : ${widget.listOfOrders.sessionsCount}",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w500),
-                            ),
+                          child: Text(
+                            "عدد الجلسات : ${widget.listOfOrders.sessionsCount}",
+                            style: const TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.w500),
                           ),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: SizedBox(
                       height: context.height * 0.05,
                       child: ElevatedButton(

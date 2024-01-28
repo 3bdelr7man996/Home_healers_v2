@@ -45,7 +45,7 @@ class AuthStateForPatient extends Equatable {
   final String? confirmPassword;
   var address;
   var advertiser;
-  var location;
+  Location? location;
   var nationality;
   @override
   List<Object?> get props => [
@@ -94,7 +94,7 @@ class AuthStateForPatient extends Equatable {
           var cityId,
           var country_code,
           var nationality,
-          var location}) =>
+          Location? location}) =>
       AuthStateForPatient(
           email: email ?? this.email,
           isVisible: isVisible ?? this.isVisible,

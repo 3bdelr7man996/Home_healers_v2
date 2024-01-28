@@ -2,7 +2,7 @@ class WalletBalanceModel {
   int? userId;
   String? name;
   int? points;
-  double? pointsInSAR;
+  num? pointsInSAR;
   String? walletBalance;
 
   WalletBalanceModel({

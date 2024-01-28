@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -152,10 +153,25 @@ class LocationInput extends StatelessWidget {
                         );
                       },
                       location: state.location,
-                      origin: state.location,
+                      origin:
+                          context.read<AuthCubitForPatient>().state.location,
                       currentLatLng: LatLng(
-                          state.location?.lat ?? 24.70281458492638,
-                          state.location?.lng ?? 46.704172412998915),
+                        context
+                                .read<AuthCubitForPatient>()
+                                .state
+                                .location
+                                ?.lat ??
+                            24.70281458492638,
+                        context
+                                .read<AuthCubitForPatient>()
+                                .state
+                                .location
+                                ?.lng ??
+                            46.704172412998915,
+                      ),
+                      // LatLng(
+                      //     state.location?.lat ?? 24.70281458492638,
+                      //     state.location?.lng ?? 46.704172412998915),
                     ),
                   ),
                 );
