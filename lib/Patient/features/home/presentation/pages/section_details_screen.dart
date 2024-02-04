@@ -14,6 +14,7 @@ class SectionDetailsScreen extends StatefulWidget {
   var numberOfIcon;
   var status_id;
   bool fromOffer;
+  bool fromPackages;
   var sessionCountForOffer;
   SectionDetailsScreen(
       {super.key,
@@ -21,6 +22,7 @@ class SectionDetailsScreen extends StatefulWidget {
       required this.SectiondetailsTitle,
       this.status_id,
       this.fromOffer = false,
+      this.fromPackages = false,
       required this.numberOfIcon});
 
   @override
@@ -42,7 +44,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     super.initState();
     context.read<SectionCubit>().changeSectionNumber(widget.numberOfIcon);
     context.read<SectionCubit>().GetSectionDetails(context);
-
+    context.read<ReservationCubit>().onChangestatus_id(widget.numberOfIcon);
     print("as");
     IsUserGuest = IsGuest();
   }
@@ -68,6 +70,8 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
   int i = 0;
   @override
   Widget build(BuildContext context) {
+    print(widget.numberOfIcon);
+    print("Ghaith");
     var FavoriteList;
 
     FavoriteList = context.select((FavoriteCubit cubit) => cubit.state.data);
@@ -79,7 +83,6 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
       searchResults = data;
       i++;
     }
-    print(data);
 
     return Scaffold(
       appBar: customAppBar(context,
@@ -117,6 +120,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                                 item["advertiser"]['id'] ==
                                 searchResults[index]['id']);
                           return DoctorCard(
+                              fromPackages: widget.fromPackages,
                               isFav: isIdExist,
                               sessionCountForOffer: widget.sessionCountForOffer,
                               fromOffer: widget.fromOffer,

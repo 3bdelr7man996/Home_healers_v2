@@ -26,6 +26,7 @@ class DoctorCard extends StatefulWidget {
   var status_id;
   var Data;
   bool fromOffer;
+  bool fromPackages;
   var offer;
   var sessionCountForOffer;
   var isFav;
@@ -36,6 +37,7 @@ class DoctorCard extends StatefulWidget {
       required this.isVisible,
       this.fromFilter = false,
       this.isFav = false,
+      this.fromPackages = false,
       this.status_id,
       this.Data,
       this.fromOffer = false,
@@ -58,7 +60,6 @@ class DoctorCard extends StatefulWidget {
 class _DoctorCardState extends State<DoctorCard> {
   List<String> names = [];
   String selectedName = "";
-
   @override
   void initState() {
     super.initState();
@@ -218,6 +219,7 @@ class _DoctorCardState extends State<DoctorCard> {
                   fromFilter: widget.fromFilter,
                   sessionCountForOffer: widget.sessionCountForOffer,
                   Data: widget.Data,
+                  fromPackages: widget.fromPackages,
                   status_id: widget.status_id,
                   fromOffer: widget.fromOffer)
             ],
@@ -401,6 +403,7 @@ class ButtonForDoctorCard extends StatelessWidget {
   var Data;
   var status_id;
   bool fromOffer;
+  bool fromPackages;
   var sessionCountForOffer;
   var fromFilter;
   var offer;
@@ -409,6 +412,7 @@ class ButtonForDoctorCard extends StatelessWidget {
       this.Data,
       this.offer,
       this.fromFilter = false,
+      this.fromPackages = false,
       this.sessionCountForOffer,
       this.status_id,
       this.fromOffer = false});
@@ -431,9 +435,11 @@ class ButtonForDoctorCard extends StatelessWidget {
           AppConstants.customNavigation(
               context,
               specialistpageScreen(
+                  fromPackages: fromPackages,
                   Data: Data,
                   status_id: status_id,
                   fromOffer: fromOffer,
+                  fromFilter: fromFilter,
                   sessionCountForOffer: sessionCountForOffer),
               -1,
               0);

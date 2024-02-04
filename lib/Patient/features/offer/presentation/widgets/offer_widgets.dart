@@ -45,7 +45,18 @@ class _OfferCardState extends State<OfferCard> {
     return InkWell(
       onTap: () {
         IsUserGuest == true
-            ? null
+            ? ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: AppColors.redColor,
+                  padding:
+                      EdgeInsets.only(bottom: 50, top: 50, left: 50, right: 50),
+                  content: Text(
+                    'قم بتسجيل الدخول لتتمتع بهذه المميزات',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  duration: const Duration(seconds: 2), // Optional duration
+                ),
+              )
             : (
                 widget.Package.status_id == null
                     ? AppConstants.customNavigation(context,
@@ -53,6 +64,7 @@ class _OfferCardState extends State<OfferCard> {
                     : AppConstants.customNavigation(
                         context,
                         SectionDetailsScreen(
+                          fromPackages: true,
                           fromOffer: true,
                           SectiondetailsTitle: "اختر الأخصائي ",
                           sessionCountForOffer: widget.Package.sessionCount,
@@ -105,15 +117,15 @@ class _OfferCardState extends State<OfferCard> {
                             ),
                           ),
                         )),
-                    const Center(
-                        child: Text(
-                      "الآم \n العمود الفقري",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold),
-                    ))
+                    // const Center(
+                    //     child: Text(
+                    //   "الآم \n العمود الفقري",
+                    //   textAlign: TextAlign.center,
+                    //   style: TextStyle(
+                    //       color: Colors.white,
+                    //       fontSize: 20.0,
+                    //       fontWeight: FontWeight.bold),
+                    // ))
                   ],
                 ),
               ),
@@ -171,7 +183,20 @@ class _OfferCardState extends State<OfferCard> {
                   ),
                   onPressed: () {
                     IsUserGuest == true
-                        ? null
+                        ? ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: AppColors.redColor,
+                              padding: EdgeInsets.only(
+                                  bottom: 50, top: 50, left: 50, right: 50),
+                              content: Text(
+                                'قم بتسجيل الدخول لتتمتع بهذه المميزات',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              duration: const Duration(
+                                  seconds: 2), // Optional duration
+                            ),
+                          )
                         : (
                             widget.Package.status_id == null
                                 ? AppConstants.customNavigation(
@@ -182,6 +207,7 @@ class _OfferCardState extends State<OfferCard> {
                                 : AppConstants.customNavigation(
                                     context,
                                     SectionDetailsScreen(
+                                      fromPackages: true,
                                       fromOffer: true,
                                       SectiondetailsTitle: "اختر الأخصائي ",
                                       sessionCountForOffer:

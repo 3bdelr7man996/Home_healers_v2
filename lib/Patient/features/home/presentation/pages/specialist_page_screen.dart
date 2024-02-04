@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class specialistpageScreen extends StatefulWidget {
   var Data;
   var status_id;
+  bool fromPackages;
   bool fromOffer;
   var sessionCountForOffer;
   var fromFilter;
@@ -16,6 +17,7 @@ class specialistpageScreen extends StatefulWidget {
       {super.key,
       this.Data,
       this.fromFilter = false,
+      this.fromPackages = false,
       this.status_id,
       this.fromOffer = false,
       this.sessionCountForOffer});
@@ -27,7 +29,6 @@ class specialistpageScreen extends StatefulWidget {
 class _specialistpageScreenState extends State<specialistpageScreen> {
   bool click = false;
   late bool IsUserGuest;
-
   @override
   void initState() {
     super.initState();
@@ -86,6 +87,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                               ? SizedBox()
                               : click
                                   ? ButtonWithCounter(
+                                      fromPackages: widget.fromPackages,
                                       sessionCountForOffer:
                                           widget.sessionCountForOffer,
                                       Data: widget.Data,
