@@ -10,6 +10,7 @@ import 'package:dr/core/utils/app_strings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -106,7 +107,7 @@ class _TableClenderForSessionState extends State<TableClenderForSession> {
 }
 
 class LocationInput extends StatelessWidget {
-  TextEditingController control;
+  final TextEditingController control;
   LocationInput({super.key, required this.control});
 
   @override
@@ -195,6 +196,40 @@ class LocationInput extends StatelessWidget {
                 ),
               ),
             );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class CouponField extends StatelessWidget {
+  const CouponField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "الكوبون",
+          style: bigBlackFont(fontWeight: FontWeight.w500),
+        ),
+        5.ph,
+        TextFormField(
+          decoration: InputDecoration(
+            hintText: 'ادخل الكوبون',
+            suffixIcon: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SvgPicture.asset(
+                "assets/icons/percent_icon.svg",
+                width: 5,
+                height: 5,
+              ),
+            ),
+          ),
+          onChanged: (coupon) {
+            context.read<ReservationCubit>().onCouponChange(coupon);
           },
         ),
       ],

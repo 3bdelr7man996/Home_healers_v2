@@ -68,5 +68,45 @@
 		</array>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>googlechromes</string>
+        <string>comgooglemaps</string>
+    </array>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>يحتاج التطبيق لصلاحية الوصول لمكتبة الصور لادراج صورة شخصية او صورة للمناسبة</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>nr needs this permission</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to measure activity on the application and provide services based on the user's need for a better experience and successful access to customers</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>nr needs this permission</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Our app uses bluetooth to find, connect and transfer data between different devices</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>nr needs this permission</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>nr needs this permission</string>
+	<key>NSCameraUsageDescription</key>
+	<string>يحتاج التطبيق لصلاحية الوصول للكاميرا لإلاتقاط صورة شخصية او صورة للمناسبة</string>
+	<key>NSContactsUsageDescription</key>
+	<string>nr needs this permission</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
+	<key>NSMotionUsageDescription</key>
+	<string>nr needs this permission</string>
 </dict>
 </plist>

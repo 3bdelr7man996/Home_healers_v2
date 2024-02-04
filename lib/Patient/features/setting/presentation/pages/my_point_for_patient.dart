@@ -79,9 +79,9 @@ class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
               ),
               BlocBuilder<GetPointsCubit, GetPointsState>(
                 builder: (context, state) {
-                  return state.Data.newPointsNotifications == null
+                  return state.myPointsData?.newPointsNotifications == null
                       ? SizedBox()
-                      : state.Data.newPointsNotifications.length == 0
+                      : state.myPointsData?.newPointsNotifications.length == 0
                           ? SizedBox(
                               height: 300,
                               child: Center(
@@ -95,14 +95,15 @@ class _MyPointScreenForPatientState extends State<MyPointScreenForPatient> {
                                 Divider(
                                   thickness: 0.5,
                                 ),
-                                for (int i = 0;
-                                    i <
-                                        state
-                                            .Data.newPointsNotifications.length;
-                                    i++)
-                                  Activity(
-                                      Notification:
-                                          state.Data.newPointsNotifications[i]),
+                                if (state.myPointsData != null)
+                                  for (int i = 0;
+                                      i <
+                                          state.myPointsData!
+                                              .newPointsNotifications.length;
+                                      i++)
+                                    Activity(
+                                        Notification: state.myPointsData
+                                            ?.newPointsNotifications[i]),
                               ],
                             );
                 },

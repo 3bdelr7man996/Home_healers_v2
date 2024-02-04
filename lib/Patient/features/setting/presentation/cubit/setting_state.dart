@@ -159,20 +159,24 @@ class UpdateInfoState extends Equatable {
 ////////////////////////////////////////////////////////////////////
 class GetPointsState extends Equatable {
   GetPointsState({
-    this.Data = false,
+    this.myPointsData,
+    this.pointState = RequestState.initial,
   });
-  var Data;
-
+  MyPointsModel? myPointsData;
+  RequestState pointState;
   @override
   @override
   List<Object?> get props => [
-        Data,
+        myPointsData,
+        pointState,
       ];
   GetPointsState copyWith({
-    var Data,
+    MyPointsModel? myPointsData,
+    RequestState? pointState,
   }) =>
       GetPointsState(
-        Data: Data ?? this.Data,
+        myPointsData: myPointsData ?? this.myPointsData,
+        pointState: pointState ?? this.pointState,
       );
 }
 

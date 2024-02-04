@@ -14,7 +14,6 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../offer/presentation/cubit/offer_cubit.dart';
 
@@ -68,7 +67,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   @override
   void initState() {
     context.read<PaymentCubit>().resetPayData();
-    
+
     context.read<PaymentCubit>().getBalance();
     context.read<GetPackagesCubit>().GetPackages(context);
     context.read<GetOffersCubit>().GetOffers(context);
@@ -101,21 +100,22 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                   selectedName: widget.selectedName,
                   categories: widget.categories),
               widget.withOffer ? 0.ph : 20.ph,
-              widget.withOffer
-                  ? const SizedBox.shrink()
-                  : TextField(
-                      decoration: InputDecoration(
-                        hintText: 'ادخل كود الخصم',
-                        suffixIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(
-                            "assets/icons/percent_icon.svg",
-                            width: 5,
-                            height: 5,
-                          ),
-                        ),
-                      ),
-                    ),
+              // widget.withOffer
+              //     ? const SizedBox.shrink()
+              //     : TextField(
+              //         decoration: InputDecoration(
+              //           hintText: 'ادخل كود الخصم',
+              //           suffixIcon: Padding(
+              //             padding: const EdgeInsets.all(8.0),
+              //             child: SvgPicture.asset(
+              //               "assets/icons/percent_icon.svg",
+              //               width: 5,
+              //               height: 5,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+
               20.ph,
               const Align(
                 alignment: Alignment.centerRight,

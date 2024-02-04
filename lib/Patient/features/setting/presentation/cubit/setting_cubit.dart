@@ -19,9 +19,9 @@ import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dar
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
-import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -328,7 +328,7 @@ class GetPointsCubit extends Cubit<GetPointsState> {
     try {
       MyPointsModel response = await getPointrepo.GetPoints();
       print(response);
-      emit(state.copyWith(Data: response));
+      emit(state.copyWith(myPointsData: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
@@ -337,6 +337,7 @@ class GetPointsCubit extends Cubit<GetPointsState> {
   Future<void> pointsToCashback(var points, BuildContext context) async {
     try {
       fieldsValidation(points);
+      emit(state.copyWith(pointState: RequestState.loading));
       Map<String, dynamic> body = {
         "num_of_points": "${points}",
       };
@@ -344,10 +345,12 @@ class GetPointsCubit extends Cubit<GetPointsState> {
       pointsToCashbackModel response =
           await getPointrepo.pointsToCashback(body: body);
       await GetMyPoints(context);
+      emit(state.copyWith(pointState: RequestState.success));
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
 
       print(response);
     } catch (e) {
+      emit(state.copyWith(pointState: RequestState.failed));
       print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }

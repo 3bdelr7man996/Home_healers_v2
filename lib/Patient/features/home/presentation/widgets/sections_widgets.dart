@@ -12,11 +12,11 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages/section_details_screen.dart';
 
@@ -111,8 +111,7 @@ class CustumAppBarForPatient extends StatefulWidget {
 }
 
 Future<String> getAttributeFromSharedPreferences() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String attribute = prefs.getString(AppStrings.userInfo) ?? '';
+  String attribute = CacheHelper.getData(key: AppStrings.userInfo);
   return attribute;
 }
 
@@ -127,29 +126,29 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
   var userInfo;
   var jsonData;
   String FirstName = '';
-  late bool IsUserGuest;
+  bool IsUserGuest = false;
 
   IsGuest() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    IsUserGuest = CacheHelper.dataSaved(key: 'guest');
 
-    setState(() {
-      IsUserGuest = prefs.containsKey('guest');
+    Future.delayed(Duration.zero, () {
+      setState(() {});
     });
   }
 
   @override
   void initState() {
     super.initState();
-    IsUserGuest = false;
     IsGuest();
-    getAttributeFromSharedPreferences().then((value) {
-      setState(() {
-        userInfo = value;
-        jsonData = jsonDecode(userInfo);
-        List<String> words = jsonData["name"].split(" ");
-        FirstName = words[0];
+    if (!IsUserGuest)
+      getAttributeFromSharedPreferences().then((value) {
+        setState(() {
+          userInfo = value;
+          jsonData = jsonDecode(userInfo);
+          List<String> words = jsonData["name"].split(" ");
+          FirstName = words[0];
+        });
       });
-    });
   }
 
   @override
@@ -181,14 +180,16 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IsUserGuest == true
-                      ? Text(
-                          "مرحبا ! \n قم بتسجيل الدخول \n وتمتع بجميع ميزات التطبيق",
-                          textAlign: TextAlign.right,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            height: 1.5,
-                            fontWeight: FontWeight.bold,
+                      ? Expanded(
+                          child: Text(
+                            "مرحبا ! \n قم بتسجيل الدخول \n وتمتع بجميع ميزات التطبيق",
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              height: 1.5,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       : Text(
@@ -201,8 +202,8 @@ class _CustumAppBarForPatientState extends State<CustumAppBarForPatient> {
                           ),
                         ),
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 80,
+                    height: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       image: jsonData != null && jsonData["image"] != null

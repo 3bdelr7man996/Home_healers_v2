@@ -162,6 +162,7 @@ class ReservationCubit extends Cubit<ReservationState> {
   makeNotesEmpty() => {emit(state.copyWith(notes: ""))};
   onChangePainPlace(value) => {emit(state.copyWith(painPlace: value))};
   OnOfferChange(var offer) => emit(state.copyWith(offer: offer));
+  onCouponChange(String coupon) => emit(state.copyWith(coupon: coupon));
 
   Future<void> MakeReservation(
     BuildContext context,
@@ -232,6 +233,7 @@ class ReservationCubit extends Cubit<ReservationState> {
           "user_id": "${userId}",
           "pain_place": "${state.painPlace}",
           "status_id": "${state.status_id}",
+          "coupon": "${state.coupon}"
         };
       } else {
         body = {
@@ -245,7 +247,8 @@ class ReservationCubit extends Cubit<ReservationState> {
           "status_id": "${state.status_id}",
           "notes": "${state.notes}",
           "days": daysArray,
-          "pain_place": "${state.painPlace}"
+          "pain_place": "${state.painPlace}",
+          "coupon": "${state.coupon}"
           //coupon ===ToDo===
         };
       }

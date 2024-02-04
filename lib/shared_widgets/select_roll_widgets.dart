@@ -106,6 +106,8 @@ class CardIdentification extends StatelessWidget {
                   )
                 : Image.asset(
                     _imagePath!,
+                    width: 60.0,
+                    height: 60.0,
                   ),
             SizedBox(height: 10),
             Text(

@@ -61,6 +61,8 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
               30.ph,
               LocationInput(control: control),
               30.ph,
+              CouponField(),
+              30.ph,
               widget.fromOffer
                   ? SizedBox()
                   : TextFormField(

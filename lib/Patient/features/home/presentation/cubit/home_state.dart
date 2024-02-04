@@ -112,7 +112,7 @@ class ReservationState extends Equatable {
       this.sessions_count = 1,
       this.status_id,
       this.days,
-      this.coupon,
+      this.coupon = "",
       this.location,
       this.offer,
       this.address,
@@ -124,7 +124,7 @@ class ReservationState extends Equatable {
   String? end_at;
   String? painPlace;
   String notes;
-  var coupon;
+  String coupon;
   var offer;
   var address;
   var location;
@@ -157,7 +157,7 @@ class ReservationState extends Equatable {
     String? start_at,
     String? notes,
     String? end_at,
-    var coupon,
+    String? coupon,
     var location,
     String? painPlace,
     int? sessions_count,
