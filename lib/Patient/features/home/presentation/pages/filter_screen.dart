@@ -37,6 +37,7 @@ class _FiterScreenState extends State<FiterScreen> {
     context.read<AuthCubit>().getAllDepartements();
     context.read<AuthCubit>().getAllStatus();
     context.read<ReservationCubit>().onChangestatus_id(null);
+    context.read<ReservationCubit>().onChangestatus_id(-1);
   }
 
   @override

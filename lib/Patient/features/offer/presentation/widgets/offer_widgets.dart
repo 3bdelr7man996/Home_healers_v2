@@ -64,6 +64,7 @@ class _OfferCardState extends State<OfferCard> {
                     : AppConstants.customNavigation(
                         context,
                         SectionDetailsScreen(
+                          fromPackages: true,
                           fromOffer: true,
                           SectiondetailsTitle: "اختر الأخصائي ",
                           sessionCountForOffer: widget.Package.sessionCount,
@@ -206,6 +207,7 @@ class _OfferCardState extends State<OfferCard> {
                                 : AppConstants.customNavigation(
                                     context,
                                     SectionDetailsScreen(
+                                      fromPackages: true,
                                       fromOffer: true,
                                       SectiondetailsTitle: "اختر الأخصائي ",
                                       sessionCountForOffer:

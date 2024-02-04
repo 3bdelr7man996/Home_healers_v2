@@ -116,7 +116,6 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.fromPackage);
     return Scaffold(
       appBar: customAppBar(context, title: "injury_area", backButton: true),
       body: SingleChildScrollView(
@@ -188,6 +187,7 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                                 builder: (context) => DateOfSessionScreen(
                                     Data: widget.Data,
                                     fromFilter: widget.fromFilter,
+                                    fromPackages: widget.fromPackage,
                                     status_id: widget.status_id,
                                     fromOffer: widget.fromOffer)),
                           );
