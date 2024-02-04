@@ -563,6 +563,7 @@ class ButtonWithCounter extends StatefulWidget {
   var Data;
   var status_id;
   bool fromOffer;
+  bool fromPackages;
   var sessionCountForOffer;
   var fromFilter;
   ButtonWithCounter(
@@ -571,6 +572,7 @@ class ButtonWithCounter extends StatefulWidget {
       this.fromFilter,
       this.status_id,
       this.sessionCountForOffer,
+      this.fromPackages = false,
       this.fromOffer = false});
 
   @override
@@ -652,11 +654,12 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => InjuryAreaScreen(
+                      status_id: widget.status_id,
                       sessionCountForOffer: widget.sessionCountForOffer,
                       Data: widget.Data,
-                      fromFilter: false,
+                      fromFilter: widget.fromFilter,
                       fromOffer: widget.fromOffer,
-                      fromPackage: false,
+                      fromPackage: widget.fromPackages,
                     ),
                   ),
                 );

@@ -31,6 +31,7 @@ class _SectionsScreenState extends State<SectionsScreen> {
   void initState() {
     super.initState();
     DeepLinkHandler().init(context);
+    context.read<ReservationCubit>().onChangestatus_id(-1);
     di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<GetAllAdsCubit>().GetAllAds(context);
     var isGuestExist = IsGuest();

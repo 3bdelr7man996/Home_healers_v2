@@ -14,11 +14,13 @@ class DateOfSessionScreen extends StatefulWidget {
   var Data;
   var status_id;
   bool fromOffer;
+  bool fromPackages;
   var fromFilter;
   DateOfSessionScreen(
       {super.key,
       this.Data,
       this.fromFilter,
+      this.fromPackages = false,
       this.status_id,
       required this.fromOffer});
 
@@ -49,6 +51,9 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
   @override
   Widget build(BuildContext context) {
     print(widget.fromOffer);
+    print("///////////////////////");
+    print(widget.fromFilter);
+    print("///////////////////////");
     return Scaffold(
       appBar: customAppBar(context,
           title: "choose_your_reservation_date", backButton: true),
@@ -74,34 +79,39 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                         hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-              names.isNotEmpty
-                  ? DropdownButton<String>(
-                      underline: Container(), // Hide the underline
-                      // icon: const SizedBox(), // Hide the arrow icon
-                      value: selectedName,
-                      onChanged: (String? newValue) async {
-                        for (var category in widget.Data["status_advisor"]) {
-                          if (category['name_ar'] == newValue) {
-                            id = category['id'];
-                            break;
-                          }
-                        }
-                        await context
-                            .read<ReservationCubit>()
-                            .onChangestatus_id(id);
-                        setState(() {
-                          selectedName = newValue!;
-                        });
-                      },
-                      items:
-                          names.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    )
-                  : SizedBox(),
+              widget.fromPackages
+                  ? SizedBox()
+                  : widget.fromFilter || widget.fromOffer
+                      ? names.isNotEmpty
+                          ? DropdownButton<String>(
+                              underline: Container(), // Hide the underline
+                              // icon: const SizedBox(), // Hide the arrow icon
+                              value: selectedName,
+                              onChanged: (String? newValue) async {
+                                for (var category
+                                    in widget.Data["status_advisor"]) {
+                                  if (category['name_ar'] == newValue) {
+                                    id = category['id'];
+                                    break;
+                                  }
+                                }
+                                await context
+                                    .read<ReservationCubit>()
+                                    .onChangestatus_id(id);
+                                setState(() {
+                                  selectedName = newValue!;
+                                });
+                              },
+                              items: names.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            )
+                          : SizedBox()
+                      : SizedBox(),
               10.ph,
               BlocBuilder<ReservationCubit, ReservationState>(
                 builder: (context, state) {

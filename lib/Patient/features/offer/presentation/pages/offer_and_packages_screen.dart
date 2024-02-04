@@ -5,6 +5,7 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../home/presentation/cubit/home_cubit.dart';
 import 'offer_screen.dart';
 
 class OfferAndPackagesScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _OfferAndPackagesScreenState extends State<OfferAndPackagesScreen> {
     super.initState();
     context.read<GetPackagesCubit>().GetPackages(context);
     context.read<GetOffersCubit>().GetOffers(context);
+    context.read<ReservationCubit>().onChangestatus_id(-1);
   }
 
   var Packages, Offers;
