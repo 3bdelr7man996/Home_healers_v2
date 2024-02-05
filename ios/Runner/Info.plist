@@ -52,9 +52,11 @@
 	<string>en</string>
 	<string>ar</string>
     </array>
-	<key>NSAppTransportSecurity</key>
-    <key>NSAllowsLocalNetworking</key>
-    <true/>
+	<key>NSAppTransportSecurity</key>    
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
     <key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -108,6 +110,5 @@
 	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
 	<key>NSMotionUsageDescription</key>
 	<string>nr needs this permission</string>
-
 </dict>
 </plist>
