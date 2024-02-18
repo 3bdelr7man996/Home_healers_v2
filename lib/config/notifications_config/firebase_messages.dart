@@ -18,7 +18,7 @@ import 'local_notification_config.dart';
 import 'package:dr/di_container.dart' as di;
 
 class FirebaseMessagingService {
-  final FirebaseMessaging firebaseMessaging;
+   FirebaseMessaging firebaseMessaging;
   final LocalNotificationsService localNotification;
   FirebaseMessagingService(
       {required this.firebaseMessaging, required this.localNotification}) {
@@ -26,6 +26,10 @@ class FirebaseMessagingService {
   }
 
   Future<void> _initializeFirebase() async {
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  }
+  //REQUEST PERMISSION 
+  Future<void> requestNotificPermission()async{
     await firebaseMessaging.requestPermission(
       alert: true,
       announcement: false,
@@ -35,9 +39,8 @@ class FirebaseMessagingService {
       provisional: false,
       sound: true,
     );
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    
   }
-
   ///HANDLE ON SELECT NOTIFICATION AND SHOW EARN POPUP
   void onRecieveNotification(BuildContext context) {
     log("***********ON RECIEVE NOTIFICATION INTIALIZATION ************");
@@ -92,7 +95,12 @@ class FirebaseMessagingService {
 
   ///get fiebase token 'fcm'
   Future<String?> getFirebaseToken() async {
-    return await firebaseMessaging.getToken();
+    try {
+      return await firebaseMessaging.getToken();
+    } catch (e) {
+      log(e.toString());
+      return '';
+    }
   }
 
   void handleRoute(BuildContext context, RemoteMessage message) {

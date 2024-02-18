@@ -134,8 +134,10 @@ class ReservationsCubit extends Cubit<ReservationsState> {
       //             .toData());
       //   }
       // }
+      log("pain id ${state.painStatusId}  statusId ${reservation.statusId}");
+      if(state.painStatusId!=null||reservation.statusId!=null)
       await getReservations(
-        statusId: state.painStatusId!,
+        statusId: state.painStatusId??reservation.statusId??0,
         reservationStep: reservationStep,
       );
       // onSelectedTab(selectedTap)

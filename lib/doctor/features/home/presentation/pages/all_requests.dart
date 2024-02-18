@@ -11,8 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dr/di_container.dart' as di;
 
 class Allrequests extends StatefulWidget {
-  const Allrequests({super.key});
-
+  const Allrequests({super.key,this.fromSetting=false});
+  final bool fromSetting;
   @override
   State<Allrequests> createState() => _AllrequestsState();
 }
@@ -33,7 +33,7 @@ class _AllrequestsState extends State<Allrequests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const AppBarForHome(),
+         AppBarForHome(fromSetting: widget.fromSetting,),
         30.ph,
         Expanded(
           child: Padding(

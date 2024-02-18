@@ -1,5 +1,6 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/shared_widgets/select_roll_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _SelectRollForSignInState extends State<SelectRollForSignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: NextButton(rollSelected: rollSelected),
+      appBar: AppBar(backgroundColor: AppColors.backGroundColor,),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

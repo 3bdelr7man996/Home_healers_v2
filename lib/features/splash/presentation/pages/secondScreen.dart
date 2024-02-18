@@ -12,74 +12,77 @@ class SecondScreen extends StatelessWidget {
     var width = size.width;
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              "assets/images/secondPage.svg",
-              width: 200,
-              height: 200,
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            const Text(
-              "عائلة هوم هيلرز  :",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            const Text(
-              "احجز جلستك الطبية المنزلية مع افضل الاخصائين في العلاج الطبيعي والتاهيل الطبي المنزلي في راحة بيتك وبامكانك الحجز مع الاخصائي المتاح حاليا في التطبيق او حجز موعد معه",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 17),
-            ),
-            SizedBox(
-              height: height * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: width * 0.08,
-                  height: height * 0.02,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 198, 217, 233),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(width * 0.02),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/images/secondPage.svg",
+                width: 200,
+                height: 200,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                "عائلة هوم هيلرز  :",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                "احجز جلستك الطبية المنزلية مع افضل الاخصائين في العلاج الطبيعي والتاهيل الطبي المنزلي في راحة بيتك وبامكانك الحجز مع الاخصائي المتاح حاليا في التطبيق او حجز موعد معه",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17),
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: width * 0.08,
+                    height: height * 0.02,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 198, 217, 233),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(width * 0.02),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: width * 0.02,
-                ),
-                Container(
-                  width: width * 0.12,
-                  height: height * 0.02,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 55, 210, 244),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(width * 0.02),
+                  SizedBox(
+                    width: width * 0.02,
+                  ),
+                  Container(
+                    width: width * 0.12,
+                    height: height * 0.02,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 55, 210, 244),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(width * 0.02),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: width * 0.02,
-                ),
-                Container(
-                  width: width * 0.08,
-                  height: height * 0.02,
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 198, 217, 233),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(width * 0.02),
+                  SizedBox(
+                    width: width * 0.02,
+                  ),
+                  Container(
+                    width: width * 0.08,
+                    height: height * 0.02,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 198, 217, 233),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(width * 0.02),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(

@@ -1,4 +1,4 @@
-import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -14,8 +14,9 @@ class AcceptRefuseButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SizedBox(
-          width: context.width * 0.25,
+        Expanded(
+          flex: 1,
+          //width: context.width * 0.25,
           child: ElevatedButton(
             onPressed: () {
               context.read<ReservationsCubit>().updateReservation(
@@ -35,14 +36,18 @@ class AcceptRefuseButtons extends StatelessWidget {
                 ),
               ),
             ),
-            child: Text(
-              'rejecting_the_request'.tr(),
-              style: const TextStyle(color: Colors.red, fontSize: 12),
+            child: FittedBox(
+              child: Text(
+                'rejecting_the_request'.tr(),
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
             ),
           ),
         ),
-        SizedBox(
-          width: context.width * 0.55,
+        5.pw,
+        Expanded(
+          flex: 2,
+          //width: context.width * 0.6,
           child: ElevatedButton(
             onPressed: () {
               context

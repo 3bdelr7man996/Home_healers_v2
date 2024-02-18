@@ -1,5 +1,6 @@
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -11,6 +12,7 @@ import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/features/splash/presentation/pages/first_screen.dart';
+import 'package:dr/di_container.dart' as di;
 
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
               : context.read<AuthCubitForPatient>().getCurrentPosition()
           : context.read<AuthCubitForPatient>().getCurrentPosition(),
     ]);
+    await di.sl<FirebaseMessagingService>().requestNotificPermission();
   }
 
   @override

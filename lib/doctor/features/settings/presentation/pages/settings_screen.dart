@@ -67,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     iconPath: AppImages.settingRequests,
                     title: "specialist_requests".tr(),
-                    routeScreen: const Scaffold(body: Allrequests()),
+                    routeScreen: const Scaffold(body: Allrequests(fromSetting: true,)),
                   ),
                   15.ph,
                   OneOption(
