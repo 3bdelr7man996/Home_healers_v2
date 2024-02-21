@@ -40,16 +40,16 @@ class _ChatsScreenState extends State<ChatsScreen> {
               children: [
                 const SearchField(),
                 20.ph,
-
                 ActiveUsersSection(),
                 // 20.ph,
                 Text(
                   "messages".tr(),
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0),
+                      fontWeight: FontWeight.bold, fontSize: 20.0,),
                 ),
                 10.ph,
                 ConversationsSection(),
+                
               ],
             ),
           ),

@@ -33,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //resizeToAvoidBottomInset: true,
       body: _widgets[selectedIndex],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
