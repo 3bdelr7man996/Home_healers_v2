@@ -1,7 +1,10 @@
 class AppStrings {
-  static String baseUrl = "https://dev.home-healers.com";
-  static String imageUrl = "https://dev.home-healers.com/upload/";
-  static String divSecondUrl = "https://testing.home-healers.com";
+  static String baseUrl =
+      "http://admin.home-healers.com"; //"https://dev.home-healers.com";
+  static String imageUrl =
+      "http://admin.home-healers.com/upload/"; // "https://dev.home-healers.com/upload/";
+  static String divSecondUrl =
+      "https://home-healers.com"; // "https://testing.home-healers.com";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";
@@ -26,6 +29,8 @@ class AppStrings {
   static String allConversations = "/api/chatStatus";
   static String activeStatus = "/api/advertiser/updateStatus";
   static String reservationDetails = "/api/reservaionGetByID";
+  static String activate_acc = "/api/activateAccount";
+  static String forget_pass = "/api/forgetPassword";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";

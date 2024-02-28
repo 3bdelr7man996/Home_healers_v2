@@ -1,5 +1,5 @@
-import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
-import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_cubit/forget_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/reset_pass_cubit/reset_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

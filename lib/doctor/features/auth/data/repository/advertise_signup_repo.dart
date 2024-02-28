@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
+import 'package:dr/features/auth/data/models/activation_model.dart';
 import 'package:dr/doctor/features/auth/data/model/cities_area.dart';
 import 'package:dr/doctor/features/auth/data/model/departements_model.dart';
 import 'package:dr/doctor/features/auth/data/model/sign_up_adv_model.dart';

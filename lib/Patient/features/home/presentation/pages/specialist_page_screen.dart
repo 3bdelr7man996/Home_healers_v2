@@ -1,9 +1,11 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class specialistpageScreen extends StatefulWidget {
@@ -34,6 +36,15 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
     super.initState();
     IsUserGuest = false;
     IsGuest();
+    context.read<ReservationCubit>().initReservationData();
+    context.read<ReservationCubit>().getCurrentPosition();
+    if (widget.sessionCountForOffer != null) {
+      context
+          .read<ReservationCubit>()
+          .OnChangeSessionCount(widget.sessionCountForOffer);
+    } else {
+      context.read<ReservationCubit>().OnChangeSessionCount(1);
+    }
   }
 
   IsGuest() async {

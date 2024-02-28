@@ -1,3 +1,4 @@
+import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/http_helper.dart';
 
 class ForgetPasswordDs {
@@ -9,6 +10,26 @@ class ForgetPasswordDs {
       {required Map<String, String> body}) async {
     Map<String, dynamic>? response =
         await apiHelper.post("/api/forgetPassword", body: body);
+    return response;
+  }
+
+  //ACTIVATE ACCOUNT
+  Future<Map<String, dynamic>?> activateAccount(
+      {required Map<String, String> body}) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      AppStrings.activate_acc,
+      body: body,
+    );
+    return response;
+  }
+
+  //RESEND CODE TO EMAIL
+  Future<Map<String, dynamic>?> resendCode(
+      {required Map<String, String> body}) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      AppStrings.forget_pass,
+      body: body,
+    );
     return response;
   }
 }

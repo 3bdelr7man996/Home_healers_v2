@@ -26,7 +26,7 @@ class AuthState extends Equatable {
     this.obscurePass = true,
     this.obscureConfPass = true,
     this.term = false,
-    this.showPopup = false,
+    // this.showPopup = false,
     this.statusState = RequestState.initial,
     this.departementState = RequestState.initial,
     this.citiesState = RequestState.initial,
@@ -57,7 +57,7 @@ class AuthState extends Equatable {
   final bool obscurePass;
   final bool obscureConfPass;
   final bool term;
-  final bool showPopup;
+  // final bool showPopup;
   final String? status;
   final RequestState registerState;
   final RequestState departementState;
@@ -89,7 +89,7 @@ class AuthState extends Equatable {
         obscurePass,
         obscureConfPass,
         term,
-        showPopup,
+        // showPopup,
         registerState,
         departementState,
         statusState,
@@ -124,7 +124,7 @@ class AuthState extends Equatable {
     bool? obscurePass,
     bool? obscureConfPass,
     bool? term,
-    bool? showPopup,
+    // bool? showPopup,
     String? status,
     RequestState? departementState,
     RequestState? statusState,
@@ -162,7 +162,7 @@ class AuthState extends Equatable {
         obscurePass: obscurePass ?? this.obscurePass,
         obscureConfPass: obscureConfPass ?? this.obscureConfPass,
         term: term ?? this.term,
-        showPopup: showPopup ?? this.showPopup,
+        // showPopup: showPopup ?? this.showPopup,
         status: status ?? this.status,
       );
 }

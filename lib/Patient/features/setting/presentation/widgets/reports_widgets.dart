@@ -3,6 +3,7 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/shared_widgets/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -121,7 +122,9 @@ class _specialist_reportsState extends State<specialist_reports> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: 0.7,
                       ),
                       itemCount: state.reportsForDoctors == null
                           ? 0
@@ -132,35 +135,29 @@ class _specialist_reportsState extends State<specialist_reports> {
                             AppConstants.customNavigation(
                                 context,
                                 PhotoViewerRouteWrapper(
-                                    filePath:
-                                        state.reportsForDoctors[index].file,
-                                    typeOfFile: state
-                                        .reportsForDoctors[index].file
-                                        .substring(
-                                            0,
-                                            state.reportsForDoctors[index].file
-                                                    .length -
-                                                4)),
+                                  filePath: state.reportsForDoctors[index].file,
+                                ),
                                 0,
                                 -1);
                           },
                           child: Container(
                             padding: EdgeInsets.only(bottom: 10.0),
                             color: Colors.white,
-                            child: Container(
-                              child: state.reportsForDoctors[index].file
-                                          .substring(
-                                              0,
-                                              state.reportsForDoctors[index]
-                                                      .file.length -
-                                                  4) ==
-                                      "pdf"
-                                  ? Center(child: Text("file"))
-                                  : Center(child: Text("photo")),
-                              width: 200,
-                              height: 200,
-                              color: const Color.fromARGB(122, 158, 158, 158),
-                            ),
+                            child: state.reportsForDoctors[index].file
+                                    .endsWith('pdf')
+                                ? SizedBox(
+                                    child: AppConstants.customAssetImage(
+                                      imagePath: AppImages.pdf_icon,
+                                    ),
+                                  )
+                                : SizedBox(
+                                    child: AppConstants.customNetworkImage(
+                                      imagePath:
+                                          state.reportsForDoctors[index].file,
+                                    ),
+                                    width: 200,
+                                    height: 200,
+                                  ),
                           ),
                         );
                       },

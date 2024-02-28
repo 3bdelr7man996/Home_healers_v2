@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -13,10 +12,13 @@ import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_cubit/forget_password_cubit.dart';
+import 'package:dr/features/auth/presentation/pages/activate_account.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:dr/di_container.dart' as di;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'login_state.dart';
 
@@ -32,36 +34,51 @@ class LoginCubit extends Cubit<LoginState> {
     FirebaseAnalyticUtil.logLogoutEvent();
   }
 
-  //?====================[ SIGN IN USER ]===================
+  //?===========================[ SIGN IN USER ]================================
+  UserModel? user;
   Future<void> userLogin(BuildContext context) async {
     try {
       emit(state.copyWith(loginState: RequestState.loading));
-      UserModel? user = await repository.userLogin(body: {
+      user = await repository.userLogin(body: {
         "email": "${state.email}",
         "password": "${state.password}",
         "fcm_token":
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       });
-
-      await cacheData(user);
-      di.sl<ApiBaseHelper>().updateHeader();
-      emit(state.copyWith(loginState: RequestState.success));
-      FirebaseAnalyticUtil.logLogin();
-      if (user?.success?.advertiser?.id != null) {
-        if (context.mounted) {
-          AppConstants.pushRemoveNavigator(
-            context,
-            screen: const HomeScreen(
-              selectedIndex: 0,
-            ),
-          );
-        }
+      bool isAdvertise = user?.success?.advertiser?.id != null;
+      if ((!isAdvertise && user?.success?.activated == 0) ||
+          (isAdvertise && user?.success?.advertiser?.activated == 0)) {
+        emit(state.copyWith(loginState: RequestState.success));
+        FirebaseAnalyticUtil.logLogin();
+        context
+            .read<ForgetPasswordCubit>()
+            .resendCode(email: user?.success?.email ?? '');
+        AppConstants.pushRemoveNavigator(context,
+            screen: ActivateAccountScreen(
+              email: user?.success?.email ?? '',
+              isAdvertise: isAdvertise,
+              cacheData: cacheData,
+            ));
       } else {
-        if (context.mounted) {
-          AppConstants.pushRemoveNavigator(
-            context,
-            screen: HomeScreenForPatient(selectedIndex: 2),
-          );
+        await cacheData();
+        emit(state.copyWith(loginState: RequestState.success));
+        FirebaseAnalyticUtil.logLogin();
+        if (isAdvertise) {
+          if (context.mounted) {
+            AppConstants.pushRemoveNavigator(
+              context,
+              screen: const HomeScreen(
+                selectedIndex: 0,
+              ),
+            );
+          }
+        } else {
+          if (context.mounted) {
+            AppConstants.pushRemoveNavigator(
+              context,
+              screen: HomeScreenForPatient(selectedIndex: 2),
+            );
+          }
         }
       }
     } catch (e) {
@@ -71,11 +88,12 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   /// save user data in local
-  Future<void> cacheData(UserModel? response) async {
-    if (response?.success?.advertiser?.email != null) {
+  Future<void> cacheData() async {
+    if (user?.success?.advertiser?.email != null) {
+      log("${user?.success?.advertiser?.toJson()}");
       await CacheHelper.saveData(
           key: AppStrings.userInfo,
-          value: jsonEncode(response?.success?.advertiser?.toJson()));
+          value: jsonEncode(user?.success?.advertiser?.toJson()));
       await CacheHelper.saveData(
         key: AppStrings.isAdvertise,
         value: true,
@@ -83,11 +101,10 @@ class LoginCubit extends Cubit<LoginState> {
     } else {
       log("else patient login ======");
       await CacheHelper.saveData(
-          key: AppStrings.userInfo,
-          value: jsonEncode(response?.success?.toJson()));
+          key: AppStrings.userInfo, value: jsonEncode(user?.success?.toJson()));
       await CacheHelper.saveData(
         key: AppStrings.userId,
-        value: response?.success?.id,
+        value: user?.success?.id,
       );
       log("user info: ${CacheHelper.getData(key: AppStrings.userInfo)}");
       await CacheHelper.saveData(
@@ -95,15 +112,13 @@ class LoginCubit extends Cubit<LoginState> {
         value: false,
       );
     }
-    if (response?.success?.token != null) {
+    if (user?.success?.token != null) {
       log("saveTokkken ");
       await CacheHelper.saveData(
         key: AppStrings.userToken,
-        value: response?.success?.token,
+        value: user?.success?.token,
       );
-      log("${CacheHelper.getData(
-        key: AppStrings.userToken,
-      )}");
+      di.sl<ApiBaseHelper>().updateHeader();
     }
   }
 

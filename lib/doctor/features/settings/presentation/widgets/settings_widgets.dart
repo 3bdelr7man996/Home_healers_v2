@@ -101,7 +101,7 @@ class OneOption extends StatelessWidget {
           IconButton(
             onPressed: onPressed,
             icon: const Icon(
-              Icons.arrow_back_ios_new,
+              Icons.arrow_forward_ios,
               color: Colors.grey,
             ),
           ),

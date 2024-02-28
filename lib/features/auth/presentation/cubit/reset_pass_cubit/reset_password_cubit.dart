@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/features/auth/data/models/forget_password_model.dart';
 import 'package:dr/features/auth/data/repositories/reset_password_repo.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:flutter/material.dart';
@@ -24,8 +26,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         "email": "${state.email}"
       });
       print(user);
-
       emit(state.copyWith(loading: false));
+      AppConstants.pushRemoveNavigator(context, screen: SelectRollForSignIn());
     } catch (e) {
       emit(state.copyWith(loading: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);

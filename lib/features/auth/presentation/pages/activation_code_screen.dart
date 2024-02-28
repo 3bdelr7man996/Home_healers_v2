@@ -2,8 +2,10 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_cubit/forget_password_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../shared_widgets/activation_code_widgets.dart';
@@ -50,23 +52,31 @@ class _ActivationCodeScreenState extends State<ActivationCodeScreen> {
               30.ph,
               const VerificationCodeForm(),
               30.ph,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("ألم تتلقى الرمز ؟"),
-                  5.pw,
-                  InkWell(
-                    onTap: () {
-                      context
-                          .read<ForgetPasswordCubit>()
-                          .forgetPassword(context);
-                    },
-                    child: const Text(
-                      "إعادة إرسال",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )
-                ],
+              BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
+                builder: (context, state) {
+                  if (state.resendCodeState == RequestState.loading) {
+                    return CupertinoActivityIndicator();
+                  } else {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("ألم تتلقى الرمز ؟"),
+                        5.pw,
+                        InkWell(
+                          onTap: () {
+                            context
+                                .read<ForgetPasswordCubit>()
+                                .resendCode(email: state.email ?? '');
+                          },
+                          child: const Text(
+                            "إعادة إرسال",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ],
+                    );
+                  }
+                },
               ),
               30.ph,
               Container(
@@ -75,7 +85,11 @@ class _ActivationCodeScreenState extends State<ActivationCodeScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     AppConstants.customNavigation(
-                        context, const ConfirmPasswordScreen(), -1, 0);
+                      context,
+                      const ConfirmPasswordScreen(),
+                      -1,
+                      0,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,

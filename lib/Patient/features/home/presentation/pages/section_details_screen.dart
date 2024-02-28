@@ -1,9 +1,11 @@
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/home_widgets.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_details_widgets.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,8 +87,11 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     }
 
     return Scaffold(
-      appBar: customAppBar(context,
-          backButton: true, title: widget.SectiondetailsTitle),
+      appBar: customAppBar(
+        context,
+        backButton: true,
+        title: widget.SectiondetailsTitle,
+      ),
       bottomNavigationBar: widget.fromOffer
           ? null
           : BottomNavigationForPatient(selectedIndex: 2),
@@ -98,19 +103,19 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                 padding: EdgeInsets.all(20.0),
                 child: FilterForSectionDetails(search: search),
               ),
-              searchResults.length == 0
-                  ?
-                  // const Center(
-                  //     child: Text(
-                  //     "عذراً لا يوجد أخصائيين ",
-                  //     textAlign: TextAlign.center,
-                  //     style: TextStyle(
-                  //         height: 2,
-                  //         fontWeight: FontWeight.bold,
-                  //         fontSize: 25.0),
-                  //   ))
-                  SizedBox()
-                  : Expanded(
+              BlocBuilder<SectionCubit, SectionState>(
+                builder: (context, state) {
+                  if (state.Loading == true) {
+                    return CustomLoader();
+                  } else if (state.Loading == false && searchResults.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "لا يوجد نتائج",
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    );
+                  } else {
+                    return Expanded(
                       child: ListView.builder(
                         itemCount: searchResults.length,
                         itemBuilder: (context, index) {
@@ -138,7 +143,10 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                               isVisible: _isVisible);
                         },
                       ),
-                    )
+                    );
+                  }
+                },
+              )
             ],
           ),
           PopUpForAddToFavourite(

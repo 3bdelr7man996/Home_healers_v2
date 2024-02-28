@@ -2,6 +2,7 @@
 
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:equatable/equatable.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 
 class SectionState extends Equatable {
   SectionState({
@@ -123,11 +124,11 @@ class ReservationState extends Equatable {
   String? start_at;
   String? end_at;
   String? painPlace;
-  String notes;
-  String coupon;
+  String? notes;
+  String? coupon;
   var offer;
-  var address;
-  var location;
+  String? address;
+  Location? location;
   final int? sessions_count;
   final int? status_id;
   List<DateTime>? days;
@@ -153,31 +154,31 @@ class ReservationState extends Equatable {
     bool? Loading,
     var advertiser_id,
     var offer,
-    var address,
-    String? start_at,
+    String? Function()? address,
+    String? Function()? start_at,
     String? notes,
-    String? end_at,
-    String? coupon,
-    var location,
+    String? Function()? end_at,
+    String? Function()? coupon,
+    Location? Function()? location,
     String? painPlace,
     int? sessions_count,
     int? status_id,
-    List<DateTime>? days,
+    List<DateTime>? Function()? days,
     String? visaUrl,
     RequestState? payState,
   }) =>
       ReservationState(
           Loading: Loading ?? this.Loading,
           advertiser_id: advertiser_id ?? this.advertiser_id,
-          start_at: start_at ?? this.start_at,
-          end_at: end_at ?? this.end_at,
+          start_at: start_at != null ? start_at() : this.start_at,
+          end_at: end_at != null ? end_at() : this.end_at,
           status_id: status_id ?? this.status_id,
-          days: days ?? this.days,
+          days: days != null ? days() : this.days,
           painPlace: painPlace ?? this.painPlace,
-          address: address ?? this.address,
+          address: address != null ? address() : this.address,
           notes: notes ?? this.notes,
-          coupon: coupon ?? this.coupon,
-          location: location ?? this.location,
+          coupon: coupon != null ? coupon() : this.coupon,
+          location: location != null ? location() : this.location,
           offer: offer ?? this.offer,
           sessions_count: sessions_count ?? this.sessions_count);
 }

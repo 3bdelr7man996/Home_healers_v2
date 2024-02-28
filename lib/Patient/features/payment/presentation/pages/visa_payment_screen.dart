@@ -10,6 +10,7 @@ import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/cupertino.dart' as ios;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
@@ -29,34 +30,31 @@ class _VisaPaymentScreenState extends State<VisaPaymentScreen> {
 
   InAppWebViewController? controllerGlobal;
 
-  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-    crossPlatform: InAppWebViewOptions(
-        javaScriptEnabled: true,
-        useShouldOverrideUrlLoading: true,
-        useOnDownloadStart: true,
-        allowFileAccessFromFileURLs: true,
-        mediaPlaybackRequiresUserGesture: false,
-        preferredContentMode: UserPreferredContentMode.RECOMMENDED),
-    android: AndroidInAppWebViewOptions(
-      useWideViewPort: false,
-      initialScale: 0,
-      allowFileAccess: true,
-      useShouldInterceptRequest: true,
-      useHybridComposition: true,
-    ),
-    ios: IOSInAppWebViewOptions(
-      allowsInlineMediaPlayback: true,
-    ),
+  InAppWebViewSettings options = InAppWebViewSettings(
+    allowsInlineMediaPlayback: true,
+    javaScriptEnabled: true,
+    useShouldOverrideUrlLoading: true,
+    useOnDownloadStart: true,
+    allowFileAccessFromFileURLs: true,
+    mediaPlaybackRequiresUserGesture: false,
+    preferredContentMode: UserPreferredContentMode.RECOMMENDED,
+    useWideViewPort: false,
+    initialScale: 0,
+    allowFileAccess: true,
+    useShouldInterceptRequest: true,
+    useHybridComposition: true,
   );
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PaymentCubit, PaymentState>(
-      builder: (context, state) => WillPopScope(
-        onWillPop: () => context.read<PaymentCubit>().exitApp(
-              context,
-              controllerGlobal: controllerGlobal,
-            ),
+      builder: (context, state) => PopScope(
+        onPopInvoked: (value) {
+          context.read<PaymentCubit>().exitApp(
+                context,
+                controllerGlobal: controllerGlobal,
+              );
+        },
         child: Scaffold(
           backgroundColor: AppColors.whiteColor,
           body: Stack(
@@ -80,8 +78,8 @@ class _VisaPaymentScreenState extends State<VisaPaymentScreen> {
                   ? SafeArea(
                       child: InAppWebView(
                         initialUrlRequest:
-                            URLRequest(url: Uri.parse(state.visaUrl!)),
-                        initialOptions: options,
+                            URLRequest(url: WebUri(state.visaUrl!)),
+                        initialSettings: options,
                         onWebViewCreated:
                             (InAppWebViewController webViewController) {
                           controllerGlobal = webViewController;
@@ -92,7 +90,7 @@ class _VisaPaymentScreenState extends State<VisaPaymentScreen> {
                         },
                         onReceivedServerTrustAuthRequest:
                             (controller, challenge) async {
-                          controller.android.clearSslPreferences();
+                          controller.clearSslPreferences();
                           if (kDebugMode) {
                             print(challenge);
                           }

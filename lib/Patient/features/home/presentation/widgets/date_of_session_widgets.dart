@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
@@ -7,6 +9,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/toast_helper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +29,25 @@ class _TableClenderForSessionState extends State<TableClenderForSession> {
   DateTime today = DateTime.now();
   DateTime lastDay = DateTime.now().add(Duration(days: 30));
   void _onDaySelected(DateTime day, DateTime focusDay) async {
+    log("day $day");
+    int index =
+        selectedDates.indexWhere((date) => date.day.compareTo(day.day) == 0);
+    if (index != -1) {
+      selectedDates.removeAt(index);
+      log("is trueeeeeeeeeeeeeeeeeeeee $selectedDates");
+      context.read<ReservationCubit>().onChangeDays(selectedDates);
+      setState(() {});
+      return;
+    }
+    if (selectedDates.length ==
+        context.read<ReservationCubit>().state.sessions_count) {
+      ShowToastHelper.showToast(
+        msg: "تم تحديد مواعيد جميع الجلسات",
+        isError: false,
+      );
+      return;
+    }
+
     DateTime selectedDate = day;
 
     // Show the date picker to select the date
@@ -141,7 +163,7 @@ class LocationInput extends StatelessWidget {
                       onNext: (result) {
                         if (result != null) {
                           context.read<ReservationCubit>().onAddressChange(
-                                result.formattedAddress,
+                                result.formattedAddress ?? "",
                               );
                           context.read<ReservationCubit>().onLocationChange(
                                 result.geometry.location,
@@ -157,22 +179,10 @@ class LocationInput extends StatelessWidget {
                       origin:
                           context.read<AuthCubitForPatient>().state.location,
                       currentLatLng: LatLng(
-                        context
-                                .read<AuthCubitForPatient>()
-                                .state
-                                .location
-                                ?.lat ??
-                            24.70281458492638,
-                        context
-                                .read<AuthCubitForPatient>()
-                                .state
-                                .location
-                                ?.lng ??
-                            46.704172412998915,
+                        state.location?.lat ?? 24.70281458492638,
+                        state.location?.lng ?? 46.704172412998915,
                       ),
-                      // LatLng(
-                      //     state.location?.lat ?? 24.70281458492638,
-                      //     state.location?.lng ?? 46.704172412998915),
+                     
                     ),
                   ),
                 );

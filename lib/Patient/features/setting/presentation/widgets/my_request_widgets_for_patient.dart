@@ -258,7 +258,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: SizedBox(
-                                          width: 70.0,
+                                          width: 80.0,
                                           child: Text(
                                             value,
                                             style: TextStyle(fontSize: 14.0),

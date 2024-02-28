@@ -8,10 +8,14 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import '../../../../../core/utils/deep_link_util.dart';
 import '../../data/models/my_orders_model.dart';
@@ -26,10 +30,51 @@ class BillScreen extends StatefulWidget {
 }
 
 class _BillScreenState extends State<BillScreen> {
+  GlobalKey _globalKey = new GlobalKey();
   @override
   void initState() {
     super.initState();
     context.read<MyOrdersCubit>().GetInvoiceDetails(widget.oneOrder.id);
+  }
+
+  void _printScreen() {
+    Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+      final doc = pw.Document();
+      var image = await _capturePng();
+      if (image != null) {
+        final captureImg = pw.MemoryImage(image);
+        // final image = await WidgetWraper.fromKey(
+        //   key: _printKey,
+        //   pixelRatio: 2.0,
+        // );
+
+        doc.addPage(pw.Page(
+            pageFormat: format,
+            build: (pw.Context context) {
+              return pw.Center(
+                child: pw.Expanded(
+                  child: pw.Image(captureImg),
+                ),
+              );
+            }));
+      }
+      return doc.save();
+    });
+  }
+
+  Future<Uint8List?> _capturePng() async {
+    try {
+      RenderRepaintBoundary boundary = _globalKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List? pngBytes = byteData?.buffer.asUint8List();
+      return pngBytes;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   @override
@@ -41,31 +86,6 @@ class _BillScreenState extends State<BillScreen> {
     //       10, (index) => chars.codeUnitAt(Random().nextInt(chars.length))));
     // }
 
-    final GlobalKey<State<StatefulWidget>> _printKey = GlobalKey();
-
-    void _printScreen() {
-      Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
-        final doc = pw.Document();
-
-        final image = await WidgetWraper.fromKey(
-          key: _printKey,
-          pixelRatio: 2.0,
-        );
-
-        doc.addPage(pw.Page(
-            pageFormat: format,
-            build: (pw.Context context) {
-              return pw.Center(
-                child: pw.Expanded(
-                  child: pw.Image(image),
-                ),
-              );
-            }));
-
-        return doc.save();
-      });
-    }
-
     print(widget.oneOrder.runtimeType);
     return Scaffold(
       appBar: customAppBar(context, title: "الفاتورة", backButton: true),
@@ -75,7 +95,7 @@ class _BillScreenState extends State<BillScreen> {
           child: Column(
             children: [
               RepaintBoundary(
-                key: _printKey,
+                key: _globalKey,
                 child: Column(
                   children: [
                     BlueSection(oneOrder: widget.oneOrder),
@@ -121,7 +141,7 @@ class _BillScreenState extends State<BillScreen> {
                 onPressed: _printScreen,
                 child: Text("تحميل الفاتورة أو طباعتها"),
                 style: ElevatedButton.styleFrom(
-                  primary: AppColors.primaryColor,
+                  backgroundColor: AppColors.primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),

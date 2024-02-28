@@ -388,6 +388,10 @@ class evaluationCubit extends Cubit<evaluationsState> {
           await eevaluationsRepo.sendEvaluation(body: body);
       emit(state.copyWith(showEvaluationPopUp: state.showEvaluationPopUp + 1));
       _onSendCommentPressed();
+      Future.delayed(Duration(milliseconds: 700), () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      });
       print(response);
     } catch (e) {
       print(e.toString());

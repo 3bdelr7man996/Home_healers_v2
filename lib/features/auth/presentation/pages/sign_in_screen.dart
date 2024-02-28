@@ -7,7 +7,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/pages/sign_up_screen.dart';
-import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/forget_password_screen.dart';
 import 'package:dr/shared_widgets/submit_button.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';

@@ -1,8 +1,5 @@
-import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/sign_up/signup_body.dart';
-import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,10 +27,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         appBar: customAppBar(context),
         body: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
-            if (state.registerState == RequestState.success) {
-              AppConstants.pushRemoveNavigator(context,
-                  screen: const HomeScreen(selectedIndex: 0));
-            }
+            // if (state.registerState == RequestState.success) {
+            //   AppConstants.pushRemoveNavigator(context,
+            //       screen: const HomeScreen(selectedIndex: 0));
+            // }
           },
           child: SignUpBody(),
         ));

@@ -1,7 +1,8 @@
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
-import 'package:dr/core/utils/app_strings.dart';
-import 'package:dr/core/utils/cache_helper.dart';
+import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("Token ${CacheHelper.getData(key: AppStrings.userToken)}");
+    // print("Token ${CacheHelper.getData(key: AppStrings.userToken)}");
 
     var data = context.select((FavoriteCubit cubit) => cubit.state.data);
     return Scaffold(
@@ -55,33 +56,55 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : Stack(children: [
-                  ListView.builder(
-                    itemCount: data["data"].length,
-                    itemBuilder: (context, index) {
-                      return DoctorCard(
-                          Data: data["data"][index]['advertiser'],
-                          name: data["data"][index]["advertiser"]["name_ar"],
-                          status: data["data"][index]["advertiser"]["status"],
-                          price: data["data"][index]["advertiser"]
-                              ["session_price"],
-                          address: data["data"][index]["advertiser"]
-                              ["address_ar"],
-                          statusAdvisor: data["data"][index]["advertiser"]
-                              ["status_advisor"],
-                          categories: data["data"][index]["advertiser"]
-                              ["categories"],
-                          image: data["data"][index]["advertiser"]["image"],
-                          fromfavorite: true,
-                          toggleVisibility: _toggleVisibility,
-                          isVisible: _isVisible);
-                    },
-                  ),
-                  PopUpForAddToFavourite(
-                    isVisible: _isVisible,
-                    toggleVisibility: _toggleVisibility,
-                  )
-                ]),
+              : data["data"].length == 0
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppConstants.customAssetImage(
+                            imagePath: AppImages.no_fav_icon,
+                            height: 150,
+                            width: 250,
+                          ),
+                          20.ph,
+                          Text(
+                            "لا يوجد مفضلة ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Stack(children: [
+                      ListView.builder(
+                        itemCount: data["data"].length,
+                        itemBuilder: (context, index) {
+                          return DoctorCard(
+                              Data: data["data"][index]['advertiser'],
+                              name: data["data"][index]["advertiser"]
+                                  ["name_ar"],
+                              status: data["data"][index]["advertiser"]
+                                  ["status"],
+                              price: data["data"][index]["advertiser"]
+                                  ["session_price"],
+                              address: data["data"][index]["advertiser"]
+                                  ["address_ar"],
+                              statusAdvisor: data["data"][index]["advertiser"]
+                                  ["status_advisor"],
+                              categories: data["data"][index]["advertiser"]
+                                  ["categories"],
+                              image: data["data"][index]["advertiser"]["image"],
+                              fromfavorite: true,
+                              toggleVisibility: _toggleVisibility,
+                              isVisible: _isVisible);
+                        },
+                      ),
+                      PopUpForAddToFavourite(
+                        isVisible: _isVisible,
+                        toggleVisibility: _toggleVisibility,
+                      )
+                    ]),
     );
   }
 }

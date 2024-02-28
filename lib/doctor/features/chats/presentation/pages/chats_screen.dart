@@ -1,4 +1,6 @@
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/shimmer_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
@@ -45,11 +47,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 Text(
                   "messages".tr(),
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0,),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                  ),
                 ),
                 10.ph,
                 ConversationsSection(),
-                
               ],
             ),
           ),
@@ -195,7 +198,27 @@ class ConversationsSection extends StatelessWidget {
             ),
           );
         } else {
-          return const SizedBox.shrink();
+          return Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AppConstants.customAssetImage(
+                    imagePath: AppImages.no_msg_icon,
+                    height: 150,
+                    width: 150,
+                  ),
+                  20.ph,
+                  Text(
+                    "لايوجد رسائل لديك",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         }
       },
     );

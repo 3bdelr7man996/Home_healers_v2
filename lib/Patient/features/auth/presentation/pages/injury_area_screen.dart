@@ -124,126 +124,104 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                children: [
-                  HumanAnatomy(onChanged: showCheckBox),
-                  25.ph,
-                  Text(
-                    titleForCheckBox,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  10.ph,
-                  SizedBox(
-                    height: 200,
-                    child: GridView.count(
-                      childAspectRatio: 4.0,
-                      crossAxisCount: 2,
-                      children: CheckBoxShow.map((item) => CheckboxListTile(
-                            value: checkedValues[item] ?? false,
-                            onChanged: (value) {
-                              if (ListOfResult.contains(item)) {
-                                ListOfResult.remove(item);
-                              } else {
-                                ListOfResult.add(item);
-                              }
-                              print(ListOfResult);
-
-                              setState(() {
-                                checkedValues[item] = value!;
-                              });
-                            },
-                            title: Text(
-                              item,
-                              style: TextStyle(
-                                  fontSize: 12.0, fontWeight: FontWeight.w500),
-                            ),
-                          )).toList(),
-                    ),
-                  ),
-                ],
+              HumanAnatomy(onChanged: showCheckBox),
+              25.ph,
+              Text(
+                titleForCheckBox,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: context.width,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        backgroundColor: AppColors.primaryColor,
-                      ),
-                      onPressed: () {
-                        if (ListOfResult.length != 0) {
-                          context
-                              .read<ReservationCubit>()
-                              .onChangePainPlace(ListOfResult.join(", "));
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DateOfSessionScreen(
-                                    Data: widget.Data,
-                                    fromFilter: widget.fromFilter,
-                                    fromPackages: widget.fromPackage,
-                                    status_id: widget.status_id,
-                                    fromOffer: widget.fromOffer)),
-                          );
+              10.ph,
+              SizedBox(
+                height: ((CheckBoxShow.length + 1) / 2) * 60,
+                child: GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  childAspectRatio: 4.0,
+                  crossAxisCount: 2,
+                  children: CheckBoxShow.map((item) => CheckboxListTile(
+                        value: checkedValues[item] ?? false,
+                        onChanged: (value) {
+                          if (ListOfResult.contains(item)) {
+                            ListOfResult.remove(item);
+                          } else {
+                            ListOfResult.add(item);
+                          }
+                          print(ListOfResult);
 
-                          // AppConstants.customNavigation(
-                          //     context,
-                          // DateOfSessionScreen(
-                          //     Data: widget.Data,
-                          //     fromFilter: widget.fromFilter,
-                          //     status_id: widget.status_id,
-                          //     fromOffer: widget.fromOffer),
-                          //     1,
-                          //     0);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: AppColors.redColor,
-                              padding: EdgeInsets.only(
-                                  bottom: 50, top: 50, left: 50, right: 50),
-                              content: Text(
-                                'يرجى تحديد مكان الإصابة',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                              duration: const Duration(
-                                  seconds: 2), // Optional duration
-                            ),
-                          );
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: const Text(
-                          'متابعة',
-                          style: TextStyle(color: Colors.white),
+                          setState(() {
+                            checkedValues[item] = value!;
+                          });
+                        },
+                        title: Text(
+                          item,
+                          style: TextStyle(
+                              fontSize: 12.0, fontWeight: FontWeight.w500),
                         ),
-                      ),
+                      )).toList(),
+                ),
+              ),
+              SizedBox(
+                width: context.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: AppColors.primaryColor,
+                  ),
+                  onPressed: () {
+                    if (ListOfResult.length != 0) {
+                      context
+                          .read<ReservationCubit>()
+                          .onChangePainPlace(ListOfResult.join(", "));
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DateOfSessionScreen(
+                                Data: widget.Data,
+                                fromFilter: widget.fromFilter,
+                                fromPackages: widget.fromPackage,
+                                status_id: widget.status_id,
+                                fromOffer: widget.fromOffer)),
+                      );
+
+                      // AppConstants.customNavigation(
+                      //     context,
+                      // DateOfSessionScreen(
+                      //     Data: widget.Data,
+                      //     fromFilter: widget.fromFilter,
+                      //     status_id: widget.status_id,
+                      //     fromOffer: widget.fromOffer),
+                      //     1,
+                      //     0);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: AppColors.redColor,
+                          padding: EdgeInsets.only(
+                              bottom: 50, top: 50, left: 50, right: 50),
+                          content: Text(
+                            'يرجى تحديد مكان الإصابة',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          duration:
+                              const Duration(seconds: 2), // Optional duration
+                        ),
+                      );
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: const Text(
+                      'متابعة',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                  10.ph,
-                  // SizedBox(
-                  //   width: context.width,
-                  //   child: ElevatedButton(
-                  //     style: ElevatedButton.styleFrom(
-                  //       elevation: 0,
-                  //       primary: Colors.transparent,
-                  //     ),
-                  //     onPressed: () {},
-                  //     child: const Text(
-                  //       'تخطي',
-                  //       style: TextStyle(color: AppColors.primaryColor),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              )
+                ),
+              ),
             ],
           ),
         ),

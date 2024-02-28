@@ -2,7 +2,7 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/features/auth/presentation/cubit/reset_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/reset_pass_cubit/reset_password_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';

@@ -1,15 +1,12 @@
-import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/features/auth/presentation/cubit/forget_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_cubit/forget_password_cubit.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../shared_widgets/forget_password_widgets.dart';
 
 class ForgetPaswwordScreen extends StatefulWidget {
   const ForgetPaswwordScreen({super.key});
@@ -94,10 +91,10 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
             ),
           ),
         ),
-        Container(
-          height: context.height,
-          child: PopUpForForgetPassword(),
-        )
+        // Container(
+        //   height: context.height / 2,
+        //   child: PopUpForForgetPassword(),
+        // )
       ]),
     );
   }

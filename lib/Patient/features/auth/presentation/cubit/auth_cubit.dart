@@ -3,15 +3,17 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/features/auth/data/models/user_model.dart';
+import 'package:dr/features/auth/presentation/pages/activate_account.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:dr/di_container.dart' as di;
 
@@ -100,8 +102,9 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   onRequestStatusChange() =>
       {emit(state.copyWith(requestStatus: !state.requestStatus))};
 
-  showPopUpAfterSignUp() => emit(state.copyWith(isVisible: !state.isVisible));
+  // showPopUpAfterSignUp() => emit(state.copyWith(isVisible: !state.isVisible));
   //?====================[  SIGN UP NEW ACC  ]==========================
+  SignUpForPatientModel? patient;
 
   ///Register new patient
   Future<void> signUpPatient(BuildContext context) async {
@@ -132,16 +135,20 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       };
 
-      emit(state.copyWith(registerState: RequestState.loading));
-      emit(state.copyWith(requestStatus: true));
-      SignUpForPatientModel response =
-          await signUpPatientRepo.signUP(body: body);
-      print(response);
+      emit(state.copyWith(
+        registerState: RequestState.loading,
+        requestStatus: true,
+      ));
+      patient = await signUpPatientRepo.signUP(body: body);
+      print(patient);
+      AppConstants.pushRemoveNavigator(context,
+          screen: ActivateAccountScreen(
+            email: state.email!,
+            isAdvertise: false,
+            cacheData: cacheData,
+          ));
 
-      await cacheData(response);
-      di.sl<ApiBaseHelper>().updateHeader();
-
-      showPopUpAfterSignUp();
+      //await cacheData(response);
       emit(state.copyWith(requestStatus: false));
       FirebaseAnalyticUtil.logSignUpEvent();
       log("Register Success");
@@ -205,20 +212,23 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   }
 
   /// save user data in local
-  Future<void> cacheData(SignUpForPatientModel response) async {
-    print("Token");
-    print("////////////////////////////////////////////////////////////");
-    print(response.success.token);
-    await CacheHelper.saveData(
-        key: AppStrings.userInfo, value: jsonEncode(response.success.toJson()));
-    await CacheHelper.saveData(
-      key: AppStrings.userToken,
-      value: response.success.token,
-    );
-    await CacheHelper.saveData(
-      key: AppStrings.isAdvertise,
-      value: false,
-    );
+  Future<void> cacheData() async {
+    if (patient != null) {
+      print("Token");
+      print(patient!.success.token);
+      await CacheHelper.saveData(
+          key: AppStrings.userInfo,
+          value: jsonEncode(patient!.success.toJson()));
+      await CacheHelper.saveData(
+        key: AppStrings.userToken,
+        value: patient!.success.token,
+      );
+      await CacheHelper.saveData(
+        key: AppStrings.isAdvertise,
+        value: false,
+      );
+      di.sl<ApiBaseHelper>().updateHeader();
+    }
   }
 
   ///get user info from local data

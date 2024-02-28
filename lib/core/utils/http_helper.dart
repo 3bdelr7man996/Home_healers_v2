@@ -198,6 +198,7 @@ class ApiBaseHelper {
       case 401:
       case 403:
       case 422:
+      case 404:
         var responseJson = json.decode(response.body.toString());
         error = handleError(responseJson);
         logger.i(

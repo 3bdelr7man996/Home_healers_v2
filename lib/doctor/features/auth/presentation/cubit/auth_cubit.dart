@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -14,9 +15,11 @@ import 'package:dr/doctor/features/auth/data/model/departements_model.dart';
 import 'package:dr/doctor/features/auth/data/model/sign_up_adv_model.dart';
 import 'package:dr/doctor/features/auth/data/model/status_model.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
+import 'package:dr/features/auth/presentation/pages/activate_account.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dr/di_container.dart' as di;
@@ -238,8 +241,10 @@ class AuthCubit extends Cubit<AuthState> {
 
   //?====================[  SIGN UP NEW ACC  ]==========================
 
+  SignUpAdvertiseModel? advertise;
+
   ///Register new advertiser
-  Future<void> signUpAdv() async {
+  Future<void> signUpAdv(BuildContext context) async {
     try {
       fieldsValidation(true);
       Map<String, String> body = {
@@ -279,19 +284,25 @@ class AuthCubit extends Cubit<AuthState> {
         }
       }
       emit(state.copyWith(registerState: RequestState.loading));
-      SignUpAdvertiseModel response = await signUpAdverRepo.signUP(
+      advertise = await signUpAdverRepo.signUP(
         body: body,
       );
-      await cacheData(response);
-      di.sl<ApiBaseHelper>().updateHeader();
+      AppConstants.pushRemoveNavigator(context,
+          screen: ActivateAccountScreen(
+            email: state.email!,
+            isAdvertise: true,
+            cacheData: cacheData,
+          ));
+      //await cacheData(response);
       initRegisterData();
-      emit(
-          state.copyWith(registerState: RequestState.success, showPopup: true));
+      emit(state.copyWith(registerState: RequestState.success));
       log("Register Success");
     } catch (e) {
       log("Sign up error $e");
-      emit(
-          state.copyWith(registerState: RequestState.failed, showPopup: false));
+      emit(state.copyWith(
+        registerState: RequestState.failed,
+        // showPopup: false,
+      ));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -321,20 +332,23 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   /// save user data in local
-  Future<void> cacheData(SignUpAdvertiseModel response) async {
-    await CacheHelper.saveData(
-        key: AppStrings.userInfo,
-        value: jsonEncode(response.success?.advertiser?.toJson()));
-    if (response.success?.token != null) {
+  Future<void> cacheData() async {
+    if (advertise != null) {
       await CacheHelper.saveData(
-        key: AppStrings.userToken,
-        value: response.success?.token,
+          key: AppStrings.userInfo,
+          value: jsonEncode(advertise?.success?.advertiser?.toJson()));
+      if (advertise?.success?.token != null) {
+        await CacheHelper.saveData(
+          key: AppStrings.userToken,
+          value: advertise?.success?.token,
+        );
+      }
+      await CacheHelper.saveData(
+        key: AppStrings.isAdvertise,
+        value: true,
       );
+      di.sl<ApiBaseHelper>().updateHeader();
     }
-    await CacheHelper.saveData(
-      key: AppStrings.isAdvertise,
-      value: true,
-    );
   }
 
   ///get user info from local data
@@ -376,12 +390,12 @@ class AuthCubit extends Cubit<AuthState> {
       iban: "",
       location: null,
       phone: "",
-      selectedCategories: null,
-      selectedCity: null,
-      selectedStatus: null,
+      selectedCategories: () => null,
+      selectedCity: () => null,
+      selectedStatus: () => null,
       obscurePass: true,
       obscureConfPass: true,
-      showPopup: false,
+      // showPopup: false,
       term: false,
       identification: "",
     ));
@@ -453,23 +467,27 @@ class AuthCubit extends Cubit<AuthState> {
       }
       emit(state.copyWith(registerState: RequestState.loading));
       log(body.toString());
-      SignUpAdvertiseModel response = await signUpAdverRepo.signUP(
+      advertise = await signUpAdverRepo.signUP(
           body: body,
           isUpdateProfile: true,
           files: state.imgProfile != null ? [state.imgProfile!] : null,
           fileKey: "image");
 
-      await cacheData(response);
+      await cacheData();
       ShowToastHelper.showToast(
           msg: "update_profile_success".tr(), isError: false);
       // initRegisterData();
-      emit(
-          state.copyWith(registerState: RequestState.success, showPopup: true));
+      emit(state.copyWith(
+        registerState: RequestState.success,
+        // showPopup: true,
+      ));
       log("update Success");
     } catch (e) {
       log("Sign up error $e");
-      emit(
-          state.copyWith(registerState: RequestState.failed, showPopup: false));
+      emit(state.copyWith(
+        registerState: RequestState.failed,
+        // showPopup: false,
+      ));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

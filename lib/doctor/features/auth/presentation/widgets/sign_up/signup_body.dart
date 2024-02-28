@@ -6,7 +6,6 @@ import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
-import 'package:dr/shared_widgets/pop_up.dart';
 import 'package:dr/shared_widgets/submit_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +179,9 @@ class SignUpBody extends StatelessWidget {
                               title: 'create_account'.tr(),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  await context.read<AuthCubit>().signUpAdv();
+                                  await context
+                                      .read<AuthCubit>()
+                                      .signUpAdv(context);
                                 }
                               });
                         }
@@ -193,14 +194,14 @@ class SignUpBody extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                return PopUpDialog(
-                  isVisible: state.showPopup,
-                  rollSelected: 1,
-                );
-              },
-            )
+            // BlocBuilder<AuthCubit, AuthState>(
+            //   builder: (context, state) {
+            //     return PopUpDialog(
+            //       isVisible: state.showPopup,
+            //       rollSelected: 1,
+            //     );
+            //   },
+            // )
           ],
         ),
       ),

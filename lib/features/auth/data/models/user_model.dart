@@ -29,6 +29,7 @@ class UserData {
   String? fcmToken;
   String? email;
   String? gender;
+  int? activated;
   int? cityId;
   String? token;
   Advertiser? advertiser;
@@ -43,6 +44,7 @@ class UserData {
       this.fcmToken,
       this.email,
       this.gender,
+      this.activated,
       this.cityId,
       this.token,
       this.advertiser,
@@ -59,6 +61,7 @@ class UserData {
     gender = json?['gender'];
     cityId = json?['city_id'];
     token = json?['token'];
+    activated = json?['activated'];
     advertiser = Advertiser.fromJson(json?['advertiser']);
     if (json?['doctor_reports'] != null) {
       doctorReports = <DoctorReports>[];
@@ -83,6 +86,7 @@ class UserData {
     data['fcm_token'] = fcmToken;
     data['email'] = email;
     data['gender'] = gender;
+    data['activated'] = activated;
     data['city_id'] = cityId;
     data['token'] = token;
     data['advertiser'] = advertiser?.toJson();
@@ -103,6 +107,7 @@ class UserData {
     String? fcmToken,
     String? email,
     String? gender,
+    int? activated,
     int? cityId,
     String? token,
     Advertiser? advertiser,
@@ -114,6 +119,7 @@ class UserData {
         name: name ?? this.name,
         email: email ?? this.email,
         id: id ?? this.id,
+        activated: activated ?? this.activated,
         image: image ?? this.image,
         mobile: mobile ?? this.mobile,
         fcmToken: fcmToken ?? this.fcmToken,

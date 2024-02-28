@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
@@ -15,6 +17,7 @@ import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 
 import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
 import '../../data/models/get_all_ads_model.dart';
@@ -30,12 +33,13 @@ class SectionCubit extends Cubit<SectionState> {
 
   Future<void> GetSectionDetails(BuildContext context) async {
     try {
-      emit(state.copyWith(listOfResponse: {}));
+      emit(state.copyWith(listOfResponse: {}, Loading: true));
       fieldsValidation();
       SectionModel response =
           await sectionRepo.GetSection(sectionNumber: state.sectionNumber);
-      emit(state.copyWith(listOfResponse: response.toJson()));
+      emit(state.copyWith(listOfResponse: response.toJson(), Loading: false));
     } catch (e) {
+      emit(state.copyWith(Loading: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -151,18 +155,33 @@ class ReservationCubit extends Cubit<ReservationState> {
   decraseSessionsCount() =>
       {emit(state.copyWith(sessions_count: state.sessions_count! - 1))};
   OnChangeSessionCount(value) => {emit(state.copyWith(sessions_count: value))};
-  onAddressChange(var address) => {emit(state.copyWith(address: address))};
-  onLocationChange(var location) => {emit(state.copyWith(location: location))};
+  onAddressChange(String address) =>
+      {emit(state.copyWith(address: () => address))};
+  onLocationChange(Location location) =>
+      {emit(state.copyWith(location: () => location))};
 
   onChangeadvertiserId(value) => {emit(state.copyWith(advertiser_id: value))};
   onChangestatus_id(value) => {emit(state.copyWith(status_id: value))};
-  onChangeDays(value) => {emit(state.copyWith(days: value))};
+  onChangeDays(value) => {emit(state.copyWith(days: () => value))};
   makesessions_countOne() => {emit(state.copyWith(sessions_count: 1))};
   onChangeNotes(value) => {emit(state.copyWith(notes: value))};
   makeNotesEmpty() => {emit(state.copyWith(notes: ""))};
   onChangePainPlace(value) => {emit(state.copyWith(painPlace: value))};
   OnOfferChange(var offer) => emit(state.copyWith(offer: offer));
-  onCouponChange(String coupon) => emit(state.copyWith(coupon: coupon));
+  onCouponChange(String coupon) => emit(state.copyWith(coupon: () => coupon));
+  initReservationData() {
+    //daysArray = [];
+    emit(state.copyWith(
+      days: () => [],
+      start_at: () => null,
+      end_at: () => null,
+      location: () => null,
+      address: () => null,
+      notes: "",
+      coupon: () => null,
+      offer: null,
+    ));
+  }
 
   Future<void> MakeReservation(
     BuildContext context,
@@ -178,7 +197,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       if (state.days!.length > 1) {
         start_at = sortedDates!.first.toString();
         start_at = start_at.substring(0, start_at.length - 4);
-        emit(state.copyWith(start_at: start_at));
+        emit(state.copyWith(start_at: () => start_at));
       } else {
         var newDateTime = sortedDates!.first;
         start_at = DateTime(
@@ -190,11 +209,11 @@ class ReservationCubit extends Cubit<ReservationState> {
           00,
         ).toString();
         start_at = start_at.substring(0, start_at.length - 4);
-        emit(state.copyWith(start_at: start_at));
+        emit(state.copyWith(start_at: () => start_at));
       }
       String end_at = sortedDates.last.toString();
       end_at = end_at.substring(0, end_at.length - 4);
-      emit(state.copyWith(end_at: end_at));
+      emit(state.copyWith(end_at: () => end_at));
       List<String> daysArray = sortedDates
           .map((date) =>
               date.toString().substring(0, date.toString().length - 4))
@@ -203,23 +222,6 @@ class ReservationCubit extends Cubit<ReservationState> {
       emit(state.copyWith(Loading: true));
 
       Map<String, dynamic> body;
-      // var lat, lng;
-      // var permission = await Geolocator.checkPermission();
-      // if (permission == LocationPermission.denied ||
-      //     permission == LocationPermission.deniedForever) {
-      //   Geolocator.requestPermission();
-      // }
-      // Position position = await Geolocator.getCurrentPosition(
-      //   desiredAccuracy: LocationAccuracy.high,
-      // );
-
-      // print("location is ${position.latitude}");
-
-      // lat = position.latitude;
-      // lng = position.longitude;
-
-      // // You can use latitude and longitude for your desired purpose.
-      // print("Latitude: ${lat}, Longitude: ${lng}");
 
       if (withOffer) {
         body = {
@@ -248,14 +250,11 @@ class ReservationCubit extends Cubit<ReservationState> {
           "notes": "${state.notes}",
           "days": daysArray,
           "pain_place": "${state.painPlace}",
-          "coupon": "${state.coupon}"
+          "coupon": "${state.coupon ?? ''}"
           //coupon ===ToDo===
         };
       }
       print(body);
-      // for (int i = 0; i < daysArray.length; i++) {
-      //   body['days[$i]'] = daysArray[i];
-      // }\
 
       var response;
       if (withOffer) {
@@ -266,18 +265,18 @@ class ReservationCubit extends Cubit<ReservationState> {
       }
       emit(state.copyWith(Loading: false));
       // AppConstants.customNavigation(context, MyRequestsForPatient(), -1, 0);
-      emit(state.copyWith(sessions_count: 1));
-      emit(state.copyWith(days: []));
-      emit(state.copyWith(location: []));
-      emit(state.copyWith(notes: ""));
-      emit(state.copyWith(address: ""));
-      emit(state.copyWith(status_id: -1));
+      emit(state.copyWith(
+        sessions_count: 1,
+        days: () => [],
+        location: () => null,
+        notes: "",
+        address: () => null,
+        status_id: -1,
+      ));
+
       daysArray = [];
       sortedDates = [];
       makeNotesEmpty();
-      state.location = null;
-
-      // ignore: use_build_context_synchronously
       body.removeWhere((key, value) => key.startsWith('days['));
       FirebaseAnalyticUtil.logAddReservationEvent();
       Navigator.pushReplacement(
@@ -293,36 +292,48 @@ class ReservationCubit extends Cubit<ReservationState> {
 
   ///////////////////////////////////////// validate on fields /////////////////////////////////////////
   void fieldsValidation(bool withOffer) {
-    if (state.location == null) {
-      throw ("ادخل موقعك");
+    if (state.location == null || state.address == null) {
+      throw ("ادخل موقع الزيارة المنزلية");
     }
-    if (state.status_id == null) {
+    if (state.status_id == null || state.status_id == -1) {
       throw ("حدد الاختصاص ");
-    } else {
-      if (state.status_id == -1) {
-        throw ("حدد الاختصاص ");
-      }
     }
-    if (state.days == null) {
-      throw (" حدد الأيام ");
-    } else {
-      if (state.days!.length == 0) {
-        throw (" حدد الأيام ");
-      }
-      if (state.sessions_count != state.days!.length) {
-        throw ("عدد الجلسات لا يساوي الأيام المحددة");
-      }
-      if (state.sessions_count! > state.days!.length) {
-        throw ("قم بتحديد الأيام التي تريد حجز موعد بها");
-      }
+    if (state.days == null || state.days!.isEmpty) {
+      throw (" حدد تواريخ الجلسات ");
     }
 
-    if (state.location == null) {
-      throw ("ادخل موقعك");
+    if (state.sessions_count != state.days!.length) {
+      throw ("عدد الجلسات لا يساوي الأيام المحددة");
     }
-
-    if (state.notes.length == 0 && !withOffer) {
+    if (state.notes?.length == 0 && !withOffer) {
       throw ("الرجاء قم بإدخال المزيد من التفاصيل");
+    }
+  }
+
+  //?========================[ GET CURRENT POSITION ]===========================
+  Future<void> getCurrentPosition() async {
+    try {
+      var permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        Geolocator.requestPermission();
+      }
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      log("location is ${position.latitude}");
+      emit(
+        state.copyWith(
+          location: () => Location(
+            lat: position.latitude,
+            lng: position.longitude,
+          ),
+        ),
+      );
+
+      // You can use latitude and longitude for your desired purpose.
+    } catch (e) {
+      log("Error: $e");
     }
   }
 }

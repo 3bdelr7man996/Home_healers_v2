@@ -131,7 +131,7 @@ class _TowSectionState extends State<TowSection> {
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 child: AppConstants.customNetworkImage(
                   imagePath:
-                      " ${widget.fromNotification ? widget.notificationOrder[0]['advertiser']['image'] : widget.listOfOrders?.advertiser.image}",
+                      "${widget.fromNotification ? widget.notificationOrder[0]['advertiser']['image'] : widget.listOfOrders?.advertiser.image}",
                   imageError: AppImages.doctorPlaceholder,
                   width: context.width * 0.25,
                   height: context.width * 0.25 - 10,
@@ -781,7 +781,7 @@ class BottomSheetForEvalute extends StatelessWidget {
     }
 
     return SizedBox(
-        height: 350,
+        height: 380,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
           child: Column(

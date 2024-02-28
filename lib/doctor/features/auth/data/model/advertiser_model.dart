@@ -20,6 +20,7 @@ class Advertiser {
     this.gender,
     this.iban,
     this.location,
+    this.activated,
     this.bundleId,
     this.countryId,
     this.cityId,
@@ -60,6 +61,7 @@ class Advertiser {
   late final String? iban;
   late final String? nationalId;
   late final String? location;
+  late final int? activated;
   late final int? bundleId;
   late final int? countryId;
   late final int? cityId;
@@ -101,6 +103,7 @@ class Advertiser {
     iban = json?['iban'];
     nationalId = json?['national_id'];
     location = json?["location"];
+    activated = json?["activated"];
     bundleId = json?["bundle_id"];
     countryId = json?['country_id'];
     cityId = json?['city_id'];
@@ -155,12 +158,13 @@ class Advertiser {
     data['iban'] = iban;
     data['national_id'] = nationalId;
     data['location'] = location;
+    data['activated'] = activated;
     data['bundle_id'] = bundleId;
     data['country_id'] = countryId;
     data['city_id'] = cityId;
     data['area_id'] = areaId;
-    data['startfrom'] = startfrom;
-    data['endat'] = endat;
+    data['startfrom'] = startfrom.toString();
+    data['endat'] = endat.toString();
     data['session_price'] = sessionPrice;
     data['session_dur'] = sessionDur;
     data['lat'] = lat;

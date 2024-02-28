@@ -13,7 +13,7 @@ import 'package:dr/doctor/features/settings/presentation/pages/change_password.d
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
-import 'package:dr/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
@@ -67,7 +67,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OneOption(
                     iconPath: AppImages.settingRequests,
                     title: "specialist_requests".tr(),
-                    routeScreen: const Scaffold(body: Allrequests(fromSetting: true,)),
+                    routeScreen: const Scaffold(
+                        body: Allrequests(
+                      fromSetting: true,
+                    )),
                   ),
                   15.ph,
                   OneOption(

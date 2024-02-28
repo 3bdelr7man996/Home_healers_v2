@@ -66,4 +66,7 @@ class AppImages {
   static String americanExCard = 'assets/icons/american_ex_card.svg';
   static String activityIcon = 'assets/icons/activity.png';
   static String task_icon = 'assets/icons/task_icon.png';
+  static String pdf_icon = 'assets/icons/pdf_icon.png';
+  static String no_msg_icon = 'assets/icons/no_messages.png';
+  static String no_fav_icon = 'assets/icons/no_favourites.png';
 }

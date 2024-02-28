@@ -128,7 +128,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
                 borderRadius: BorderRadius.circular(10),
                 child: AppConstants.customNetworkImage(
                   imagePath: "${widget.Data["image"]}",
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   imageError: "assets/images/doctor.png",
                 ),
               ),
@@ -584,10 +584,15 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
   @override
   void initState() {
     super.initState();
-    if (widget.sessionCountForOffer != null)
-      context
-          .read<ReservationCubit>()
-          .OnChangeSessionCount(widget.sessionCountForOffer);
+    // context.read<ReservationCubit>().initReservationData();
+    // context.read<ReservationCubit>().getCurrentPosition();
+    // if (widget.sessionCountForOffer != null) {
+    //   context
+    //       .read<ReservationCubit>()
+    //       .OnChangeSessionCount(widget.sessionCountForOffer);
+    // } else {
+    //   context.read<ReservationCubit>().OnChangeSessionCount(1);
+    // }
   }
 
   @override
