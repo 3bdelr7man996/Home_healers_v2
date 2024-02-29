@@ -132,6 +132,6 @@ class SocialIcon extends StatelessWidget {
         onPressed: () {
           AppConstants.launchURL(socialUrl);
         },
-        icon: AppConstants.customAssetSvg(imagePath: imagePath));
+        icon: AppConstants.customAssetSvg(imagePath: imagePath,width: 40.0));
   }
 }

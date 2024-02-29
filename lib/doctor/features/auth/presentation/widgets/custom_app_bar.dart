@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/utils/app_colors.dart';
 
 PreferredSizeWidget customAppBar(BuildContext context,
-    {String title = '', bool backButton = true, bool fromSetting = false}) {
+    {String title = '', bool backButton = true, bool fromSetting = false,double? elevation=8,Color? backgroundColor=AppColors.backGroundColor,}) {
   return AppBar(
     centerTitle: true,
     leading: backButton
@@ -32,9 +32,9 @@ PreferredSizeWidget customAppBar(BuildContext context,
             ),
           )
         : const SizedBox(),
-    backgroundColor: AppColors.backGroundColor,
-    shadowColor: Colors.grey.withOpacity(0.5),
-    elevation: 8,
+    backgroundColor: backgroundColor,
+    shadowColor: AppColors.borderColor,
+    elevation: elevation,
     title: Text(
       title.tr(),
       style: const TextStyle(

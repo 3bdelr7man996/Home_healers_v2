@@ -120,13 +120,14 @@ class PatientDetailsSection extends StatelessWidget {
               //width: 115,
               height: 90,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(10),
                 child: AppConstants.customNetworkImage(
+                  width: 80,
+                  height: 80,
                     imageError: AppImages.patientImg,
-                    fit: BoxFit.contain,
                     imagePath: "${state.reservation?.user?.image ?? ""}"),
               ),
             ),

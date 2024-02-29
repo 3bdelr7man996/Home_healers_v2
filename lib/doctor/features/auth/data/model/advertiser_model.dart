@@ -163,8 +163,8 @@ class Advertiser {
     data['country_id'] = countryId;
     data['city_id'] = cityId;
     data['area_id'] = areaId;
-    data['startfrom'] = startfrom.toString();
-    data['endat'] = endat.toString();
+    data['startfrom'] =startfrom!=null? startfrom.toString():null;
+    data['endat'] =endat!=null? endat.toString():null;
     data['session_price'] = sessionPrice;
     data['session_dur'] = sessionDur;
     data['lat'] = lat;

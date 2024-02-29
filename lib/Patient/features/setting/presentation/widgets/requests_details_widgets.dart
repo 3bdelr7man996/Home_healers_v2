@@ -58,28 +58,28 @@ class FirstSection extends StatelessWidget {
           ),
           10.pw,
           Expanded(
-            child: FittedBox(
-              child: Text(
-                num == 0
-                    ? "قيد المراجعة \nفي انتظار القبول"
-                    : num == 1
-                        ? "مقبولة \nفي انتظار الدفع"
-                        : num == 2
-                            ? "مؤكدة \nتم الدفع"
-                            : num == 3
-                                ? "مكتملة \nتم إنهاء الزيارة"
-                                : num == 4
-                                    ? "ملغية \nتم الإلغاء"
-                                    : "الجلسة \n قيد الانتظار",
-                style: TextStyle(
-                    color: num == 0
-                        ? AppColors.yellowColor
-                        : num == 4
-                            ? AppColors.redColor
-                            : AppColors.greenColor,
-                    fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
+            child: Text(
+              num == 0
+                  ? "قيد المراجعة \nفي انتظار القبول"
+                  : num == 1
+                      ? "مقبولة \nفي انتظار الدفع"
+                      : num == 2
+                          ? "مؤكدة \nتم الدفع"
+                          : num == 3
+                              ? "مكتملة \nتم إنهاء الزيارة"
+                              : num == 4
+                                  ? "ملغية \nتم الإلغاء"
+                                  : "الجلسة \n قيد الانتظار",
+              style: TextStyle(
+                  color: num == 0
+                      ? AppColors.yellowColor
+                      : num == 4
+                          ? AppColors.redColor
+                          : AppColors.greenColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10.0,
+                  ),
+              textAlign: TextAlign.center,
             ),
           )
         ],
@@ -133,8 +133,8 @@ class _TowSectionState extends State<TowSection> {
                   imagePath:
                       "${widget.fromNotification ? widget.notificationOrder[0]['advertiser']['image'] : widget.listOfOrders?.advertiser.image}",
                   imageError: AppImages.doctorPlaceholder,
-                  width: context.width * 0.25,
-                  height: context.width * 0.25 - 10,
+                  width: context.width * 0.2,
+                  height: context.width * 0.2 ,
                 ),
               ),
               10.pw,

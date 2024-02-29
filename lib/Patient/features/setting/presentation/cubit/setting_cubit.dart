@@ -109,7 +109,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       MyOrdersModel response = await myOrdersRepo.GetMyOrders();
       emit(state.copyWith(allOrders: response.data));
 
-      print(response.data![0].parentId.runtimeType);
+      //print(response.data![0].parentId.runtimeType);
       List<OrderData>? arrayForReviewing = [];
       List<OrderData>? arrayForConfirmed = [];
       List<OrderData>? arrayForWaitConfirmed = [];

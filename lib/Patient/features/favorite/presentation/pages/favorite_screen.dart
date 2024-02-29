@@ -70,7 +70,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           Text(
                             "لا يوجد مفضلة ",
                             style: TextStyle(
-                              fontWeight: FontWeight.w700,
+                              color: Color.fromARGB(255, 179, 181, 181),
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],

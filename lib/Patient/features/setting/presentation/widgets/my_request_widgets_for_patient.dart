@@ -53,9 +53,11 @@ class ListOfOrder extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator()),
               )
             : listOfOrders.length == 0
-                ? Center(
+                ? Expanded(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        
                         SvgPicture.asset(
                           "assets/images/noOrders.svg",
                           width: 200,
@@ -183,28 +185,27 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                       ),
                       10.pw,
                       Expanded(
-                        child: FittedBox(
-                          child: Text(
-                            widget.num == 0
-                                ? "قيد المراجعة \nفي انتظار القبول"
-                                : widget.num == 1
-                                    ? "مقبولة \nفي انتظار الدفع"
-                                    : widget.num == 2
-                                        ? "مؤكدة \nتم الدفع"
-                                        : widget.num == 3
-                                            ? "مكتملة \nتم إنهاء الزيارة"
-                                            : widget.num == 4
-                                                ? "ملغية \nتم الإلغاء"
-                                                : "الجلسة \n قيد الانتظار",
-                            style: TextStyle(
-                                color: widget.num == 0
-                                    ? AppColors.yellowColor
-                                    : widget.num == 4
-                                        ? AppColors.redColor
-                                        : AppColors.greenColor,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
+                        child: Text(
+                          widget.num == 0
+                              ? "قيد المراجعة \nفي انتظار القبول"
+                              : widget.num == 1
+                                  ? "مقبولة \nفي انتظار الدفع"
+                                  : widget.num == 2
+                                      ? "مؤكدة \nتم الدفع"
+                                      : widget.num == 3
+                                          ? "مكتملة \nتم إنهاء الزيارة"
+                                          : widget.num == 4
+                                              ? "ملغية \nتم الإلغاء"
+                                              : "الجلسة \n قيد الانتظار",
+                          style: TextStyle(
+                              color: widget.num == 0
+                                  ? AppColors.yellowColor
+                                  : widget.num == 4
+                                      ? AppColors.redColor
+                                      : AppColors.greenColor,
+                                fontSize: 10.0,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
                         ),
                       )
                     ],
@@ -225,8 +226,8 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       child: AppConstants.customNetworkImage(
-                        width: 75,
-                        height: 70,
+                        width: context.width*0.2,
+                        height: context.width*0.2,
                         imageError: AppImages.doctorPlaceholder,
                         imagePath: "${widget.listOfOrders.advertiser.image}",
                       ),

@@ -210,4 +210,9 @@ class ChatsCubit extends Cubit<ChatsState> {
         });
     await di.sl<PusherConfiguration>().pusher.connect();
   }
+
+ void unSubscribeChannel(){
+   di.sl<PusherConfiguration>().pusher.unsubscribe(channelName: 'chat.$myId');
+    di.sl<PusherConfiguration>().pusher.disconnect();
+ }
 }

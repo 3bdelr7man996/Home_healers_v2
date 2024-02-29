@@ -1,5 +1,4 @@
 import 'package:dr/config/notifications_config/firebase_messages.dart';
-import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/deep_link_util.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -34,13 +33,14 @@ class _AllrequestsState extends State<Allrequests> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
          AppBarForHome(fromSetting: widget.fromSetting,),
-        30.ph,
+        //30.ph,
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if(!widget.fromSetting)
                 Text(
                   "all_requests".tr(),
                   style: const TextStyle(

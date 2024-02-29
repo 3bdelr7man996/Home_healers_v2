@@ -128,7 +128,7 @@ class AppConstants {
 
   static customNetworkImage({
     required String imagePath,
-    String imgBaseUrl = "https://dev.home-healers.com/upload/",
+    String imgBaseUrl ="http://admin.home-healers.com/upload/",
     String imageError = 'assets/images/logo.png',
     double? height,
     double? width,

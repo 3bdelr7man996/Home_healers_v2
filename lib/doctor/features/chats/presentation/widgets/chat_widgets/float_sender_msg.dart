@@ -4,11 +4,9 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 class SenderMessageSection extends StatelessWidget {
-  const SenderMessageSection({super.key, this.mychannel});
-  final PusherChannel? mychannel;
+  const SenderMessageSection({super.key,});
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -212,7 +212,8 @@ class ConversationsSection extends StatelessWidget {
                   Text(
                     "لايوجد رسائل لديك",
                     style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      color: Color.fromARGB(255, 179, 181, 181),
+                    fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],

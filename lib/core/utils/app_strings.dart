@@ -6,7 +6,7 @@ class AppStrings {
   static String divSecondUrl =
       "https://home-healers.com"; // "https://testing.home-healers.com";
 
-  //api url
+  //api url 
   static String advertiseSignUp = "/api/registerAdv";
   static String userSignIn = "/api/user/login";
   static String advDepartments = "/api/categories";

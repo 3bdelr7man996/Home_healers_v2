@@ -148,6 +148,7 @@ class ReservationsCubit extends Cubit<ReservationsState> {
         updateReservationState: RequestState.success,
         reservation: response,
       ));
+      onSelectedTab(reservationStep);
     } catch (e) {
       emit(state.copyWith(updateReservationState: RequestState.failed));
 

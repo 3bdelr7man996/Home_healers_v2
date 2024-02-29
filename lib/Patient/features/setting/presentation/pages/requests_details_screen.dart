@@ -249,7 +249,7 @@ class _RequestsDetailsScreenForPatientState
                                 )
                               : const SizedBox(),
                   if (widget.num == 1)
-                    widget.oneOrder!.parentId != 0
+                    widget.oneOrder?.parentId != 0
                         ? SizedBox()
                         : ElevatedButton(
                             onPressed: () {

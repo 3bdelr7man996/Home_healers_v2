@@ -7,6 +7,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/pages/sign_up_screen.dart';
+import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/forget_password_screen.dart';
 import 'package:dr/shared_widgets/submit_button.dart';
@@ -31,6 +32,7 @@ class _SignInScreen extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:customAppBar(context,backButton: true,backgroundColor: Colors.white,elevation: 0,),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(

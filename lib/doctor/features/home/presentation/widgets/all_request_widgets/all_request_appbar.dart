@@ -1,7 +1,9 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +13,12 @@ class AppBarForHome extends StatelessWidget {
   final bool fromSetting;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+    fromSetting?
+    customAppBar(context, title: "all_requests".tr(), backButton: true):
+     Container(
       width: context.width,
-      height:fromSetting? context.height * 0.32:context.height * 0.25,
+      height:context.height * 0.23,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
@@ -31,11 +36,8 @@ class AppBarForHome extends StatelessWidget {
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            if(fromSetting)
-            IconButton(onPressed: (){
-             Navigator.pop(context); 
-            }, icon: Icon(Icons.arrow_forward_ios,color: Colors.white,),),
+          children: [            
+            15.ph,
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               child: Row(
@@ -78,3 +80,5 @@ class AppBarForHome extends StatelessWidget {
     );
   }
 }
+
+      
