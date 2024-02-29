@@ -22,6 +22,11 @@ class SignUpForPatientScreen extends StatefulWidget {
 }
 
 class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
+  @override
+  void initState() {
+    context.read<AuthCubitForPatient>().getCurrentPosition();
+    super.initState();
+  }
   Widget build(BuildContext context) {
     // bool Request = context
     //     .select((AuthCubitForPatient cubit) => cubit.state.requestStatus);
