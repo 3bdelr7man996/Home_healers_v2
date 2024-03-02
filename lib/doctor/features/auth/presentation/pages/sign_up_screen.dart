@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     context.read<AuthCubit>().initRegisterData();
-    context.read<AuthCubit>().getCurrentPosition();
+
     super.initState();
   }
 
