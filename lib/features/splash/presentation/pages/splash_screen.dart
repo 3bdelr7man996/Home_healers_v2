@@ -1,4 +1,3 @@
-import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -11,6 +10,7 @@ import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/first_screen.dart';
 import 'package:dr/di_container.dart' as di;
 
@@ -33,11 +33,6 @@ class _SplashScreenState extends State<SplashScreen> {
       context.read<AuthCubit>().getAllDepartements(),
       context.read<AuthCubit>().getAllStatus(),
       context.read<AuthCubit>().getAllCities(),
-      CacheHelper.dataSaved(key: AppStrings.isAdvertise)
-          ? CacheHelper.getData(key: AppStrings.isAdvertise)
-              ? context.read<AuthCubit>().getCurrentPosition()
-              : context.read<AuthCubitForPatient>().getCurrentPosition()
-          : context.read<AuthCubitForPatient>().getCurrentPosition(),
     ]);
     await di.sl<FirebaseMessagingService>().requestNotificPermission();
   }
@@ -53,8 +48,12 @@ class _SplashScreenState extends State<SplashScreen> {
           AppConstants.pushRemoveNavigator(context,
               screen: HomeScreenForPatient(selectedIndex: 2));
         }
-      } else {
-        AppConstants.pushRemoveNavigator(context, screen: FirstScreen());
+      } else if(CacheHelper.dataSaved(key: AppStrings.firstTime)){
+         AppConstants.customNavigation(
+                        context, SelectRollForSignIn(), 0.5, 0.5,);
+        
+      }else {
+       AppConstants.pushRemoveNavigator(context, screen: FirstScreen());
       }
     });
     super.initState();

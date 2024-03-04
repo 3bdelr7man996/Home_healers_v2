@@ -80,6 +80,7 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       num: 3,
                       title: "email",
                       icon: AppImages.emailIcon,
+                      keyBoardType: TextInputType.emailAddress,
                     ),
                     30.ph,
                     // TextFormFieldForSignUpForPatient(
@@ -150,6 +151,7 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       num: 7,
                       title: "identification_number_residence",
                       icon: AppImages.locationIcon,
+                      keyBoardType: TextInputType.number,
                     ),
                     30.ph,
 

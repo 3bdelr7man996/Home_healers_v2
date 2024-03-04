@@ -20,9 +20,10 @@ class TextFormFieldForSignUpForPatient extends StatelessWidget {
   final int num;
   final String title;
   final String icon;
+  final TextInputType? keyBoardType;
 
   TextFormFieldForSignUpForPatient(
-      {super.key, required this.num, required this.title, required this.icon});
+      {super.key, required this.num, required this.title, required this.icon,this.keyBoardType=TextInputType.text,});
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +135,7 @@ class TextFormFieldForSignUpForPatient extends StatelessWidget {
             else if (num == 5)
               context.read<AuthCubitForPatient>().onConfPassChange(value);
           },
+          keyboardType:keyBoardType ,
         ),
       ],
     );

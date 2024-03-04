@@ -56,6 +56,7 @@ class AppStrings {
   static String userInfo = "USER_INFO";
   static String isAdvertise = "IS_ADVERTISE";
   static String isActive = "USER_ACTIVE";
+  static String firstTime="FIRST_TIME";
 
   //APP CONFIGIRATION
   static String PUSHER_APP_ID = '1714511';
