@@ -1,6 +1,5 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
-import 'package:dr/Patient/features/setting/presentation/pages/requests_details_screen.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
@@ -11,8 +10,6 @@ import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/res
 import 'package:dr/doctor/features/home/presentation/pages/requests_details_screen.dart';
 import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/notification/presentation/widgets/notification_widgets.dart';
-import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
-import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
