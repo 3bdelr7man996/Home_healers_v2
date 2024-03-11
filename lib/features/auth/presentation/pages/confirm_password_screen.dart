@@ -2,7 +2,7 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
-import 'package:dr/features/auth/presentation/cubit/reset_pass_cubit/reset_password_cubit.dart';
+import 'package:dr/features/auth/presentation/cubit/forget_cubit/forget_password_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
@@ -32,50 +32,50 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
               40.ph,
               Image.asset("assets/images/confirm_password.png"),
               50.ph,
-              BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+              BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                 builder: (context, state) {
                   return TiteldTextFormField(
                     onSuffixTab: () =>
-                        context.read<ResetPasswordCubit>().onShowPassChange(),
+                        context.read<ForgetPasswordCubit>().onShowPassChange(),
                     onChanged: (p0) {
-                      context.read<ResetPasswordCubit>().onpasswordChange(p0);
+                      context.read<ForgetPasswordCubit>().onpasswordChange(p0);
                     },
                     title: "password".tr(),
                     prefixIconPath: AppImages.passwordIcon,
-                    suffixIconPath: state.showNewPass
+                    suffixIconPath: state.showPass
                         ? AppImages.hiddenPassIcon
                         : AppImages.showPasswordIcon,
-                    obscureText: state.showNewPass ? false : true,
+                    obscureText: state.showPass ? false : true,
                     validate: true,
                     validateMsg: "required".tr(),
                   );
                 },
               ),
               20.ph,
-              BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+              BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                 builder: (context, state) {
                   return TiteldTextFormField(
                     onSuffixTab: () => context
-                        .read<ResetPasswordCubit>()
-                        .onShowConfirmPassChange(),
+                        .read<ForgetPasswordCubit>()
+                        .onShowPassChange(),
                     onChanged: (p0) {
                       context
-                          .read<ResetPasswordCubit>()
+                          .read<ForgetPasswordCubit>()
                           .onconfirmPasswordChange(p0);
                     },
                     title: "confirm_password".tr(),
                     prefixIconPath: AppImages.passwordIcon,
-                    suffixIconPath: state.showConfirmPass
+                    suffixIconPath: state.showPass
                         ? AppImages.hiddenPassIcon
                         : AppImages.showPasswordIcon,
-                    obscureText: state.showConfirmPass ? false : true,
+                    obscureText: state.showPass ? false : true,
                     validate: true,
                     validateMsg: "required".tr(),
                   );
                 },
               ),
               50.ph,
-              BlocBuilder<ResetPasswordCubit, ResetPasswordState>(
+              BlocBuilder<ForgetPasswordCubit, ForgetPasswordState>(
                 builder: (context, state) {
                   return Container(
                     width: context.width * 0.9,
@@ -85,7 +85,7 @@ class _ConfirmPasswordScreenState extends State<ConfirmPasswordScreen> {
                         state.loading
                             ? null
                             : context
-                                .read<ResetPasswordCubit>()
+                                .read<ForgetPasswordCubit>()
                                 .resetPass(context);
                       },
                       style: ElevatedButton.styleFrom(

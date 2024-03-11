@@ -55,13 +55,10 @@ import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/features/auth/data/datasources/forget_password_ds.dart';
 import 'package:dr/features/auth/data/datasources/login_ds.dart';
-import 'package:dr/features/auth/data/datasources/reset_password_ds.dart';
 import 'package:dr/features/auth/data/repositories/forget_password_repo.dart';
 import 'package:dr/features/auth/data/repositories/login_repo.dart';
-import 'package:dr/features/auth/data/repositories/reset_password_repo.dart';
 import 'package:dr/features/auth/presentation/cubit/forget_cubit/forget_password_cubit.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
-import 'package:dr/features/auth/presentation/cubit/reset_pass_cubit/reset_password_cubit.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
@@ -141,7 +138,6 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => ReservationWithOfferDS(apiHelper: sl()));
   sl.registerLazySingleton(() => GetAllAdsDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ForgetPasswordDs(apiHelper: sl()));
-  sl.registerLazySingleton(() => ResetPasswordDS(apiHelper: sl()));
   sl.registerLazySingleton(() => MyPointsDS(apiHelper: sl()));
   sl.registerLazySingleton(() => evaluationsDS(apiHelper: sl()));
   sl.registerLazySingleton(() => ReportsDS(apiHelper: sl()));
@@ -168,7 +164,6 @@ Future<void> serviceLocatorInit() async {
   sl.registerLazySingleton(() => GetAllAdsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => PaymentRepository(dataSource: sl()));
   sl.registerLazySingleton(() => ForgetPasswordRepo(dataSource: sl()));
-  sl.registerLazySingleton(() => ResetPasswordRepo(dataSource: sl()));
   sl.registerLazySingleton(() => GetPointsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => evaluationsRepo(dataSource: sl()));
   sl.registerLazySingleton(() => ReportsRepo(dataSource: sl()));
@@ -198,7 +193,6 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => GetAllAdsCubit(getAllAdsRepo: sl()));
   sl.registerFactory(() => PaymentCubit(repository: sl()));
   sl.registerFactory(() => ForgetPasswordCubit(repository: sl()));
-  sl.registerFactory(() => ResetPasswordCubit(repository: sl()));
   sl.registerFactory(() => GetPointsCubit(getPointrepo: sl()));
   sl.registerFactory(() => evaluationCubit(eevaluationsRepo: sl()));
   sl.registerFactory(() => ReportsCubit(repositry: sl()));

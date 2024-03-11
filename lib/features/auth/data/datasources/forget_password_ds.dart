@@ -32,4 +32,13 @@ class ForgetPasswordDs {
     );
     return response;
   }
+
+  //RESET PASSWORD 
+   Future<Map<String, dynamic>?> resetPassword(
+      {required Map<String, String> body}) async {
+    print(body);
+    Map<String, dynamic>? response =
+        await apiHelper.post("/api/resetPassword", body: body);
+    return response;
+  }
 }

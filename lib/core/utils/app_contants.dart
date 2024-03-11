@@ -213,7 +213,7 @@ class AppConstants {
   }
 
   static customNavigation(
-      BuildContext context, Widget screen, double x, double y) async {
+      BuildContext context, Widget screen, double x, double y,) async {
     await Navigator.push(
       context,
       PageRouteBuilder(

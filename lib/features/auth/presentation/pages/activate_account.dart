@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -13,13 +15,14 @@ class ActivateAccountScreen extends StatelessWidget {
   const ActivateAccountScreen({
     super.key,
     required this.email,
-    required this.cacheData,
-    required this.isAdvertise,
+     required this.cacheData,
+     this.isAdvertise=false,
+     this.fromForgetPass=false,
   });
   final String email;
   final bool isAdvertise;
   final Function cacheData;
-
+  final bool fromForgetPass;
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -54,7 +57,7 @@ class ActivateAccountScreen extends StatelessWidget {
                   ),
                   20.ph,
                   const Text(
-                    "من فضلك ادخل الكود المرسل الي البريد\nالالكتروني Example@gmail.com",
+                    "من فضلك ادخل الكود المرسل الي البريد\nالالكتروني ",
                     style: TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
@@ -100,13 +103,16 @@ class ActivateAccountScreen extends StatelessWidget {
                           height: context.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
+                              log("email $email");
                               context.read<ForgetPasswordCubit>().activateAccount(
                                     context,
                                     email: email,
                                     code: state.code,
                                     cacheData: cacheData,
                                     isAdvertise: isAdvertise,
-                                  );
+                                    fromForgetPass: fromForgetPass,
+                                  )
+                                  ;
                               //todo
                             },
                             style: ElevatedButton.styleFrom(

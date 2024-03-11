@@ -1,16 +1,17 @@
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/features/auth/presentation/pages/activation_code_screen.dart';
+import 'package:dr/features/auth/presentation/pages/activate_account.dart';
+import 'package:dr/features/auth/presentation/pages/confirm_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PopUpForForgetPassword extends StatelessWidget {
-  const PopUpForForgetPassword({super.key});
-
+  const PopUpForForgetPassword({super.key,required this.email,});
+   final String email;
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
+      canPop: false,
       child: AlertDialog(
         backgroundColor: Colors.white,
         content: Column(
@@ -38,8 +39,12 @@ class PopUpForForgetPassword extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             AppConstants.customButton(context, onPressed: () {
+              Navigator.pop(context);
               AppConstants.customNavigation(
-                  context, ActivationCodeScreen(), -1, 0);
+                  context, ActivateAccountScreen(email: email,cacheData: ()=>
+                      AppConstants.customNavigation(
+                  context,ConfirmPasswordScreen(),-1,0,),fromForgetPass: true
+                  ,), -1, 0);
             }, title: "متابعة"),
           ],
         ),

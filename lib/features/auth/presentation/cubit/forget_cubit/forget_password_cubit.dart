@@ -1,10 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_custom_exception.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/features/auth/data/models/activation_model.dart';
 import 'package:dr/features/auth/data/models/forget_password_model.dart';
 import 'package:dr/features/auth/data/repositories/forget_password_repo.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/forget_password_dialog.dart';
 import 'package:dr/shared_widgets/pop_up.dart';
 import 'package:equatable/equatable.dart';
@@ -32,9 +34,9 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => PopUpForForgetPassword(),
+        builder: (context) => PopUpForForgetPassword(email: state.email??''),
       );
-      ShowToastHelper.showToast(msg: user!.message, isError: false);
+      //ShowToastHelper.showToast(msg: user!.message, isError: false);
     } on UnauthorisedException catch (e) {
       if (e.toString().contains("Email not found")) {
         ShowToastHelper.showToast(msg: "هذا الحساب غير موجود", isError: true);
@@ -68,6 +70,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     required String code,
     required bool isAdvertise,
     Function? cacheData,
+    bool fromForgetPass=false,
   }) async {
     try {
       emit(state.copyWith(activeState: RequestState.loading));
@@ -78,7 +81,8 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       if (response?.success == true) {
         if (cacheData != null) {
           cacheData();
-          showDialog(
+          if(!fromForgetPass)
+          {showDialog(
             barrierDismissible: false,
             context: context,
             builder: (context) {
@@ -87,11 +91,12 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
               );
             },
           );
+       }
         }
-        ShowToastHelper.showToast(
-          msg: response?.message ?? "تم التأكيد",
-          isError: false,
-        );
+        // ShowToastHelper.showToast(
+        //   msg: response?.message ?? "تم التأكيد",
+        //   isError: false,
+        // );
         emit(state.copyWith(activeState: RequestState.success));
       } else {
         ShowToastHelper.showToast(
@@ -100,7 +105,15 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
         );
         emit(state.copyWith(activeState: RequestState.failed));
       }
-    } catch (e) {
+    } on BadRequestException{
+       ShowToastHelper.showToast(
+        msg: "الكود الذي ادخلته غير صحيح",
+        isError: true,
+      );
+      emit(state.copyWith(activeState: RequestState.failed));
+    
+    }
+    catch (e) {
       ShowToastHelper.showToast(
         msg: e.toString(),
         isError: true,
@@ -127,4 +140,46 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
+  //?============================[RESET PASSWORD]======================================
+  Future<void> resetPass(BuildContext context) async {
+    try {
+      resetFieldsValid();
+      emit(state.copyWith(loading: true));
+
+      ForgetPasswordModel? user = await repository.resetPassword(body: {
+        "password": "${state.newPassword}",
+        "activation_code":"${state.code}",
+        "email": "${state.email}"
+      });
+      print(user);
+      emit(state.copyWith(loading: false));
+      AppConstants.pushRemoveNavigator(context, screen: SelectRollForSignIn());
+    } catch (e) {
+      emit(state.copyWith(loading: false));
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
+  
+  onShowPassChange() => emit(state.copyWith(showPass: !state.showPass));
+
+  onpasswordChange(String password) =>
+      emit(state.copyWith(newPassword: password));
+
+  onconfirmPasswordChange(String password) =>
+      emit(state.copyWith(confPassword: password));
+
+  void resetFieldsValid() {
+    
+    if (state.newPassword == null) {
+      throw ("ادخل كلمة السر");
+    }
+    if (state.confPassword == null) {
+      throw ("ادخل تأكيد كلمة السر");
+    }
+    if (state.newPassword != state.confPassword) {
+      throw ("الرجاء المطابقة بين كلمة السر وتأكيد كلمة السر");
+    }
+  }
+
+ 
 }

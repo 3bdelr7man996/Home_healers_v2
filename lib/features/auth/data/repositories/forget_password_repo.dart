@@ -28,4 +28,12 @@ class ForgetPasswordRepo {
 
     return response?['message'];
   }
+
+  //?=======================[ RESET PASSWORD ]===============================
+  Future<ForgetPasswordModel>? resetPassword(
+      {required Map<String, String> body}) async {
+    ForgetPasswordModel? apiResponse = ForgetPasswordModel.fromJson(
+        await dataSource.resetPassword(body: body));
+    return apiResponse;
+  }
 }

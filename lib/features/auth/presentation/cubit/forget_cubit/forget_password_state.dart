@@ -9,6 +9,9 @@ class ForgetPasswordState extends Equatable {
     this.activeState = RequestState.initial,
     this.resendCodeState = RequestState.initial,
     this.code = '',
+    this.newPassword,
+    this.confPassword,
+    this.showPass=false,
   });
   final String? email;
   var loading;
@@ -16,6 +19,9 @@ class ForgetPasswordState extends Equatable {
   RequestState activeState;
   RequestState resendCodeState;
   String code;
+  String? newPassword;
+  String? confPassword;
+  bool showPass;
 
   @override
   List<Object?> get props => [
@@ -25,6 +31,9 @@ class ForgetPasswordState extends Equatable {
         activeState,
         resendCodeState,
         code,
+        newPassword,
+        confPassword,
+        showPass,
       ];
 
   ForgetPasswordState copyWith({
@@ -34,6 +43,9 @@ class ForgetPasswordState extends Equatable {
     String? code,
     RequestState? activeState,
     RequestState? resendCodeState,
+    String? newPassword,
+    String? confPassword,
+     bool?   showPass,
   }) =>
       ForgetPasswordState(
         email: email ?? this.email,
@@ -42,5 +54,8 @@ class ForgetPasswordState extends Equatable {
         code: code ?? this.code,
         activeState: activeState ?? this.activeState,
         resendCodeState: resendCodeState ?? this.resendCodeState,
+        newPassword:newPassword??this.newPassword,
+        confPassword:confPassword??this.confPassword,
+        showPass:showPass??this.showPass,
       );
 }
