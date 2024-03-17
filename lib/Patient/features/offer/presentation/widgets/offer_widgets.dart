@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
 import 'package:dr/Patient/features/offer/presentation/pages/packages_details.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';

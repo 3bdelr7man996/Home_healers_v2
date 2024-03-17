@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/doctor/features/home/data/models/tab_info.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,11 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'app_colors.dart';
 import 'app_font.dart';
 import 'app_strings.dart';
+
+Future<String> getAttributeFromSharedPreferences() async {
+  String attribute = CacheHelper.getData(key: AppStrings.userInfo);
+  return attribute;
+}
 
 enum ResevationStep {
   reviewing,
@@ -128,7 +134,7 @@ class AppConstants {
 
   static customNetworkImage({
     required String imagePath,
-    String imgBaseUrl ="http://admin.home-healers.com/upload/",
+    String imgBaseUrl = "http://admin.home-healers.com/upload/",
     String imageError = 'assets/images/logo.png',
     double? height,
     double? width,
@@ -213,7 +219,11 @@ class AppConstants {
   }
 
   static customNavigation(
-      BuildContext context, Widget screen, double x, double y,) async {
+    BuildContext context,
+    Widget screen,
+    double x,
+    double y,
+  ) async {
     await Navigator.push(
       context,
       PageRouteBuilder(

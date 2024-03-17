@@ -176,47 +176,47 @@ class TotalDetails extends StatelessWidget {
                   ],
                 ),
                 5.ph,
-                // type!=null
-                //     ? SizedBox()
-                //     : Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         children: [
-                //           Text("سعر الجلسة :"),
-                //           Text(
-                //             order.advertiser.sessionPrice != null
-                //                 ? "${order.advertiser.sessionPrice} ريال"
-                //                 : "",
-                //             style: TextStyle(
-                //                 fontWeight: FontWeight.w500,
-                //                 color: AppColors.secondryColor),
-                //           ),
-                //         ],
-                //       ),
-                // 5.ph,
-                // type!=null
-                //     ? SizedBox()
-                //     : Row(
-                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         children: [
-                //           Text(
-                //             "كود الخصم :",
-                //             style: TextStyle(color: AppColors.primaryColor),
-                //           ),
-                //           order.coupon == null
-                //               ? Text(
-                //                   "لا يوجد",
-                //                   style: TextStyle(
-                //                       fontWeight: FontWeight.w500,
-                //                       color: AppColors.primaryColor),
-                //                 )
-                //               : Text(
-                //                   "${order.coupon}",
-                //                   style:
-                //                       const TextStyle(fontWeight: FontWeight.w600),
-                //                 )
-                //         ],
-                //       ),
-                // 5.ph,
+                type != null
+                    ? SizedBox()
+                    : order.advertiser.sessionPrice == null
+                        ? SizedBox()
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("سعر الجلسة :"),
+                              Text(
+                                "${order.advertiser.sessionPrice} ريال",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.secondryColor),
+                              ),
+                            ],
+                          ),
+                5.ph,
+                type != null
+                    ? SizedBox()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "كود الخصم :",
+                            style: TextStyle(color: AppColors.primaryColor),
+                          ),
+                          order.coupon == null
+                              ? Text(
+                                  "لا يوجد",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.primaryColor),
+                                )
+                              : Text(
+                                  "${order.coupon}",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600),
+                                )
+                        ],
+                      ),
+                5.ph,
                 // const Row(
                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 //   children: [

@@ -1,8 +1,10 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/search_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -124,7 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         final firstName = result['firstname_ar'];
                         return DoctorCard(
                             fromFilter: true,
-                            Data: result,
+                            doctorInfo: result,
                             name: result["name_ar"],
                             status: result["status"],
                             price: result["session_price"],

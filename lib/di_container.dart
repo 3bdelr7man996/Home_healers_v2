@@ -18,7 +18,10 @@ import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart
 import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/ads_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/filter_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/offer/data/datasources/get_offers_ds.dart';
 import 'package:dr/Patient/features/offer/data/datasources/get_packages_ds.dart';
 import 'package:dr/Patient/features/offer/data/repositories/get_offers_Repo.dart';

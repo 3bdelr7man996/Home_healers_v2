@@ -1,6 +1,7 @@
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/home_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/filter_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/home_widgets/home_widgets.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,7 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return DoctorCard(
                           fromFilter: true,
-                          Data: data[index],
+                          doctorInfo: data[index],
                           name: data[index]["name_ar"],
                           status: data[index]["status"],
                           price: data[index]["session_price"],

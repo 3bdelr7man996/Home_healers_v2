@@ -4,6 +4,7 @@ import '../../core/utils/app_colors.dart';
 
 ThemeData appTheme() {
   return ThemeData(
+    useMaterial3: false,
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: CupertinoPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),

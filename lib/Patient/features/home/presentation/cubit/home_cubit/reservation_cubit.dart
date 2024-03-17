@@ -1,16 +1,9 @@
-import 'dart:developer';
+// ignore_for_file: unused_local_variable
 
-import 'package:bloc/bloc.dart';
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
-import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
-import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
-import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
-import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
-import 'package:dr/Patient/features/home/presentation/pages/filter_result_screen.dart';
-import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state/reservation_state.dart';
+import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/firebase_analytic_helper.dart';
@@ -19,127 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 
-import '../../../setting/presentation/pages/my_requests_screen_for_patient.dart';
-import '../../data/models/get_all_ads_model.dart';
-
-class SectionCubit extends Cubit<SectionState> {
-  final SectionRepo sectionRepo;
-
-  SectionCubit({required this.sectionRepo}) : super(SectionState());
-
-  //?==================== formFields change ====================
-  showConfPassword() => emit(state.copyWith(Loading: !state.Loading));
-  changeSectionNumber(int num) => emit(state.copyWith(sectionNumber: num));
-
-  Future<void> GetSectionDetails(BuildContext context) async {
-    try {
-      emit(state.copyWith(listOfResponse: {}, Loading: true));
-      fieldsValidation();
-      SectionModel response =
-          await sectionRepo.GetSection(sectionNumber: state.sectionNumber);
-      emit(state.copyWith(listOfResponse: response.toJson(), Loading: false));
-    } catch (e) {
-      emit(state.copyWith(Loading: false));
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
-    }
-  }
-
-  ///validate on fields
-  void fieldsValidation() {}
-
-  /// check if user login or not
-  bool hasToken() {
-    final String token = CacheHelper.getData(key: AppStrings.userToken) ?? "";
-    if (token.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-////////////////////////⁡⁢⁣⁢New Class For Filter⁡//////////////////////////////////////////////
-
-class FilterCubit extends Cubit<FilterState> {
-  final FilterRepo filterRepo;
-
-  FilterCubit({required this.filterRepo}) : super(FilterState());
-
-  //?==================== formFields change ====================
-  showConfPassword() => emit(state.copyWith(Loading: !state.Loading));
-
-  changeSectionNumber(int num) => emit(state.copyWith(status_id: num));
-  changeCategoryNumber(int num) => {emit(state.copyWith(category_id: num))};
-  changeGender(String gender) => emit(state.copyWith(gender: gender));
-  changeCity(int city) => emit(state.copyWith(city_id: city));
-  changeArea(int area) => emit(state.copyWith(area_id: area));
-
-  Future<void> GetFilterResult(BuildContext context) async {
-    try {
-      emit(state.copyWith(listOfResponse: {}));
-      fieldsValidation();
-
-      SectionModel response = await filterRepo.GetFilter(
-          areaId: state.area_id,
-          category_id: state.category_id,
-          gender: state.gender,
-          sectionNumber: state.status_id,
-          cityId: state.city_id);
-      emit(state.copyWith(listOfResponse: response.toJson()));
-
-      emit(state.copyWith(area_id: -1));
-      emit(state.copyWith(category_id: -1));
-      emit(state.copyWith(status_id: -1));
-      emit(state.copyWith(city_id: -1));
-      emit(state.copyWith(area_id: -1));
-      emit(state.copyWith(gender: "-1"));
-      FirebaseAnalyticUtil.logSearchEvent(term: "Filter", param: {
-        "area_id": "${state.area_id}",
-        "category_id": "${state.category_id}",
-        "cityId": "${state.city_id}",
-      });
-      AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
-    } catch (e) {
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
-    }
-  }
-
-  ///validate on fields
-  void fieldsValidation() {}
-
-  /// check if user login or not
-  bool hasToken() {
-    final String token = CacheHelper.getData(key: AppStrings.userToken) ?? "";
-    if (token.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
-
-///////////////////////////////// ⁡⁢⁣⁢New Class For Search⁡ ////////
-
-class SearchCubit extends Cubit<SearchState> {
-  final SearchRepo searchRepo;
-
-  SearchCubit({required this.searchRepo}) : super(SearchState());
-
-  //?==================== formFields change ====================
-
-  Future<void> GetSearchResult(BuildContext context) async {
-    try {
-      emit(state.copyWith(listOfResponse: {}));
-
-      SectionModel response = await searchRepo.GetSearch();
-      emit(state.copyWith(listOfResponse: response.toJson()));
-    } catch (e) {
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
-    }
-  }
-}
-
-/////////////// ⁡⁢⁣⁢New Class For reservation⁡ /////////////////////////////////////////
 class ReservationCubit extends Cubit<ReservationState> {
   final ReservationRepo reservationRepo;
   final ReservationWithOfferRepo reservationWithOfferRepo;
@@ -254,12 +126,10 @@ class ReservationCubit extends Cubit<ReservationState> {
           //coupon ===ToDo===
         };
       }
-      print(body);
 
       var response;
       if (withOffer) {
         response = await reservationWithOfferRepo.MakeReservation(body: body);
-        print(response);
       } else {
         response = await reservationRepo.MakeReservation(body: body);
       }
@@ -321,7 +191,6 @@ class ReservationCubit extends Cubit<ReservationState> {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      log("location is ${position.latitude}");
       emit(
         state.copyWith(
           location: () => Location(
@@ -332,25 +201,6 @@ class ReservationCubit extends Cubit<ReservationState> {
       );
 
       // You can use latitude and longitude for your desired purpose.
-    } catch (e) {
-      log("Error: $e");
-    }
-  }
-}
-
-///////////////////////////////////////// ⁡⁢⁣⁢New Class For ADs /////////////////////////////////////////
-class GetAllAdsCubit extends Cubit<GetAllAdsState> {
-  final GetAllAdsRepo getAllAdsRepo;
-
-  GetAllAdsCubit({required this.getAllAdsRepo}) : super(GetAllAdsState());
-
-  Future<void> GetAllAds(BuildContext context) async {
-    try {
-      GetAllAdsModel response = await getAllAdsRepo.GetAllAds();
-
-      emit(state.copyWith(data: response));
-    } catch (e) {
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
-    }
+    } catch (e) {}
   }
 }

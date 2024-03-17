@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -30,7 +30,7 @@ class _OfferScreenState extends State<OfferScreen> {
               sessionCountForOffer: data[index]['session_count'],
               offer: data[index],
               fromOffer: true,
-              Data: data[index]['advertiser'],
+              doctorInfo: data[index]['advertiser'],
               name: data[index]['advertiser']['name_ar'],
               status: data[index]['advertiser']['status'],
               price: data[index]['advertiser']['session_price'],
