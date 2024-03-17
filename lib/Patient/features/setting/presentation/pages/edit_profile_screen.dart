@@ -2,12 +2,12 @@
 
 import 'dart:convert';
 
-import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_font.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';

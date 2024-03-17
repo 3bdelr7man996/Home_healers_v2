@@ -1,5 +1,6 @@
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
@@ -82,7 +83,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         itemCount: data["data"].length,
                         itemBuilder: (context, index) {
                           return DoctorCard(
-                              Data: data["data"][index]['advertiser'],
+                              doctorInfo: data["data"][index]['advertiser'],
                               name: data["data"][index]["advertiser"]
                                   ["name_ar"],
                               status: data["data"][index]["advertiser"]

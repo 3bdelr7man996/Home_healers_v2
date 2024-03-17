@@ -1,24 +1,27 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_state.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets.dart';
-import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:dr/Patient/features/home/data/models/section-model.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets/dropDown_select_section_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets/table_clender_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../widgets/date_of_session_widgets/coupon_field_widget.dart';
+import '../widgets/date_of_session_widgets/done_button_widget.dart';
+import '../widgets/date_of_session_widgets/location_input_widget.dart';
+
 class DateOfSessionScreen extends StatefulWidget {
-  var Data;
-  var status_id;
+  Data? doctorInfo;
+  int? status_id;
   bool fromOffer;
   bool fromPackages;
-  var fromFilter;
+  bool? fromFilter;
   DateOfSessionScreen(
       {super.key,
-      this.Data,
+      this.doctorInfo,
       this.fromFilter,
       this.fromPackages = false,
       this.status_id,
@@ -36,24 +39,21 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
   void initState() {
     super.initState();
 
-    context.read<ReservationCubit>().onChangeadvertiserId(widget.Data["id"]);
+    context
+        .read<ReservationCubit>()
+        .onChangeadvertiserId(widget.doctorInfo!.id);
     if (widget.fromFilter == false)
       context.read<ReservationCubit>().onChangestatus_id(widget.status_id);
     context.read<ReservationCubit>().makeNotesEmpty();
-    for (var item in widget.Data["status_advisor"]) {
-      names.add(item['name_ar']);
+    for (StatusAdvisor item in widget.doctorInfo!.statusAdvisor) {
+      names.add(item.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
-  late int id;
   final TextEditingController control = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    print(widget.fromOffer);
-    print("///////////////////////");
-    print(widget.fromFilter);
-    print("///////////////////////");
     return Scaffold(
       appBar: customAppBar(context,
           title: "choose_your_reservation_date", backButton: true),
@@ -83,73 +83,18 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                     ),
               widget.fromPackages
                   ? SizedBox()
-                  : widget.fromFilter || widget.fromOffer
+                  : widget.fromFilter! || widget.fromOffer
                       ? names.isNotEmpty
-                          ? DropdownButton<String>(
-                              underline: Container(), // Hide the underline
-                              // icon: const SizedBox(), // Hide the arrow icon
-                              value: selectedName,
-                              onChanged: (String? newValue) async {
-                                for (var category
-                                    in widget.Data["status_advisor"]) {
-                                  if (category['name_ar'] == newValue) {
-                                    id = category['id'];
-                                    break;
-                                  }
-                                }
-                                await context
-                                    .read<ReservationCubit>()
-                                    .onChangestatus_id(id);
-                                setState(() {
-                                  selectedName = newValue!;
-                                });
-                              },
-                              items: names.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
+                          ? DropDownForSelectSection(
+                              doctorInfo: widget.doctorInfo,
+                              names: names,
+                              selectedName: selectedName,
                             )
                           : SizedBox()
                       : SizedBox(),
               10.ph,
-              BlocBuilder<ReservationCubit, ReservationState>(
-                builder: (context, state) {
-                  return state.Loading
-                      ? CircularProgressIndicator()
-                      : Container(
-                          width: context.width,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (widget.fromOffer) {
-                                context
-                                    .read<ReservationCubit>()
-                                    .MakeReservation(
-                                      context,
-                                      true,
-                                    );
-                              } else
-                                context
-                                    .read<ReservationCubit>()
-                                    .MakeReservation(
-                                      context,
-                                      false,
-                                    );
-                            },
-                            child: Text('إتمام العملية'),
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              backgroundColor: AppColors.primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                        );
-                },
+              DoneButton(
+                fromOffer: widget.fromOffer,
               )
             ],
           ),

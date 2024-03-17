@@ -2,8 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
 import 'package:dr/Patient/features/setting/data/models/add_report_model.dart';
 import 'package:dr/Patient/features/setting/data/models/evaluations_model.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
@@ -19,6 +17,7 @@ import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dar
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/http_helper.dart';
@@ -50,7 +49,6 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
   Future<void> ShowNotification(BuildContext context, String id) async {
     try {
       var response = await showNotificationRepo.ShowNotification(id: id);
-      print(response['data']);
       int num = 1;
       if (response['data']['userReservations'][0]['status'] == 'reviewing') {
         num = 0;
@@ -67,7 +65,6 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
           'canceled') {
         num = 4;
       }
-      print(num);
 
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => RequestsDetailsScreenForPatient(
@@ -76,7 +73,6 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
             notificationOrder: response['data']['userReservations']),
       ));
     } catch (e) {
-      print(e);
       emit(state.copyWith(loading: false));
 
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -95,7 +91,6 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
         (Route route) => false,
       );
     } catch (e) {
-      print(e);
       emit(state.copyWith(loading: false));
 
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -109,7 +104,6 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       MyOrdersModel response = await myOrdersRepo.GetMyOrders();
       emit(state.copyWith(allOrders: response.data));
 
-      //print(response.data![0].parentId.runtimeType);
       List<OrderData>? arrayForReviewing = [];
       List<OrderData>? arrayForConfirmed = [];
       List<OrderData>? arrayForWaitConfirmed = [];
@@ -138,11 +132,8 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
       emit(state.copyWith(completedOrders: arrayForCompleted));
       emit(state.copyWith(canceledOrders: arrayForCanceled));
       debugPrint("${state.waitConfirmOrders}");
-      print("asd");
-      // print(state.ReviewingOrders);
       emit(state.copyWith(loading: false));
     } catch (e) {
-      print(e);
       emit(state.copyWith(loading: false));
 
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -153,10 +144,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
     try {
       inVoiceModel response = await getInvoiceRepo.Getinvoice(id);
       emit(state.copyWith(inVoice: response));
-
-      print(response);
     } catch (e) {
-      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -176,17 +164,9 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
   onStatusChange(String value) => emit(state.copyWith(status: value));
 
   Future<void> updateSelectedReservation(BuildContext context) async {
-    print(state.id);
-    print(state.start_at);
-    print(state.end_at);
-    print(state.status);
     try {
       emit(state.copyWith(loadingUpdateResevation: true));
-      print(state.loadingUpdateResevation);
-      print(state.id);
-      print(state.start_at);
-      print(state.end_at);
-      print(state.status);
+
       fieldsValidation();
       Map<String, dynamic> body = {
         "id": "${state.id}",
@@ -202,9 +182,7 @@ class UpdateReservationCubit extends Cubit<UpdateReservationState> {
       emit(state.copyWith(loadingUpdateResevation: false));
 
       emit(state.copyWith(showPoUp: true));
-      print(response);
     } catch (e) {
-      print(e.toString());
       emit(state.copyWith(loadingUpdateResevation: false));
 
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -237,7 +215,6 @@ class UpdateInfoCubit extends Cubit<UpdateInfoState> {
   Future<void> UpdateInfoForUser(BuildContext context) async {
     List<File> images = [];
     if (state.image != null) images.add(state.image);
-    print(images);
     try {
       fieldsValidation();
       Map<String, String> body = {};
@@ -267,9 +244,7 @@ class UpdateInfoCubit extends Cubit<UpdateInfoState> {
       emit(state.copyWith(gender: ""));
       await cacheData(response);
       Navigator.pop(context);
-      print(response);
     } catch (e) {
-      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -309,9 +284,6 @@ Future<void> cacheData(UpdateInfoModel response) async {
     jsonData["mobile"] = response.success.mobile;
     jsonData["gender"] = response.success.gender;
 
-    print(jsonData);
-    print("asdfasdf");
-
     // Save the updated jsonData object to the shared preferences
     CacheHelper.saveData(key: AppStrings.userInfo, value: jsonEncode(jsonData));
   });
@@ -327,7 +299,6 @@ class GetPointsCubit extends Cubit<GetPointsState> {
   Future<void> GetMyPoints(BuildContext context) async {
     try {
       MyPointsModel response = await getPointrepo.GetPoints();
-      print(response);
       emit(state.copyWith(myPointsData: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
@@ -347,11 +318,8 @@ class GetPointsCubit extends Cubit<GetPointsState> {
       await GetMyPoints(context);
       emit(state.copyWith(pointState: RequestState.success));
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
-
-      print(response);
     } catch (e) {
       emit(state.copyWith(pointState: RequestState.failed));
-      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -392,9 +360,7 @@ class evaluationCubit extends Cubit<evaluationsState> {
         Navigator.pop(context);
         Navigator.pop(context);
       });
-      print(response);
     } catch (e) {
-      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -425,11 +391,7 @@ class ReportsCubit extends Cubit<ReportsState> {
       ReportsModel response = await repositry.getReports(body: body);
       emit(state.copyWith(reportsForDoctors: response.success.doctorReports));
       emit(state.copyWith(reportsForPatient: response.success.reports));
-      print("\\\\\\\\\\\\\\\\");
-      print(state.reportsForDoctors);
-      print("\\\\\\\\\\\\\\\\");
     } catch (e) {
-      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
@@ -449,8 +411,7 @@ class AddReportCubit extends Cubit<AddReportState> {
   Future<void> sendReport(BuildContext context, var image, var title) async {
     List<File> images = [];
     images.add(image);
-    print(title);
-    print(images);
+
     try {
       Map<String, String> body = {};
 
@@ -461,7 +422,6 @@ class AddReportCubit extends Cubit<AddReportState> {
       await context.read<ReportsCubit>().GetReports();
       ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
     } catch (e) {
-      print(e.toString());
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

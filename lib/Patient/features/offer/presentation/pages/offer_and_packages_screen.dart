@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/offer/presentation/pages/packages_screen.dart';
 
@@ -5,7 +6,6 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../home/presentation/cubit/home_cubit.dart';
 import 'offer_screen.dart';
 
 class OfferAndPackagesScreen extends StatefulWidget {
