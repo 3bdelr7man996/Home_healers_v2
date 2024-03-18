@@ -26,7 +26,8 @@ class FilterCubit extends Cubit<FilterState> {
 
   Future<void> GetFilterResult(BuildContext context) async {
     try {
-      emit(state.copyWith(listOfResponse: {}));
+      emit(state.copyWith(
+          listOfResponse: SectionModel(success: false, data: [], message: "")));
 
       SectionModel response = await filterRepo.GetFilter(
           areaId: state.area_id,
@@ -35,7 +36,7 @@ class FilterCubit extends Cubit<FilterState> {
           sectionNumber: state.status_id,
           cityId: state.city_id);
       emit(state.copyWith(
-          listOfResponse: response.toJson(),
+          listOfResponse: response,
           area_id: -1,
           category_id: -1,
           status_id: -1,

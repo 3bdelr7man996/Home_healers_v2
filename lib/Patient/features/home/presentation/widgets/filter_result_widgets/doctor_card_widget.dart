@@ -1,6 +1,4 @@
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/button_for_doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/header_for_doctor_card_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -22,6 +20,7 @@ class DoctorCard extends StatefulWidget {
   int? status_id;
   Data? doctorInfo;
   bool fromOffer;
+  bool fromFav;
   bool fromPackages;
   var offer;
   var sessionCountForOffer;
@@ -34,6 +33,7 @@ class DoctorCard extends StatefulWidget {
       this.fromFilter = false,
       this.isFav = false,
       this.fromPackages = false,
+      this.fromFav = false,
       this.status_id,
       this.doctorInfo,
       this.fromOffer = false,
@@ -209,6 +209,7 @@ class _DoctorCardState extends State<DoctorCard> {
                     ),
               20.ph,
               ButtonForDoctorCard(
+                  fromFav: widget.fromFav,
                   offer: widget.offer,
                   fromFilter: widget.fromFilter,
                   sessionCountForOffer: widget.sessionCountForOffer,

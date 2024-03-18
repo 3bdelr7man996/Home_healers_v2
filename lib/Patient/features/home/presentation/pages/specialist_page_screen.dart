@@ -15,15 +15,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class specialistpageScreen extends StatefulWidget {
   Data? doctorInfo;
-  var status_id;
+  int? status_id;
   bool fromPackages;
+  bool fromFav;
   bool fromOffer;
   var sessionCountForOffer;
-  var fromFilter;
+  bool? fromFilter;
   specialistpageScreen(
       {super.key,
       this.doctorInfo,
       this.fromFilter = false,
+      this.fromFav = false,
       this.fromPackages = false,
       this.status_id,
       this.fromOffer = false,
@@ -105,6 +107,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                               ? SizedBox()
                               : click
                                   ? ButtonWithCounter(
+                                      fromFav: widget.fromFav,
                                       fromPackages: widget.fromPackages,
                                       sessionCountForOffer:
                                           widget.sessionCountForOffer,

@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dr/Patient/features/auth/data/models/sign_up_patient_model.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state/section_state.dart';
 import 'package:dr/core/utils/app_strings.dart';
@@ -26,7 +25,6 @@ class SectionCubit extends Cubit<SectionState> {
       SectionModel response =
           await sectionRepo.GetSection(sectionNumber: state.sectionNumber);
       emit(state.copyWith(listOfResponse: response, Loading: false));
-      print("Hi");
     } catch (e) {
       emit(state.copyWith(Loading: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);

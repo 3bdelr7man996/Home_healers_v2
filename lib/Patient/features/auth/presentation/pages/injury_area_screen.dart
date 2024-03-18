@@ -21,12 +21,14 @@ class InjuryAreaScreen extends StatefulWidget {
       status_id,
       fromPackage;
   Data? doctorInfo;
+  bool fromFav;
 
   InjuryAreaScreen(
       {super.key,
       this.sessionCountForOffer,
       this.numberOfIcon,
       this.fromFilter = false,
+      this.fromFav = false,
       this.doctorInfo,
       this.fromOffer,
       this.fromPackage = false,
@@ -182,6 +184,7 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DateOfSessionScreen(
+                                fromFav: widget.fromFav,
                                 doctorInfo: widget.doctorInfo,
                                 fromFilter: widget.fromFilter,
                                 fromPackages: widget.fromPackage,

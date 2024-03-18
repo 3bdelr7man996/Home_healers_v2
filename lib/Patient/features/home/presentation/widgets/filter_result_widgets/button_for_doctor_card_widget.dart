@@ -14,6 +14,7 @@ class ButtonForDoctorCard extends StatelessWidget {
   int? status_id;
   bool fromOffer;
   bool fromPackages;
+  bool fromFav;
   var sessionCountForOffer;
   bool? fromFilter;
   var offer;
@@ -22,6 +23,7 @@ class ButtonForDoctorCard extends StatelessWidget {
       this.doctorInfo,
       this.offer,
       this.fromFilter = false,
+      this.fromFav = false,
       this.fromPackages = false,
       this.sessionCountForOffer,
       this.status_id,
@@ -45,6 +47,7 @@ class ButtonForDoctorCard extends StatelessWidget {
           AppConstants.customNavigation(
               context,
               specialistpageScreen(
+                  fromFav: fromFav,
                   fromPackages: fromPackages,
                   doctorInfo: doctorInfo,
                   status_id: status_id,

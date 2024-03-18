@@ -27,7 +27,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
   void initState() {
     super.initState();
     names.add("الاختصاص");
-    for (Categories item in widget.doctorInfo!.categories) {
+    for (Categories item in widget.doctorInfo!.categories!) {
       names.add(item.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';

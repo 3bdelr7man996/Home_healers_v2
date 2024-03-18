@@ -1,29 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-part of 'favorite_cubit.dart';
+import 'package:equatable/equatable.dart';
 
-class FavoriteState extends Equatable {
-  FavoriteState({
-    this.Loading = false,
-    this.data,
-  });
-  final bool Loading;
-  var data;
-  @override
-  @override
-  List<Object?> get props => [Loading, data];
-  FavoriteState copyWith({
-    bool? Loading,
-    var page,
-    var data,
-  }) =>
-      FavoriteState(
-        Loading: Loading ?? this.Loading,
-        data: data ?? this.data,
-      );
-}
-
-////////// New Class ///////////////////////////////
 class AddFavoriteState extends Equatable {
   AddFavoriteState({
     this.Loading = false,

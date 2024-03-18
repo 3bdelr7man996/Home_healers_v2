@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/filter_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
@@ -25,8 +26,8 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
   @override
   @override
   Widget build(BuildContext context) {
-    var data = context.select(
-      (FilterCubit cubit) => cubit.state.listOfResponse?["data"],
+    List<Data?>? data = context.select(
+      (FilterCubit cubit) => cubit.state.listOfResponse?.data,
     );
     return Scaffold(
       appBar: customAppBar(context, title: "filter_result", backButton: true),
@@ -42,13 +43,13 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
                       return DoctorCard(
                           fromFilter: true,
                           doctorInfo: data[index],
-                          name: data[index]["name_ar"],
-                          status: data[index]["status"],
-                          price: data[index]["session_price"],
-                          address: data[index]["address_ar"],
-                          statusAdvisor: data[index]["status_advisor"],
-                          categories: data[index]['categories'],
-                          image: data[index]["image"],
+                          name: data[index]!.nameAr!,
+                          status: data[index]!.status!,
+                          price: data[index]!.sessionPrice,
+                          address: data[index]!.addressAr!,
+                          statusAdvisor: data[index]!.statusAdvisor!,
+                          categories: data[index]!.categories!,
+                          image: data[index]!.image!,
                           toggleVisibility: _toggleVisibility,
                           isVisible: _isVisible);
                     },

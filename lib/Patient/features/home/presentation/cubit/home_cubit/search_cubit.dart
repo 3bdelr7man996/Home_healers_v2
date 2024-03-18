@@ -14,10 +14,11 @@ class SearchCubit extends Cubit<SearchState> {
 
   Future<void> GetSearchResult(BuildContext context) async {
     try {
-      emit(state.copyWith(listOfResponse: {}));
+      emit(state.copyWith(
+          listOfResponse: SectionModel(data: [], message: "", success: false)));
 
       SectionModel response = await searchRepo.GetSearch();
-      emit(state.copyWith(listOfResponse: response.toJson()));
+      emit(state.copyWith(listOfResponse: response));
     } catch (e) {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }

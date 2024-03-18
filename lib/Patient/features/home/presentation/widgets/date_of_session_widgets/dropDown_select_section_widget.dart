@@ -30,7 +30,7 @@ class _DropDownForSelectSectionState extends State<DropDownForSelectSection> {
       // icon: const SizedBox(), // Hide the arrow icon
       value: widget.selectedName,
       onChanged: (String? newValue) async {
-        for (StatusAdvisor category in widget.doctorInfo!.statusAdvisor) {
+        for (StatusAdvisor category in widget.doctorInfo!.statusAdvisor!) {
           if (category.nameAr == newValue) {
             id = category.id!;
             break;

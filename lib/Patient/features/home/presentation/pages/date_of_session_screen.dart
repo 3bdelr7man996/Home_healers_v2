@@ -19,11 +19,13 @@ class DateOfSessionScreen extends StatefulWidget {
   bool fromOffer;
   bool fromPackages;
   bool? fromFilter;
+  bool? fromFav;
   DateOfSessionScreen(
       {super.key,
       this.doctorInfo,
       this.fromFilter,
       this.fromPackages = false,
+      this.fromFav = false,
       this.status_id,
       required this.fromOffer});
 
@@ -45,7 +47,7 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
     if (widget.fromFilter == false)
       context.read<ReservationCubit>().onChangestatus_id(widget.status_id);
     context.read<ReservationCubit>().makeNotesEmpty();
-    for (StatusAdvisor item in widget.doctorInfo!.statusAdvisor) {
+    for (StatusAdvisor item in widget.doctorInfo!.statusAdvisor!) {
       names.add(item.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
@@ -81,6 +83,13 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                         hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
+              widget.fromFav!
+                  ? DropDownForSelectSection(
+                      doctorInfo: widget.doctorInfo,
+                      names: names,
+                      selectedName: selectedName,
+                    )
+                  : SizedBox(),
               widget.fromPackages
                   ? SizedBox()
                   : widget.fromFilter! || widget.fromOffer

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:equatable/equatable.dart';
 
 class FilterState extends Equatable {
@@ -18,7 +19,7 @@ class FilterState extends Equatable {
   late final int? city_id;
   late final int? area_id;
   late final String? gender;
-  Map<String, dynamic>? listOfResponse;
+  SectionModel? listOfResponse;
   @override
   @override
   List<Object?> get props => [
@@ -37,7 +38,7 @@ class FilterState extends Equatable {
     String? gender,
     int? status_id,
     int? city_id,
-    Map<String, dynamic>? listOfResponse,
+    SectionModel? listOfResponse,
   }) =>
       FilterState(
         Loading: Loading ?? this.Loading,

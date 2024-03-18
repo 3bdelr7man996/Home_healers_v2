@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/addFavorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/stars_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';

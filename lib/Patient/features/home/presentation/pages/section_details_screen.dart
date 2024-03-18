@@ -1,4 +1,5 @@
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/favorite/data/models/favoriteModel.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
@@ -74,7 +75,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
   int i = 0;
   @override
   Widget build(BuildContext context) {
-    var FavoriteList;
+    FavoriteModel? FavoriteList;
 
     FavoriteList = context.select((FavoriteCubit cubit) => cubit.state.data);
 
@@ -122,8 +123,8 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                         itemBuilder: (context, index) {
                           bool isIdExist = false;
                           if (FavoriteList != null)
-                            isIdExist = FavoriteList['data'].any((item) =>
-                                item["advertiser"]['id'] ==
+                            isIdExist = FavoriteList.data.any((item) =>
+                                item.advertiser!.id! ==
                                 searchResults![index].id);
                           return DoctorCard(
                               fromPackages: widget.fromPackages,

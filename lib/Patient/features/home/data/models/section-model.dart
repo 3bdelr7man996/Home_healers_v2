@@ -74,7 +74,7 @@ class Data {
   late final String? mobile;
   late final String? email;
   late final String? image;
-  late final years;
+  var years;
   var images;
   late final String? descAr;
   late final String? descEn;
@@ -82,7 +82,7 @@ class Data {
   late final String? addressEn;
   late final String? gender;
   late final String? iban;
-  late var location;
+  var location;
   late final int? bundleId;
   late final int? countryId;
   late final int? cityId;
@@ -94,7 +94,7 @@ class Data {
   late final String? lat;
   late final String? lng;
   late final String? status;
-  late var centerId;
+  var centerId;
   late final String? fcmToken;
   late final int? isOnline;
   late final String? createdAt;
@@ -102,8 +102,8 @@ class Data {
   late final int? rating;
   late final String? nameAr;
   late final String? nameEn;
-  late final List<Categories> categories;
-  late final List<StatusAdvisor> statusAdvisor;
+  late final List<Categories>? categories;
+  late final List<StatusAdvisor>? statusAdvisor;
   late final Workinghours? workinghours;
   late final List<dynamic>? rates;
 
@@ -151,7 +151,9 @@ class Data {
         .map((e) => StatusAdvisor.fromJson(e))
         .toList();
     workinghours = null;
-    rates = List.castFrom<dynamic, dynamic>(json?['rates']);
+    rates = json?['rates'] == null
+        ? null
+        : List.castFrom<dynamic, dynamic>(json?['rates']);
   }
 
   Map<String, dynamic>? toJson() {
@@ -192,8 +194,8 @@ class Data {
     _data['rating'] = rating;
     _data['name_ar'] = nameAr;
     _data['name_en'] = nameEn;
-    _data['categories'] = categories.map((e) => e.toJson()).toList();
-    _data['status_advisor'] = statusAdvisor.map((e) => e.toJson()).toList();
+    _data['categories'] = categories!.map((e) => e.toJson()).toList();
+    _data['status_advisor'] = statusAdvisor!.map((e) => e.toJson()).toList();
     _data['workinghours'] = workinghours;
     _data['rates'] = rates;
     return _data;
@@ -216,7 +218,7 @@ class Categories {
   late final String? status;
   late final int? orderNum;
   late final String? image;
-  late final Pivot pivot;
+  late final Pivot? pivot;
 
   Categories.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -236,7 +238,7 @@ class Categories {
     _data['status'] = status;
     _data['order_num'] = orderNum;
     _data['image'] = image;
-    _data['pivot'] = pivot.toJson();
+    _data['pivot'] = pivot!.toJson();
     return _data;
   }
 }
@@ -274,7 +276,7 @@ class StatusAdvisor {
   late final String? nameAr;
   late final String? nameEn;
   late final String? status;
-  late final Pivot pivot;
+  late final Pivot? pivot;
 
   StatusAdvisor.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -290,7 +292,7 @@ class StatusAdvisor {
     _data['name_ar'] = nameAr;
     _data['name_en'] = nameEn;
     _data['status'] = status;
-    _data['pivot'] = pivot.toJson();
+    _data['pivot'] = pivot!.toJson();
     return _data;
   }
 }

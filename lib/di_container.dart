@@ -5,7 +5,8 @@ import 'package:dr/Patient/features/favorite/data/datasources/addFavorite_ds.dar
 import 'package:dr/Patient/features/favorite/data/datasources/favorite_ds.dart';
 import 'package:dr/Patient/features/favorite/data/repositories/addFavorite_repo.dart';
 import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/addFavorite_cubit.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/datasources/filter_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/get_all_ads_ds.dart';
 import 'package:dr/Patient/features/home/data/datasources/reservation_ds.dart';

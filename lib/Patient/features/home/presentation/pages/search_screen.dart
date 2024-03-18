@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/search_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
@@ -43,23 +44,23 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  var searchResults = [];
+  List<Data>? searchResults = [];
 
   void search(String query) {
     setState(() {
-      searchResults = Data.where((obj) {
-        final name = obj['name_ar'].toString().toLowerCase();
+      searchResults = Info?.where((obj) {
+        final name = obj.nameAr.toString().toLowerCase();
         return name.contains(query.toLowerCase());
       }).toList();
     });
     FirebaseAnalyticUtil.logSearchEvent(term: query);
   }
 
-  var Data;
+  List<Data>? Info;
   @override
   Widget build(BuildContext context) {
-    Data = context
-        .select((SearchCubit cubit) => cubit.state.listOfResponse?["data"]);
+    Info =
+        context.select((SearchCubit cubit) => cubit.state.listOfResponse!.data);
     return Scaffold(
       appBar: customAppBar(context, backButton: true, title: "search"),
       body: Stack(children: [
@@ -115,25 +116,25 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
             20.ph,
-            searchResults.length == 0
+            searchResults!.length == 0
                 ? Expanded(
                     child: Image.asset("assets/images/noSearchResult.png"))
                 : Expanded(
                     child: ListView.builder(
-                      itemCount: searchResults.length,
+                      itemCount: searchResults!.length,
                       itemBuilder: (context, index) {
-                        final result = searchResults[index];
-                        final firstName = result['firstname_ar'];
+                        final result = searchResults![index];
+                        final firstName = result.firstnameAr;
                         return DoctorCard(
                             fromFilter: true,
                             doctorInfo: result,
-                            name: result["name_ar"],
-                            status: result["status"],
-                            price: result["session_price"],
-                            address: result["address_ar"],
-                            statusAdvisor: result["status_advisor"],
-                            categories: result['categories'],
-                            image: result["image"],
+                            name: result.nameAr!,
+                            status: result.status!,
+                            price: result.sessionPrice,
+                            address: result.addressAr!,
+                            statusAdvisor: result.statusAdvisor,
+                            categories: result.categories,
+                            image: result.image,
                             toggleVisibility: _toggleVisibility,
                             isVisible: _isVisible);
                       },

@@ -24,7 +24,7 @@ class _specialistInfoState extends State<specialistInfo> {
   void initState() {
     super.initState();
     names.add("الأقسام :");
-    for (StatusAdvisor? item in widget.doctorInfo!.statusAdvisor) {
+    for (StatusAdvisor? item in widget.doctorInfo!.statusAdvisor!) {
       names.add(item!.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
