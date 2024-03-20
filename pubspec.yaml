@@ -54,6 +54,7 @@ dependencies:
   uni_links: ^0.5.1
   uri: ^1.0.0
   flutter_verification_code: ^1.1.7
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +64,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: 'launcher_icon'
   ios: true
-  image_path: 'assets/icons/logo_icon.jpg'
+  image_path: 'assets/images/mainlogo.png'
   min_sdk_android: 21
 
   flutter_lints: ^2.0.0

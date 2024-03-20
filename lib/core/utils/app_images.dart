@@ -1,6 +1,8 @@
 class AppImages {
   //Images
   static String logoImage = "assets/images/logo.png";
+  static String mainLogo="assets/images/mainlogo.png";
+  static String mainLogoTransp="assets/images/mainlogoTrans.png";
   static String placeholderImage = "assets/images/placeholder.png";
   static String doctorPlaceholder = "assets/images/doctor.png";
   static String patientImg = "assets/images/patient.png";

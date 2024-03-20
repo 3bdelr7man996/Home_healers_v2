@@ -48,12 +48,15 @@ class _SplashScreenState extends State<SplashScreen> {
           AppConstants.pushRemoveNavigator(context,
               screen: HomeScreenForPatient(selectedIndex: 2));
         }
-      } else if(CacheHelper.dataSaved(key: AppStrings.firstTime)){
-         AppConstants.customNavigation(
-                        context, SelectRollForSignIn(), 0.5, 0.5,);
-        
-      }else {
-       AppConstants.pushRemoveNavigator(context, screen: FirstScreen());
+      } else if (CacheHelper.dataSaved(key: AppStrings.firstTime)) {
+        AppConstants.customNavigation(
+          context,
+          SelectRollForSignIn(),
+          0.5,
+          0.5,
+        );
+      } else {
+        AppConstants.pushRemoveNavigator(context, screen: FirstScreen());
       }
     });
     super.initState();

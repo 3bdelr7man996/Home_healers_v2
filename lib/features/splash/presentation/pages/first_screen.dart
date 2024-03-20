@@ -1,4 +1,6 @@
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/secondScreen.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +93,8 @@ class FirstScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    CacheHelper.saveData(
+                        key: AppStrings.firstTime, value: false);
                     AppConstants.customNavigation(
                         context, SecondScreen(), 1, 0);
                   },
@@ -112,6 +116,8 @@ class FirstScreen extends StatelessWidget {
               padding: const EdgeInsets.only(top: 3),
               child: InkWell(
                 onTap: () {
+                  CacheHelper.saveData(
+                      key: AppStrings.firstTime, value: false);
                   AppConstants.customNavigation(
                       context, SelectRollForSignIn(), -0.5, -0.5);
                 },
