@@ -7,6 +7,7 @@ import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/firebase_analytic_helper.dart';
+import 'package:dr/core/utils/http_custom_exception.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
@@ -81,6 +82,10 @@ class LoginCubit extends Cubit<LoginState> {
           }
         }
       }
+    } on UnauthorisedException {
+      emit(state.copyWith(loginState: RequestState.failed));
+      ShowToastHelper.showToast(
+          msg: "تأكد من البريد و الباسورد", isError: true);
     } catch (e) {
       emit(state.copyWith(loginState: RequestState.failed));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);

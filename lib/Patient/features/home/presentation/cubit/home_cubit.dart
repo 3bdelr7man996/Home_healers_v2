@@ -239,7 +239,7 @@ class ReservationCubit extends Cubit<ReservationState> {
         };
       } else {
         body = {
-          "advertiser_id": "${state.advertiser_id}",
+          "advertiser_id": "${state.advertiser_id}", // "162",
           "lat": "${state.location?.lat}",
           "lang": "${state.location?.lng}",
           "user_id": "${userId}",

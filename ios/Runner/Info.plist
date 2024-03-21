@@ -1,114 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
-	<string>Home Healers</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>dr</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.7.9</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>59</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>CFBundleLocalizations</key>
-    <array>
-	<string>en</string>
-	<string>ar</string>
-    </array>
-	<key>NSAppTransportSecurity</key>    
 	<dict>
-		<key>NSAllowsLocalNetworking</key>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleDisplayName</key>
+		<string>Home Healers</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>dr</string>
+		<key>CFBundlePackageType</key>
+		<string>APPL</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1.7.9</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleVersion</key>
+		<string>59</string>
+		<key>LSRequiresIPhoneOS</key>
 		<true/>
-	</dict>
-    <key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-		<key>CFBundleTypeRole</key>
-		<string>Editor</string>
-		<key>CFBundleURLName</key>
-		<string></string>
-		<key>CFBundleURLSchemes</key>
+		<key>UILaunchStoryboardName</key>
+		<string>LaunchScreen</string>
+		<key>UIMainStoryboardFile</key>
+		<string>Main</string>
+		<key>UISupportedInterfaceOrientations</key>
 		<array>
-			<string>homehealerr</string>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
+		<key>UISupportedInterfaceOrientations~ipad</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false/>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true/>
+		<key>CFBundleLocalizations</key>
+		<array>
+			<string>en</string>
+			<string>ar</string>
+		</array>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsLocalNetworking</key>
+			<true/>
 		</dict>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>googlechromes</string>
-        <string>comgooglemaps</string>
-    </array>
-	<key>UISupportsDocumentBrowser</key>
-	<true/>
-	<key>io.flutter.embedded_views_preview</key>
-	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>يحتاج التطبيق لصلاحية الوصول لمكتبة الصور لادراج صورة شخصية او صورة للمناسبة</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>nr needs this permission</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to measure activity on the application and provide services based on the user's need for a better experience and successful access to customers</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>nr needs this permission</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Our app uses bluetooth to find, connect and transfer data between different devices</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>nr needs this permission</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>nr needs this permission</string>
-	<key>NSCameraUsageDescription</key>
-	<string>يحتاج التطبيق لصلاحية الوصول للكاميرا لإلاتقاط صورة شخصية او صورة للمناسبة</string>
-	<key>NSContactsUsageDescription</key>
-	<string>nr needs this permission</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق </string>
-	<key>NSMotionUsageDescription</key>
-	<string>nr needs this permission</string>
-</dict>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string></string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>homehealerr</string>
+				</array>
+			</dict>
+		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>googlechromes</string>
+			<string>comgooglemaps</string>
+		</array>
+		<key>UISupportsDocumentBrowser</key>
+		<true/>
+		<key>io.flutter.embedded_views_preview</key>
+		<true/>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>يحتاج التطبيق لصلاحية الوصول لمكتبة الصور لادراج صورة شخصية او صورة للمناسبة</string>
+		<key>NSSpeechRecognitionUsageDescription</key>
+		<string>nr needs this permission</string>
+		<key>NSUserTrackingUsageDescription</key>
+		<string>This identifier will be used to measure activity on the application and provide services based on the user's need for a better experience and successful access to customers</string>
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
+		<key>NSAppleMusicUsageDescription</key>
+		<string>nr needs this permission</string>
+		<key>NSBluetoothAlwaysUsageDescription</key>
+		<string>Our app uses bluetooth to find, connect and transfer data between different devices</string>
+		<key>NSBluetoothPeripheralUsageDescription</key>
+		<string>nr needs this permission</string>
+		<key>NSCalendarsUsageDescription</key>
+		<string>nr needs this permission</string>
+		<key>NSCameraUsageDescription</key>
+		<string>يحتاج التطبيق لصلاحية الوصول للكاميرا لإلاتقاط صورة شخصية او صورة للمناسبة</string>
+		<key>NSContactsUsageDescription</key>
+		<string>nr needs this permission</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق</string>
+		<key>NSMotionUsageDescription</key>
+		<string>nr needs this permission</string>
+		<key>UIStatusBarHidden</key>
+		<false/>
+	</dict>
 </plist>
