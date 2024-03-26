@@ -6,7 +6,7 @@ class AppStrings {
   static String divSecondUrl =
       "https://home-healers.com"; // "https://testing.home-healers.com";
 
-  //api url 
+  //api url
   static String advertiseSignUp = "/api/registerAdv";
   static String userSignIn = "/api/user/login";
   static String advDepartments = "/api/categories";
@@ -31,6 +31,7 @@ class AppStrings {
   static String reservationDetails = "/api/reservaionGetByID";
   static String activate_acc = "/api/activateAccount";
   static String forget_pass = "/api/forgetPassword";
+  static String delete_acc = "/api/deleteaccount";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";
@@ -56,7 +57,7 @@ class AppStrings {
   static String userInfo = "USER_INFO";
   static String isAdvertise = "IS_ADVERTISE";
   static String isActive = "USER_ACTIVE";
-  static String firstTime="FIRST_TIME";
+  static String firstTime = "FIRST_TIME";
 
   //APP CONFIGIRATION
   static String PUSHER_APP_ID = '1714511';

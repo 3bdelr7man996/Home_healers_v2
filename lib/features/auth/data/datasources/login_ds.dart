@@ -12,4 +12,13 @@ class LoginDs {
         await apiHelper.post(AppStrings.userSignIn, body: body);
     return response;
   }
+
+  Future<Map<String, dynamic>?> deleteAcc({required int userId}) async {
+    Map<String, dynamic>? response = await apiHelper.get(
+      AppStrings.delete_acc,
+      newBaseUrl: AppStrings.divSecondUrl,
+      queryParameters: {"account_id": "$userId"},
+    );
+    return response;
+  }
 }
