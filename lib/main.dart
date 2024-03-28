@@ -21,6 +21,8 @@ void main() async {
 
   Bloc.observer = MyBlocObserver();
 
+  
+
   runApp(EasyLocalization(
       supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
       path: AppStrings.localizationPath,
@@ -28,6 +30,8 @@ void main() async {
       startLocale: const Locale('ar', 'EG'),
       child: const MyApp()));
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

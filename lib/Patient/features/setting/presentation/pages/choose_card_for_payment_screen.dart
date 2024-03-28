@@ -54,7 +54,7 @@ class ChooseCardScreen extends StatelessWidget {
                     }
                   });
                 },
-                child: const Text('تابع'),
+                child: const Text('تابع',),
               ),
             );
           }
@@ -126,6 +126,21 @@ class ChooseCardScreen extends StatelessWidget {
                   onTap: () => context
                       .read<PaymentCubit>()
                       .onSelectPayCard(PayCard.american),
+                );
+              },
+            ),
+            20.ph,
+            BlocBuilder<PaymentCubit, PaymentState>(
+              buildWhen: (previous, current) =>
+                  previous.selectedPayCard != current.selectedPayCard,
+              builder: (context, state) {
+                return CardWay(
+                  iconPath: AppImages.applePayIcon,
+                  title: "ابل",
+                  selected: state.selectedPayCard == PayCard.apple,
+                  onTap: () => context
+                      .read<PaymentCubit>()
+                      .onSelectPayCard(PayCard.apple),
                 );
               },
             ),
