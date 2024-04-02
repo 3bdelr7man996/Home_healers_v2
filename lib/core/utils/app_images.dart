@@ -39,6 +39,8 @@ class AppImages {
   static String chatCall = 'assets/icons/chat_call_icon.svg';
   static String chatVideo = 'assets/icons/chat_video_icon.svg';
   static String mikeIcon = 'assets/icons/mike_icon.svg';
+  static String pauseIcon = 'assets/icons/pause_icon.svg';
+  static String galleryIcon = 'assets/icons/gallery_icon.svg';
   static String emptyNotifications = "assets/icons/no_notifications.svg";
   static String xicon = "assets/icons/xicon.svg";
   static String walletIcon = 'assets/icons/budget_icon_for_payment.svg';

@@ -5,7 +5,7 @@ import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/core/utils/shimmer_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/chats/data/models/conversations_model.dart';
-import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/chats_widgets.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/conversations_widget/active_users_avatar.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/conversations_widget/active_users_shimmer.dart';
@@ -213,7 +213,7 @@ class ConversationsSection extends StatelessWidget {
                     "لايوجد رسائل لديك",
                     style: TextStyle(
                       color: Color.fromARGB(255, 179, 181, 181),
-                    fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],

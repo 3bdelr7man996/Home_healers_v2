@@ -110,6 +110,9 @@
 		<string>يحتاج التطبيق لصلاحية تحديد المواقع لتحديد موقع الخدمة الخاصة بك بشكل دقيق</string>
 		<key>NSMotionUsageDescription</key>
 		<string>nr needs this permission</string>
+		<key>NSMicrophoneUsageDescription</key>
+        <string>يحتاج التطبيق صلاحية الوصول للميكروفون</string>
+		
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>

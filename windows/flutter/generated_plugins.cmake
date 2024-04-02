@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   geolocator_windows
   maps_launcher
   printing
+  record_windows
   url_launcher_windows
 )
 

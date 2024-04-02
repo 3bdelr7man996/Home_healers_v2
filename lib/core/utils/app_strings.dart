@@ -5,6 +5,7 @@ class AppStrings {
       "http://admin.home-healers.com/upload/"; // "https://dev.home-healers.com/upload/";
   static String divSecondUrl =
       "https://home-healers.com"; // "https://testing.home-healers.com";
+  static String secondImgUrl = "https://home-healers.com/public/";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";

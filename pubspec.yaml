@@ -55,6 +55,8 @@ dependencies:
   uri: ^1.0.0
   flutter_verification_code: ^1.1.7
   flutter_native_splash: ^2.4.0
+  record: ^5.0.5
+  just_audio: ^0.9.37
 
 dev_dependencies:
   flutter_test:

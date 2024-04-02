@@ -24,7 +24,8 @@ import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.d
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
-import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
 import 'package:dr/doctor/features/home/data/repositories/reservation_orders_repo.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -164,6 +165,9 @@ MultiBlocProvider blocMultiProvider({required child}) {
         create: (BuildContext context) => ChatsCubit(
           chatsRepo: di.sl<ChatsRepo>(),
         ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => RecorderCubit(),
       ),
     ],
     child: child,

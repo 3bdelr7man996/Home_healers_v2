@@ -10,19 +10,24 @@ class Messages {
   String? receiverFcm;
   String? createdAt;
   String? updatedAt;
+  String? path;
+  String? type;
 
-  Messages(
-      {this.id,
-      this.userId,
-      this.reciverId,
-      this.advertiserId,
-      this.content,
-      this.senderType,
-      this.receiverType,
-      this.senderFcm,
-      this.receiverFcm,
-      this.createdAt,
-      this.updatedAt});
+  Messages({
+    this.id,
+    this.userId,
+    this.reciverId,
+    this.advertiserId,
+    this.content,
+    this.senderType,
+    this.receiverType,
+    this.senderFcm,
+    this.receiverFcm,
+    this.path,
+    this.type,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   Messages.fromJson(Map<String, dynamic>? json) {
     id = int.parse(json?['id'].toString() ?? "0");
@@ -38,6 +43,8 @@ class Messages {
     receiverFcm = json?['receiver_fcm'];
     createdAt = json?['created_at'];
     updatedAt = json?['updated_at'];
+    path = json?['path'];
+    type = json?['type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +60,8 @@ class Messages {
     data['receiver_fcm'] = this.receiverFcm;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['type'] = this.type;
+    data['path'] = this.path;
     return data;
   }
 }
