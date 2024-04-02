@@ -21,7 +21,7 @@
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>CFBundleVersion</key>
-		<string>59</string>
+		<string>60</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
@@ -84,7 +84,7 @@
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>nr needs this permission</string>
 		<key>NSUserTrackingUsageDescription</key>
-		<string>This identifier will be used to measure activity on the application and provide services based on the user's need for a better experience and successful access to customers</string>
+		<string>   نحتاج صلاحية قياس النشاط على التطبيق وتقديم الخدمات بناءً على حاجة المستخدم لتجربة أفضل ووصول ناجح للعملاء</string>
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>fetch</string>

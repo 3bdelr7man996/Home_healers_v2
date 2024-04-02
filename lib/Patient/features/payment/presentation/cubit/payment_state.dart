@@ -2,7 +2,7 @@ part of 'payment_cubit.dart';
 
 enum PayType { visa, tamara, apple, wallet, tap }
 
-enum PayCard { master, visa, american, mada }
+enum PayCard { master, visa, american, mada ,apple}
 
 class PaymentState extends Equatable {
   const PaymentState({

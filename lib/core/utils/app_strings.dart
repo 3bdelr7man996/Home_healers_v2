@@ -65,7 +65,8 @@ class AppStrings {
   static String PUSHER_APP_KEY = '7256046f50a9f3e2a17a';
   static String PUSHER_APP_SECRET = '21720d29ec15b4099ca2';
   static String PUSHER_APP_CLUSTER = 'eu';
-
+  
+  static bool TRACK_AUTH=true;
   static String mapApiKey = "AIzaSyBL3got10NTJkmjKT9fgaDPraXxqgb33EQ";
   //Demo
   static String placeHolderNetwImg =

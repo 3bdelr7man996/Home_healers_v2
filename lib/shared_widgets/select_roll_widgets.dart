@@ -54,6 +54,7 @@ class NextButton extends StatelessWidget {
               Icon(
                 Icons.arrow_back,
                 size: 30,
+                color: Colors.white,
               ),
             ],
           ),

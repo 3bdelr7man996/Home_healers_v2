@@ -1,3 +1,5 @@
+
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -39,6 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    WidgetsFlutterBinding.ensureInitialized()
+        .addPostFrameCallback((_) => getTrackingPermission());
     initConfigData().then((value) {
       if (CacheHelper.dataSaved(key: AppStrings.userToken)) {
         if (CacheHelper.getData(key: AppStrings.isAdvertise)) {
@@ -49,17 +53,26 @@ class _SplashScreenState extends State<SplashScreen> {
               screen: HomeScreenForPatient(selectedIndex: 2));
         }
       } else if (CacheHelper.dataSaved(key: AppStrings.firstTime)) {
-        AppConstants.customNavigation(
+        AppConstants.pushRemoveNavigator(
           context,
-          SelectRollForSignIn(),
-          0.5,
-          0.5,
+          screen: SelectRollForSignIn(),
         );
       } else {
         AppConstants.pushRemoveNavigator(context, screen: FirstScreen());
       }
     });
     super.initState();
+  }
+
+  Future<void> getTrackingPermission() async {
+    final TrackingStatus status =
+        await AppTrackingTransparency.trackingAuthorizationStatus;
+    AppStrings.TRACK_AUTH = status == TrackingStatus.authorized;
+    // If the system can show an authorization request dialog
+    if (status == TrackingStatus.notDetermined ||
+        status == TrackingStatus.denied) {
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
   }
 
   @override
