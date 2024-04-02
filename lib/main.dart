@@ -52,8 +52,7 @@ class MyApp extends StatelessWidget {
         ],
         builder: BotToastInit(),
         home: SplashScreen(),
-        //const SignUpScreen(),
-        //const SelectRollForSignIn(),
+       
       ),
     );
   }
