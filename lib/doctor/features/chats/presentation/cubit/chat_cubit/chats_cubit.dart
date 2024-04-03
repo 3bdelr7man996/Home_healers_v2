@@ -36,7 +36,6 @@ class ChatsCubit extends Cubit<ChatsState> {
   onChangeFile(File? Function()? file) => emit(state.copyWith(msgFile: file));
   onChangePlayedName(String name) =>
       emit(state.copyWith(playedAudioName: name));
-  onChangeAudioPlay(bool isPlay) => emit(state.copyWith(audioPlay: isPlay));
 
   TextEditingController? msgFieldController = TextEditingController();
   int? userId;

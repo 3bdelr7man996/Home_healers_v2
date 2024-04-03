@@ -12,7 +12,6 @@ class ChatsState extends Equatable {
     this.fileType,
     this.msgFile,
     this.playedAudioName = '',
-    this.audioPlay = false,
   });
 
   final String? content;
@@ -25,7 +24,6 @@ class ChatsState extends Equatable {
   final String? fileType;
   final File? msgFile;
   final String playedAudioName;
-  final bool audioPlay;
 
   @override
   List<Object?> get props => [
@@ -39,7 +37,6 @@ class ChatsState extends Equatable {
         fileType,
         msgFile,
         playedAudioName,
-        audioPlay,
       ];
   ChatsState copyWith({
     String? content,
@@ -53,7 +50,6 @@ class ChatsState extends Equatable {
     String? Function()? fileType,
     File? Function()? msgFile,
     String? playedAudioName,
-    bool? audioPlay,
   }) =>
       ChatsState(
         content: content ?? this.content,
@@ -66,6 +62,5 @@ class ChatsState extends Equatable {
         fileType: fileType != null ? fileType() : this.fileType,
         msgFile: msgFile != null ? msgFile() : this.msgFile,
         playedAudioName: playedAudioName ?? this.playedAudioName,
-        audioPlay: audioPlay ?? this.audioPlay,
       );
 }

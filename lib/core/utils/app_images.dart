@@ -53,6 +53,7 @@ class AppImages {
   static String settingPerson = "assets/icons/person_setting_icon.svg";
   static String settingLock = "assets/icons/lock_setting_icon.svg";
   static String delete_acc = "assets/icons/delete_acc.svg";
+  static String deleteIcon = "assets/icons/delete-icon.svg";
   static String settingRequests = "assets/icons/requests_setting_icon.svg";
   static String settingCertificate =
       "assets/icons/certificate_setting_icon.svg";
@@ -69,7 +70,7 @@ class AppImages {
   static String visaCard = 'assets/icons/visa_card_icon.svg';
   static String madaCard = 'assets/icons/mada_card.svg';
   static String americanExCard = 'assets/icons/american_ex_card.svg';
-  static String applePayIcon='assets/icons/Apple_pay_icon.svg';
+  static String applePayIcon = 'assets/icons/Apple_pay_icon.svg';
   static String activityIcon = 'assets/icons/activity.png';
   static String task_icon = 'assets/icons/task_icon.png';
   static String pdf_icon = 'assets/icons/pdf_icon.png';
