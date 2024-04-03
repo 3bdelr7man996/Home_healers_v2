@@ -1,5 +1,6 @@
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/section_details_screen.dart';
+import 'package:dr/Patient/features/offer/data/models/get_packages_model.dart';
 import 'package:dr/Patient/features/offer/presentation/pages/packages_details.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -12,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class OfferCard extends StatefulWidget {
-  var Package;
+  Packages? Package;
   OfferCard({super.key, this.Package});
 
   @override
@@ -58,7 +59,7 @@ class _OfferCardState extends State<OfferCard> {
                 ),
               )
             : (
-                widget.Package.status_id == null
+                widget.Package!.status_id == null
                     ? AppConstants.customNavigation(context,
                         OfferDetailsScreen(Package: widget.Package), -1, 0)
                     : AppConstants.customNavigation(
@@ -67,8 +68,8 @@ class _OfferCardState extends State<OfferCard> {
                           fromPackages: true,
                           fromOffer: true,
                           SectiondetailsTitle: "اختر الأخصائي ",
-                          sessionCountForOffer: widget.Package.sessionCount,
-                          numberOfIcon: widget.Package.status_id,
+                          sessionCountForOffer: widget.Package!.sessionCount,
+                          numberOfIcon: widget.Package!.status_id,
                         ),
                         -1,
                         0),
@@ -109,7 +110,7 @@ class _OfferCardState extends State<OfferCard> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10, right: 5),
                               child: Text(
-                                "${widget.Package.discount} %",
+                                "${widget.Package!.discount} %",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -117,21 +118,12 @@ class _OfferCardState extends State<OfferCard> {
                             ),
                           ),
                         )),
-                    // const Center(
-                    //     child: Text(
-                    //   "الآم \n العمود الفقري",
-                    //   textAlign: TextAlign.center,
-                    //   style: TextStyle(
-                    //       color: Colors.white,
-                    //       fontSize: 20.0,
-                    //       fontWeight: FontWeight.bold),
-                    // ))
                   ],
                 ),
               ),
               10.ph,
               Text(
-                widget.Package.description,
+                widget.Package!.description,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     color: Colors.black,
@@ -144,7 +136,7 @@ class _OfferCardState extends State<OfferCard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "${widget.Package.price} SAR",
+                    "${widget.Package!.price} SAR",
                     style: TextStyle(
                         color: AppColors.secondryColor,
                         fontWeight: FontWeight.bold,
@@ -155,7 +147,7 @@ class _OfferCardState extends State<OfferCard> {
                     text: TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text: '${widget.Package.oldPrice} SAR',
+                          text: '${widget.Package!.oldPrice} SAR',
                           style: const TextStyle(
                               color: Colors.grey,
                               decoration: TextDecoration.lineThrough,
@@ -198,7 +190,7 @@ class _OfferCardState extends State<OfferCard> {
                             ),
                           )
                         : (
-                            widget.Package.status_id == null
+                            widget.Package!.status_id == null
                                 ? AppConstants.customNavigation(
                                     context,
                                     OfferDetailsScreen(Package: widget.Package),
@@ -211,8 +203,8 @@ class _OfferCardState extends State<OfferCard> {
                                       fromOffer: true,
                                       SectiondetailsTitle: "اختر الأخصائي ",
                                       sessionCountForOffer:
-                                          widget.Package.sessionCount,
-                                      numberOfIcon: widget.Package.status_id,
+                                          widget.Package!.sessionCount,
+                                      numberOfIcon: widget.Package!.status_id,
                                     ),
                                     -1,
                                     0),

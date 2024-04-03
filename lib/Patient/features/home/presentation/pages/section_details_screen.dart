@@ -135,12 +135,12 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                               doctorInfo: searchResults![index],
                               name: searchResults![index].nameAr!,
                               status: searchResults![index].status!,
-                              price: searchResults![index].sessionPrice!,
+                              price: searchResults![index].sessionPrice,
                               address: searchResults![index].addressAr!,
                               statusAdvisor:
                                   searchResults![index].statusAdvisor,
                               categories: searchResults![index].categories,
-                              image: searchResults![index].image!,
+                              image: searchResults![index].image,
                               toggleVisibility: _toggleVisibility,
                               isVisible: _isVisible);
                         },

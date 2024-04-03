@@ -1,9 +1,10 @@
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
+import 'package:dr/Patient/features/offer/data/models/get_offers_model.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class OfferScreen extends StatefulWidget {
-  var Offers;
+  GetOffersModel Offers;
   OfferScreen({super.key, required this.Offers});
 
   @override
@@ -21,23 +22,23 @@ class _OfferScreenState extends State<OfferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var data = widget.Offers['offers'];
+    List<Offers>? data = widget.Offers.offers;
     return Expanded(
       child: ListView.builder(
-        itemCount: data.length,
+        itemCount: data!.length,
         itemBuilder: (context, index) {
           return DoctorCard(
-              sessionCountForOffer: data[index]['session_count'],
+              sessionCountForOffer: data[index].sessionCount,
               offer: data[index],
               fromOffer: true,
-              doctorInfo: data[index]['advertiser'],
-              name: data[index]['advertiser']['name_ar'],
-              status: data[index]['advertiser']['status'],
-              price: data[index]['advertiser']['session_price'],
-              address: data[index]['advertiser']['address_ar'],
-              statusAdvisor: data[index]['advertiser']['status_advisor'],
-              categories: data[index]['advertiser']['categories'],
-              image: data[index]['advertiser']['image'],
+              doctorInfo: data[index].advertiser!,
+              name: data[index].advertiser!.nameAr!,
+              status: data[index].advertiser!.status!,
+              price: data[index].advertiser!.sessionPrice!,
+              address: data[index].advertiser!.addressAr!,
+              statusAdvisor: data[index].advertiser!.statusAdvisor!,
+              categories: data[index].advertiser!.categories!,
+              image: data[index].advertiser!.image!,
               toggleVisibility: _toggleVisibility,
               isVisible: _isVisible);
         },

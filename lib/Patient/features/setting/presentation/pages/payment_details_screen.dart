@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit/offer_cubit.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit/package_cubit.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/payment/presentation/pages/visa_payment_screen.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
@@ -14,8 +16,6 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../offer/presentation/cubit/offer_cubit.dart';
 
 class PaymentDetailsScreen extends StatefulWidget {
   bool withOffer;

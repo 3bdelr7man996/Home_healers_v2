@@ -1,3 +1,5 @@
+import 'package:dr/Patient/features/home/data/models/section-model.dart';
+
 class GetOffersModel {
   GetOffersModel({
     required this.success,
@@ -47,7 +49,7 @@ class Offers {
   late var description;
   late var oldPrice;
   late var discount;
-  late final Advertiser advertiser;
+  late final Data? advertiser;
 
   Offers.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -60,7 +62,7 @@ class Offers {
     description = json?['description'];
     oldPrice = json?['old_price'];
     discount = json?['discount'];
-    advertiser = Advertiser.fromJson(json?['advertiser']);
+    advertiser = Data.fromJson(json?['advertiser']);
   }
 
   Map<String, dynamic>? toJson() {
@@ -75,7 +77,7 @@ class Offers {
     _data['description'] = description;
     _data['old_price'] = oldPrice;
     _data['discount'] = discount;
-    _data['advertiser'] = advertiser.toJson();
+    _data['advertiser'] = advertiser!.toJson();
     return _data;
   }
 }
@@ -162,7 +164,7 @@ class Advertiser {
   late var nameAr;
   late var nameEn;
   late final List<Categories> categories;
-  late final List<StatusAdvisor> statusAdvisor;
+  late final List<StatusAdvisor>? statusAdvisor;
 
   Advertiser.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -252,48 +254,7 @@ class Advertiser {
     _data['name_ar'] = nameAr;
     _data['name_en'] = nameEn;
     _data['categories'] = categories.map((e) => e.toJson()).toList();
-    _data['status_advisor'] = statusAdvisor.map((e) => e.toJson()).toList();
-    return _data;
-  }
-}
-
-class Categories {
-  Categories({
-    required this.id,
-    required this.nameAr,
-    required this.nameEn,
-    required this.status,
-    required this.orderNum,
-    required this.image,
-    required this.pivot,
-  });
-  late var id;
-  late var nameAr;
-  late var nameEn;
-  late var status;
-  late var orderNum;
-  late var image;
-  late final Pivot pivot;
-
-  Categories.fromJson(Map<String, dynamic>? json) {
-    id = json?['id'];
-    nameAr = json?['name_ar'];
-    nameEn = json?['name_en'];
-    status = json?['status'];
-    orderNum = json?['order_num'];
-    image = json?['image'];
-    pivot = Pivot.fromJson(json?['pivot']);
-  }
-
-  Map<String, dynamic>? toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name_ar'] = nameAr;
-    _data['name_en'] = nameEn;
-    _data['status'] = status;
-    _data['order_num'] = orderNum;
-    _data['image'] = image;
-    _data['pivot'] = pivot.toJson();
+    _data['status_advisor'] = statusAdvisor!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -315,43 +276,6 @@ class Pivot {
     final _data = <String, dynamic>{};
     _data['advertiser_id'] = advertiserId;
     _data['category_id'] = categoryId;
-    return _data;
-  }
-}
-
-class StatusAdvisor {
-  StatusAdvisor({
-    required this.id,
-    required this.nameAr,
-    required this.nameEn,
-    required this.status,
-    this.image,
-    required this.pivot,
-  });
-  late var id;
-  late var nameAr;
-  late var nameEn;
-  late var status;
-  late var image;
-  late final Pivot pivot;
-
-  StatusAdvisor.fromJson(Map<String, dynamic>? json) {
-    id = json?['id'];
-    nameAr = json?['name_ar'];
-    nameEn = json?['name_en'];
-    status = json?['status'];
-    image = json?['image'];
-    pivot = Pivot.fromJson(json?['pivot']);
-  }
-
-  Map<String, dynamic>? toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['name_ar'] = nameAr;
-    _data['name_en'] = nameEn;
-    _data['status'] = status;
-    _data['image'] = image;
-    _data['pivot'] = pivot.toJson();
     return _data;
   }
 }

@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
-import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit/offer_cubit.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit/package_cubit.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_state/offer_state.dart';
+import 'package:dr/Patient/features/offer/presentation/cubit/offer_state/package_state.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -105,20 +108,17 @@ class TotalDetails extends StatelessWidget {
                                               if (type == "offer")
                                                 for (int i = 0;
                                                     i <
-                                                        state
-                                                            .AllOffers![
-                                                                'offers']
+                                                        state.AllOffers!.offers
                                                             .length;
                                                     i++)
-                                                  state.AllOffers!['offers'][i]
-                                                              ['id'] ==
+                                                  state.AllOffers!.offers[i]
+                                                              .id ==
                                                           offerId
                                                       ? Expanded(
                                                           child: Text(state
-                                                                          .AllOffers![
-                                                                      'offers'][i]
-                                                                  [
-                                                                  'description'] ??
+                                                                  .AllOffers!
+                                                                  .offers[i]
+                                                                  .description ??
                                                               "عن طريق العرض"))
                                                       : SizedBox(),
                                               if (type == "package")
@@ -127,7 +127,9 @@ class TotalDetails extends StatelessWidget {
                                                         value.AllPackages!
                                                             .packages.length;
                                                     i++)
-                                                  value.AllPackages.packages[i]
+                                                  value
+                                                              .AllPackages!
+                                                              .packages![i]
                                                               .id ==
                                                           offerId
                                                       ? Expanded(
