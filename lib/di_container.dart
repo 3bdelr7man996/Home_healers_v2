@@ -69,6 +69,7 @@ import 'config/notifications_config/local_notification_config.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/http_helper.dart';
 import 'doctor/features/auth/presentation/cubit/auth_cubit.dart';
+import 'doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
 import 'doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'doctor/features/diagnose_report/data/datasources/diagnose_report_ds.dart';
 import 'doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
@@ -122,6 +123,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => NotificationCubit(repository: sl()));
   sl.registerFactory(() => ChatsCubit(chatsRepo: sl()));
   sl.registerFactory(() => RecorderCubit());
+  sl.registerFactory(() => AudioCubit());
 
   //PATIENT DATA SOURCE
   sl.registerLazySingleton(() => PatientSignUpDS(apiHelper: sl()));

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -140,5 +139,18 @@ class RecorderCubit extends Cubit<RecorderState> {
     timer = Timer.periodic(const Duration(seconds: 1), (Timer t) {
       emit(state.copyWith(recordDuration: state.recordDuration + 1));
     });
+  }
+
+  Future<void> deleteRecord() async {
+    try {
+      final path = await recorder.stop();
+      if (path != null) {
+        final File file = File(path);
+        await file.delete();
+      }
+      log('file deleted');
+    } catch (e) {
+      throw "File does not exist";
+    }
   }
 }

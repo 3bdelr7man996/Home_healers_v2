@@ -22,43 +22,38 @@ class SenderBuble extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            alignment: Alignment.centerRight,
-            margin: EdgeInsets.symmetric(vertical: 5),
-            child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                ),
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.darkPrimaryColor,
-                    Color.fromARGB(255, 190, 99, 223),
-                  ],
-                  tileMode: TileMode.repeated,
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  fileView(
-                    context,
-                    path: message?.path,
-                    type: message?.type ?? '',
+          if (message?.content != null)
+            Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                   ),
-                  if (message?.content != null)
-                    Text(
-                      message!.content!,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                ],
+                  gradient: LinearGradient(
+                    colors: [
+                      AppColors.darkPrimaryColor,
+                      Color.fromARGB(255, 190, 99, 223),
+                    ],
+                    tileMode: TileMode.repeated,
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  message!.content!,
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
+          fileView(
+            context,
+            path: message?.path,
+            type: message?.type ?? '',
           ),
           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Icon(
@@ -68,7 +63,7 @@ class SenderBuble extends StatelessWidget {
             ),
             5.pw,
             Text(
-              "${message?.createdAt}",
+              "${message?.createdAt ?? ''}",
               style: TextStyle(
                 fontSize: 9.0,
                 color: AppColors.textGrey,
@@ -115,9 +110,11 @@ class SenderBuble extends StatelessWidget {
                   path.contains(state.playedAudioName))
               ? AudioPlayerView(
                   path: '${AppStrings.secondImgUrl}$path',
+                  fromMe: true,
                 )
               : SliderView(
                   path: '${AppStrings.secondImgUrl}$path',
+                  fromMe: true,
                 );
         },
       );

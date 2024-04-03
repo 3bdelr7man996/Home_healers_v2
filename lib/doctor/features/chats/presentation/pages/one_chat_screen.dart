@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dr/core/utils/http_helper.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/chat_widgets/chat_appbar.dart';
@@ -62,6 +63,7 @@ class _OneChatScreenState extends State<OneChatScreen> {
     return PopScope(
       onPopInvoked: (didPop) {
         if (didPop == true) {
+          context.read<AudioCubit>().dispose();
           context.read<ChatsCubit>().unSubscribeChannel();
         }
       },
@@ -93,12 +95,7 @@ class _OneChatScreenState extends State<OneChatScreen> {
                                       ? SenderBuble(
                                           message: state.messagesList?[index])
                                       : ReciveBuble(
-                                          content: state.messagesList?[index]
-                                                  .content ??
-                                              '',
-                                          createdAt: state.messagesList?[index]
-                                                  .createdAt ??
-                                              '');
+                                          message: state.messagesList?[index]);
                                 },
                               ),
                             )

@@ -3,6 +3,7 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/record_widget/record_wave_widget.dart';
@@ -39,7 +40,8 @@ class SenderMessageSection extends StatelessWidget {
             return cubit.state.content!.length > 0
                 ? InkWell(
                     onTap: () async {
-                      cubit.onChangeAudioPlay(false);
+                      // cubit.onChangeAudioPlay(false);
+                      context.read<AudioCubit>().onChangeAudioPlay(false);
                       await cubit.sendMessage(context);
                     },
                     child: Icon(
@@ -63,19 +65,37 @@ class RecordSection extends StatelessWidget {
     return BlocBuilder<RecorderCubit, RecorderState>(
       builder: (context, state) {
         return state.recordState == RecordState.record
-            ? Material(
-                clipBehavior: Clip.hardEdge,
-                child: GestureDetector(
-                  onTap: () async {
-                    await context.read<RecorderCubit>().stop(context);
-                    await context.read<ChatsCubit>().sendMessage(context);
-                  },
-                  child: AppConstants.customAssetSvg(
-                    imagePath: AppImages.pauseIcon,
-                    width: 35.0,
-                    height: 35.0,
+            ? Row(
+                children: [
+                  Material(
+                    clipBehavior: Clip.hardEdge,
+                    child: GestureDetector(
+                      onTap: () async {
+                        await context.read<RecorderCubit>().deleteRecord();
+                      },
+                      child: AppConstants.customAssetSvg(
+                        imagePath: AppImages.deleteIcon,
+                        width: 35.0,
+                        height: 35.0,
+                      ),
+                    ),
                   ),
-                ),
+                  5.pw,
+                  Material(
+                    clipBehavior: Clip.hardEdge,
+                    child: GestureDetector(
+                      onTap: () async {
+                        await context.read<RecorderCubit>().stop(context);
+                        await context.read<ChatsCubit>().sendMessage(context);
+                      },
+                      child: AppConstants.customAssetSvg(
+                        imagePath: AppImages.pauseIcon,
+                        width: 35.0,
+                        height: 35.0,
+                      ),
+                    ),
+                  ),
+                ],
               )
             : Material(
                 clipBehavior: Clip.hardEdge,
