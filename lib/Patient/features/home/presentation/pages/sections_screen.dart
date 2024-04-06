@@ -6,6 +6,7 @@ import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.d
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/deep_link_util.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dr/config/notifications_config/firebase_messages.dart';
@@ -30,13 +31,15 @@ class _SectionsScreenState extends State<SectionsScreen> {
   @override
   void initState() {
     super.initState();
+    di.sl<FirebaseMessagingService>().requestNotificPermission();
     DeepLinkHandler().init(context);
     context.read<ReservationCubit>().onChangestatus_id(-1);
     di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<GetAllAdsCubit>().GetAllAds(context);
+
+    FirebaseAnalyticUtil.logAppOpen();
+
     var isGuestExist = IsGuest();
-    print(isGuestExist);
-    print("\\\\\\\\\\\\\\\\\\\\\\");
     if (isGuestExist == false)
       context.read<FavoriteCubit>().GetFavorite(context);
   }

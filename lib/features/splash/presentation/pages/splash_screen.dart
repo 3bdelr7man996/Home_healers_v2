@@ -1,20 +1,17 @@
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
-import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
-import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/first_screen.dart';
-import 'package:dr/di_container.dart' as di;
 
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
@@ -27,22 +24,24 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>  {
   Future<void> initConfigData() async {
-    FirebaseAnalyticUtil.logAppOpen();
     await Future.wait([
       context.read<SettingCubit>().getAppInfo(),
       context.read<AuthCubit>().getAllDepartements(),
       context.read<AuthCubit>().getAllStatus(),
       context.read<AuthCubit>().getAllCities(),
     ]);
-    await di.sl<FirebaseMessagingService>().requestNotificPermission();
+    //  WidgetsFlutterBinding.ensureInitialized()
+    //     .addPostFrameCallback((_) => getTrackingPermission());
+    await getTrackingPermission();
+
   }
 
   @override
   void initState() {
-    WidgetsFlutterBinding.ensureInitialized()
-        .addPostFrameCallback((_) => getTrackingPermission());
+    
+   
     initConfigData().then((value) {
       if (CacheHelper.dataSaved(key: AppStrings.userToken)) {
         if (CacheHelper.getData(key: AppStrings.isAdvertise)) {
@@ -67,10 +66,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> getTrackingPermission() async {
     final TrackingStatus status =
         await AppTrackingTransparency.trackingAuthorizationStatus;
-    AppStrings.TRACK_AUTH = status == TrackingStatus.authorized;
+    AppStrings.TRACK_AUTH = (status == TrackingStatus.authorized);
     // If the system can show an authorization request dialog
-    if (status == TrackingStatus.notDetermined ||
-        status == TrackingStatus.denied) {
+    if (status != TrackingStatus.authorized ) {
       await AppTrackingTransparency.requestTrackingAuthorization();
     }
   }
