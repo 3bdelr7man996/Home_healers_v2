@@ -15,9 +15,9 @@ class ActivateAccountScreen extends StatelessWidget {
   const ActivateAccountScreen({
     super.key,
     required this.email,
-     required this.cacheData,
-     this.isAdvertise=false,
-     this.fromForgetPass=false,
+    required this.cacheData,
+    this.isAdvertise = false,
+    this.fromForgetPass = false,
   });
   final String email;
   final bool isAdvertise;
@@ -57,7 +57,7 @@ class ActivateAccountScreen extends StatelessWidget {
                   ),
                   20.ph,
                   const Text(
-                    "من فضلك ادخل الكود المرسل الي البريد\nالالكتروني ",
+                    "من فضلك ادخل الكود المرسل الي الواتس اب ",
                     style: TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
@@ -104,15 +104,16 @@ class ActivateAccountScreen extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {
                               log("email $email");
-                              context.read<ForgetPasswordCubit>().activateAccount(
+                              context
+                                  .read<ForgetPasswordCubit>()
+                                  .activateAccount(
                                     context,
                                     email: email,
                                     code: state.code,
                                     cacheData: cacheData,
                                     isAdvertise: isAdvertise,
                                     fromForgetPass: fromForgetPass,
-                                  )
-                                  ;
+                                  );
                               //todo
                             },
                             style: ElevatedButton.styleFrom(

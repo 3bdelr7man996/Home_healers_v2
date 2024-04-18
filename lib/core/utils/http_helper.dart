@@ -208,12 +208,13 @@ class ApiBaseHelper {
         throw UnauthorisedException(error);
       case 500:
       default:
+        var responseJson = json.decode(response.body.toString());
+        error = handleError(responseJson);
         logger.i(
             "REQUEST [$request] => PATH: $url => \nSTATUS CODE[${response.statusCode}] => \nDATA: ${response.body}");
         FirebaseAnalyticUtil.logAPIErrorEvent(
             param: {"status": "${response.statusCode}", "url": url});
-        throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+        throw FetchDataException('جرب في وقتا لاحق');
     }
   }
 }

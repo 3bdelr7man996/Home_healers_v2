@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
+import 'dart:developer';
+
 import 'package:dr/Patient/features/offer/presentation/cubit/offer_cubit.dart';
 import 'package:dr/Patient/features/payment/presentation/cubit/payment_cubit.dart';
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
@@ -317,57 +319,64 @@ class PaymentTypeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Row(
-          children: [
-            SvgPicture.asset(icon),
-            20.pw,
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  5.ph,
-                  if (balance != null)
+    return GestureDetector(
+      onTap: () {
+        log("value on tap detector $value");
+        context.read<PaymentCubit>().onSelectPayType(value);
+      },
+      child: Container(
+        width: context.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            children: [
+              SvgPicture.asset(icon),
+              20.pw,
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      "رصيدك ${balance} ريال سعودي",
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.secondryColor,
-                          fontWeight: FontWeight.w500),
+                      title,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w500),
                     ),
-                ],
+                    5.ph,
+                    if (balance != null)
+                      Text(
+                        "رصيدك ${balance} ريال سعودي",
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: AppColors.secondryColor,
+                            fontWeight: FontWeight.w500),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            BlocBuilder<PaymentCubit, PaymentState>(
-              builder: (context, state) {
-                return SizedBox(
-                  width: 25,
-                  height: 50,
-                  child: RadioListTile(
-                    activeColor: AppColors.primaryColor,
-                    value: value, //  PayType.wallet,
-                    groupValue: state.selectedPayType,
-                    onChanged: (value) {
-                      context.read<PaymentCubit>().onSelectPayType(value!);
-                    },
-                  ),
-                );
-              },
-            )
-          ],
+              BlocBuilder<PaymentCubit, PaymentState>(
+                builder: (context, state) {
+                  return SizedBox(
+                    width: 25,
+                    height: 50,
+                    child: RadioListTile(
+                      activeColor: AppColors.primaryColor,
+                      value: value, //  PayType.wallet,
+                      groupValue: state.selectedPayType,
+                      onChanged: (value) {
+                        log("value on changed $value");
+                        context.read<PaymentCubit>().onSelectPayType(value!);
+                      },
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

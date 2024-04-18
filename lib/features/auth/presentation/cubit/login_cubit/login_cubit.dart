@@ -50,8 +50,8 @@ class LoginCubit extends Cubit<LoginState> {
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       });
       bool isAdvertise = user?.success?.advertiser?.id != null;
-      if ((!isAdvertise && user?.success?.activated == 0) ||
-          (isAdvertise && user?.success?.advertiser?.activated == 0)) {
+      if (!(!isAdvertise && user?.success?.activated == 0) ||
+          !(isAdvertise && user?.success?.advertiser?.activated == 0)) {
         emit(state.copyWith(loginState: RequestState.success));
         FirebaseAnalyticUtil.logLogin();
         context

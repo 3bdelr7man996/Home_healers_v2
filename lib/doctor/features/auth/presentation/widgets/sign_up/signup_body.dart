@@ -68,7 +68,7 @@ class SignUpBody extends StatelessWidget {
                     IntlPhoneField(
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
-                        hintText: ' رقم الجوال',
+                        hintText: ' رقم الواتس اب',
                         suffixIcon: const Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(),

@@ -35,35 +35,6 @@ class PaymentDetailsScreen extends StatefulWidget {
 }
 
 class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
-  // String? packageText;
-  // Future fetchData() async {
-  // await context.read<GetPackagesCubit>().GetPackages(context);
-  // await context.read<GetOffersCubit>().GetOffers(context);
-
-  //   if (widget.order.type != null) {
-  //     if (widget.order.type == "package") {
-  //       for (int i = 0; i < Packages.packages.length; i++) {
-  //         if (Packages.packages[i].id == widget.order.offer_id) {
-  //           setState(() {
-  //             packageText = Packages.packages[i].description;
-  //           });
-  //         }
-  //       }
-  //     } else {
-  //       for (int i = 0; i < Offers.offers.length; i++) {
-  //         if (Offers.offers[i].id == widget.order.offer_id) {
-  //           setState(() {
-  //             packageText = Offers.offers[i].description;
-  //           });
-  //         }
-  //       }
-  //     }
-  //   }
-  //   print("||||||||||||||||||||||||||||||||||||||||||||||||||||");
-  //   print(packageText);
-  //   print("||||||||||||||||||||||||||||||||||||||||||||||||||||");
-  // }
-
   @override
   void initState() {
     context.read<PaymentCubit>().resetPayData();
@@ -100,22 +71,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                   selectedName: widget.selectedName,
                   categories: widget.categories),
               widget.withOffer ? 0.ph : 20.ph,
-              // widget.withOffer
-              //     ? const SizedBox.shrink()
-              //     : TextField(
-              //         decoration: InputDecoration(
-              //           hintText: 'ادخل كود الخصم',
-              //           suffixIcon: Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: SvgPicture.asset(
-              //               "assets/icons/percent_icon.svg",
-              //               width: 5,
-              //               height: 5,
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-
               20.ph,
               const Align(
                 alignment: Alignment.centerRight,
