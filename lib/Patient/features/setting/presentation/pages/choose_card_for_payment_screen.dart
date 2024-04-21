@@ -12,7 +12,7 @@ import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../widgets/choose_card_for_payment_widgets.dart';
+import '../widgets/choose_card_for_payment_widgets/card_way_widget.dart';
 
 class ChooseCardScreen extends StatelessWidget {
   const ChooseCardScreen({super.key, required this.order});

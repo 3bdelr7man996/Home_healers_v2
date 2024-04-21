@@ -25,7 +25,7 @@ class _OfferScreenState extends State<OfferScreen> {
     List<Offers>? data = widget.Offers.offers;
     return Expanded(
       child: ListView.builder(
-        itemCount: data!.length,
+        itemCount: data.length,
         itemBuilder: (context, index) {
           return DoctorCard(
               sessionCountForOffer: data[index].sessionCount,

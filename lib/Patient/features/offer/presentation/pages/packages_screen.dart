@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:dr/Patient/features/offer/data/models/get_packages_model.dart';
 import 'package:dr/Patient/features/offer/presentation/widgets/offer_widgets.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                     crossAxisCount: 2,
                     childAspectRatio: 0.63,
                   ),
-                  itemCount: widget.Packages!.packages!.length,
+                  itemCount: widget.Packages!.packages.length,
                   itemBuilder: (context, index) {
                     return widget.Packages!.packages[index].status_id != null
                         ? OfferCard(Package: widget.Packages!.packages[index])

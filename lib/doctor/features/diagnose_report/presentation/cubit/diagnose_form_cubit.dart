@@ -36,7 +36,6 @@ class DiagnoseFormCubit extends Cubit<DiagnoseFormState> {
   void nameChanged(String key, String value) {
     final values = state.diagnoseValues ?? {};
     values[key] = value;
-    print(values);
     emit(state.copyWith(diagnoseValues: values));
   }
 

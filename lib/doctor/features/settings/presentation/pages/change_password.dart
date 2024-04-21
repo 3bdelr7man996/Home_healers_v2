@@ -20,7 +20,6 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _isVisible = false;
 
   void _toggleVisibility() {
-    print("asd");
     setState(() {
       _isVisible = !_isVisible;
     });
@@ -50,7 +49,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                               context
                                   .read<SettingCubit>()
                                   .showValueForOldpassword(value);
-                              print(state.oldPasswordValue);
                             },
                             onClick: () {
                               context

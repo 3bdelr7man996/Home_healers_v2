@@ -1,5 +1,6 @@
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/my_point_for_patient_widgets.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_state/get_point_state.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/my_point_for_patient_widgets/my_point_header_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/my_point_widgets.dart';

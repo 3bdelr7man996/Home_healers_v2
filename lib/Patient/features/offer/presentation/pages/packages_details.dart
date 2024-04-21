@@ -21,7 +21,6 @@ class _OfferDetailsScreenState extends State<OfferDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.Package.sessionCount);
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(

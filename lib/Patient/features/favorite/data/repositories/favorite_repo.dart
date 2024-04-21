@@ -9,10 +9,7 @@ class FavoriteRepo {
   Future GetFavorite() async {
     FavoriteModel FavoriteResponse =
         FavoriteModel.fromJson(await dataSource.GetFavorite());
-    print("from Repo");
-    print("////////////////////////////////////");
-    print(FavoriteResponse);
-    print("////////////////////////////////////");
+
     return FavoriteResponse;
   }
 }

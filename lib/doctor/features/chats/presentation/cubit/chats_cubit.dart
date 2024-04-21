@@ -100,7 +100,6 @@ class ChatsCubit extends Cubit<ChatsState> {
       //           "id": "$userId",
       //           "msg": state.content,
       //         }));
-      print(response);
     } catch (e) {
       log("send up error $e");
       emit(state.copyWith(sendMsgState: RequestState.failed));
@@ -211,8 +210,8 @@ class ChatsCubit extends Cubit<ChatsState> {
     await di.sl<PusherConfiguration>().pusher.connect();
   }
 
- void unSubscribeChannel(){
-   di.sl<PusherConfiguration>().pusher.unsubscribe(channelName: 'chat.$myId');
+  void unSubscribeChannel() {
+    di.sl<PusherConfiguration>().pusher.unsubscribe(channelName: 'chat.$myId');
     di.sl<PusherConfiguration>().pusher.disconnect();
- }
+  }
 }

@@ -18,7 +18,6 @@ class _ReportScreenState extends State<ReportScreen> {
   bool _isVisible = false;
 
   void _toggleVisibility() {
-    print("asd");
     setState(() {
       _isVisible = !_isVisible;
     });

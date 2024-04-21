@@ -92,8 +92,6 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
   Map<String, bool> checkedValuesMiddlearea = {};
 
   void showCheckBox(var title) {
-    print("asdf");
-    print(title);
     setState(() {
       titleForCheckBox = title;
       if (title == "الرأس") {
@@ -152,7 +150,6 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                           } else {
                             ListOfResult.add(item);
                           }
-                          print(ListOfResult);
 
                           setState(() {
                             checkedValues[item] = value!;

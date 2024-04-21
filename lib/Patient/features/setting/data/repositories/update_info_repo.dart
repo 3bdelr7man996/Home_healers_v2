@@ -10,8 +10,6 @@ class UpdateInfoRepo {
 
   Future<UpdateInfoModel> UpdateInfo(
       {required Map<String, String> body, required List<File> Files}) async {
-    print("bodyyyy== $body");
-    print(Files);
     UpdateInfoModel signUpResponse = UpdateInfoModel.fromJson(
       await dataSource.updateInfo(
         body: body,

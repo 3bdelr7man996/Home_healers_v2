@@ -102,9 +102,6 @@ class ApiBaseHelper {
       request.headers["Authorization"] = 'Bearer ${CacheHelper.getData(
         key: AppStrings.userToken,
       )}';
-      print("asdfasdfasdf");
-      print(request.headers);
-      print("asdfasdfasdf");
 
       //init form data eg,name,description,...
       body?.forEach((key, value) {
@@ -176,14 +173,12 @@ class ApiBaseHelper {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body.toString());
-        // print(responseJson);
         logger.i(
             "REQUEST[$request] StatusCode[${response.statusCode}]=> PATH: $url"
             "=> REQUEST VALUES: $responseJson => HEADERS: ${response.headers}");
         return responseJson;
       case 201 || 202:
         var responseJson = json.decode(response.body.toString());
-        // print(responseJson);
         logger.i(
             "REQUEST[$request] StatusCode[${response.statusCode}]=> PATH: $url"
             "=> REQUEST VALUES: $responseJson => HEADERS: ${response.headers}");

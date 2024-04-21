@@ -28,7 +28,13 @@ import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart'
 import 'package:dr/Patient/features/setting/data/repositories/show_notification_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/add_report_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/evaluation_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/report_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_reservation_cubit.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';

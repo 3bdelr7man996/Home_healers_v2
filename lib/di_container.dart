@@ -46,7 +46,13 @@ import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dar
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/add_report_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/evaluation_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/report_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_reservation_cubit.dart';
 import 'package:dr/config/pusher_config/pusher_config.dart';
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';

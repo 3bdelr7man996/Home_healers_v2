@@ -13,7 +13,6 @@ class GetOffersCubit extends Cubit<GetOffersState> {
   Future<void> GetOffers(BuildContext context) async {
     try {
       GetOffersModel response = await getOffersRepo.getOffers();
-      print(response);
       emit(state.copyWith(AllOffers: response));
     } catch (e) {
       print(e);

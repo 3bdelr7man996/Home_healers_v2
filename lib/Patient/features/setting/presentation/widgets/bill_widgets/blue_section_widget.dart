@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_state/my_order_state.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

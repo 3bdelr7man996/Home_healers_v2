@@ -1,4 +1,5 @@
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_state/get_point_state.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
