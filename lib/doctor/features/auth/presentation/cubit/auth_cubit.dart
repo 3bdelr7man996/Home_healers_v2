@@ -287,12 +287,12 @@ class AuthCubit extends Cubit<AuthState> {
       advertise = await signUpAdverRepo.signUP(
         body: body,
       );
-      AppConstants.pushRemoveNavigator(context,
-          screen: ActivateAccountScreen(
+      AppConstants.customNavigation(context,
+          ActivateAccountScreen(
             email: state.email!,
             isAdvertise: true,
             cacheData: cacheData,
-          ));
+          ),0,0);
       //await cacheData(response);
       initRegisterData();
       emit(state.copyWith(registerState: RequestState.success));

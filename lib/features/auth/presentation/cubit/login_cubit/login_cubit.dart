@@ -50,19 +50,19 @@ class LoginCubit extends Cubit<LoginState> {
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       });
       bool isAdvertise = user?.success?.advertiser?.id != null;
-      if (!(!isAdvertise && user?.success?.activated == 0) ||
-          !(isAdvertise && user?.success?.advertiser?.activated == 0)) {
+      if ((!isAdvertise && user?.success?.activated == 0) ||
+          (isAdvertise && user?.success?.advertiser?.activated == 0)) {
         emit(state.copyWith(loginState: RequestState.success));
         FirebaseAnalyticUtil.logLogin();
         context
             .read<ForgetPasswordCubit>()
             .resendCode(email: user?.success?.email ?? '');
-        AppConstants.pushRemoveNavigator(context,
-            screen: ActivateAccountScreen(
+        AppConstants.customNavigation(context,
+             ActivateAccountScreen(
               email: user?.success?.email ?? '',
               isAdvertise: isAdvertise,
               cacheData: cacheData,
-            ));
+            ),0,0);
       } else {
         await cacheData();
         emit(state.copyWith(loginState: RequestState.success));
