@@ -41,7 +41,7 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
                 ),
                 20.ph,
                 Text(
-                  "في حالة نسيان كلمة السر يمكنك \n  الحصول عليها عن طريق البريد الالكتروني \n  او رقم الهاتف  الخاص بك",
+                  "في حالة نسيان كلمة السر يمكنك \n  الحصول عليها عن طريق البريد الالكتروني \n  او رقم الواتس اب  الخاص بك",
                   style: TextStyle(fontSize: 16.0),
                   textAlign: TextAlign.center,
                 ),
@@ -49,7 +49,7 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
                 Image.asset("assets/images/forget_password.png"),
                 40.ph,
                 TiteldTextFormField(
-                  title: "email".tr(),
+                  title: "البريد الالكتروني او الواتس اب",
                   keyboardType: TextInputType.emailAddress,
                   prefixIconPath: AppImages.emailIcon,
                   validate: true,
@@ -78,11 +78,11 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
                       ),
                       child: const Text(
                         'إعادة تعيين كلمة المرور',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        // style: TextStyle(
+                        //   fontSize: 16,
+                        //   fontWeight: FontWeight.bold,
+                        //   color: Colors.white,
+                        // ),
                       ),
                     );
                   },

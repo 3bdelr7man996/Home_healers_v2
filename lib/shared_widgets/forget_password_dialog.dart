@@ -37,7 +37,7 @@ class PopUpForForgetPassword extends StatelessWidget {
             ),
             10.ph,
             Text(
-              "سيصلك رسالة علي بريدك الالكتروني بها\n رابط لاستعادة كلمة المرور الخاصة بك",
+              "سيصلك رسالة علي بريدك الالكتروني او الواتس اب بها\n رابط لاستعادة كلمة المرور الخاصة بك",
               style: TextStyle(fontSize: 14.0),
               textAlign: TextAlign.center,
             ),
