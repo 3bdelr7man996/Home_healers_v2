@@ -272,8 +272,6 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
-    print("favoriteISTHIs");
-    print(widget.isFav);
     return Row(
       children: [
         Stack(

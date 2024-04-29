@@ -78,11 +78,11 @@ class _ForgetPaswwordScreenState extends State<ForgetPaswwordScreen> {
                       ),
                       child: const Text(
                         'إعادة تعيين كلمة المرور',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        // style: TextStyle(
+                        //   fontSize: 16,
+                        //   fontWeight: FontWeight.bold,
+                        //   color: Colors.white,
+                        // ),
                       ),
                     );
                   },

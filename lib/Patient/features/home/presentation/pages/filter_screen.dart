@@ -42,11 +42,6 @@ class _FiterScreenState extends State<FiterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(context.select((AuthCubit cubit) => cubit.state.areasList));
-    print("//////////////////////////////////////////////////////////////");
-    print(context.select((AuthCubit cubit) => cubit.state.citiesList));
-    print("//////////////////////////////////////////////////////////////");
-
     statusFromData =
         context.select((AuthCubit cubit) => cubit.state.statusList);
     if (statusFromData != null) {
@@ -75,7 +70,6 @@ class _FiterScreenState extends State<FiterScreen> {
         }
       }).toList();
     }
-    // print(context.select((AuthCubit cubit) => cubit.state.departemensList));
     CitesFromData = context.select((AuthCubit cubit) => cubit.state.citiesList);
     if (CitesFromData != null) {
       Cites = CitesFromData.map((city) {
@@ -90,16 +84,17 @@ class _FiterScreenState extends State<FiterScreen> {
       }).toList();
     }
     return Scaffold(
-      appBar: customAppBarForFilter(context,
-          title: "filter_for_search", backButton: true),
+      appBar: customAppBarForFilter(
+        context,
+        title: "filter_for_search",
+        backButton: true,
+      ),
       bottomNavigationBar: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(16),
         child: ElevatedButton(
           onPressed: () async {
             await context.read<FilterCubit>().GetFilterResult(context);
-
-            // AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,

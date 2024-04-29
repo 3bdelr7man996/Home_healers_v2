@@ -13,23 +13,25 @@ PreferredSizeWidget customAppBarForFilter(BuildContext context,
     {String title = '', bool backButton = true, bool fromSetting = false}) {
   return AppBar(
     centerTitle: true,
-    actions: [
-      Padding(
-        padding: EdgeInsets.only(left: 10.0),
-        child: Center(
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Text(
-              "إعادة",
-              style: TextStyle(
-                  color: AppColors.primaryColor, fontWeight: FontWeight.w500),
-            ),
-          ),
-        ),
-      )
-    ],
+    // actions: [
+    //   Padding(
+    //     padding: EdgeInsets.only(left: 10.0),
+    //     child: Center(
+    //       child: InkWell(
+    //         onTap: () {
+    //           Navigator.pop(context);
+    //         },
+    //         child: const Text(
+    //           "إعادة",
+    //           style: TextStyle(
+    //             color: AppColors.primaryColor,
+    //             fontWeight: FontWeight.w500,
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //   )
+    // ],
     leading: backButton
         ? Container(
             margin: const EdgeInsets.all(12.0),
@@ -40,7 +42,7 @@ PreferredSizeWidget customAppBarForFilter(BuildContext context,
             child: IconButton(
               padding: EdgeInsets.zero,
               icon: const Icon(
-                Icons.close,
+                Icons.arrow_back,
                 size: 15,
                 color: AppColors.whiteColor,
               ),

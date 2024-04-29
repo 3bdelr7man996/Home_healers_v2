@@ -210,7 +210,14 @@ class _SignInScreen extends State<SignInScreen> {
                                     -1,
                                     0);
                               },
-                              child: Text('تخطي'),
+                              child: Text(
+                                'تخطي',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                   ],
