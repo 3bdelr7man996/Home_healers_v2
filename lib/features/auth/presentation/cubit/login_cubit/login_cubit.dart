@@ -31,11 +31,13 @@ class LoginCubit extends Cubit<LoginState> {
   final LoginRepo repository;
   //?===================[ LOG OUT ]======================
   void logOut() {
-    CacheHelper.clearData(key: AppStrings.userInfo);
-    CacheHelper.clearData(key: AppStrings.userToken);
-    CacheHelper.clearData(key: AppStrings.isAdvertise);
-    FirebaseMessaging.instance.deleteToken();
-    FirebaseAnalyticUtil.logLogoutEvent();
+    if (CacheHelper.dataSaved(key: AppStrings.userToken)) {
+      CacheHelper.clearData(key: AppStrings.userInfo);
+      CacheHelper.clearData(key: AppStrings.userToken);
+      CacheHelper.clearData(key: AppStrings.isAdvertise);
+      FirebaseMessaging.instance.deleteToken();
+      FirebaseAnalyticUtil.logLogoutEvent();
+    }
   }
 
   //?===========================[ SIGN IN USER ]================================
@@ -57,12 +59,15 @@ class LoginCubit extends Cubit<LoginState> {
         context
             .read<ForgetPasswordCubit>()
             .resendCode(email: user?.success?.email ?? '');
-        AppConstants.customNavigation(context,
-             ActivateAccountScreen(
+        AppConstants.customNavigation(
+            context,
+            ActivateAccountScreen(
               email: user?.success?.email ?? '',
               isAdvertise: isAdvertise,
               cacheData: cacheData,
-            ),0,0);
+            ),
+            0,
+            0);
       } else {
         await cacheData();
         emit(state.copyWith(loginState: RequestState.success));

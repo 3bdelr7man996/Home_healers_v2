@@ -85,7 +85,7 @@ class _SignInScreen extends State<SignInScreen> {
                     ),
                     40.ph,
                     TiteldTextFormField(
-                      title: "${"email".tr()} أو رقم الهاتف ",
+                      title: "${"email".tr()} أو رقم الواتس اب ",
                       keyboardType: TextInputType.emailAddress,
                       prefixIconPath: AppImages.emailIcon,
                       validate: true,
