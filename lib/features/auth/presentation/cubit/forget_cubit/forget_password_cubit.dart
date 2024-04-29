@@ -34,7 +34,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (context) => PopUpForForgetPassword(email: state.email??''),
+        builder: (context) => PopUpForForgetPassword(email: state.email ?? ''),
       );
       //ShowToastHelper.showToast(msg: user!.message, isError: false);
     } on UnauthorisedException catch (e) {
@@ -69,8 +69,8 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     required String email,
     required String code,
     required bool isAdvertise,
-    Function? cacheData,
-    bool fromForgetPass=false,
+    Function({BuildContext? context})? cacheData,
+    bool fromForgetPass = false,
   }) async {
     try {
       emit(state.copyWith(activeState: RequestState.loading));
@@ -80,18 +80,18 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       });
       if (response?.success == true) {
         if (cacheData != null) {
-          cacheData();
-          if(!fromForgetPass)
-          {showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return PopUpDialog(
-                isAdvertise: isAdvertise,
-              );
-            },
-          );
-       }
+          cacheData(context: context);
+          if (!fromForgetPass) {
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) {
+                return PopUpDialog(
+                  isAdvertise: isAdvertise,
+                );
+              },
+            );
+          }
         }
         // ShowToastHelper.showToast(
         //   msg: response?.message ?? "تم التأكيد",
@@ -105,15 +105,13 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
         );
         emit(state.copyWith(activeState: RequestState.failed));
       }
-    } on BadRequestException{
-       ShowToastHelper.showToast(
+    } on BadRequestException {
+      ShowToastHelper.showToast(
         msg: "الكود الذي ادخلته غير صحيح",
         isError: true,
       );
       emit(state.copyWith(activeState: RequestState.failed));
-    
-    }
-    catch (e) {
+    } catch (e) {
       ShowToastHelper.showToast(
         msg: e.toString(),
         isError: true,
@@ -140,6 +138,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
+
   //?============================[RESET PASSWORD]======================================
   Future<void> resetPass(BuildContext context) async {
     try {
@@ -148,7 +147,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
 
       ForgetPasswordModel? user = await repository.resetPassword(body: {
         "password": "${state.newPassword}",
-        "activation_code":"${state.code}",
+        "activation_code": "${state.code}",
         "email": "${state.email}"
       });
       print(user);
@@ -159,7 +158,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
-  
+
   onShowPassChange() => emit(state.copyWith(showPass: !state.showPass));
 
   onpasswordChange(String password) =>
@@ -169,7 +168,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       emit(state.copyWith(confPassword: password));
 
   void resetFieldsValid() {
-    
     if (state.newPassword == null) {
       throw ("ادخل كلمة السر");
     }
@@ -180,6 +178,4 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       throw ("الرجاء المطابقة بين كلمة السر وتأكيد كلمة السر");
     }
   }
-
- 
 }

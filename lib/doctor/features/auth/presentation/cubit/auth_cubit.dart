@@ -296,9 +296,7 @@ class AuthCubit extends Cubit<AuthState> {
       //await cacheData(response);
       initRegisterData();
       emit(state.copyWith(registerState: RequestState.success));
-      log("Register Success");
     } catch (e) {
-      log("Sign up error $e");
       emit(state.copyWith(
         registerState: RequestState.failed,
         // showPopup: false,
@@ -332,7 +330,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   /// save user data in local
-  Future<void> cacheData() async {
+  Future<void> cacheData({BuildContext? context}) async {
     if (advertise != null) {
       await CacheHelper.saveData(
           key: AppStrings.userInfo,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -21,7 +19,7 @@ class ActivateAccountScreen extends StatelessWidget {
   });
   final String email;
   final bool isAdvertise;
-  final Function cacheData;
+  final Function({BuildContext? context})? cacheData;
   final bool fromForgetPass;
   @override
   Widget build(BuildContext context) {
@@ -103,7 +101,6 @@ class ActivateAccountScreen extends StatelessWidget {
                           height: context.height * 0.05,
                           child: ElevatedButton(
                             onPressed: () {
-                              log("email $email");
                               context
                                   .read<ForgetPasswordCubit>()
                                   .activateAccount(

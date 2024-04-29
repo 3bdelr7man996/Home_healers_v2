@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PopUpForForgetPassword extends StatelessWidget {
-  const PopUpForForgetPassword({super.key,required this.email,});
-   final String email;
+  const PopUpForForgetPassword({
+    super.key,
+    required this.email,
+  });
+  final String email;
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -41,14 +44,27 @@ class PopUpForForgetPassword extends StatelessWidget {
             AppConstants.customButton(context, onPressed: () {
               Navigator.pop(context);
               AppConstants.customNavigation(
-                  context, ActivateAccountScreen(email: email,cacheData: ()=>
-                      AppConstants.customNavigation(
-                  context,ConfirmPasswordScreen(),-1,0,),fromForgetPass: true
-                  ,), -1, 0);
+                  context,
+                  ActivateAccountScreen(
+                    email: email,
+                    cacheData: callBack,
+                    fromForgetPass: true,
+                  ),
+                  -1,
+                  0);
             }, title: "متابعة"),
           ],
         ),
       ),
+    );
+  }
+
+  callBack({BuildContext? context}) {
+    AppConstants.customNavigation(
+      context!,
+      ConfirmPasswordScreen(),
+      -1,
+      0,
     );
   }
 }

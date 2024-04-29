@@ -212,7 +212,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   }
 
   /// save user data in local
-  Future<void> cacheData() async {
+  Future<void> cacheData({BuildContext? context}) async {
     if (patient != null) {
       print("Token");
       print(patient!.success.token);

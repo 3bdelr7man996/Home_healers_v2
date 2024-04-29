@@ -96,7 +96,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   /// save user data in local
-  Future<void> cacheData() async {
+  Future<void> cacheData({BuildContext? context}) async {
     if (user?.success?.advertiser?.email != null) {
       //log("${user?.success?.advertiser?.toJson()}");
       await CacheHelper.saveData(
@@ -114,7 +114,6 @@ class LoginCubit extends Cubit<LoginState> {
         key: AppStrings.userId,
         value: user?.success?.id,
       );
-      log("user info: ${CacheHelper.getData(key: AppStrings.userInfo)}");
       await CacheHelper.saveData(
         key: AppStrings.isAdvertise,
         value: false,
