@@ -8,11 +8,13 @@ import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/features/auth/data/models/activation_model.dart';
 import 'package:dr/features/auth/data/models/forget_password_model.dart';
 import 'package:dr/features/auth/data/repositories/forget_password_repo.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/forget_password_dialog.dart';
 import 'package:dr/shared_widgets/pop_up.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 part 'forget_password_state.dart';
 
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
@@ -35,6 +37,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       showDialog(
         context: context,
         barrierDismissible: false,
+        builder: (context) => PopUpForForgetPassword(email: state.email ?? ''),
         builder: (context) => PopUpForForgetPassword(email: state.email ?? ''),
       );
       //ShowToastHelper.showToast(msg: user!.message, isError: false);
@@ -70,7 +73,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     required String email,
     required String code,
     required bool isAdvertise,
-    Function? cacheData,
+    Function({BuildContext? context})? cacheData,
     bool fromForgetPass = false,
   }) async {
     try {
@@ -81,7 +84,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       });
       if (response?.success == true) {
         if (cacheData != null) {
-          cacheData();
+          cacheData(context: context);
           if (!fromForgetPass) {
             showDialog(
               barrierDismissible: false,
@@ -153,6 +156,7 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       });
       print(user);
       emit(state.copyWith(loading: false));
+      context.read<LoginCubit>().logOut();
       AppConstants.pushRemoveNavigator(context, screen: SelectRollForSignIn());
     } catch (e) {
       emit(state.copyWith(loading: false));

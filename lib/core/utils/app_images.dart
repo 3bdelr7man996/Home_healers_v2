@@ -1,6 +1,8 @@
 class AppImages {
   //Images
   static String logoImage = "assets/images/logo.png";
+  static String mainLogo = "assets/images/mainlogo.png";
+  static String mainLogoTransp = "assets/images/mainlogoTrans.png";
   static String placeholderImage = "assets/images/placeholder.png";
   static String doctorPlaceholder = "assets/images/doctor.png";
   static String patientImg = "assets/images/patient.png";
@@ -37,6 +39,8 @@ class AppImages {
   static String chatCall = 'assets/icons/chat_call_icon.svg';
   static String chatVideo = 'assets/icons/chat_video_icon.svg';
   static String mikeIcon = 'assets/icons/mike_icon.svg';
+  static String pauseIcon = 'assets/icons/pause_icon.svg';
+  static String galleryIcon = 'assets/icons/gallery_icon.svg';
   static String emptyNotifications = "assets/icons/no_notifications.svg";
   static String xicon = "assets/icons/xicon.svg";
   static String walletIcon = 'assets/icons/budget_icon_for_payment.svg';
@@ -48,6 +52,8 @@ class AppImages {
   static String likeSign = "assets/icons/like.svg";
   static String settingPerson = "assets/icons/person_setting_icon.svg";
   static String settingLock = "assets/icons/lock_setting_icon.svg";
+  static String delete_acc = "assets/icons/delete_acc.svg";
+  static String deleteIcon = "assets/icons/delete-icon.svg";
   static String settingRequests = "assets/icons/requests_setting_icon.svg";
   static String settingCertificate =
       "assets/icons/certificate_setting_icon.svg";
@@ -64,6 +70,7 @@ class AppImages {
   static String visaCard = 'assets/icons/visa_card_icon.svg';
   static String madaCard = 'assets/icons/mada_card.svg';
   static String americanExCard = 'assets/icons/american_ex_card.svg';
+  static String applePayIcon = 'assets/icons/Apple_pay_icon.svg';
   static String activityIcon = 'assets/icons/activity.png';
   static String task_icon = 'assets/icons/task_icon.png';
   static String pdf_icon = 'assets/icons/pdf_icon.png';

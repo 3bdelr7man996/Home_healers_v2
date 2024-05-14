@@ -59,7 +59,7 @@ class UserData {
     fcmToken = json?['fcm_token'];
     email = json?['email'];
     gender = json?['gender'];
-    cityId = json?['city_id'];
+    cityId = int.tryParse(json?['city_id'].toString() ?? "4");
     token = json?['token'];
     activated = json?['activated'];
     advertiser = Advertiser.fromJson(json?['advertiser']);

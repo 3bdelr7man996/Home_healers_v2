@@ -36,7 +36,9 @@ import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/rep
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_reservation_cubit.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
-import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
 import 'package:dr/doctor/features/home/data/repositories/reservation_orders_repo.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
@@ -176,6 +178,12 @@ MultiBlocProvider blocMultiProvider({required child}) {
         create: (BuildContext context) => ChatsCubit(
           chatsRepo: di.sl<ChatsRepo>(),
         ),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => RecorderCubit(),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => AudioCubit(),
       ),
     ],
     child: child,

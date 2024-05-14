@@ -9,6 +9,9 @@ class ChatsState extends Equatable {
     this.getMsgState = RequestState.initial,
     this.sendMsgState = RequestState.initial,
     this.conversationState = RequestState.initial,
+    this.fileType,
+    this.msgFile,
+    this.playedAudioName = '',
   });
 
   final String? content;
@@ -18,6 +21,10 @@ class ChatsState extends Equatable {
   final RequestState sendMsgState;
   final RequestState getMsgState;
   final RequestState conversationState;
+  final String? fileType;
+  final File? msgFile;
+  final String playedAudioName;
+
   @override
   List<Object?> get props => [
         content,
@@ -27,6 +34,9 @@ class ChatsState extends Equatable {
         sendMsgState,
         getMsgState,
         conversationState,
+        fileType,
+        msgFile,
+        playedAudioName,
       ];
   ChatsState copyWith({
     String? content,
@@ -37,6 +47,9 @@ class ChatsState extends Equatable {
     RequestState? sendMsgState,
     RequestState? getMsgState,
     RequestState? conversationState,
+    String? Function()? fileType,
+    File? Function()? msgFile,
+    String? playedAudioName,
   }) =>
       ChatsState(
         content: content ?? this.content,
@@ -46,5 +59,8 @@ class ChatsState extends Equatable {
         sendMsgState: sendMsgState ?? this.sendMsgState,
         conversationsList: conversationsList ?? this.conversationsList,
         conversationState: conversationState ?? this.conversationState,
+        fileType: fileType != null ? fileType() : this.fileType,
+        msgFile: msgFile != null ? msgFile() : this.msgFile,
+        playedAudioName: playedAudioName ?? this.playedAudioName,
       );
 }

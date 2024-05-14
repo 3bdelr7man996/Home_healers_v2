@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/config/pusher_config/pusher_config.dart';
@@ -17,16 +18,24 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dr/di_container.dart' as di;
+import 'package:image_picker/image_picker.dart';
 
 part 'chats_state.dart';
 
 enum UserType { Advertiser, User }
+
+enum FileType { record, file }
 
 class ChatsCubit extends Cubit<ChatsState> {
   final ChatsRepo chatsRepo;
   ChatsCubit({required this.chatsRepo}) : super(ChatsState());
 
   onContentChange(String value) => emit(state.copyWith(content: value));
+  onChangeFiletype(String? Function()? type) =>
+      emit(state.copyWith(fileType: type));
+  onChangeFile(File? Function()? file) => emit(state.copyWith(msgFile: file));
+  onChangePlayedName(String name) =>
+      emit(state.copyWith(playedAudioName: name));
 
   TextEditingController? msgFieldController = TextEditingController();
   int? userId;
@@ -63,6 +72,8 @@ class ChatsCubit extends Cubit<ChatsState> {
       recieverName =
           "${recieverInfo.advertiser?.firstnameAr} ${recieverInfo.advertiser?.lastnameAr}";
     }
+    onChangeFile(() => null);
+    onChangeFiletype(() => null);
   }
 
   ///Send A Message
@@ -78,11 +89,14 @@ class ChatsCubit extends Cubit<ChatsState> {
         "content": "${state.content}",
         "sender_type": senderType!,
         "receiver_type": recieverType!,
-        "reciver_id": "$recieverId"
+        "reciver_id": "$recieverId",
+        "type": state.fileType ?? '',
       };
       msgFieldController?.clear();
       Messages response = await chatsRepo.sendMessage(
         body: body,
+        fileKey: 'file',
+        files: state.msgFile != null ? [state.msgFile!] : null,
       );
       myMessages.add(response);
 
@@ -90,16 +104,11 @@ class ChatsCubit extends Cubit<ChatsState> {
         sendMsgState: RequestState.success,
         content: '',
         messagesList: myMessages.reversed.toList(),
+        fileType: () => null,
+        msgFile: () => null,
       ));
 
-      // await di.sl<PusherConfiguration>().pusher.trigger(PusherEvent(
-      //         userId: "$userId",
-      //         channelName: "chat.$userId",
-      //         eventName: "ChatMessageSent",
-      //         data: {
-      //           "id": "$userId",
-      //           "msg": state.content,
-      //         }));
+      print(response);
     } catch (e) {
       log("send up error $e");
       emit(state.copyWith(sendMsgState: RequestState.failed));
@@ -109,7 +118,8 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   ///validate on fields
   void fieldsValidation() {
-    if (state.content!.length == 0) throw ("ادخل رسالتك");
+    if (state.content!.length == 0 && state.msgFile == null)
+      throw ("ادخل رسالتك");
   }
 
   List<Messages> myMessages = [];
@@ -213,5 +223,22 @@ class ChatsCubit extends Cubit<ChatsState> {
   void unSubscribeChannel() {
     di.sl<PusherConfiguration>().pusher.unsubscribe(channelName: 'chat.$myId');
     di.sl<PusherConfiguration>().pusher.disconnect();
+  }
+
+  //?==========================[ PICK IMAGE FILE ]==============================
+  Future<void> pickImage(BuildContext context) async {
+    final picker = ImagePicker();
+    try {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        emit(state.copyWith(
+            msgFile: () => File(pickedFile.path),
+            fileType: () => FileType.file.name));
+        await sendMessage(context);
+      }
+    } catch (e) {
+      log("Error picking image: $e");
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
   }
 }

@@ -12,21 +12,21 @@ class AppException implements Exception {
 
 class FetchDataException extends AppException {
   FetchDataException([String? message])
-      : super(message, "Error During Communication: ");
+      : super(message, " خطأ أثناء الأتصال بالخادم,");
 }
 
 class BadRequestException extends AppException {
   BadRequestException([ResponseFailure? message])
-      : super('${message?.message}', "Invalid Request: ");
+      : super('${message?.message}', "طلب غير صالح ,  ");
 }
 
 class UnauthorisedException extends AppException {
   UnauthorisedException([ResponseFailure? message])
-      : super(' ${message?.message}', "Unauthorised ");
+      : super(' ${message?.message}', "غير مصرح , ");
 }
 
 class InvalidInputException extends AppException {
-  InvalidInputException([String? message]) : super(message, "Invalid Input: ");
+  InvalidInputException([String? message]) : super(message, "مدخل غير صالح, ");
 }
 
 class ResponseFailure {

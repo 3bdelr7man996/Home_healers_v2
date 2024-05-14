@@ -1,12 +1,15 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/change_password_widgets.dart';
+import 'package:dr/features/auth/presentation/pages/forget_password_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -60,10 +63,16 @@ class _ChangePasswordState extends State<ChangePassword> {
                             icon: AppImages.passwordIcon,
                           ),
                           5.ph,
-                          Text(
-                            "forget_your_password".tr(),
-                            style: TextStyle(color: AppColors.primaryColor),
-                            textAlign: TextAlign.end,
+                          InkWell(
+                            onTap: () {
+                              AppConstants.customNavigation(
+                                  context, ForgetPaswwordScreen(), -1, 0);
+                            },
+                            child: Text(
+                              "forget_your_password".tr(),
+                              style: TextStyle(color: AppColors.primaryColor),
+                              textAlign: TextAlign.end,
+                            ),
                           )
                         ],
                       ),

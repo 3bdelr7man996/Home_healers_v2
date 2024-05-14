@@ -1,12 +1,19 @@
+import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/features/splash/presentation/pages/secondScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:dr/di_container.dart' as di;
 
 class FirstScreen extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback(
+        (_) => di.sl<FirebaseMessagingService>().requestNotificPermission());
+
+    @override
     var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
@@ -91,6 +98,8 @@ class FirstScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    CacheHelper.saveData(
+                        key: AppStrings.firstTime, value: false);
                     AppConstants.customNavigation(
                         context, SecondScreen(), 1, 0);
                   },
@@ -112,6 +121,7 @@ class FirstScreen extends StatelessWidget {
               padding: const EdgeInsets.only(top: 3),
               child: InkWell(
                 onTap: () {
+                  CacheHelper.saveData(key: AppStrings.firstTime, value: false);
                   AppConstants.customNavigation(
                       context, SelectRollForSignIn(), -0.5, -0.5);
                 },

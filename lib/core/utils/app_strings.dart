@@ -5,6 +5,7 @@ class AppStrings {
       "http://admin.home-healers.com/upload/"; // "https://dev.home-healers.com/upload/";
   static String divSecondUrl =
       "https://home-healers.com"; // "https://testing.home-healers.com";
+  static String secondImgUrl = "https://home-healers.com/public/";
 
   //api url
   static String advertiseSignUp = "/api/registerAdv";
@@ -31,6 +32,7 @@ class AppStrings {
   static String reservationDetails = "/api/reservaionGetByID";
   static String activate_acc = "/api/activateAccount";
   static String forget_pass = "/api/forgetPassword";
+  static String delete_acc = "/api/deleteaccount";
 
   //api url for patient
   static String patientSignUp = "/api/user/register";
@@ -63,7 +65,8 @@ class AppStrings {
   static String PUSHER_APP_KEY = '7256046f50a9f3e2a17a';
   static String PUSHER_APP_SECRET = '21720d29ec15b4099ca2';
   static String PUSHER_APP_CLUSTER = 'eu';
-
+  
+  static bool TRACK_AUTH=true;
   static String mapApiKey = "AIzaSyBL3got10NTJkmjKT9fgaDPraXxqgb33EQ";
   //Demo
   static String placeHolderNetwImg =

@@ -284,18 +284,16 @@ class AuthCubit extends Cubit<AuthState> {
       advertise = await signUpAdverRepo.signUP(
         body: body,
       );
-      AppConstants.pushRemoveNavigator(context,
-          screen: ActivateAccountScreen(
+      AppConstants.customNavigation(context,
+          ActivateAccountScreen(
             email: state.email!,
             isAdvertise: true,
             cacheData: cacheData,
-          ));
+          ),0,0);
       //await cacheData(response);
       initRegisterData();
       emit(state.copyWith(registerState: RequestState.success));
-      log("Register Success");
     } catch (e) {
-      log("Sign up error $e");
       emit(state.copyWith(
         registerState: RequestState.failed,
         // showPopup: false,
@@ -329,7 +327,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   /// save user data in local
-  Future<void> cacheData() async {
+  Future<void> cacheData({BuildContext? context}) async {
     if (advertise != null) {
       await CacheHelper.saveData(
           key: AppStrings.userInfo,

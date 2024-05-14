@@ -32,5 +32,15 @@ ThemeData appTheme() {
           ),
           borderRadius: BorderRadius.circular(15)),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+      backgroundColor: AppColors.primaryColor,
+       foregroundColor: Colors.white,
+      shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),) ,
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    )),
   );
 }

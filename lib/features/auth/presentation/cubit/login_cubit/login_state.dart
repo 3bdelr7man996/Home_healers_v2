@@ -6,8 +6,10 @@ class LoginState extends Equatable {
     this.password,
     this.obscurePass = true,
     this.loginState = RequestState.initial,
+    this.deleteState = RequestState.initial,
   });
   final RequestState loginState;
+  final RequestState deleteState;
   final String? email;
   final String? password;
   final bool obscurePass;
@@ -15,6 +17,7 @@ class LoginState extends Equatable {
   @override
   List<Object?> get props => [
         loginState,
+        deleteState,
         email,
         password,
         obscurePass,
@@ -22,12 +25,14 @@ class LoginState extends Equatable {
 
   LoginState copyWith({
     RequestState? loginState,
+    RequestState? deleteState,
     String? email,
     String? password,
     bool? obscurePass,
   }) =>
       LoginState(
         loginState: loginState ?? this.loginState,
+        deleteState: deleteState ?? this.deleteState,
         email: email ?? this.email,
         password: password ?? this.password,
         obscurePass: obscurePass ?? this.obscurePass,

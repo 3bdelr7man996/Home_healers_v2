@@ -58,7 +58,7 @@ import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dar
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
 import 'package:dr/doctor/features/chats/data/datasources/chats_ds.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
-import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
 import 'package:dr/doctor/features/notification/data/data_source/notifications_ds.dart';
 import 'package:dr/doctor/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:dr/doctor/features/settings/data/data_source/settings_ds.dart';
@@ -80,6 +80,8 @@ import 'config/notifications_config/local_notification_config.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/http_helper.dart';
 import 'doctor/features/auth/presentation/cubit/auth_cubit.dart';
+import 'doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
+import 'doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'doctor/features/diagnose_report/data/datasources/diagnose_report_ds.dart';
 import 'doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
 import 'doctor/features/home/data/datasources/reservations_orders_ds.dart';
@@ -131,6 +133,8 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => LoginCubit(repository: sl()));
   sl.registerFactory(() => NotificationCubit(repository: sl()));
   sl.registerFactory(() => ChatsCubit(chatsRepo: sl()));
+  sl.registerFactory(() => RecorderCubit());
+  sl.registerFactory(() => AudioCubit());
 
   //PATIENT DATA SOURCE
   sl.registerLazySingleton(() => PatientSignUpDS(apiHelper: sl()));

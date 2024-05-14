@@ -3,9 +3,10 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_state/my_order_state.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class BlueSection extends StatefulWidget {
   var oneOrder;
@@ -32,8 +33,8 @@ class _BlueSectionState extends State<BlueSection> {
                     Text(
                       "التاريخ و الوقت : ${widget.oneOrder.createdAt}",
                     ),
-                    SvgPicture.asset(
-                      "assets/images/mainlogo.svg",
+                    AppConstants.customAssetImage(
+                      imagePath: AppImages.mainLogo,
                       width: 45,
                       height: 45,
                     ),

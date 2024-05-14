@@ -15,6 +15,7 @@ import 'package:dr/doctor/features/settings/presentation/pages/edit_profile_scre
 import 'package:dr/doctor/features/settings/presentation/pages/my_point_screen.dart';
 import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
+import 'package:dr/shared_widgets/delete_account_dialog.dart';
 import 'package:dr/shared_widgets/html_body.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -83,6 +84,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     iconPath: AppImages.settingPoints,
                     title: "my_point".tr(),
                     routeScreen: const MyPointScreen(),
+                  ),
+                  15.ph,
+                  OneOption(
+                    iconPath: AppImages.delete_acc,
+                    title: "حذف الحساب",
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => DeleteAccountDialog(),
+                      );
+                    },
                   ),
                   15.ph,
                   const Divider(thickness: 0.5),

@@ -1,5 +1,6 @@
 import 'package:dr/config/notifications_config/firebase_messages.dart';
 import 'package:dr/core/utils/deep_link_util.dart';
+import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/all_request_widgets/all_request_appbar.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dr/di_container.dart' as di;
 
 class Allrequests extends StatefulWidget {
-  const Allrequests({super.key,this.fromSetting=false});
+  const Allrequests({super.key, this.fromSetting = false});
   final bool fromSetting;
   @override
   State<Allrequests> createState() => _AllrequestsState();
@@ -21,9 +22,12 @@ class _AllrequestsState extends State<Allrequests> {
 
   @override
   void initState() {
+    di.sl<FirebaseMessagingService>().requestNotificPermission();
     DeepLinkHandler().init(context);
     di.sl<FirebaseMessagingService>().onRecieveNotification(context);
     context.read<ReservationsCubit>().getReservationStatus();
+    FirebaseAnalyticUtil.logAppOpen();
+
     super.initState();
   }
 
@@ -32,20 +36,23 @@ class _AllrequestsState extends State<Allrequests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-         AppBarForHome(fromSetting: widget.fromSetting,),
+        AppBarForHome(
+          fromSetting: widget.fromSetting,
+        ),
         //30.ph,
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 15.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if(!widget.fromSetting)
-                Text(
-                  "all_requests".tr(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20.0),
-                ),
+                if (!widget.fromSetting)
+                  Text(
+                    "all_requests".tr(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20.0),
+                  ),
                 //20.ph,
                 const RequestsCardList(),
               ],

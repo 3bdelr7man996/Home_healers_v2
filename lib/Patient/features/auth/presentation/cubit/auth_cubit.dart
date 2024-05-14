@@ -141,12 +141,12 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
       ));
       patient = await signUpPatientRepo.signUP(body: body);
       print(patient);
-      AppConstants.pushRemoveNavigator(context,
-          screen: ActivateAccountScreen(
+      AppConstants.customNavigation(context,
+           ActivateAccountScreen(
             email: state.email!,
             isAdvertise: false,
             cacheData: cacheData,
-          ));
+          ),0,0);
 
       //await cacheData(response);
       emit(state.copyWith(requestStatus: false));
@@ -212,7 +212,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   }
 
   /// save user data in local
-  Future<void> cacheData() async {
+  Future<void> cacheData({BuildContext? context}) async {
     if (patient != null) {
       print("Token");
       print(patient!.success.token);

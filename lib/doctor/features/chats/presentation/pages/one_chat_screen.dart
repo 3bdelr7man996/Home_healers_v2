@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:dr/core/utils/http_helper.dart';
-import 'package:dr/doctor/features/chats/presentation/cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
+import 'package:dr/doctor/features/chats/presentation/cubit/record_cubit/record_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/chat_widgets/chat_appbar.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/chat_widgets/float_sender_msg.dart';
 import 'package:dr/doctor/features/chats/presentation/widgets/chat_widgets/reciver_buble.dart';
@@ -10,6 +14,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:record/record.dart';
 
 class OneChatScreen extends StatefulWidget {
   const OneChatScreen(
@@ -24,6 +29,10 @@ class OneChatScreen extends StatefulWidget {
 class _OneChatScreenState extends State<OneChatScreen> {
   ScrollController _scrollController = ScrollController();
   PusherChannel? myChannel;
+  StreamSubscription<RecordState>? recordSub;
+
+  // StreamSubscription<Amplitude>? _amplitudeSub;
+
   @override
   void initState() {
     context.read<ChatsCubit>().initChatData(
@@ -31,12 +40,13 @@ class _OneChatScreenState extends State<OneChatScreen> {
           recieverInfo: widget.recieverInfo,
         );
     context.read<ChatsCubit>().getAllMessage();
-    //.then((value) {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    // });
-    // });
     context.read<ChatsCubit>().subscribeChannel();
+
+    recordSub =
+        context.read<RecorderCubit>().recordStateStream.listen((recordState) {
+      context.read<RecorderCubit>().updateRecordState(recordState);
+    });
+
     super.initState();
   }
 
@@ -44,16 +54,17 @@ class _OneChatScreenState extends State<OneChatScreen> {
   void dispose() {
     // context.read<ChatsCubit>().disposeController();
     _scrollController.dispose();
-   
+    recordSub?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvoked: (didPop){
-        if(didPop==true){
-           context.read<ChatsCubit>().unSubscribeChannel();
+      onPopInvoked: (didPop) {
+        if (didPop == true) {
+          context.read<AudioCubit>().dispose();
+          context.read<ChatsCubit>().unSubscribeChannel();
         }
       },
       child: Scaffold(
@@ -62,47 +73,36 @@ class _OneChatScreenState extends State<OneChatScreen> {
           //floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           // floatingActionButton: SenderMessageSection(),
           body: BlocBuilder<ChatsCubit, ChatsState>(
-            builder: (context, state) 
-             {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                     (state.getMsgState == RequestState.loading)?
-                 Expanded(child: CustomLoader(padding: 0)):
-                
-               (state.getMsgState == RequestState.success &&
-                  state.messagesList!.isNotEmpty)? 
-                    
-                       Expanded(
-                      child: ListView.builder(
-                        reverse: true,
-                        dragStartBehavior: DragStartBehavior.down,
-                        controller: _scrollController,
-                        padding: EdgeInsets.all(8.0),
-                        itemCount: state.messagesList?.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return state.messagesList?[index].senderType ==
-                                  context.read<ChatsCubit>().senderType
-                              ? SenderBuble(
-                                  content:
-                                      state.messagesList?[index].content ?? '',
-                                  createdAt:
-                                      state.messagesList?[index].createdAt ?? '')
-                              : ReciveBuble(
-                                  content:
-                                      state.messagesList?[index].content ?? '',
-                                  createdAt:
-                                      state.messagesList?[index].createdAt ?? '');
-                        },
-                      ),
-                    )
-                   :
-                 SizedBox.shrink(),
-              
-                    SenderMessageSection(),
-                  ],
-                );
-              
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  (state.getMsgState == RequestState.loading)
+                      ? Expanded(child: CustomLoader(padding: 0))
+                      : (state.getMsgState == RequestState.success &&
+                              state.messagesList!.isNotEmpty)
+                          ? Expanded(
+                              child: ListView.builder(
+                                reverse: true,
+                                dragStartBehavior: DragStartBehavior.down,
+                                controller: _scrollController,
+                                padding: EdgeInsets.all(8.0),
+                                itemCount: state.messagesList?.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return state.messagesList?[index]
+                                              .senderType ==
+                                          context.read<ChatsCubit>().senderType
+                                      ? SenderBuble(
+                                          message: state.messagesList?[index])
+                                      : ReciveBuble(
+                                          message: state.messagesList?[index]);
+                                },
+                              ),
+                            )
+                          : SizedBox.shrink(),
+                  SenderMessageSection(),
+                ],
+              );
             },
           )),
     );

@@ -16,6 +16,9 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
+import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
+import 'package:dr/shared_widgets/delete_account_dialog.dart';
 import 'package:dr/shared_widgets/html_body.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +99,7 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                               title: "طلباتي",
                               routeScreen: MyRequestsForPatient(),
                             ),
-                            15.ph,
+                            // 15.ph,
                             // const OneOptionForPatient(
                             //   iconPath:
                             //       "assets/icons/budget_icon_for_payment.svg",
@@ -115,6 +118,17 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                               iconPath: "assets/icons/lock_setting_icon.svg",
                               title: "تغيير الرقم السري",
                               routeScreen: ChangePassword(),
+                            ),
+                            15.ph,
+                            OneOption(
+                              iconPath: AppImages.delete_acc,
+                              title: "حذف الحساب",
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => DeleteAccountDialog(),
+                                );
+                              },
                             ),
                             15.ph,
                             const Divider(thickness: 0.5),

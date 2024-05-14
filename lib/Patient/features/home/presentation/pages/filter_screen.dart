@@ -87,16 +87,17 @@ class _FiterScreenState extends State<FiterScreen> {
       }).toList();
     }
     return Scaffold(
-      appBar: customAppBarForFilter(context,
-          title: "filter_for_search", backButton: true),
+      appBar: customAppBarForFilter(
+        context,
+        title: "filter_for_search",
+        backButton: true,
+      ),
       bottomNavigationBar: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(16),
         child: ElevatedButton(
           onPressed: () async {
             await context.read<FilterCubit>().GetFilterResult(context);
-
-            // AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primaryColor,

@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dr/core/extensions/media_query_extension.dart';
-import 'package:dr/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,9 +12,8 @@ import 'package:path/path.dart';
 class PhotoViewerRouteWrapper extends StatefulWidget {
   const PhotoViewerRouteWrapper({
     super.key,
-    this.imageProvider,
     this.loadingBuilder,
-    this.filePath,
+    required this.filePath,
     this.typeOfFile,
     this.backgroundDecoration,
     this.minScale,
@@ -25,9 +23,9 @@ class PhotoViewerRouteWrapper extends StatefulWidget {
     this.filterQuality = FilterQuality.none,
     this.disableGestures,
     this.errorBuilder,
+    this.imgBaseUrl = 'http://admin.home-healers.com/upload/',
   });
-
-  final ImageProvider? imageProvider;
+  final String imgBaseUrl;
   final LoadingBuilder? loadingBuilder;
   final BoxDecoration? backgroundDecoration;
   final dynamic minScale;
@@ -61,7 +59,7 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
   }
 
   Future<void> loadNetwork() async {
-    var url = '${AppStrings.imageUrl}${widget.filePath}';
+    var url = '${widget.imgBaseUrl} ${widget.filePath}';
     print(url);
     final response = await http.get(Uri.parse(url));
     print(url);
@@ -92,13 +90,13 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
             ? Container(
                 child: Center(
                   child: PDFView(
-                    filePath: '${AppStrings.imageUrl}${widget.filePath}',
+                    filePath: '${widget.imgBaseUrl}${widget.filePath}',
                   ),
                 ),
               )
             : PhotoView(
                 imageProvider: NetworkImage(
-                  '${AppStrings.imageUrl}${widget.filePath}',
+                  '${widget.imgBaseUrl}${widget.filePath}',
                 ),
                 backgroundDecoration: widget.backgroundDecoration,
                 // const BoxDecoration(

@@ -12,4 +12,10 @@ class LoginRepo {
         UserModel.fromJson(await dataSource.userLogin(body: body));
     return apiResponse;
   }
+
+  Future<String> deleteAcc({required int userId}) async {
+    Map<String, dynamic>? apiResponse =
+        await dataSource.deleteAcc(userId: userId);
+    return apiResponse?['message'] ?? "فشل حذف الحساب";
+  }
 }
