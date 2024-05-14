@@ -87,7 +87,7 @@ class FirstSection extends StatelessWidget {
                                     for (int i = 0;
                                         i < AllOffers!.offers.length;
                                         i++)
-                                      AllOffers!.offers[i].id == offerId
+                                      AllOffers?.offers[i].id == offerId
                                           ? Expanded(
                                               child: Text(AllOffers!
                                                       .offers[i].description ??
@@ -97,14 +97,11 @@ class FirstSection extends StatelessWidget {
                                     for (int i = 0;
                                         i < value.AllPackages!.packages.length;
                                         i++)
-                                      value.AllPackages!.packages[i].id ==
+                                      value.AllPackages?.packages[i].id ==
                                               offerId
                                           ? Expanded(
-                                              child: Text(value
-                                                      .AllPackages!
-                                                      .packages[i]
-                                                      .description ??
-                                                  "عن طريق الباكدج"))
+                                              child: Text(value.AllPackages!
+                                                  .packages[i].description))
                                           : SizedBox()
                                 ],
                               );

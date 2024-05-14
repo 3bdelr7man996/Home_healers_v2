@@ -38,7 +38,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
         context: context,
         barrierDismissible: false,
         builder: (context) => PopUpForForgetPassword(email: state.email ?? ''),
-        builder: (context) => PopUpForForgetPassword(email: state.email ?? ''),
       );
       //ShowToastHelper.showToast(msg: user!.message, isError: false);
     } on UnauthorisedException catch (e) {
