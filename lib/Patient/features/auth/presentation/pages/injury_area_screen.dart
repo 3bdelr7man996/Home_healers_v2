@@ -1,10 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/auth/presentation/widgets/injury_area_widgets.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,18 +15,21 @@ import '../../../home/presentation/pages/date_of_session_screen.dart';
 class InjuryAreaScreen extends StatefulWidget {
   var sessionCountForOffer,
       numberOfIcon,
-      Data,
       fromOffer,
       SectiondetailsTitle,
       fromFilter,
       status_id,
       fromPackage;
+  Advertiser? doctorInfo;
+  bool fromFav;
+
   InjuryAreaScreen(
       {super.key,
       this.sessionCountForOffer,
       this.numberOfIcon,
       this.fromFilter = false,
-      this.Data,
+      this.fromFav = false,
+      this.doctorInfo,
       this.fromOffer,
       this.fromPackage = false,
       this.SectiondetailsTitle,
@@ -88,8 +92,6 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
   Map<String, bool> checkedValuesMiddlearea = {};
 
   void showCheckBox(var title) {
-    print("asdf");
-    print(title);
     setState(() {
       titleForCheckBox = title;
       if (title == "الرأس") {
@@ -148,7 +150,6 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                           } else {
                             ListOfResult.add(item);
                           }
-                          print(ListOfResult);
 
                           setState(() {
                             checkedValues[item] = value!;
@@ -180,7 +181,8 @@ class _InjuryAreaScreenState extends State<InjuryAreaScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DateOfSessionScreen(
-                                Data: widget.Data,
+                                fromFav: widget.fromFav,
+                                doctorInfo: widget.doctorInfo,
                                 fromFilter: widget.fromFilter,
                                 fromPackages: widget.fromPackage,
                                 status_id: widget.status_id,

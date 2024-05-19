@@ -27,6 +27,16 @@ class User {
     required this.advertiser,
     required this.message,
     required this.activationCode,
+    this.activated,
+    this.age,
+    this.birthday,
+    this.countryCode,
+    this.isOnlineForChat,
+    this.line1,
+    this.line2,
+    this.nationality,
+    this.points,
+    this.region,
   });
   late final int id;
   late final String? name;
@@ -36,6 +46,16 @@ class User {
   late final Advertiser? advertiser;
   late final String? message;
   late final String? activationCode;
+  late final int? points;
+  late final int? activated;
+  late final String? line1;
+  late final String? line2;
+  late final String? age;
+  late final String? birthday;
+  late final String? region;
+  late final String? nationality;
+  late final String? countryCode;
+  late final int? isOnlineForChat;
 
   User.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -46,6 +66,16 @@ class User {
     advertiser = Advertiser.fromJson(json?['advertiser']);
     message = json?['message'];
     activationCode = json?['activation_code'];
+    points = json?['points'];
+    activated = json?['activated'];
+    line1 = json?['line1'];
+    line2 = json?['line2'];
+    age = json?['age'];
+    birthday = json?['birthday'];
+    countryCode = json?['country_code'];
+    region = json?['region'];
+    nationality = json?['nationality'];
+    isOnlineForChat = json?['is_online_for_chat'];
   }
 
   Map<String, dynamic> toJson() {

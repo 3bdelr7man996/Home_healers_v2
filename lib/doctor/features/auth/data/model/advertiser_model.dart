@@ -1,6 +1,9 @@
+import 'package:dr/Patient/features/offer/data/models/get_offers_model.dart';
 import 'package:dr/doctor/features/auth/data/model/status_model.dart';
 
 import 'departements_model.dart';
+import 'rates_model.dart';
+import 'working_hours_model.dart';
 
 class Advertiser {
   Advertiser({
@@ -43,6 +46,11 @@ class Advertiser {
     this.nameEn,
     this.categories,
     this.statusAdvisor,
+    this.workinghours,
+    this.offers,
+    this.rates,
+    this.reservationsCount,
+    this.years,
   });
   late final int? id;
   late final String? firstnameAr;
@@ -83,6 +91,11 @@ class Advertiser {
   late final String? nameEn;
   late final List<Categories>? categories;
   late final List<StatusData>? statusAdvisor;
+  late final Workinghours? workinghours;
+  late final List<Rates>? rates;
+  var years;
+  late final int? reservationsCount;
+  late final List<Offers>? offers;
 
   Advertiser.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -125,6 +138,7 @@ class Advertiser {
     rating = json?['rating'];
     nameAr = json?['name_ar'];
     nameEn = json?['name_en'];
+    years = json?['years'];
     categories = json?['categories'] != null
         ? List.from(json?['categories'])
             .map((e) => Categories.fromJson(e))
@@ -135,7 +149,21 @@ class Advertiser {
             .map((e) => StatusData.fromJson(e))
             .toList()
         : null;
-
+    workinghours = json?['workinghours'] != null
+        ? new Workinghours.fromJson(json?['workinghours'])
+        : null;
+    if (json?['rates'] != null) {
+      rates = <Rates>[];
+      json?['rates'].forEach((v) {
+        rates!.add(new Rates.fromJson(v));
+      });
+    }
+    if (json?['offers'] != null) {
+      offers = <Offers>[];
+      json?['offers'].forEach((v) {
+        offers?.add(new Offers.fromJson(v));
+      });
+    }
     // List.castFrom<dynamic, dynamic>(json?['status_advisor']);
   }
 
@@ -163,8 +191,8 @@ class Advertiser {
     data['country_id'] = countryId;
     data['city_id'] = cityId;
     data['area_id'] = areaId;
-    data['startfrom'] =startfrom!=null? startfrom.toString():null;
-    data['endat'] =endat!=null? endat.toString():null;
+    data['startfrom'] = startfrom != null ? startfrom.toString() : null;
+    data['endat'] = endat != null ? endat.toString() : null;
     data['session_price'] = sessionPrice;
     data['session_dur'] = sessionDur;
     data['lat'] = lat;

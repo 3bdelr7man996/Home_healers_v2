@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/favorite/presentation/pages/favorite_screen.dart';
 import 'package:dr/Patient/features/home/presentation/pages/sections_screen.dart';
 import 'package:dr/Patient/features/offer/presentation/pages/offer_and_packages_screen.dart';

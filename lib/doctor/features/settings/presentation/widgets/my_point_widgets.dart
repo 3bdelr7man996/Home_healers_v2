@@ -23,11 +23,6 @@ class Activity extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const Text(
-            //   'أمس',
-            //   style: TextStyle(fontSize: 18),
-            // ),
-            10.ph,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

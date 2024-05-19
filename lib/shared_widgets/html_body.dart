@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/home/presentation/widgets/home_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/home_widgets/home_widgets.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';

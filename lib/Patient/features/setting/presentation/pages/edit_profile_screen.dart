@@ -2,18 +2,18 @@
 
 import 'dart:convert';
 
-import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets/choose_city_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets/choose_gender_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets/profile_image_for_patient_widget.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_font.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
-import 'package:dr/shared_widgets/gender_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +43,6 @@ class _EditProfileScreenForPatientState
     getAttributeFromSharedPreferences().then((value) {
       setState(() {
         userInfo = value;
-
         jsonData = jsonDecode(userInfo);
         List<String> words = jsonData["name"].split(" ");
         FirstName = words[0];
@@ -69,7 +68,6 @@ class _EditProfileScreenForPatientState
     });
   }
 
-  int x = 0;
   @override
   Widget build(BuildContext context) {
     var cities = context.select((AuthCubit cubit) => cubit.state.citiesList);
@@ -77,8 +75,6 @@ class _EditProfileScreenForPatientState
       if (cities[i].id.toString() == jsonData?["city_id"])
         context.read<UpdateInfoCubit>().oncitySelectedChange(cities[i].nameAr!);
     }
-    print(jsonData);
-
     return Scaffold(
         appBar: customAppBar(
           context,
@@ -135,71 +131,10 @@ class _EditProfileScreenForPatientState
                             prefixIconPath: AppImages.phoneIcon,
                           ),
                           30.ph,
-                          Container(
-                            width: context.width,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "اختر الجنس".tr(),
-                                  style:
-                                      bigBlackFont(fontWeight: FontWeight.w500),
-                                ),
-                                5.ph,
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GenderButton(
-                                        gender: "male",
-                                        title: "male",
-                                        fromSetting: true),
-                                    GenderButton(
-                                        gender: "female",
-                                        title: "female",
-                                        fromSetting: true)
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
+                          ChooseGenderForProfile(),
                           30.ph,
-                          BlocBuilder<AuthCubit, AuthState>(
-                            builder: (context, state) {
-                              return Container(
-                                width: context.width,
-                                child: BlocBuilder<UpdateInfoCubit,
-                                    UpdateInfoState>(
-                                  builder: (context, updateInfoState) {
-                                    return DropdownButton<String>(
-                                      value: updateInfoState.citySelected,
-                                      items: state.citiesList
-                                          ?.map((city) => DropdownMenuItem(
-                                              value: city.nameAr,
-                                              child: Text(city.nameAr!)))
-                                          .toList(),
-                                      onChanged: (value) {
-                                        context
-                                            .read<UpdateInfoCubit>()
-                                            .oncitySelectedChange(value);
-
-                                        var val;
-                                        for (int i = 0;
-                                            i < cities.length;
-                                            i++) {
-                                          if (cities[i].nameAr == value) {
-                                            val = cities[i].id;
-                                          }
-                                        }
-                                        context
-                                            .read<UpdateInfoCubit>()
-                                            .onCityIdChange(val.toString());
-                                      },
-                                    );
-                                  },
-                                ),
-                              );
-                            },
+                          ChooseCityForProfile(
+                            cities: cities,
                           ),
                           30.ph,
                           SizedBox(

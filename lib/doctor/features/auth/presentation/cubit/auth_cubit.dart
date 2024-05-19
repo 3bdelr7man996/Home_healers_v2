@@ -92,11 +92,8 @@ class AuthCubit extends Cubit<AuthState> {
           .where((element) => element != null)
           .toList();
       areas = areas[0] as List<dynamic>;
-      print(areas);
 
       emit(state.copyWith(areasList: areas));
-      print(state.areasList);
-      print("Functionnnnnn");
     }
   }
 
@@ -352,9 +349,7 @@ class AuthCubit extends Cubit<AuthState> {
   ///get user info from local data
   Map<String, dynamic> userInfo() {
     final String stringUser = CacheHelper.getData(key: AppStrings.userInfo);
-    if (kDebugMode) {
-      print(stringUser);
-    }
+    if (kDebugMode) {}
     Map<String, dynamic> user = jsonDecode(stringUser);
     return user;
   }

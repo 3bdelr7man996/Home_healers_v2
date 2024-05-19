@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/add_report_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets/report_for_me_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets/report_for_specialist_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
@@ -28,14 +29,6 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
       );
 
       if (result != null) {
-        print(result);
-        // List<String> parts = result.files.single.path!.split('/');
-        // String photoName = parts.last;
-        // List<String> chars = result.files.single.path!.split('');
-        // chars.removeAt(0);
-        // String newString = chars.join('');
-        // print('${photoName}');
-        // print('${File(result.files.single.name)}');
         File image = File(result.files.single.path!);
         String name = result.files.single.name;
         await context
@@ -144,60 +137,3 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
     );
   }
 }
-
-// class PDFViewer extends StatefulWidget {
-//   final String filePath;
-
-//   const PDFViewer({required this.filePath});
-
-//   @override
-//   _PDFViewerState createState() => _PDFViewerState();
-// }
-
-// class _PDFViewerState extends State<PDFViewer> {
-//   late File Pfile;
-//   bool isLoading = false;
-//   Future<void> loadNetwork() async {
-//     setState(() {
-//       isLoading = true;
-//     });
-//     var url = widget.filePath;
-//     final response = await http.get(Uri.parse(url));
-//     final bytes = response.bodyBytes;
-//     final filename = basename(url);
-//     final dir = await getApplicationDocumentsDirectory();
-//     var file = File('${dir.path}/$filename');
-//     await file.writeAsBytes(bytes, flush: true);
-//     setState(() {
-//       Pfile = file;
-//     });
-
-//     print(Pfile);
-//     setState(() {
-//       isLoading = false;
-//     });
-//   }
-
-//   @override
-//   void initState() {
-//     loadNetwork();
-
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: customAppBar(context, backButton: true, title: "pdf_viewer"),
-//       body: isLoading
-//           ? Center(child: CircularProgressIndicator())
-//           : Container(
-//               child: Center(
-//                 child: PDFView(
-//                   filePath: Pfile.path,
-//                 ),
-//               ),
-//             ),
-//     );
-//   }
-// }
