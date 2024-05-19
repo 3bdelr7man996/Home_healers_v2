@@ -1,6 +1,5 @@
 import 'package:dr/Patient/features/favorite/data/models/favoriteModel.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state/section_state.dart';
@@ -55,39 +54,15 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     IsUserGuest = IsGuest();
   }
 
-  String? image;
-  List<Data>? data;
-  List<Data>? searchResults;
-  void search(String query) {
-    setState(() {
-      searchResults = data!.where((obj) {
-        final name = obj.nameAr.toString().toLowerCase();
-        return name.contains(query.toLowerCase());
-      }).toList();
-    });
-  }
-
   IsGuest() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.containsKey('guest');
   }
 
-  int i = 0;
   @override
   Widget build(BuildContext context) {
     FavoriteModel? FavoriteList;
-
     FavoriteList = context.select((FavoriteCubit cubit) => cubit.state.data);
-
-    data = context.select(
-      (SectionCubit cubit) => cubit.state.listOfResponse!.data,
-    );
-    setState(() {
-      searchResults = context.select(
-        (SectionCubit cubit) => cubit.state.listOfResponse!.data,
-      );
-    });
-
     return Scaffold(
       appBar: customAppBar(
         context,
@@ -103,13 +78,15 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
             children: [
               Padding(
                 padding: EdgeInsets.all(20.0),
-                child: FilterForSectionDetails(search: search),
+                child: FilterForSectionDetails(),
               ),
               BlocBuilder<SectionCubit, SectionState>(
                 builder: (context, state) {
                   if (state.Loading == true) {
                     return CustomLoader();
-                  } else if (state.Loading == false && searchResults!.isEmpty) {
+                  } else if (state.Loading == false &&
+                      state.sectionDoctorsList == null &&
+                      state.sectionDoctorsList!.isEmpty) {
                     return Center(
                       child: Text(
                         "لا يوجد نتائج",
@@ -119,28 +96,21 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                   } else {
                     return Expanded(
                       child: ListView.builder(
-                        itemCount: searchResults!.length,
+                        itemCount: state.sectionDoctorsList?.length,
                         itemBuilder: (context, index) {
                           bool isIdExist = false;
                           if (FavoriteList != null)
                             isIdExist = FavoriteList.data.any((item) =>
                                 item.advertiser!.id! ==
-                                searchResults![index].id);
+                                state.sectionDoctorsList![index].id);
                           return DoctorCard(
                               fromPackages: widget.fromPackages,
                               isFav: isIdExist,
                               sessionCountForOffer: widget.sessionCountForOffer,
                               fromOffer: widget.fromOffer,
                               status_id: widget.status_id,
-                              doctorInfo: searchResults![index],
-                              name: searchResults![index].nameAr!,
-                              status: searchResults![index].status!,
-                              price: searchResults![index].sessionPrice,
-                              address: searchResults![index].addressAr!,
-                              statusAdvisor:
-                                  searchResults![index].statusAdvisor,
-                              categories: searchResults![index].categories,
-                              image: searchResults![index].image,
+                              doctorInfo: state.sectionDoctorsList![index],
+                              year: state.sectionDoctorsList![index].years,
                               toggleVisibility: _toggleVisibility,
                               isVisible: _isVisible);
                         },

@@ -1,34 +1,28 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/addFavorite_cubit.dart';
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/stars_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
+import 'package:dr/doctor/features/auth/data/model/departements_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HeaderForDoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromfavorite;
-  String name;
-  String? image;
-  String status;
-  Data? doctorInfo;
-  List<Categories>? categories;
+  Advertiser doctorInfo;
   bool isFav;
-  HeaderForDoctorCard(
-      {super.key,
-      required this.isVisible,
-      this.categories,
-      this.isFav = false,
-      this.status = "",
-      this.fromfavorite = false,
-      this.doctorInfo,
-      this.image = "",
-      required VoidCallback this.toggleVisibility,
-      this.name = ""});
+  HeaderForDoctorCard({
+    super.key,
+    required this.isVisible,
+    required this.doctorInfo,
+    required VoidCallback this.toggleVisibility,
+    this.isFav = false,
+    this.fromfavorite = false,
+  });
 
   @override
   State<HeaderForDoctorCard> createState() => _HeaderForDoctorCardState();
@@ -42,7 +36,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   void initState() {
     super.initState();
     names.add("الاختصاص");
-    for (Categories item in widget.categories!) {
+    for (Categories item in widget.doctorInfo.categories!) {
       names.add(item.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
@@ -61,7 +55,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: AppConstants.customNetworkImage(
-                  imagePath: "${widget.image}",
+                  imagePath: "${widget.doctorInfo.image}",
                   fit: BoxFit.fill,
                   imageError: "assets/images/doctor.png",
                 ),
@@ -78,7 +72,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                   if (widget.fromfavorite == false && widget.isFav == false) {
                     await context
                         .read<AddFavoriteCubit>()
-                        .AddFavorite(context, widget.doctorInfo!.id!);
+                        .AddFavorite(context, widget.doctorInfo.id!);
 
                     setState(() {
                       isFavorite = !isFavorite;
@@ -109,7 +103,8 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.name,
+                widget.doctorInfo.nameAr ??
+                    "${widget.doctorInfo.firstnameAr} ${widget.doctorInfo.lastnameAr}",
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     color: AppColors.primaryColor,
@@ -117,7 +112,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                     fontWeight: FontWeight.w500),
               ),
               5.ph,
-              Stars(rating: widget.doctorInfo!.rating!),
+              Stars(rating: widget.doctorInfo.rating!),
               5.ph,
               names.isNotEmpty
                   ? Container(
@@ -142,7 +137,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                     )
                   : Text(''),
               5.ph,
-              widget.status == "on"
+              widget.doctorInfo.status == "on"
                   ? Text(
                       "متاح الآن",
                       style: TextStyle(

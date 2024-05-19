@@ -5,11 +5,11 @@ import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservati
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../home/data/models/section-model.dart';
 import '../../../home/presentation/pages/date_of_session_screen.dart';
 
 class InjuryAreaScreen extends StatefulWidget {
@@ -20,7 +20,7 @@ class InjuryAreaScreen extends StatefulWidget {
       fromFilter,
       status_id,
       fromPackage;
-  Data? doctorInfo;
+  Advertiser? doctorInfo;
   bool fromFav;
 
   InjuryAreaScreen(

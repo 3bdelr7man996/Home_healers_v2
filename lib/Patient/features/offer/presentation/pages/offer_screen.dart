@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class OfferScreen extends StatefulWidget {
   GetOffersModel Offers;
-  OfferScreen({super.key, required this.Offers});
+  var year;
+  OfferScreen({super.key, required this.Offers, required this.year});
 
   @override
   State<OfferScreen> createState() => _OfferScreenState();
@@ -32,13 +33,7 @@ class _OfferScreenState extends State<OfferScreen> {
               offer: data[index],
               fromOffer: true,
               doctorInfo: data[index].advertiser!,
-              name: data[index].advertiser!.nameAr!,
-              status: data[index].advertiser!.status!,
-              price: data[index].advertiser!.sessionPrice!,
-              address: data[index].advertiser!.addressAr!,
-              statusAdvisor: data[index].advertiser!.statusAdvisor!,
-              categories: data[index].advertiser!.categories!,
-              image: data[index].advertiser!.image!,
+              year: widget.year,
               toggleVisibility: _toggleVisibility,
               isVisible: _isVisible);
         },

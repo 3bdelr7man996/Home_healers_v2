@@ -4,13 +4,12 @@ import 'package:dr/Patient/features/auth/presentation/pages/injury_area_screen.d
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/models/section-model.dart';
-
 class ButtonWithCounter extends StatefulWidget {
-  Data? doctorInfo;
+  Advertiser? doctorInfo;
   int? status_id;
   bool fromOffer;
   bool fromFav;

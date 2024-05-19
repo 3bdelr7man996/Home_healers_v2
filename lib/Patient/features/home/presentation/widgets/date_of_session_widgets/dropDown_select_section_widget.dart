@@ -1,13 +1,13 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DropDownForSelectSection extends StatefulWidget {
   String selectedName;
-  Data? doctorInfo;
+  Advertiser? doctorInfo;
   List<String> names;
   DropDownForSelectSection(
       {super.key,
@@ -30,9 +30,9 @@ class _DropDownForSelectSectionState extends State<DropDownForSelectSection> {
       // icon: const SizedBox(), // Hide the arrow icon
       value: widget.selectedName,
       onChanged: (String? newValue) async {
-        for (StatusAdvisor category in widget.doctorInfo!.statusAdvisor!) {
+        for (var category in widget.doctorInfo?.statusAdvisor ?? []) {
           if (category.nameAr == newValue) {
-            id = category.id!;
+            id = category.id;
             break;
           }
         }

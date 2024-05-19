@@ -3,14 +3,14 @@
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/static_box_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../data/models/section-model.dart';
-
 class specialistInfo extends StatefulWidget {
-  Data? doctorInfo;
-  specialistInfo({super.key, this.doctorInfo});
+  Advertiser? doctorInfo;
+  var years;
+  specialistInfo({super.key, this.doctorInfo, required this.years});
 
   @override
   State<specialistInfo> createState() => _specialistInfoState();
@@ -24,8 +24,8 @@ class _specialistInfoState extends State<specialistInfo> {
   void initState() {
     super.initState();
     names.add("الأقسام :");
-    for (StatusAdvisor? item in widget.doctorInfo!.statusAdvisor!) {
-      names.add(item!.nameAr!);
+    for (var item in widget.doctorInfo!.statusAdvisor!) {
+      names.add(item.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
@@ -41,11 +41,11 @@ class _specialistInfoState extends State<specialistInfo> {
               text1: "جلسة طبية",
               text2: "${widget.doctorInfo!.rating}",
             ),
-            widget.doctorInfo!.years == null
+            widget.years == null
                 ? SizedBox()
                 : statisticsBox(
                     text1: "سنوات الخبرة",
-                    text2: "${widget.doctorInfo!.years}",
+                    text2: "${widget.years}",
                   ),
             statisticsBox(
               text1: "تقييم",

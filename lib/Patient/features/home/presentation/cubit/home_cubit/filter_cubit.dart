@@ -8,6 +8,7 @@ import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 
 class FilterCubit extends Cubit<FilterState> {
@@ -24,10 +25,10 @@ class FilterCubit extends Cubit<FilterState> {
   changeCity(int city) => emit(state.copyWith(city_id: city));
   changeArea(int area) => emit(state.copyWith(area_id: area));
 
+  List<Advertiser> filterDataList = [];
   Future<void> GetFilterResult(BuildContext context) async {
     try {
-      emit(state.copyWith(
-          listOfResponse: SectionModel(success: false, data: [], message: "")));
+      emit(state.copyWith(Loading: true));
 
       SectionModel response = await filterRepo.GetFilter(
           areaId: state.area_id,
@@ -35,8 +36,10 @@ class FilterCubit extends Cubit<FilterState> {
           gender: state.gender,
           sectionNumber: state.status_id,
           cityId: state.city_id);
+      filterDataList.addAll(response.advertisersList);
       emit(state.copyWith(
-          listOfResponse: response,
+          Loading: false,
+          filterDataList: filterDataList,
           area_id: -1,
           category_id: -1,
           status_id: -1,
@@ -50,6 +53,7 @@ class FilterCubit extends Cubit<FilterState> {
       });
       AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
     } catch (e) {
+      emit(state.copyWith(Loading: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

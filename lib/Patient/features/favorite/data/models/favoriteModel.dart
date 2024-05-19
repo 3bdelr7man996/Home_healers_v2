@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 
 class FavoriteModel {
   FavoriteModel({
@@ -7,12 +7,13 @@ class FavoriteModel {
     required this.message,
   });
   late final bool success;
-  late final List<Info> data;
+  late final List<FavoriteData> data;
   late final String? message;
 
   FavoriteModel.fromJson(Map<String?, dynamic>? json) {
     success = json?['success'];
-    data = List.from(json?['data']).map((e) => Info.fromJson(e)).toList();
+    data =
+        List.from(json?['data']).map((e) => FavoriteData.fromJson(e)).toList();
     message = json?['message'];
   }
 
@@ -25,8 +26,8 @@ class FavoriteModel {
   }
 }
 
-class Info {
-  Info({
+class FavoriteData {
+  FavoriteData({
     required this.id,
     required this.userId,
     required this.advertiserId,
@@ -36,14 +37,14 @@ class Info {
   late final int? id;
   late final int? userId;
   late final int? advertiserId;
-  late final Data? advertiser;
+  late final Advertiser? advertiser;
   late final User user;
 
-  Info.fromJson(Map<String?, dynamic>? json) {
+  FavoriteData.fromJson(Map<String?, dynamic>? json) {
     id = json?['id'];
     userId = json?['user_id'];
     advertiserId = json?['advertiser_id'];
-    advertiser = Data.fromJson(json?['advertiser']);
+    advertiser = Advertiser.fromJson(json?['advertiser']);
     user = User.fromJson(json?['user']);
   }
 
@@ -98,7 +99,7 @@ class User {
   late final String? emailVerifiedAt;
   late final String? gender;
   late final int? cityId;
-  late final String? centerId;
+  late final int? centerId;
   late final String? createdAt;
   late final String? updatedAt;
   late final String? deletedAt;

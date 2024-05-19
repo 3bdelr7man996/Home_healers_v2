@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/appBar_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/certificates_widget.dart';
@@ -9,17 +8,19 @@ import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_wi
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/specialist_info_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class specialistpageScreen extends StatefulWidget {
-  Data? doctorInfo;
+  Advertiser? doctorInfo;
   int? status_id;
   bool fromPackages;
   bool fromFav;
   bool fromOffer;
   var sessionCountForOffer;
+  var year;
   bool? fromFilter;
   specialistpageScreen(
       {super.key,
@@ -29,6 +30,7 @@ class specialistpageScreen extends StatefulWidget {
       this.fromPackages = false,
       this.status_id,
       this.fromOffer = false,
+      this.year,
       this.sessionCountForOffer});
 
   @override
@@ -80,7 +82,10 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                           top: 75.0, left: 20.0, right: 20.0),
                       child: Column(
                         children: [
-                          specialistInfo(doctorInfo: widget.doctorInfo),
+                          specialistInfo(
+                            doctorInfo: widget.doctorInfo,
+                            years: widget.year,
+                          ),
                           20.ph,
                           const Divider(
                             thickness: 1,

@@ -4,12 +4,12 @@ import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_wi
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
+import 'package:dr/doctor/features/auth/data/model/departements_model.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/models/section-model.dart';
-
 class PictureForSpecialist extends StatefulWidget {
-  Data? doctorInfo;
+  Advertiser? doctorInfo;
   PictureForSpecialist({
     this.doctorInfo,
     super.key,

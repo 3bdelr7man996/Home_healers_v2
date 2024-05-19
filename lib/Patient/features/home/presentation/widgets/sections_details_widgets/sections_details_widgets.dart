@@ -1,13 +1,13 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore: must_be_immutable
 class FilterForSectionDetails extends StatefulWidget {
-  Function search;
-  FilterForSectionDetails({super.key, required this.search});
+  FilterForSectionDetails({super.key});
 
   @override
   State<FilterForSectionDetails> createState() =>
@@ -60,7 +60,7 @@ class _FilterForSectionDetailsState extends State<FilterForSectionDetails> {
           width: context.width * 0.7,
           child: TextField(
             controller: _searchController,
-            onChanged: (value) => widget.search(value),
+            onChanged: (query) => context.read<SectionCubit>().search(query),
             decoration: const InputDecoration(
               filled: true,
               fillColor: Colors.white,

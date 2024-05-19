@@ -1,16 +1,16 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/search_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state/search_state.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,23 +44,13 @@ class _SearchScreenState extends State<SearchScreen> {
     super.dispose();
   }
 
-  List<Data>? searchResults = [];
+  // List<Data>? searchResults = [];
 
-  void search(String query) {
-    setState(() {
-      searchResults = Info?.where((obj) {
-        final name = obj.nameAr.toString().toLowerCase();
-        return name.contains(query.toLowerCase());
-      }).toList();
-    });
-    FirebaseAnalyticUtil.logSearchEvent(term: query);
-  }
-
-  List<Data>? Info;
+  // List<Data>? Info;
   @override
   Widget build(BuildContext context) {
-    Info =
-        context.select((SearchCubit cubit) => cubit.state.listOfResponse!.data);
+    // Info =
+    //     context.select((SearchCubit cubit) => cubit.state.listOfResponse!.data);
     return Scaffold(
       appBar: customAppBar(context, backButton: true, title: "search"),
       body: Stack(children: [
@@ -103,7 +93,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   width: context.width * 0.7,
                   child: TextField(
                     controller: _searchController,
-                    onChanged: search,
+                    onChanged: (query) {
+                      context.read<SearchCubit>().search(query);
+                    },
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -116,30 +108,37 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
             20.ph,
-            searchResults!.length == 0
-                ? Expanded(
-                    child: Image.asset("assets/images/noSearchResult.png"))
-                : Expanded(
+            BlocBuilder<SearchCubit, SearchState>(
+              builder: (context, state) {
+                if (state.Loading) {
+                  return CustomLoader(
+                    padding: 0,
+                  );
+                } else if (!state.Loading &&
+                    state.searchDataList != null &&
+                    state.searchDataList!.isNotEmpty) {
+                  return Expanded(
                     child: ListView.builder(
-                      itemCount: searchResults!.length,
+                      itemCount: state.searchDataList?.length,
                       itemBuilder: (context, index) {
-                        final result = searchResults![index];
-                        final firstName = result.firstnameAr;
+                        // final result = searchResults![index];
+                        // final firstName = result.firstnameAr;
                         return DoctorCard(
                             fromFilter: true,
-                            doctorInfo: result,
-                            name: result.nameAr!,
-                            status: result.status!,
-                            price: result.sessionPrice,
-                            address: result.addressAr!,
-                            statusAdvisor: result.statusAdvisor,
-                            categories: result.categories,
-                            image: result.image,
+                            doctorInfo: state.searchDataList![index],
+                            year: state.searchDataList![index].years,
                             toggleVisibility: _toggleVisibility,
                             isVisible: _isVisible);
                       },
                     ),
-                  ),
+                  );
+                } else {
+                  return Expanded(
+                    child: Image.asset("assets/images/noSearchResult.png"),
+                  );
+                }
+              },
+            )
           ]),
         ),
         PopUpForAddToFavourite(

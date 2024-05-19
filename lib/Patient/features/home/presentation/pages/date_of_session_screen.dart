@@ -1,10 +1,11 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets/dropDown_select_section_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets/table_clender_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
+import 'package:dr/doctor/features/auth/data/model/status_model.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ import '../widgets/date_of_session_widgets/done_button_widget.dart';
 import '../widgets/date_of_session_widgets/location_input_widget.dart';
 
 class DateOfSessionScreen extends StatefulWidget {
-  Data? doctorInfo;
+  Advertiser? doctorInfo;
   int? status_id;
   bool fromOffer;
   bool fromPackages;
@@ -47,8 +48,10 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
     if (widget.fromFilter == false)
       context.read<ReservationCubit>().onChangestatus_id(widget.status_id);
     context.read<ReservationCubit>().makeNotesEmpty();
-    for (StatusAdvisor item in widget.doctorInfo!.statusAdvisor!) {
-      names.add(item.nameAr!);
+    for (StatusData item in widget.doctorInfo?.statusAdvisor ?? []) {
+      if (item.nameAr != null) {
+        names.add(item.nameAr!);
+      }
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }

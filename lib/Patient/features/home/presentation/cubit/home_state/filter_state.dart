@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:equatable/equatable.dart';
 
 class FilterState extends Equatable {
@@ -10,7 +10,7 @@ class FilterState extends Equatable {
     this.status_id,
     this.gender,
     this.city_id,
-    this.listOfResponse,
+    this.filterDataList,
     this.area_id,
   });
   final bool Loading;
@@ -19,7 +19,7 @@ class FilterState extends Equatable {
   late final int? city_id;
   late final int? area_id;
   late final String? gender;
-  SectionModel? listOfResponse;
+  final List<Advertiser>? filterDataList;
   @override
   @override
   List<Object?> get props => [
@@ -29,7 +29,7 @@ class FilterState extends Equatable {
         gender,
         area_id,
         category_id,
-        listOfResponse
+        filterDataList
       ];
   FilterState copyWith({
     bool? Loading,
@@ -38,7 +38,7 @@ class FilterState extends Equatable {
     String? gender,
     int? status_id,
     int? city_id,
-    SectionModel? listOfResponse,
+    List<Advertiser>? filterDataList,
   }) =>
       FilterState(
         Loading: Loading ?? this.Loading,
@@ -47,6 +47,6 @@ class FilterState extends Equatable {
         area_id: area_id ?? this.area_id,
         category_id: category_id ?? this.category_id,
         status_id: status_id ?? this.status_id,
-        listOfResponse: listOfResponse ?? this.listOfResponse,
+        filterDataList: filterDataList ?? this.filterDataList,
       );
 }

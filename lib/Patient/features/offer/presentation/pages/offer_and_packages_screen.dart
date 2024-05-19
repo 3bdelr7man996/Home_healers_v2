@@ -80,6 +80,7 @@ class _OfferAndPackagesScreenState extends State<OfferAndPackagesScreen> {
                       children: <Widget>[
                         OfferScreen(
                           Offers: Offers!,
+                          year: null,
                         )
                       ],
                     )

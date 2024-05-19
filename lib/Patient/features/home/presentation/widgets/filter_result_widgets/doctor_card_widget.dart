@@ -1,8 +1,8 @@
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/button_for_doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/header_for_doctor_card_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -10,15 +10,8 @@ import 'package:flutter_svg/svg.dart';
 class DoctorCard extends StatefulWidget {
   VoidCallback toggleVisibility;
   bool isVisible, fromOfferScreen, fromfavorite;
-  String name;
-  String address;
-  String status;
-  String? image;
-  int? price;
-  List<StatusAdvisor>? statusAdvisor;
-  List<Categories>? categories;
   int? status_id;
-  Data? doctorInfo;
+  Advertiser doctorInfo;
   bool fromOffer;
   bool fromFav;
   bool fromPackages;
@@ -26,28 +19,24 @@ class DoctorCard extends StatefulWidget {
   var sessionCountForOffer;
   var isFav;
   var fromFilter;
-  DoctorCard(
-      {super.key,
-      this.sessionCountForOffer,
-      required this.isVisible,
-      this.fromFilter = false,
-      this.isFav = false,
-      this.fromPackages = false,
-      this.fromFav = false,
-      this.status_id,
-      this.doctorInfo,
-      this.fromOffer = false,
-      this.fromfavorite = false,
-      this.fromOfferScreen = false,
-      this.statusAdvisor,
-      this.categories,
-      this.offer,
-      this.price = 0,
-      this.status = "",
-      this.address = "",
-      required VoidCallback this.toggleVisibility,
-      this.image = "",
-      this.name = ""});
+  var year;
+  DoctorCard({
+    super.key,
+    this.sessionCountForOffer,
+    required this.isVisible,
+    required this.doctorInfo,
+    this.fromFilter = false,
+    this.isFav = false,
+    this.fromPackages = false,
+    this.fromFav = false,
+    this.status_id,
+    this.fromOffer = false,
+    this.fromfavorite = false,
+    this.fromOfferScreen = false,
+    this.offer,
+    this.year,
+    required VoidCallback this.toggleVisibility,
+  });
 
   @override
   State<DoctorCard> createState() => _DoctorCardState();
@@ -60,7 +49,7 @@ class _DoctorCardState extends State<DoctorCard> {
   void initState() {
     super.initState();
     names.add("الأقسام :");
-    for (StatusAdvisor item in widget.statusAdvisor!) {
+    for (var item in widget.doctorInfo.statusAdvisor!) {
       names.add(item.nameAr!);
     }
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
@@ -89,10 +78,6 @@ class _DoctorCardState extends State<DoctorCard> {
             children: [
               HeaderForDoctorCard(
                   isFav: widget.isFav,
-                  status: widget.status,
-                  categories: widget.categories,
-                  name: widget.name,
-                  image: widget.image,
                   doctorInfo: widget.doctorInfo,
                   fromfavorite: widget.fromfavorite,
                   toggleVisibility: widget.toggleVisibility,
@@ -106,12 +91,13 @@ class _DoctorCardState extends State<DoctorCard> {
                     color: AppColors.primaryColor,
                   ),
                   10.pw,
-                  Expanded(
-                    child: Text(
-                      widget.address,
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                  if (widget.doctorInfo.addressAr != null)
+                    Expanded(
+                      child: Text(
+                        "${widget.doctorInfo.addressAr}",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      ),
                     ),
-                  ),
                 ],
               ),
               10.ph,
@@ -160,7 +146,7 @@ class _DoctorCardState extends State<DoctorCard> {
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "${widget.price} SAR",
+                          "${widget.doctorInfo.sessionPrice} SAR",
                           style: const TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
@@ -200,7 +186,9 @@ class _DoctorCardState extends State<DoctorCard> {
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          widget.price == null ? " SAR" : "${widget.price} SAR",
+                          widget.doctorInfo.sessionPrice == null
+                              ? " SAR"
+                              : "${widget.doctorInfo.sessionPrice} SAR",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
@@ -214,6 +202,7 @@ class _DoctorCardState extends State<DoctorCard> {
                   fromFilter: widget.fromFilter,
                   sessionCountForOffer: widget.sessionCountForOffer,
                   doctorInfo: widget.doctorInfo,
+                  year: widget.year,
                   fromPackages: widget.fromPackages,
                   status_id: widget.status_id,
                   fromOffer: widget.fromOffer)

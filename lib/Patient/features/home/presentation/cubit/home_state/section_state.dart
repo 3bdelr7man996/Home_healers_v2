@@ -1,28 +1,28 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/data/models/section-model.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:equatable/equatable.dart';
 
 class SectionState extends Equatable {
   SectionState({
     this.Loading = false,
     this.sectionNumber,
-    this.listOfResponse,
+    this.sectionDoctorsList,
   });
   final bool Loading;
   final int? sectionNumber;
-  SectionModel? listOfResponse;
+  List<Advertiser>? sectionDoctorsList;
   @override
   @override
-  List<Object?> get props => [Loading, sectionNumber, listOfResponse];
+  List<Object?> get props => [Loading, sectionNumber, sectionDoctorsList];
   SectionState copyWith({
     bool? Loading,
     int? sectionNumber,
-    SectionModel? listOfResponse,
+    List<Advertiser>? sectionDoctorsList,
   }) =>
       SectionState(
         Loading: Loading ?? this.Loading,
         sectionNumber: sectionNumber ?? this.sectionNumber,
-        listOfResponse: listOfResponse ?? this.listOfResponse,
+        sectionDoctorsList: sectionDoctorsList ?? this.sectionDoctorsList,
       );
 }
