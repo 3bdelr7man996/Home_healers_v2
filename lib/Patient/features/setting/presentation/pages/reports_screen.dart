@@ -1,6 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -19,31 +20,6 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
 
   @override
   Widget build(BuildContext context) {
-    pickAndUploadPDF() async {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png'],
-
-        // allowedExtensions: ['pdf', 'jpg', 'png'],
-      );
-
-      if (result != null) {
-        print(result);
-        // List<String> parts = result.files.single.path!.split('/');
-        // String photoName = parts.last;
-        // List<String> chars = result.files.single.path!.split('');
-        // chars.removeAt(0);
-        // String newString = chars.join('');
-        // print('${photoName}');
-        // print('${File(result.files.single.name)}');
-        File image = File(result.files.single.path!);
-        String name = result.files.single.name;
-        await context
-            .read<AddReportCubit>()
-            .sendReport(context, image, '${name}');
-      }
-    }
-
     return Scaffold(
       appBar: customAppBar(context, title: "reports", backButton: true),
       body: Padding(
@@ -127,7 +103,9 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
                           ),
                         ),
                       ),
-                      onPressed: pickAndUploadPDF,
+                      onPressed: () async {
+                        await pickAndUploadPDF();
+                      },
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -142,6 +120,27 @@ class _ReportScreenForSettingState extends State<ReportScreenForSetting> {
         ),
       ),
     );
+  }
+
+  pickAndUploadPDF() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowMultiple: false,
+        allowedExtensions: ['jpg', 'png', 'pdf'],
+      );
+
+      if (result != null) {
+        print(result);
+        File image = File(result.files.single.path!);
+        String name = result.files.single.name;
+        await context
+            .read<AddReportCubit>()
+            .sendReport(context, image, '${name}');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
 

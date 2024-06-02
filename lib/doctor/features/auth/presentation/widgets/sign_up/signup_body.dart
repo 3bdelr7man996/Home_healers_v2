@@ -63,6 +63,18 @@ class SignUpBody extends StatelessWidget {
                       validateMsg: "required".tr(),
                       onChanged: (p0) =>
                           context.read<AuthCubit>().onEmailChange(p0),
+                      validator: (value) {
+                        const pattern =
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                        final regExp = RegExp(pattern);
+                        if (value == null || value.isEmpty) {
+                          return "required".tr();
+                        } else if (!regExp.hasMatch(value)) {
+                          return "صيغة البريد الالكتروني غير صحيحة";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                     30.ph,
                     IntlPhoneField(
@@ -96,19 +108,28 @@ class SignUpBody extends StatelessWidget {
                           previous.obscurePass != current.obscurePass,
                       builder: (context, state) {
                         return TiteldTextFormField(
-                          title: "password".tr(),
-                          prefixIconPath: AppImages.passwordIcon,
-                          suffixIconPath: state.obscurePass
-                              ? AppImages.showPasswordIcon
-                              : AppImages.hiddenPassIcon,
-                          obscureText: state.obscurePass ? true : false,
-                          validate: true,
-                          validateMsg: "required".tr(),
-                          onChanged: (p0) =>
-                              context.read<AuthCubit>().onPassWordChange(p0),
-                          onSuffixTab: () =>
-                              context.read<AuthCubit>().showPassword(),
-                        );
+                            title: "password".tr(),
+                            prefixIconPath: AppImages.passwordIcon,
+                            suffixIconPath: state.obscurePass
+                                ? AppImages.showPasswordIcon
+                                : AppImages.hiddenPassIcon,
+                            obscureText: state.obscurePass ? true : false,
+                            validate: true,
+                            validateMsg: "required".tr(),
+                            onChanged: (p0) =>
+                                context.read<AuthCubit>().onPassWordChange(p0),
+                            onSuffixTab: () =>
+                                context.read<AuthCubit>().showPassword(),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "required".tr();
+                              } else if (value.length < 8 ||
+                                  !RegExp(r'^[a-zA-Z0-9]').hasMatch(value)) {
+                                return 'لايقل عن 8 حروف وان يتكون من احرف كبيرة وصغيرة وارقام';
+                              } else {
+                                return null;
+                              }
+                            });
                       },
                     ),
                     30.ph,
@@ -156,6 +177,15 @@ class SignUpBody extends StatelessWidget {
                       validateMsg: "required".tr(),
                       onChanged: (p0) =>
                           context.read<AuthCubit>().onIdentificationChange(p0),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "required".tr();
+                        } else if (value.length != 10 || value.length != 14) {
+                          return "تأكد من رقم الهوية";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                     30.ph,
                     TiteldTextFormField(

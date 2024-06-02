@@ -5,12 +5,13 @@ class SectionModel {
     required this.message,
   });
   late final bool success;
-  late final List<Data> data;
+  late final List<SectionData> data;
   late final String message;
 
   SectionModel.fromJson(Map<String, dynamic>? json) {
     success = json?['success'];
-    data = List.from(json?['data']).map((e) => Data.fromJson(e)).toList();
+    data =
+        List.from(json?['data']).map((e) => SectionData.fromJson(e)).toList();
     message = json?['message'];
   }
 
@@ -23,8 +24,8 @@ class SectionModel {
   }
 }
 
-class Data {
-  Data({
+class SectionData {
+  SectionData({
     required this.id,
     required this.firstnameAr,
     required this.firstnameEn,
@@ -107,7 +108,7 @@ class Data {
   late final Workinghours? workinghours;
   late final List<dynamic>? rates;
 
-  Data.fromJson(Map<String, dynamic>? json) {
+  SectionData.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
     firstnameAr = json?['firstname_ar'];
     firstnameEn = json?['firstname_en'];

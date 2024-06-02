@@ -95,8 +95,8 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   showConfPassword() =>
       emit(state.copyWith(obscureConfPass: !state.obscureConfPass));
 
-  onIdentificationChange(String city_id) =>
-      emit(state.copyWith(city_id: city_id));
+  onIdentificationChange(String identity) =>
+      emit(state.copyWith(identificationNum: identity));
 
   onTermChange(bool? newValue) => emit(state.copyWith(term: !state.term));
   onRequestStatusChange() =>
@@ -131,6 +131,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
         "birthday": "${formattedDate}",
         "country_code": "${state.country_code}",
         "region": "${state.address}",
+        "national_id": "${state.identificationNum}",
         "fcm_token":
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? ""
       };
@@ -141,12 +142,15 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
       ));
       patient = await signUpPatientRepo.signUP(body: body);
       print(patient);
-      AppConstants.customNavigation(context,
-           ActivateAccountScreen(
+      AppConstants.customNavigation(
+          context,
+          ActivateAccountScreen(
             email: state.email!,
             isAdvertise: false,
             cacheData: cacheData,
-          ),0,0);
+          ),
+          0,
+          0);
 
       //await cacheData(response);
       emit(state.copyWith(requestStatus: false));
@@ -162,6 +166,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
   ///validate on fields
   void fieldsValidation() {
     emit(state.copyWith(requestStatus: !state.requestStatus));
+
     if (state.gender == null || state.gender!.isEmpty) {
       throw ("gender_required".tr());
     }
@@ -208,6 +213,10 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     }
     if (state.country_code == null) {
       throw ("حدد رمز مدينتك");
+    }
+    if (state.identificationNum?.length != 10 ||
+        state.identificationNum?.length != 14) {
+      throw ("تأكد من رقم الهوية ");
     }
   }
 

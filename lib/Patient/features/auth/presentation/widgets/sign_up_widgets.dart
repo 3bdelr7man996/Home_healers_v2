@@ -21,9 +21,17 @@ class TextFormFieldForSignUpForPatient extends StatelessWidget {
   final String title;
   final String icon;
   final TextInputType? keyBoardType;
-
-  TextFormFieldForSignUpForPatient(
-      {super.key, required this.num, required this.title, required this.icon,this.keyBoardType=TextInputType.text,});
+  final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
+  TextFormFieldForSignUpForPatient({
+    super.key,
+    required this.num,
+    required this.title,
+    required this.icon,
+    this.onChanged,
+    this.validator,
+    this.keyBoardType = TextInputType.text,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -119,23 +127,9 @@ class TextFormFieldForSignUpForPatient extends StatelessWidget {
                     ),
                   ),
           ),
-          onChanged: (value) {
-            if (num == 1)
-              context.read<AuthCubitForPatient>().onFNameChange(value);
-            else if (num == 2)
-              context.read<AuthCubitForPatient>().onLNameChange(value);
-            else if (num == 3)
-              context.read<AuthCubitForPatient>().onEmailChange(value);
-            else if (num == 8)
-              context.read<AuthCubitForPatient>().onPhoneChange(value);
-            else if (num == 7)
-              context.read<AuthCubitForPatient>().onIdentificationChange(value);
-            else if (num == 4)
-              context.read<AuthCubitForPatient>().onPassWordChange(value);
-            else if (num == 5)
-              context.read<AuthCubitForPatient>().onConfPassChange(value);
-          },
-          keyboardType:keyBoardType ,
+          onChanged: onChanged,
+          validator: validator,
+          keyboardType: keyBoardType,
         ),
       ],
     );

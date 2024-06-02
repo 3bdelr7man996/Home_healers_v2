@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';

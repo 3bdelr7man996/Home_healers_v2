@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';

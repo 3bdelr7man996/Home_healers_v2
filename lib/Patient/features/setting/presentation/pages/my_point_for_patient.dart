@@ -1,4 +1,4 @@
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/my_point_for_patient_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';

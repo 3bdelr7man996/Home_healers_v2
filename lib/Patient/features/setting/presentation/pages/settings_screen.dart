@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';

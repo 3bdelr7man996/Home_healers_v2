@@ -24,6 +24,7 @@ class AuthStateForPatient extends Equatable {
       this.advertiser,
       this.age,
       this.birthday,
+      this.identificationNum,
       this.location});
   final String? email;
   final String? age;
@@ -43,6 +44,7 @@ class AuthStateForPatient extends Equatable {
   final String? password;
   final bool term;
   final String? confirmPassword;
+  final String? identificationNum;
   var address;
   var advertiser;
   Location? location;
@@ -71,6 +73,7 @@ class AuthStateForPatient extends Equatable {
         obscureConfPass,
         confirmPassword,
         location,
+        identificationNum,
       ];
   AuthStateForPatient copyWith(
           {String? email,
@@ -89,6 +92,7 @@ class AuthStateForPatient extends Equatable {
           bool? term,
           String? password,
           String? confirmPassword,
+          String? identificationNum,
           var address,
           var advertiser,
           var cityId,
@@ -96,26 +100,28 @@ class AuthStateForPatient extends Equatable {
           var nationality,
           Location? location}) =>
       AuthStateForPatient(
-          email: email ?? this.email,
-          isVisible: isVisible ?? this.isVisible,
-          firstName: firstName ?? this.firstName,
-          lastName: lastName ?? this.lastName,
-          gender: gender ?? this.gender,
-          age: age ?? this.age,
-          birthday: birthday ?? this.birthday,
-          city_id: city_id ?? this.city_id,
-          phone: phone ?? this.phone,
-          registerState: registerState ?? this.registerState,
-          password: password ?? this.password,
-          obscurePass: obscurePass ?? this.obscurePass,
-          obscureConfPass: obscureConfPass ?? this.obscureConfPass,
-          confirmPassword: confirmPassword ?? this.confirmPassword,
-          term: term ?? this.term,
-          address: address ?? this.address,
-          advertiser: advertiser ?? this.advertiser,
-          location: location ?? this.location,
-          cityId: cityId ?? this.cityId,
-          nationality: nationality ?? this.nationality,
-          country_code: country_code ?? this.country_code,
-          requestStatus: requestStatus ?? this.requestStatus);
+        email: email ?? this.email,
+        isVisible: isVisible ?? this.isVisible,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        gender: gender ?? this.gender,
+        age: age ?? this.age,
+        birthday: birthday ?? this.birthday,
+        city_id: city_id ?? this.city_id,
+        phone: phone ?? this.phone,
+        registerState: registerState ?? this.registerState,
+        password: password ?? this.password,
+        obscurePass: obscurePass ?? this.obscurePass,
+        obscureConfPass: obscureConfPass ?? this.obscureConfPass,
+        confirmPassword: confirmPassword ?? this.confirmPassword,
+        term: term ?? this.term,
+        address: address ?? this.address,
+        advertiser: advertiser ?? this.advertiser,
+        location: location ?? this.location,
+        cityId: cityId ?? this.cityId,
+        nationality: nationality ?? this.nationality,
+        country_code: country_code ?? this.country_code,
+        requestStatus: requestStatus ?? this.requestStatus,
+        identificationNum: identificationNum ?? this.identificationNum,
+      );
 }

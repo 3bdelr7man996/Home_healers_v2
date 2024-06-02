@@ -63,6 +63,11 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                             num: 1,
                             title: "first_name",
                             icon: AppImages.personIcon,
+                            onChanged: (value) {
+                              context
+                                  .read<AuthCubitForPatient>()
+                                  .onFNameChange(value);
+                            },
                           ),
                         ),
                         15.pw,
@@ -71,6 +76,11 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                             num: 2,
                             title: "last_name",
                             icon: AppImages.personIcon,
+                            onChanged: (value) {
+                              context
+                                  .read<AuthCubitForPatient>()
+                                  .onLNameChange(value);
+                            },
                           ),
                         ),
                       ],
@@ -81,14 +91,14 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       title: "email",
                       icon: AppImages.emailIcon,
                       keyBoardType: TextInputType.emailAddress,
+                      onChanged: (value) {
+                        context
+                            .read<AuthCubitForPatient>()
+                            .onEmailChange(value);
+                      },
                     ),
                     30.ph,
-                    // TextFormFieldForSignUpForPatient(
-                    //   num: 8,
-                    //   title: "mobile_number",
-                    //   icon: AppImages.phoneIcon,
-                    // ),
-                    // 30.ph,
+
                     IntlPhoneField(
                       textAlign: TextAlign.right,
                       decoration: InputDecoration(
@@ -102,8 +112,6 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       onChanged: (phone) {
                         var phonenumber = phone.completeNumber;
                         print(phonenumber);
-
-                        // phonenumber = phonenumber.substring(4);
                         context
                             .read<AuthCubitForPatient>()
                             .onPhoneChange(phonenumber);
@@ -152,6 +160,11 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       title: "identification_number_residence",
                       icon: AppImages.locationIcon,
                       keyBoardType: TextInputType.number,
+                      onChanged: (value) {
+                        context
+                            .read<AuthCubitForPatient>()
+                            .onIdentificationChange(value);
+                      },
                     ),
                     30.ph,
 
@@ -186,12 +199,22 @@ class _SignUpForPatientScreenState extends State<SignUpForPatientScreen> {
                       num: 4,
                       title: "password",
                       icon: AppImages.passwordIcon,
+                      onChanged: (value) {
+                        context
+                            .read<AuthCubitForPatient>()
+                            .onPassWordChange(value);
+                      },
                     ),
                     30.ph,
                     TextFormFieldForSignUpForPatient(
                       num: 5,
                       title: "confirm_password",
                       icon: AppImages.passwordIcon,
+                      onChanged: (value) {
+                        context
+                            .read<AuthCubitForPatient>()
+                            .onConfPassChange(value);
+                      },
                     ),
                     30.ph,
                     LocationInput(),

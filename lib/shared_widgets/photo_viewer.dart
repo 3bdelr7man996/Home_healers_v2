@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:dr/shared_widgets/custom_loader.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +46,8 @@ class PhotoViewerRouteWrapper extends StatefulWidget {
 }
 
 class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
-  get http => null;
-  late File Pfile;
+  late File? Pfile;
+  bool loadPdfFile = false;
 
   @override
   void initState() {
@@ -59,8 +61,13 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
   }
 
   Future<void> loadNetwork() async {
-    var url = '${widget.imgBaseUrl} ${widget.filePath}';
-    print(url);
+    Future.delayed(
+        Duration.zero,
+        () => setState(() {
+              loadPdfFile = true;
+            }));
+    var url = '${widget.imgBaseUrl}${widget.filePath}';
+    print("url is = $url");
     final response = await http.get(Uri.parse(url));
     print(url);
 
@@ -71,6 +78,7 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
     await file.writeAsBytes(bytes, flush: true);
     setState(() {
       Pfile = file;
+      loadPdfFile = false;
     });
   }
 
@@ -86,14 +94,19 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
         constraints: BoxConstraints.expand(
           height: context.height,
         ),
-        child: widget.typeOfFile == "pdf"
-            ? Container(
-                child: Center(
-                  child: PDFView(
-                    filePath: '${widget.imgBaseUrl}${widget.filePath}',
-                  ),
-                ),
-              )
+        child: widget.filePath!.endsWith("pdf")
+            ? loadPdfFile
+                ? CustomLoader(
+                    padding: 0,
+                  )
+                : Container(
+                    child: Center(
+                      child: PDFView(
+                        filePath: Pfile?.path,
+                        // fitEachPage: false,
+                      ),
+                    ),
+                  )
             : PhotoView(
                 imageProvider: NetworkImage(
                   '${widget.imgBaseUrl}${widget.filePath}',

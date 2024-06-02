@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -71,14 +71,14 @@ class FirstSection extends StatelessWidget {
                                   ? "ملغية \nتم الإلغاء"
                                   : "الجلسة \n قيد الانتظار",
               style: TextStyle(
-                  color: num == 0
-                      ? AppColors.yellowColor
-                      : num == 4
-                          ? AppColors.redColor
-                          : AppColors.greenColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 10.0,
-                  ),
+                color: num == 0
+                    ? AppColors.yellowColor
+                    : num == 4
+                        ? AppColors.redColor
+                        : AppColors.greenColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 10.0,
+              ),
               textAlign: TextAlign.center,
             ),
           )
@@ -134,7 +134,7 @@ class _TowSectionState extends State<TowSection> {
                       "${widget.fromNotification ? widget.notificationOrder[0]['advertiser']['image'] : widget.listOfOrders?.advertiser.image}",
                   imageError: AppImages.doctorPlaceholder,
                   width: context.width * 0.2,
-                  height: context.width * 0.2 ,
+                  height: context.width * 0.2,
                 ),
               ),
               10.pw,

@@ -1,4 +1,3 @@
-
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:dr/Patient/features/home/presentation/pages/home_screen_for_patient.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
@@ -24,24 +23,21 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>  {
+class _SplashScreenState extends State<SplashScreen> {
   Future<void> initConfigData() async {
     await Future.wait([
       context.read<SettingCubit>().getAppInfo(),
-      context.read<AuthCubit>().getAllDepartements(),
+      // context.read<AuthCubit>().getAllDepartements(),
       context.read<AuthCubit>().getAllStatus(),
       context.read<AuthCubit>().getAllCities(),
     ]);
     //  WidgetsFlutterBinding.ensureInitialized()
     //     .addPostFrameCallback((_) => getTrackingPermission());
     await getTrackingPermission();
-
   }
 
   @override
   void initState() {
-    
-   
     initConfigData().then((value) {
       if (CacheHelper.dataSaved(key: AppStrings.userToken)) {
         if (CacheHelper.getData(key: AppStrings.isAdvertise)) {
@@ -68,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen>  {
         await AppTrackingTransparency.trackingAuthorizationStatus;
     AppStrings.TRACK_AUTH = (status == TrackingStatus.authorized);
     // If the system can show an authorization request dialog
-    if (status != TrackingStatus.authorized ) {
+    if (status != TrackingStatus.authorized) {
       await AppTrackingTransparency.requestTrackingAuthorization();
     }
   }

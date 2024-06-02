@@ -41,7 +41,8 @@ import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dar
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/edit_acc_cubit/edit_user_acc_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/config/pusher_config/pusher_config.dart';
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
@@ -62,6 +63,7 @@ import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'Patient/features/home/presentation/cubit/cubit/filter_cubit.dart';
 import 'Patient/features/setting/data/datasources/show_notification_ds.dart';
 import 'Patient/features/setting/data/repositories/show_notification_repo.dart';
 import 'config/notifications_config/firebase_messages.dart';
@@ -180,7 +182,7 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => AuthCubit(signUpAdverRepo: sl()));
   sl.registerFactory(() => AuthCubitForPatient(signUpPatientRepo: sl()));
   sl.registerFactory(() => SectionCubit(sectionRepo: sl()));
-  sl.registerFactory(() => FilterCubit(filterRepo: sl()));
+  sl.registerFactory(() => FilterCubit(sl()));
   sl.registerFactory(() =>
       ReservationCubit(reservationRepo: sl(), reservationWithOfferRepo: sl()));
   sl.registerFactory(() => MyOrdersCubit(
@@ -189,7 +191,7 @@ Future<void> serviceLocatorInit() async {
       getInvoiceRepo: sl(),
       showNotificationRepo: sl()));
   sl.registerFactory(() => UpdateReservationCubit(updateReservationRepo: sl()));
-  sl.registerFactory(() => UpdateInfoCubit(UpdateInfo: sl()));
+  sl.registerFactory(() => EditUserAccCubit(repository: sl()));
   sl.registerFactory(() => FavoriteCubit(favoriteRepo: sl()));
   sl.registerFactory(() => AddFavoriteCubit(addFavoriteRepo: sl()));
   sl.registerFactory(() => GetPackagesCubit(getPackagesRepo: sl()));

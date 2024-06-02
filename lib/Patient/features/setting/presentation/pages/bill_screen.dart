@@ -19,7 +19,7 @@ import 'dart:ui' as ui;
 
 import '../../../../../core/utils/deep_link_util.dart';
 import '../../data/models/my_orders_model.dart';
-import '../cubit/setting_cubit.dart';
+import '../cubit/settings_cubit/setting_cubit.dart';
 
 class BillScreen extends StatefulWidget {
   OrderData oneOrder;

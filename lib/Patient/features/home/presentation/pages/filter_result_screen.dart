@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/home/presentation/cubit/cubit/filter_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/home_widgets.dart';
@@ -25,7 +26,7 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
   @override
   Widget build(BuildContext context) {
     var data = context.select(
-      (FilterCubit cubit) => cubit.state.listOfResponse?["data"],
+      (FilterCubit cubit) => cubit.state.specialistList?["data"],
     );
     return Scaffold(
       appBar: customAppBar(context, title: "filter_result", backButton: true),

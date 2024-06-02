@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/http_helper.dart';
 
 class UpdateInfoDS {
@@ -23,6 +24,13 @@ class UpdateInfoDS {
       documents: documents,
       documentsKey: documentsKey,
     );
+    return response;
+  }
+
+  ///GET ALL Cities & area
+  Future<Map<String, dynamic>?> getAllCitiesArea() async {
+    Map<String, dynamic>? response =
+        await apiHelper.get(AppStrings.advAllCities);
     return response;
   }
 }

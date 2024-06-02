@@ -2,12 +2,12 @@ import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.d
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
-import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_with_offer_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/cubit/filter_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/offer/data/repositories/get_offers_Repo.dart';
 import 'package:dr/Patient/features/offer/data/repositories/get_packages_repo.dart';
@@ -22,7 +22,8 @@ import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart'
 import 'package:dr/Patient/features/setting/data/repositories/show_notification_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/edit_acc_cubit/edit_user_acc_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/chats/data/repositories/chats_repo.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/audio_cubit/audio_cubit.dart';
 import 'package:dr/doctor/features/chats/presentation/cubit/chat_cubit/chats_cubit.dart';
@@ -81,9 +82,7 @@ MultiBlocProvider blocMultiProvider({required child}) {
         ),
       ),
       BlocProvider(
-        create: (BuildContext context) => FilterCubit(
-          filterRepo: di.sl<FilterRepo>(),
-        ),
+        create: (BuildContext context) => di.sl<FilterCubit>(),
       ),
       BlocProvider(
         create: (BuildContext context) => SearchCubit(
@@ -113,8 +112,8 @@ MultiBlocProvider blocMultiProvider({required child}) {
         ),
       ),
       BlocProvider(
-        create: (BuildContext context) => UpdateInfoCubit(
-          UpdateInfo: di.sl<UpdateInfoRepo>(),
+        create: (BuildContext context) => EditUserAccCubit(
+          repository: di.sl<UpdateInfoRepo>(),
         ),
       ),
       BlocProvider(

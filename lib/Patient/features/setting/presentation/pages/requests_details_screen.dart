@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:dr/Patient/features/setting/data/models/my_orders_model.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/bill_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/payment_details_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';

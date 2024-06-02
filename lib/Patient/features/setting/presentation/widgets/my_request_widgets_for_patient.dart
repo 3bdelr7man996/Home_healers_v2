@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/requests_details_screen.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -57,7 +57,6 @@ class ListOfOrder extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        
                         SvgPicture.asset(
                           "assets/images/noOrders.svg",
                           width: 200,
@@ -203,7 +202,7 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                                   : widget.num == 4
                                       ? AppColors.redColor
                                       : AppColors.greenColor,
-                                fontSize: 10.0,
+                              fontSize: 10.0,
                               fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
@@ -226,8 +225,8 @@ class _CardsForRequestsState extends State<CardsForRequests> {
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       child: AppConstants.customNetworkImage(
-                        width: context.width*0.2,
-                        height: context.width*0.2,
+                        width: context.width * 0.2,
+                        height: context.width * 0.2,
                         imageError: AppImages.doctorPlaceholder,
                         imagePath: "${widget.listOfOrders.advertiser.image}",
                       ),

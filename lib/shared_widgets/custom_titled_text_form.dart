@@ -17,6 +17,8 @@ class TiteldTextFormField extends StatelessWidget {
   final String? hint;
   final void Function(String)? onChanged;
   final void Function()? onSuffixTab;
+  final String? Function(String?)? validator;
+  final bool readOnly;
   const TiteldTextFormField({
     super.key,
     required this.title,
@@ -31,6 +33,8 @@ class TiteldTextFormField extends StatelessWidget {
     this.onChanged,
     this.onSuffixTab,
     this.hint,
+    this.validator,
+    this.readOnly = false,
   });
 
   @override
@@ -47,8 +51,12 @@ class TiteldTextFormField extends StatelessWidget {
           initialValue: initialValue,
           keyboardType: keyboardType,
           obscureText: obscureText,
+          readOnly: readOnly,
           validator: validate
               ? (value) {
+                  if (validator != null) {
+                    return validator!(value);
+                  }
                   if (value == null || value.isEmpty) {
                     return validateMsg;
                   } else {

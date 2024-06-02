@@ -11,20 +11,25 @@ class FilterDs {
     required int? areaId,
     required String? gender,
   }) async {
-    String route = "/api/advertisers?" +
-        (category_id != null && category_id != -1
-            ? '&category_id=$category_id'
-            : '') +
-        (sectionNumber != null && sectionNumber != -1
-            ? '&status_id=$sectionNumber'
-            : '') +
-        (cityId != null && cityId != -1 ? '&city_id=$cityId' : '') +
-        (areaId != null && areaId != -1 ? '&area_id=$areaId' : '') +
-        (gender != null && gender != "-1" ? '&gender=$gender' : '');
-    print(route);
-    Map<String, dynamic>? response = await apiHelper.get(
-      route,
-    );
+    // String route = "/api/advertisers?" +
+    //     (category_id != null && category_id != -1
+    //         ? '&category_id=$category_id'
+    //         : '') +
+    //     (sectionNumber != null && sectionNumber != -1
+    //         ? '&status_id=$sectionNumber'
+    //         : '') +
+    //     (cityId != null && cityId != -1 ? '&city_id=$cityId' : '') +
+    //     (areaId != null && areaId != -1 ? '&area_id=$areaId' : '') +
+    //     (gender != null && gender != "-1" ? '&gender=$gender' : '');
+    print("$sectionNumber  $areaId  $category_id  $cityId  $gender");
+    Map<String, dynamic>? response =
+        await apiHelper.get("/api/advertisers", queryParameters: {
+      "category_id": "${category_id ?? ''}",
+      "status_id": "${sectionNumber ?? ''}",
+      "city_id": "${cityId ?? ''}",
+      "area_id": "${areaId ?? ''}",
+      "gender": "${gender ?? ''}"
+    });
     return response;
   }
 }

@@ -74,32 +74,6 @@ class AuthCubit extends Cubit<AuthState> {
   onGenderChange(String gender) => emit(state.copyWith(gender: gender));
 
   ///////////Editing By Ghaith///////////////////
-  onAreasChange(String value) {
-    if (state.citiesList != null) {
-      List areas = state.citiesList!
-          .map((city) {
-            if (city.nameAr == value) {
-              return city.area!.map((area) {
-                return {
-                  "name": area.nameAr,
-                  "id": area.id,
-                };
-              }).toList();
-            } else {
-              return null;
-            }
-          })
-          .where((element) => element != null)
-          .toList();
-      areas = areas[0] as List<dynamic>;
-      print(areas);
-
-      emit(state.copyWith(areasList: areas));
-      print(state.areasList);
-      print("Functionnnnnn");
-    }
-  }
-
   onSelectCategory(int id) {
     List<int>? selectedCateg = state.selectedCategories?.toList() ?? [];
     var allCateg = state.departemensList?.toList();
@@ -287,12 +261,15 @@ class AuthCubit extends Cubit<AuthState> {
       advertise = await signUpAdverRepo.signUP(
         body: body,
       );
-      AppConstants.customNavigation(context,
+      AppConstants.customNavigation(
+          context,
           ActivateAccountScreen(
             email: state.email!,
             isAdvertise: true,
             cacheData: cacheData,
-          ),0,0);
+          ),
+          0,
+          0);
       //await cacheData(response);
       initRegisterData();
       emit(state.copyWith(registerState: RequestState.success));
@@ -323,6 +300,11 @@ class AuthCubit extends Cubit<AuthState> {
     }
     if (state.gender == null || state.gender!.isEmpty) {
       throw ("gender_required".tr());
+    }
+    if (isRegister &&
+        (state.identification?.length != 14 ||
+            state.identification?.length != 10)) {
+      throw ("accept_term".tr());
     }
     if (isRegister && state.term == false) {
       throw ("accept_term".tr());
@@ -450,7 +432,7 @@ class AuthCubit extends Cubit<AuthState> {
         "address_en": "${state.address}",
         "status": "${state.status}",
         // "session_price":"10",
-        //"national_id": "${state.identification}",
+        "national_id": "${state.identification}",
         "fcm_token":
             await di.sl<FirebaseMessagingService>().getFirebaseToken() ?? "",
       };

@@ -3,7 +3,7 @@
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/deep_link_util.dart';
 import 'package:dr/core/utils/firebase_analytic_helper.dart';

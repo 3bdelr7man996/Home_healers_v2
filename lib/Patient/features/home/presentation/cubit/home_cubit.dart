@@ -60,63 +60,54 @@ class SectionCubit extends Cubit<SectionState> {
 
 ////////////////////////⁡⁢⁣⁢New Class For Filter⁡//////////////////////////////////////////////
 
-class FilterCubit extends Cubit<FilterState> {
-  final FilterRepo filterRepo;
+// class FilterCubit extends Cubit<FilterState> {
+//   final FilterRepo filterRepo;
 
-  FilterCubit({required this.filterRepo}) : super(FilterState());
+//   FilterCubit({required this.filterRepo}) : super(FilterState());
 
-  //?==================== formFields change ====================
-  showConfPassword() => emit(state.copyWith(Loading: !state.Loading));
+//   //?==================== formFields change ====================
+//   showConfPassword() => emit(state.copyWith(Loading: !state.Loading));
 
-  changeSectionNumber(int num) => emit(state.copyWith(status_id: num));
-  changeCategoryNumber(int num) => {emit(state.copyWith(category_id: num))};
-  changeGender(String gender) => emit(state.copyWith(gender: gender));
-  changeCity(int city) => emit(state.copyWith(city_id: city));
-  changeArea(int area) => emit(state.copyWith(area_id: area));
+//   changeSectionNumber(int num) => emit(state.copyWith(status_id: num));
+//   changeCategoryNumber(int num) => {emit(state.copyWith(category_id: num))};
+//   changeGender(String gender) => emit(state.copyWith(gender: gender));
+//   changeCity(int city) => emit(state.copyWith(city_id: city));
+//   changeArea(int area) => emit(state.copyWith(area_id: area));
 
-  Future<void> GetFilterResult(BuildContext context) async {
-    try {
-      emit(state.copyWith(listOfResponse: {}));
-      fieldsValidation();
+//   Future<void> GetFilterResult(BuildContext context) async {
+//     try {
+//       emit(state.copyWith(listOfResponse: {}));
+//       SectionModel response = await filterRepo.GetFilter(
+//           areaId: state.area_id,
+//           category_id: state.category_id,
+//           gender: state.gender,
+//           sectionNumber: state.status_id,
+//           cityId: state.city_id);
+//       emit(state.copyWith(listOfResponse: response.toJson()));
+//       FirebaseAnalyticUtil.logSearchEvent(term: "Filter", param: {
+//         "area_id": "${state.area_id}",
+//         "category_id": "${state.category_id}",
+//         "cityId": "${state.city_id}",
+//       });
+//       AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
+//     } catch (e) {
+//       ShowToastHelper.showToast(msg: e.toString(), isError: true);
+//     }
+//   }
 
-      SectionModel response = await filterRepo.GetFilter(
-          areaId: state.area_id,
-          category_id: state.category_id,
-          gender: state.gender,
-          sectionNumber: state.status_id,
-          cityId: state.city_id);
-      emit(state.copyWith(listOfResponse: response.toJson()));
+//   ///validate on fields
+//   void fieldsValidation() {}
 
-      emit(state.copyWith(area_id: -1));
-      emit(state.copyWith(category_id: -1));
-      emit(state.copyWith(status_id: -1));
-      emit(state.copyWith(city_id: -1));
-      emit(state.copyWith(area_id: -1));
-      emit(state.copyWith(gender: "-1"));
-      FirebaseAnalyticUtil.logSearchEvent(term: "Filter", param: {
-        "area_id": "${state.area_id}",
-        "category_id": "${state.category_id}",
-        "cityId": "${state.city_id}",
-      });
-      AppConstants.customNavigation(context, FilterResultScreen(), -1, 0);
-    } catch (e) {
-      ShowToastHelper.showToast(msg: e.toString(), isError: true);
-    }
-  }
-
-  ///validate on fields
-  void fieldsValidation() {}
-
-  /// check if user login or not
-  bool hasToken() {
-    final String token = CacheHelper.getData(key: AppStrings.userToken) ?? "";
-    if (token.isNotEmpty) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-}
+//   /// check if user login or not
+//   bool hasToken() {
+//     final String token = CacheHelper.getData(key: AppStrings.userToken) ?? "";
+//     if (token.isNotEmpty) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+// }
 
 ///////////////////////////////// ⁡⁢⁣⁢New Class For Search⁡ ////////
 
@@ -239,7 +230,7 @@ class ReservationCubit extends Cubit<ReservationState> {
         };
       } else {
         body = {
-          "advertiser_id": "${state.advertiser_id}", // "162",
+          "advertiser_id": "162", // "${state.advertiser_id}", // "162",
           "lat": "${state.location?.lat}",
           "lang": "${state.location?.lng}",
           "user_id": "${userId}",
