@@ -1,27 +1,36 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/appBar_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/certificates_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/custom_button_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/picture_section_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/specialist_info_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class specialistpageScreen extends StatefulWidget {
-  var Data;
-  var status_id;
+  Advertiser? doctorInfo;
+  int? status_id;
   bool fromPackages;
+  bool fromFav;
   bool fromOffer;
   var sessionCountForOffer;
-  var fromFilter;
+  var year;
+  bool? fromFilter;
   specialistpageScreen(
       {super.key,
-      this.Data,
+      this.doctorInfo,
       this.fromFilter = false,
+      this.fromFav = false,
       this.fromPackages = false,
       this.status_id,
       this.fromOffer = false,
+      this.year,
       this.sessionCountForOffer});
 
   @override
@@ -57,6 +66,8 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.doctorInfo);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -71,13 +82,16 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                           top: 75.0, left: 20.0, right: 20.0),
                       child: Column(
                         children: [
-                          specialistInfo(Data: widget.Data),
+                          specialistInfo(
+                            doctorInfo: widget.doctorInfo,
+                            years: widget.year,
+                          ),
                           20.ph,
                           const Divider(
                             thickness: 1,
                           ),
                           5.ph,
-                          widget.Data['images'] != null
+                          widget.doctorInfo!.images != null
                               ? const Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -90,18 +104,19 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                 )
                               : SizedBox(),
                           5.ph,
-                          widget.Data['images'] != null
-                              ? Certificates(Data: widget.Data['images'])
+                          widget.doctorInfo?.images != null
+                              ? Certificates(Data: widget.doctorInfo!.images)
                               : SizedBox(),
                           5.ph,
                           IsUserGuest == true
                               ? SizedBox()
                               : click
                                   ? ButtonWithCounter(
+                                      fromFav: widget.fromFav,
                                       fromPackages: widget.fromPackages,
                                       sessionCountForOffer:
                                           widget.sessionCountForOffer,
-                                      Data: widget.Data,
+                                      doctorInfo: widget.doctorInfo,
                                       fromFilter: widget.fromFilter,
                                       status_id: widget.status_id,
                                       fromOffer: widget.fromOffer)
@@ -156,7 +171,7 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                 borderRadius: BorderRadius.circular(20.0),
               ),
               height: 175,
-              child: PictureForSpecialist(Data: widget.Data),
+              child: PictureForSpecialist(doctorInfo: widget.doctorInfo),
             ),
           ),
         ],

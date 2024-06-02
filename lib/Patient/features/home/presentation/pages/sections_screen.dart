@@ -1,5 +1,13 @@
 // ignore_for_file: unused_element
 
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/ads_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets/bottomSheet_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets/custom_appBar_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets/icons_for_sections_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets/slider_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/evaluation_cubit.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_widgets.dart';

@@ -1,5 +1,5 @@
-import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/my_request_widgets_for_patient.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/my_requests_widgets_for_patient/list_of_order_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/home/presentation/widgets/my_requests_widgets.dart';
@@ -52,7 +52,7 @@ class _MyRequestsForPatientState extends State<MyRequestsForPatient> {
               updateActiveIndex(index);
             },
           ),
-          ListOfOrder(activeIndex: activeIndex)
+          ListOfOrder(TabIndexClicked: activeIndex)
         ],
       ),
     );

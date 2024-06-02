@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_custom_exception.dart';
@@ -28,7 +30,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
 
       ForgetPasswordModel? user =
           await repository.forgetPassword(body: {"email": "${state.email}"});
-      print(user);
       emit(state.copyWith(
         showPopUp: !state.showPopUp!,
         loading: false,

@@ -1,5 +1,6 @@
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
+import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
@@ -7,6 +8,8 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../data/models/favoriteModel.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -46,8 +49,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     // print("Token ${CacheHelper.getData(key: AppStrings.userToken)}");
-
-    var data = context.select((FavoriteCubit cubit) => cubit.state.data);
+    FavoriteModel? data =
+        context.select((FavoriteCubit cubit) => cubit.state.data);
     return Scaffold(
       appBar: customAppBar(context, backButton: false, title: "favorite"),
       body: IsUserGuest == true
@@ -56,7 +59,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : data["data"].length == 0
+              : data.data.length == 0
                   ? Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -79,23 +82,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     )
                   : Stack(children: [
                       ListView.builder(
-                        itemCount: data["data"].length,
+                        itemCount: data.data.length,
                         itemBuilder: (context, index) {
                           return DoctorCard(
-                              Data: data["data"][index]['advertiser'],
-                              name: data["data"][index]["advertiser"]
-                                  ["name_ar"],
-                              status: data["data"][index]["advertiser"]
-                                  ["status"],
-                              price: data["data"][index]["advertiser"]
-                                  ["session_price"],
-                              address: data["data"][index]["advertiser"]
-                                  ["address_ar"],
-                              statusAdvisor: data["data"][index]["advertiser"]
-                                  ["status_advisor"],
-                              categories: data["data"][index]["advertiser"]
-                                  ["categories"],
-                              image: data["data"][index]["advertiser"]["image"],
+                              fromFav: true,
+                              doctorInfo: data.data[index].advertiser!,
+                              year: null,
                               fromfavorite: true,
                               toggleVisibility: _toggleVisibility,
                               isVisible: _isVisible);

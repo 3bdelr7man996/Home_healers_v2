@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/report_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/edit_profile_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_requests_screen_for_patient.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/settings_widgets.dart';
-import 'package:dr/core/extensions/media_query_extension.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/settings_widget/one_option_for_patient_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/settings_widget/sign_in_or_log_out_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
@@ -16,15 +16,12 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:dr/doctor/features/settings/presentation/pages/change_password.dart';
 import 'package:dr/doctor/features/settings/presentation/pages/contact_us.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/settings_widgets.dart';
-import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
-import 'package:dr/features/auth/presentation/pages/select_roll_for_sign_in.dart';
 import 'package:dr/shared_widgets/delete_account_dialog.dart';
 import 'package:dr/shared_widgets/html_body.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreenForPatient extends StatefulWidget {
@@ -191,53 +188,9 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                   15.ph,
                   const Divider(thickness: 0.5),
                   15.ph,
-                  IsUserGuest == true
-                      ? Container(
-                          width: context.width,
-                          height: context.height * 0.05,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              backgroundColor: AppColors.primaryColor,
-                            ),
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.remove('guest');
-                              AppConstants.customNavigation(
-                                  context, SelectRollForSignIn(), -1, 0);
-                            },
-                            child: Text('تسجيل دخول'),
-                          ),
-                        )
-                      : InkWell(
-                          onTap: () async {
-                            context.read<LoginCubit>().logOut();
-                            AppConstants.pushRemoveNavigator(context,
-                                screen: const SelectRollForSignIn());
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/log_out_setting_icon.svg",
-                                width: 40,
-                                height: 40,
-                              ),
-                              10.pw,
-                              const Text(
-                                "تسجيل الخروج",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: AppColors.primaryColor),
-                              ),
-                              20.ph
-                            ],
-                          ),
-                        ),
+                  SignInOrLogOutButton(
+                    IsUserGuest: IsUserGuest,
+                  ),
                   15.ph
                 ],
               ),

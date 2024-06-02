@@ -1,4 +1,6 @@
-import 'package:dr/Patient/features/setting/presentation/widgets/my_wallet_widgets.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/my_wallet_widgets/deposit_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/my_wallet_widgets/my_current_balance_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/my_wallet_widgets/transfer_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';

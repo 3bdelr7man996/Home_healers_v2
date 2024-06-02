@@ -4,8 +4,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/utils/app_colors.dart';
 
-PreferredSizeWidget customAppBar(BuildContext context,
-    {String title = '', bool backButton = true, bool fromSetting = false,double? elevation=8,Color? backgroundColor=AppColors.backGroundColor,}) {
+PreferredSizeWidget customAppBar(
+  BuildContext context, {
+  String title = '',
+  bool backButton = true,
+  bool fromSetting = false,
+  double? elevation = 8,
+  Color? backgroundColor = AppColors.backGroundColor,
+}) {
   return AppBar(
     centerTitle: true,
     leading: backButton

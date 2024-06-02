@@ -142,15 +142,6 @@ class SettingCubit extends Cubit<SettingState> {
   }
 
   void fieldsValidation() {
-    // var jsonData;
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String attribute = prefs.getString(AppStrings.userInfo) ?? '';
-    // jsonData = jsonDecode(attribute);
-    // print(jsonData);
-    // var password = jsonData['password'];
-    // if (password != state.oldPasswordValue) {
-    //   throw ("كلمتك السر غير صحيحة");
-    // }
     if (state.newPasswordValue == null || state.newPasswordValue?.length == 0) {
       throw ("ادخل كلمة السر الجديدة");
     }

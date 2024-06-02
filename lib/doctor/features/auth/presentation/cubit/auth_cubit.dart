@@ -74,6 +74,29 @@ class AuthCubit extends Cubit<AuthState> {
   onGenderChange(String gender) => emit(state.copyWith(gender: gender));
 
   ///////////Editing By Ghaith///////////////////
+  onAreasChange(String value) {
+    if (state.citiesList != null) {
+      List areas = state.citiesList!
+          .map((city) {
+            if (city.nameAr == value) {
+              return city.area!.map((area) {
+                return {
+                  "name": area.nameAr,
+                  "id": area.id,
+                };
+              }).toList();
+            } else {
+              return null;
+            }
+          })
+          .where((element) => element != null)
+          .toList();
+      areas = areas[0] as List<dynamic>;
+
+      emit(state.copyWith(areasList: areas));
+    }
+  }
+
   onSelectCategory(int id) {
     List<int>? selectedCateg = state.selectedCategories?.toList() ?? [];
     var allCateg = state.departemensList?.toList();
@@ -334,9 +357,7 @@ class AuthCubit extends Cubit<AuthState> {
   ///get user info from local data
   Map<String, dynamic> userInfo() {
     final String stringUser = CacheHelper.getData(key: AppStrings.userInfo);
-    if (kDebugMode) {
-      print(stringUser);
-    }
+    if (kDebugMode) {}
     Map<String, dynamic> user = jsonDecode(stringUser);
     return user;
   }

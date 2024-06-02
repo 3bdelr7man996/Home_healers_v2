@@ -1,15 +1,22 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/edit_acc_cubit/edit_user_acc_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets.dart';
+// ignore_for_file: unnecessary_null_comparison
+
+import 'dart:convert';
+
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets/choose_city_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets/choose_gender_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/edit_widgets/profile_image_for_patient_widget.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
-import 'package:dr/core/utils/app_font.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:dr/shared_widgets/custom_titled_text_form.dart';
-import 'package:dr/shared_widgets/gender_button.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +38,6 @@ class _EditProfileScreenForPatientState
     context.read<EditUserAccCubit>().getAllCities();
   }
 
-  int x = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,8 @@
 // ignore_for_file: must_be_immutable, deprecated_member_use
 
-import 'package:dr/Patient/features/setting/presentation/widgets/bill_widgets.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/requests_details_widgets.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/bill_widgets/blue_section_widget.dart';
+import 'package:dr/Patient/features/setting/presentation/widgets/request_details_widgets/bill_widget.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -19,7 +20,6 @@ import 'dart:ui' as ui;
 
 import '../../../../../core/utils/deep_link_util.dart';
 import '../../data/models/my_orders_model.dart';
-import '../cubit/settings_cubit/setting_cubit.dart';
 
 class BillScreen extends StatefulWidget {
   OrderData oneOrder;
@@ -43,10 +43,6 @@ class _BillScreenState extends State<BillScreen> {
       var image = await _capturePng();
       if (image != null) {
         final captureImg = pw.MemoryImage(image);
-        // final image = await WidgetWraper.fromKey(
-        //   key: _printKey,
-        //   pixelRatio: 2.0,
-        // );
 
         doc.addPage(pw.Page(
             pageFormat: format,
@@ -72,21 +68,12 @@ class _BillScreenState extends State<BillScreen> {
       Uint8List? pngBytes = byteData?.buffer.asUint8List();
       return pngBytes;
     } catch (e) {
-      print(e);
       return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    // String randomString() {
-    //   const chars =
-    //       'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    //   return String.fromCharCodes(List.generate(
-    //       10, (index) => chars.codeUnitAt(Random().nextInt(chars.length))));
-    // }
-
-    print(widget.oneOrder.runtimeType);
     return Scaffold(
       appBar: customAppBar(context, title: "الفاتورة", backButton: true),
       body: SingleChildScrollView(

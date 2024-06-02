@@ -1,3 +1,5 @@
+import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:easy_localization/easy_localization.dart';
