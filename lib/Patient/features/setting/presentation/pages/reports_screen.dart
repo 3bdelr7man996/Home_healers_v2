@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/add_report_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets/report_for_me_widget.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets/report_for_specialist_widget.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/widgets/reports_widgets.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';

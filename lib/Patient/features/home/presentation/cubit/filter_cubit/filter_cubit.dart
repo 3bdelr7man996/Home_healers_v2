@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:dr/Patient/features/home/data/models/section-model.dart';
 import 'package:dr/Patient/features/home/data/repositories/filter_repo.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_result_screen.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/firebase_analytic_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
+import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:dr/doctor/features/auth/data/model/cities_area.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:equatable/equatable.dart';
@@ -89,8 +89,7 @@ class FilterCubit extends Cubit<FilterState> {
     await context.read<AuthCubit>().getAllCities();
     await context.read<AuthCubit>().getAllDepartements();
     await context.read<AuthCubit>().getAllStatus();
-    context.read<ReservationCubit>().onChangestatus_id(null);
-    context.read<ReservationCubit>().onChangestatus_id(-1);
+
     catgList = context
         .read<AuthCubit>()
         .departList!

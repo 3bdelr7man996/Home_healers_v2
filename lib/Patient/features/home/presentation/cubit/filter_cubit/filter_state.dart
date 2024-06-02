@@ -1,21 +1,21 @@
 part of 'filter_cubit.dart';
 
 class FilterState extends Equatable {
-  FilterState({
-    this.Loading = false,
-    this.category_id,
-    this.status_id,
-    this.gender,
-    this.city_id,
-    this.specialistList,
-    this.area_id,
-    this.areaList,
-    this.showArea = false,
-    this.showCateg = false,
-    this.showCity = false,
-    this.showGender = false,
-    this.showStatus = false,
-  });
+  FilterState(
+      {this.Loading = false,
+      this.category_id,
+      this.status_id,
+      this.gender,
+      this.city_id,
+      this.specialistList,
+      this.area_id,
+      this.areaList,
+      this.showArea = false,
+      this.showCateg = false,
+      this.showCity = false,
+      this.showGender = false,
+      this.showStatus = false,
+      this.filterDataList});
   final bool Loading;
   final Item? category_id;
   final Item? status_id;
@@ -28,6 +28,7 @@ class FilterState extends Equatable {
   final bool showCity;
   final bool showArea;
   final bool showGender;
+  final List<Advertiser>? filterDataList;
 
   final Map<String, dynamic>? specialistList;
   @override
@@ -46,6 +47,7 @@ class FilterState extends Equatable {
         showCity,
         showArea,
         showGender,
+        filterDataList,
       ];
   FilterState copyWith({
     bool? Loading,
@@ -61,6 +63,7 @@ class FilterState extends Equatable {
     bool? showCity,
     bool? showArea,
     bool? showGender,
+    List<Advertiser>? filterDataList,
   }) =>
       FilterState(
         Loading: Loading ?? this.Loading,
@@ -76,6 +79,7 @@ class FilterState extends Equatable {
         showCity: showCity ?? this.showCity,
         showGender: showGender ?? this.showGender,
         showStatus: showStatus ?? this.showStatus,
+        filterDataList: filterDataList ?? this.filterDataList,
       );
 }
 

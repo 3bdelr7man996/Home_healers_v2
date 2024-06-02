@@ -20,7 +20,6 @@ import 'package:dr/Patient/features/home/data/repositories/reservation_with_offe
 import 'package:dr/Patient/features/home/data/repositories/search_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/section_repo.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/ads_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/filter_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/offer/data/datasources/get_offers_ds.dart';
@@ -46,15 +45,7 @@ import 'package:dr/Patient/features/setting/data/repositories/my_points_repo.dar
 import 'package:dr/Patient/features/setting/data/repositories/reports_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_info_repo.dart';
 import 'package:dr/Patient/features/setting/data/repositories/update_reservation_repo.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/add_report_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/evaluation_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/report_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_reservation_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/edit_acc_cubit/edit_user_acc_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/config/pusher_config/pusher_config.dart';
 import 'package:dr/doctor/features/auth/data/data_source/advertise_signup_ds.dart';
 import 'package:dr/doctor/features/auth/data/repository/advertise_signup_repo.dart';
@@ -75,7 +66,7 @@ import 'package:dr/features/auth/presentation/cubit/login_cubit/login_cubit.dart
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-import 'Patient/features/home/presentation/cubit/cubit/filter_cubit.dart';
+import 'Patient/features/home/presentation/cubit/filter_cubit/filter_cubit.dart';
 import 'Patient/features/setting/data/datasources/show_notification_ds.dart';
 import 'Patient/features/setting/data/repositories/show_notification_repo.dart';
 import 'config/notifications_config/firebase_messages.dart';
@@ -197,12 +188,12 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => FilterCubit(sl()));
   sl.registerFactory(() =>
       ReservationCubit(reservationRepo: sl(), reservationWithOfferRepo: sl()));
-  sl.registerFactory(() => MyOrdersCubit(
-      myOrdersRepo: sl(),
-      showBillRepo: sl(),
-      getInvoiceRepo: sl(),
-      showNotificationRepo: sl()));
-  sl.registerFactory(() => UpdateReservationCubit(updateReservationRepo: sl()));
+  // sl.registerFactory(() => MyOrdersCubit(
+  //     myOrdersRepo: sl(),
+  //     showBillRepo: sl(),
+  //     getInvoiceRepo: sl(),
+  //     showNotificationRepo: sl()));
+  // sl.registerFactory(() => UpdateReservationCubit(updateReservationRepo: sl()));
   sl.registerFactory(() => EditUserAccCubit(repository: sl()));
   sl.registerFactory(() => FavoriteCubit(favoriteRepo: sl()));
   sl.registerFactory(() => AddFavoriteCubit(addFavoriteRepo: sl()));
@@ -211,8 +202,8 @@ Future<void> serviceLocatorInit() async {
   sl.registerFactory(() => GetAllAdsCubit(getAllAdsRepo: sl()));
   sl.registerFactory(() => PaymentCubit(repository: sl()));
   sl.registerFactory(() => ForgetPasswordCubit(repository: sl()));
-  sl.registerFactory(() => GetPointsCubit(getPointrepo: sl()));
-  sl.registerFactory(() => evaluationCubit(eevaluationsRepo: sl()));
-  sl.registerFactory(() => ReportsCubit(repositry: sl()));
-  sl.registerFactory(() => AddReportCubit(repositry: sl()));
+  // sl.registerFactory(() => GetPointsCubit(getPointrepo: sl()));
+  // sl.registerFactory(() => evaluationCubit(eevaluationsRepo: sl()));
+  // sl.registerFactory(() => ReportsCubit(repositry: sl()));
+  // sl.registerFactory(() => AddReportCubit(repositry: sl()));
 }

@@ -1,5 +1,4 @@
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/my_order_cubit.dart';
-import 'package:dr/Patient/features/setting/presentation/cubit/settings_cubit/setting_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/my_point_for_patient.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';

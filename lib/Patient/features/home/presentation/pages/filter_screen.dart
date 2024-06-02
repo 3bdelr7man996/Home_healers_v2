@@ -1,18 +1,10 @@
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/filter_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_widgets/appBar_for_filter.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/cubit/filter_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/cubit/home_cubit.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_widgets.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/filter_cubit/filter_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_widgets/filter_layout.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../widgets/filter_widgets/radioButtons_section.dart';
 
 class FiterScreen extends StatefulWidget {
   const FiterScreen({super.key});
@@ -32,47 +24,6 @@ class _FiterScreenState extends State<FiterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // statusFromData =
-    //     context.select((AuthCubit cubit) => cubit.state.statusList);
-    // if (statusFromData != null) {
-    //   Status = statusFromData.map((city) {
-    //     if (city != null) {
-    //       return {
-    //         "name": city.nameAr,
-    //         "id": city.id,
-    //       };
-    //     } else {
-    //       return null;
-    //     }
-    //   }).toList();
-    // }
-    // categoriesFromData =
-    //     context.select((AuthCubit cubit) => cubit.state.departemensList);
-    // if (categoriesFromData != null) {
-    //   categories = categoriesFromData.map((city) {
-    //     if (city != null) {
-    //       return {
-    //         "name": city.nameAr,
-    //         "id": city.id,
-    //       };
-    //     } else {
-    //       return null;
-    //     }
-    //   }).toList();
-    // }
-    // CitesFromData = context.select((AuthCubit cubit) => cubit.state.citiesList);
-    // if (CitesFromData != null) {
-    //   Cites = CitesFromData.map((city) {
-    //     if (city != null) {
-    //       return {
-    //         "name": city.nameAr,
-    //         "id": city.id,
-    //       };
-    //     } else {
-    //       return null;
-    //     }
-    //   }).toList();
-    //}
     return Scaffold(
       appBar: customAppBarForFilter(
         context,

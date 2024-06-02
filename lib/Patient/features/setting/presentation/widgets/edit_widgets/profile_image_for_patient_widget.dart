@@ -1,106 +1,71 @@
 // ignore_for_file: unnecessary_null_comparison
 
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/update_info_cubit.dart';
+import 'package:dr/Patient/features/setting/presentation/cubit/edit_acc_cubit/edit_user_acc_cubit.dart';
+import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
-import 'package:dr/core/utils/app_strings.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 
-class ProfileImageForPatient extends StatefulWidget {
-  const ProfileImageForPatient({
-    Key? key,
-  }) : super(key: key);
-  @override
-  State<ProfileImageForPatient> createState() => _ProfileImageForPatientState();
-}
-
-class _ProfileImageForPatientState extends State<ProfileImageForPatient> {
-  late File _imageFile;
-  final picker = ImagePicker();
-  var userInfo;
-  var jsonData;
-  var image;
-
-  @override
-  void initState() {
-    super.initState();
-    _imageFile = File('assets/images/doctor.png');
-
-    getAttributeFromSharedPreferences().then((value) {
-      setState(() {
-        userInfo = value;
-        jsonData = jsonDecode(userInfo);
-      });
-    });
-  }
-
-  Future pickImage() async {
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedImage != null) {
-        _imageFile = File(pickedImage.path);
-        showSelectedPhoto = false;
-        context.read<UpdateInfoCubit>().onimageChange(_imageFile);
-      } else {
-        _imageFile = File('assets/images/doctor.png');
-      }
-    });
-  }
-
-  bool showSelectedPhoto = true;
+class ProfileImgPatient extends StatelessWidget {
+  const ProfileImgPatient({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
       children: [
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: <Widget>[
-            if (jsonData != null)
-              jsonData["image"] != null && showSelectedPhoto == true
-                  ? Container(
+        Container(
+          height: 150,
+          width: 150,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            //shape: BoxShape.circle,
+            borderRadius: BorderRadius.all(Radius.circular(75.0)),
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.circular(75.0)),
+            child: BlocBuilder<EditUserAccCubit, EditUserAccState>(
+              buildWhen: (previous, current) =>
+                  previous.img != current.img ||
+                  previous.avatar != current.avatar ||
+                  previous.userInfo != current.userInfo,
+              builder: (context, state) {
+                if (state.img != null && state.img!.path.isNotEmpty) {
+                  return AppConstants.customFileImage(
+                      file: state.img!,
+                      fit: BoxFit.fill,
                       width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(80),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              "${AppStrings.baseUrl}/upload/${jsonData["image"]}",
-                            ),
-                            fit: BoxFit.cover,
-                            onError: (exception, stackTrace) => {},
-                          )),
-                    )
-                  : CircleAvatar(
-                      radius: 80,
-                      backgroundColor: Colors.grey[300],
-                      backgroundImage:
-                          _imageFile != null && _imageFile.existsSync()
-                              ? Image.file(_imageFile).image
-                              : const AssetImage('assets/images/doctor.png'),
-                    ),
-            InkWell(
-              onTap: () {
-                pickImage();
+                      height: 150);
+                } else {
+                  return AppConstants.customNetworkImage(
+                    imagePath: "${state.userInfo?.image}",
+                    imageError: AppImages.patientImg,
+                    width: 150,
+                    height: 150,
+                    fit: BoxFit.fill,
+                  );
+                }
               },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SvgPicture.asset(
-                  "assets/icons/pick_image_icon.svg",
-                  width: 40,
-                  height: 40,
+            ),
+          ),
+        ),
+        Positioned(
+            bottom: 0,
+            right: 10,
+            child: GestureDetector(
+              onTap: () => context.read<EditUserAccCubit>().pickImage(),
+              child: Container(
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: AppColors.primaryColor),
+                padding: const EdgeInsets.all(5.0),
+                child: AppConstants.customAssetSvg(
+                  imagePath: "assets/icons/pick_image_icon.svg",
                 ),
               ),
-            ),
-          ],
-        ),
+            )),
       ],
     );
   }
