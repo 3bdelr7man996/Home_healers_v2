@@ -32,4 +32,16 @@ class AddReportCubit extends Cubit<AddReportState> {
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }
+
+  Future<void> deleteReport(BuildContext context, int repId) async {
+    try {
+      var response = await repositry.deleteReport(repId);
+      await context.read<ReportsCubit>().GetReports();
+      if (response) {
+        ShowToastHelper.showToast(msg: "تمت العملية بنجاح", isError: false);
+      }
+    } catch (e) {
+      ShowToastHelper.showToast(msg: e.toString(), isError: true);
+    }
+  }
 }

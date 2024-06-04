@@ -86,7 +86,7 @@ class CardHeader extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "تاريخ الطلب :${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(reservation?.startAt ?? ''))}",
+                  "تاريخ الطلب :${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(reservation?.createdAt ?? ''))}",
                   style: const TextStyle(fontWeight: FontWeight.w500),
                 )
               ],

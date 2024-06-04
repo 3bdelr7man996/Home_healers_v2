@@ -18,11 +18,13 @@ class AcceptRefuseButtons extends StatelessWidget {
           flex: 1,
           //width: context.width * 0.25,
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               context.read<ReservationsCubit>().updateReservation(
                   state.reservation!.copyWith(status: 'canceled'),
                   ResevationStep.canceled,
                   subReservation: true);
+              context.read<ReservationsCubit>().getReservationStatus();
+
               Navigator.pop(context);
             },
             style: ButtonStyle(

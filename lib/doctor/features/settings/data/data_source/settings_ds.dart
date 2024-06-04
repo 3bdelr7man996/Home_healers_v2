@@ -37,6 +37,7 @@ class SettingsDs {
       '/api/resetAuthUserPassword',
       body: body,
     );
+
     return response;
   }
 

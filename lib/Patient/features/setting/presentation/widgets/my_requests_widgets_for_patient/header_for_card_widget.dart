@@ -38,7 +38,7 @@ class HeaderForCard extends StatelessWidget {
                   if (listOfOrders!.startAt != null)
                     FittedBox(
                       child: Text(
-                        "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(listOfOrders!.startAt))}",
+                        "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(listOfOrders?.createdAt ?? listOfOrders!.startAt))}",
                         style: const TextStyle(
                             fontWeight: FontWeight.w500, fontSize: 14),
                       ),

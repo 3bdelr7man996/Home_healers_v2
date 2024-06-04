@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsForsection extends StatelessWidget {
-  var changeTitle;
-  OptionsForsection({super.key, this.changeTitle});
+  OptionsForsection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +52,6 @@ class OptionsForsection extends StatelessWidget {
                                           state.statusList![index].id)
                                       : false,
                                   onChanged: (checked) {
-                                    changeTitle(
-                                        state.statusList![index].nameAr, 2);
-
                                     context.read<AuthCubit>().onSelectStatus(
                                           state.statusList![index].id,
                                         );

@@ -10,8 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsForJobTitle extends StatelessWidget {
-  var changeTitle;
-  OptionsForJobTitle({super.key, this.changeTitle});
+  OptionsForJobTitle({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +55,6 @@ class OptionsForJobTitle extends StatelessWidget {
                                           state.departemensList![index].id)
                                       : false,
                                   onChanged: (checked) {
-                                    changeTitle(
-                                        state.departemensList![index].nameAr,
-                                        1);
                                     context.read<AuthCubit>().onSelectCategory(
                                           state.departemensList![index].id,
                                         );

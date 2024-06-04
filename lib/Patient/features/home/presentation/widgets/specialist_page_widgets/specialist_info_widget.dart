@@ -45,7 +45,7 @@ class _specialistInfoState extends State<specialistInfo> {
                 ? SizedBox()
                 : statisticsBox(
                     text1: "سنوات الخبرة",
-                    text2: "${widget.years}",
+                    text2: "${widget.years} +",
                   ),
             statisticsBox(
               text1: "تقييم",

@@ -70,7 +70,11 @@ class DateSection extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    "تاريخ الطلب : ${state.reservation?.startAt?.replaceAll(RegExp(r'(\d{2}:\d{2}:\d{2})'), "") ?? ""}",
+                    "تاريخ الطلب : ${state.reservation?.createdAt?.replaceAll(RegExp(r'(\d{2}:\d{2}:\d{2})'), "") ?? ""}",
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "تاريخ الجلسة : ${state.reservation?.startAt?.replaceAll(RegExp(r'(\d{2}:\d{2}:\d{2})'), "") ?? ""}",
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   )
                 ],
@@ -125,8 +129,8 @@ class PatientDetailsSection extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: AppConstants.customNetworkImage(
-                  width: 80,
-                  height: 80,
+                    width: 80,
+                    height: 80,
                     imageError: AppImages.patientImg,
                     imagePath: "${state.reservation?.user?.image ?? ""}"),
               ),

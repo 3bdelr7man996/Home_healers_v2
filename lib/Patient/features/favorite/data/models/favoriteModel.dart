@@ -28,17 +28,17 @@ class FavoriteModel {
 
 class FavoriteData {
   FavoriteData({
-    required this.id,
-    required this.userId,
-    required this.advertiserId,
-    required this.advertiser,
-    required this.user,
+     this.id,
+     this.userId,
+     this.advertiserId,
+    this.advertiser,
+    this.user,
   });
-  late final int? id;
-  late final int? userId;
-  late final int? advertiserId;
-  late final Advertiser? advertiser;
-  late final User user;
+    int? id;
+    int? userId;
+    int? advertiserId;
+    Advertiser? advertiser;
+    User? user;
 
   FavoriteData.fromJson(Map<String?, dynamic>? json) {
     id = json?['id'];
@@ -53,8 +53,8 @@ class FavoriteData {
     _data['id'] = id;
     _data['user_id'] = userId;
     _data['advertiser_id'] = advertiserId;
-    _data['advertiser'] = advertiser!.toJson();
-    _data['user'] = user.toJson();
+    _data['advertiser'] = advertiser?.toJson();
+    _data['user'] = user?.toJson();
     return _data;
   }
 }

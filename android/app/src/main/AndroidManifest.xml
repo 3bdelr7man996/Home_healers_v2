@@ -16,6 +16,7 @@
     <uses-feature android:name="android.hardware.location.gps" android:required="true"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    
     <application
         android:label="Home Healers"
         android:name="${applicationName}"

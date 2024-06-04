@@ -97,22 +97,36 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  String jobTitle = "المسمى";
   onSelectCategory(int id) {
     List<int>? selectedCateg = state.selectedCategories?.toList() ?? [];
-    var allCateg = state.departemensList?.toList();
+    List<Categories> allCateg = state.departemensList?.toList() ?? [];
     bool isChecked = selectedCateg.contains(id);
     if (!isChecked) {
       selectedCateg.add(id);
+      jobTitle = allCateg.firstWhere((e) => e.id == id).nameAr ?? '';
       emit(state.copyWith(
-          selectedCategories: () => selectedCateg, departemensList: allCateg));
+        selectedCategories: () => selectedCateg,
+        departemensList: allCateg,
+      ));
     } else {
       selectedCateg.remove(id);
+      if (selectedCateg.isEmpty) {
+        jobTitle = "المسمى";
+      } else {
+        jobTitle =
+            allCateg.firstWhere((e) => e.id == selectedCateg.last).nameAr ?? '';
+      }
       emit(
         state.copyWith(
-            selectedCategories: () => selectedCateg, departemensList: allCateg),
+          selectedCategories: () => selectedCateg,
+          departemensList: allCateg,
+        ),
       );
     }
   }
+
+  String section = "القسم";
 
   onSelectStatus(int id) {
     List<int>? selectedStatus = state.selectedStatus?.toList() ?? [];
@@ -120,10 +134,18 @@ class AuthCubit extends Cubit<AuthState> {
     bool isChecked = selectedStatus.contains(id);
     if (!isChecked) {
       selectedStatus.add(id);
+      section = allStatus?.firstWhere((e) => e.id == id).nameAr ?? '';
       emit(state.copyWith(
           selectedStatus: () => selectedStatus, statusList: allStatus));
     } else {
       selectedStatus.remove(id);
+      if (selectedStatus.isEmpty) {
+        section = "القسم";
+      } else {
+        section =
+            allStatus?.firstWhere((e) => e.id == selectedStatus.last).nameAr ??
+                'القسم';
+      }
       emit(
         state.copyWith(
             selectedStatus: () => selectedStatus, statusList: allStatus),
@@ -131,7 +153,9 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  onSelectCity(int id) {
+  String city = "المدينة";
+  onSelectCity(int id, String txtName) {
+    city = txtName;
     emit(state.copyWith(selectedCity: () => id));
   }
 
@@ -309,7 +333,7 @@ class AuthCubit extends Cubit<AuthState> {
   void fieldsValidation(bool isRegister) {
     if (isRegister && state.password?.compareTo(state.confPassword!) != 0) {
       log("Password${state.password} <===> conf pass${state.confPassword}");
-      throw Exception("password_not_compatible".tr());
+      throw ("password_not_compatible".tr());
     }
 
     if (state.selectedCategories == null || state.selectedCategories!.isEmpty) {
@@ -325,7 +349,7 @@ class AuthCubit extends Cubit<AuthState> {
       throw ("gender_required".tr());
     }
     if (isRegister &&
-        (state.identification?.length != 14 ||
+        (state.identification?.length != 14 &&
             state.identification?.length != 10)) {
       throw ("accept_term".tr());
     }
@@ -420,7 +444,7 @@ class AuthCubit extends Cubit<AuthState> {
           lng: double.parse(advertiser.lng ?? "0")),
       phone: advertiser.mobile,
       selectedCategories: () =>
-          advertiser.categories?.map((e) => e.id).toList(),
+          advertiser.categories?.map((e) => e.id!).toList(),
       selectedCity: () => advertiser.cityId,
       selectedStatus: () => advertiser.statusAdvisor?.map((e) => e.id).toList(),
     ));

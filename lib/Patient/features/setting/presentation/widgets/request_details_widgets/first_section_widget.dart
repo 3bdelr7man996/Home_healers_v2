@@ -43,6 +43,13 @@ class FirstSection extends StatelessWidget {
                     "تاريخ الطلب : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(fromNotification ? notificationOrder[0]['created_at'] : listOfOrders!.createdAt))}",
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
+                ),
+                //if(!fromNotification)
+                FittedBox(
+                  child: Text(
+                    "تاريخ الحجز : ${intl.DateFormat('EEEE dd/M/y').format(DateTime.parse(fromNotification ? notificationOrder[0]['start_at'] : listOfOrders!.startAt))}",
+                    style: const TextStyle(fontWeight: FontWeight.w500),
+                  ),
                 )
               ],
             ),

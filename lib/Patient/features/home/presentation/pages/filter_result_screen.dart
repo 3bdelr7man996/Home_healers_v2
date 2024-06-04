@@ -1,5 +1,4 @@
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/home_widgets/home_widgets.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/filter_cubit/filter_cubit.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
@@ -15,14 +14,6 @@ class FilterResultScreen extends StatefulWidget {
 }
 
 class _FilterResultScreenState extends State<FilterResultScreen> {
-  bool _isVisible = false;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
-  }
-
   @override
   @override
   Widget build(BuildContext context) {
@@ -36,24 +27,19 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
                 padding: 0,
               );
             } else if (!state.Loading &&
-                state.filterDataList != null &&
-                state.filterDataList!.isNotEmpty) {
+                state.specialistList != null &&
+                state.specialistList!.isNotEmpty) {
               return Stack(children: [
                 ListView.builder(
-                  itemCount: state.filterDataList?.length,
+                  itemCount: state.specialistList?.length,
                   itemBuilder: (BuildContext context, int index) {
                     return DoctorCard(
-                        fromFilter: true,
-                        doctorInfo: state.filterDataList![index],
-                        year: state.filterDataList![index].years,
-                        toggleVisibility: _toggleVisibility,
-                        isVisible: _isVisible);
+                      fromFilter: true,
+                      doctorInfo: state.specialistList![index],
+                      year: state.specialistList![index].years,
+                    );
                   },
                 ),
-                PopUpForAddToFavourite(
-                  isVisible: _isVisible,
-                  toggleVisibility: _toggleVisibility,
-                )
               ]);
             } else {
               return Center(

@@ -18,4 +18,10 @@ class AddReportRepo {
     );
     return signUpResponse;
   }
+
+  Future<bool> deleteReport(int repId) async {
+    Map<String, dynamic>? response =
+        await dataSource.deleteReport(repId: repId);
+    return response?['success'] ?? false;
+  }
 }

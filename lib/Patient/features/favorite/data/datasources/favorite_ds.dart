@@ -10,4 +10,23 @@ class FavoriteDS {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>?> addFavorite({
+    required Map<String, dynamic> body,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      '/api/user/addWish',
+      body: body,
+    );
+    return response;
+  }
+
+  Future<Map<String, dynamic>?> removeFavorite({
+    required int id,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      '/api/user/deleteWish/$id',
+    );
+    return response;
+  }
 }

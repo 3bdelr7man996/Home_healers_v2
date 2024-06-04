@@ -1,8 +1,10 @@
+import 'package:dr/Patient/features/home/presentation/cubit/filter_cubit/filter_cubit.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/home/presentation/pages/home_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 PreferredSizeWidget customAppBarForFilter(BuildContext context,
     {String title = '', bool backButton = true, bool fromSetting = false}) {
@@ -14,7 +16,7 @@ PreferredSizeWidget customAppBarForFilter(BuildContext context,
         child: Center(
           child: InkWell(
             onTap: () {
-              Navigator.pop(context);
+              context.read<FilterCubit>().initData(context);
             },
             child: const Text(
               "إعادة",

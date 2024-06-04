@@ -51,51 +51,53 @@ class Advertiser {
     this.rates,
     this.reservationsCount,
     this.years,
+    this.isFav = false,
   });
-  late final int? id;
-  late final String? firstnameAr;
-  late final String? firstnameEn;
-  late final String? lastnameAr;
-  late final String? lastnameEn;
-  late final String? mobile;
-  late final String? email;
-  late final String? image;
-  late final List<String>? images;
-  late final String? descAr;
-  late final String? descEn;
-  late final String? addressAr;
-  late final String? addressEn;
-  late final String? gender;
-  late final String? iban;
-  late final String? nationalId;
-  late final String? location;
-  late final int? activated;
-  late final int? bundleId;
-  late final int? countryId;
-  late final int? cityId;
-  late final int? areaId;
-  late final DateTime? startfrom;
-  late final DateTime? endat;
-  late final int? sessionPrice;
-  late final int? sessionDur;
-  late final String? lat;
-  late final String? lng;
-  late final String? status;
-  late final int? centerId;
-  late final String? fcmToken;
-  late final int? isOnline;
-  late final String? createdAt;
-  late final String? updatedAt;
-  late final int? rating;
-  late final String? nameAr;
-  late final String? nameEn;
-  late final List<Categories>? categories;
-  late final List<StatusData>? statusAdvisor;
-  late final Workinghours? workinghours;
-  late final List<Rates>? rates;
-  var years;
-  late final int? reservationsCount;
-  late final List<Offers>? offers;
+  int? id;
+  String? firstnameAr;
+  String? firstnameEn;
+  String? lastnameAr;
+  String? lastnameEn;
+  String? mobile;
+  String? email;
+  String? image;
+  List<String>? images;
+  String? descAr;
+  String? descEn;
+  String? addressAr;
+  String? addressEn;
+  String? gender;
+  String? iban;
+  String? nationalId;
+  String? location;
+  int? activated;
+  int? bundleId;
+  int? countryId;
+  int? cityId;
+  int? areaId;
+  DateTime? startfrom;
+  DateTime? endat;
+  int? sessionPrice;
+  int? sessionDur;
+  String? lat;
+  String? lng;
+  String? status;
+  int? centerId;
+  String? fcmToken;
+  int? isOnline;
+  String? createdAt;
+  String? updatedAt;
+  int? rating;
+  String? nameAr;
+  String? nameEn;
+  List<Categories>? categories;
+  List<StatusData>? statusAdvisor;
+  Workinghours? workinghours;
+  List<Rates>? rates;
+  int? years;
+  int? reservationsCount;
+  List<Offers>? offers;
+  bool? isFav;
 
   Advertiser.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
@@ -138,7 +140,7 @@ class Advertiser {
     rating = json?['rating'];
     nameAr = json?['name_ar'];
     nameEn = json?['name_en'];
-    years = json?['years'];
+    years = json?['years'] ?? 5;
     categories = json?['categories'] != null
         ? List.from(json?['categories'])
             .map((e) => Categories.fromJson(e))
@@ -164,6 +166,7 @@ class Advertiser {
         offers?.add(new Offers.fromJson(v));
       });
     }
+    isFav = false;
     // List.castFrom<dynamic, dynamic>(json?['status_advisor']);
   }
 
@@ -209,5 +212,101 @@ class Advertiser {
     data['categories'] = categories?.map((e) => e.toJson()).toList();
     data['status_advisor'] = statusAdvisor;
     return data;
+  }
+
+  Advertiser copyWith({
+    int? id,
+    String? firstnameAr,
+    String? firstnameEn,
+    String? lastnameAr,
+    String? lastnameEn,
+    String? mobile,
+    String? email,
+    String? image,
+    List<String>? images,
+    String? descAr,
+    String? descEn,
+    String? addressAr,
+    String? addressEn,
+    String? gender,
+    String? iban,
+    String? nationalId,
+    String? location,
+    int? activated,
+    int? bundleId,
+    int? countryId,
+    int? cityId,
+    int? areaId,
+    DateTime? startfrom,
+    DateTime? endat,
+    int? sessionPrice,
+    int? sessionDur,
+    String? lat,
+    String? lng,
+    String? status,
+    int? centerId,
+    String? fcmToken,
+    int? isOnline,
+    String? createdAt,
+    String? updatedAt,
+    int? rating,
+    String? nameAr,
+    String? nameEn,
+    List<Categories>? categories,
+    List<StatusData>? statusAdvisor,
+    Workinghours? workinghours,
+    List<Rates>? rates,
+    int? years,
+    int? reservationsCount,
+    List<Offers>? offers,
+    bool? isFav,
+  }) {
+    return Advertiser(
+      id: id ?? this.id,
+      firstnameAr: firstnameAr ?? this.firstnameAr,
+      firstnameEn: firstnameEn ?? this.firstnameEn,
+      lastnameAr: lastnameAr ?? this.lastnameAr,
+      lastnameEn: lastnameEn ?? this.lastnameEn,
+      mobile: mobile ?? this.mobile,
+      email: email ?? this.email,
+      image: image ?? this.image,
+      images: images ?? this.images,
+      descAr: descAr ?? this.descAr,
+      descEn: descEn ?? this.descEn,
+      addressAr: addressAr ?? this.addressAr,
+      addressEn: addressEn ?? this.addressEn,
+      gender: gender ?? this.gender,
+      iban: iban ?? this.iban,
+      nationalId: nationalId ?? this.nationalId,
+      location: location ?? this.location,
+      activated: activated ?? this.activated,
+      bundleId: bundleId ?? this.bundleId,
+      countryId: countryId ?? this.countryId,
+      cityId: cityId ?? this.cityId,
+      areaId: areaId ?? this.areaId,
+      startfrom: startfrom ?? this.startfrom,
+      endat: endat ?? this.endat,
+      sessionPrice: sessionPrice ?? this.sessionPrice,
+      sessionDur: sessionDur ?? this.sessionDur,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+      status: status ?? this.status,
+      centerId: centerId ?? this.centerId,
+      fcmToken: fcmToken ?? this.fcmToken,
+      isOnline: isOnline ?? this.isOnline,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rating: rating ?? this.rating,
+      nameAr: nameAr ?? this.nameAr,
+      nameEn: nameEn ?? this.nameEn,
+      categories: categories ?? this.categories,
+      statusAdvisor: statusAdvisor ?? this.statusAdvisor,
+      workinghours: workinghours ?? this.workinghours,
+      rates: rates ?? this.rates,
+      years: years ?? this.years,
+      reservationsCount: reservationsCount ?? this.reservationsCount,
+      offers: offers ?? this.offers,
+      isFav: isFav ?? this.isFav,
+    );
   }
 }

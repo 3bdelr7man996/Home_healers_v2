@@ -7,6 +7,7 @@ import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart
 import 'package:dr/doctor/features/settings/presentation/cubit/setting_cubit.dart';
 import 'package:dr/doctor/features/settings/presentation/widgets/change_password_widgets.dart';
 import 'package:dr/features/auth/presentation/pages/forget_password_screen.dart';
+import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -109,23 +110,32 @@ class _ChangePasswordState extends State<ChangePassword> {
                         icon: AppImages.passwordIcon,
                       ),
                       70.ph,
-                      SizedBox(
-                        width: context.width,
-                        height: context.height * 0.05,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            context
-                                .read<SettingCubit>()
-                                .changePassword(_toggleVisibility);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                          child: Text('save'.tr()),
-                        ),
+                      BlocBuilder<SettingCubit, SettingState>(
+                        builder: (context, state) {
+                          return state.changePassLoad
+                              ? CustomLoader(
+                                  padding: 0,
+                                )
+                              : SizedBox(
+                                  width: context.width,
+                                  height: context.height * 0.05,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      context
+                                          .read<SettingCubit>()
+                                          .changePassword(_toggleVisibility);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.primaryColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                    child: Text('save'.tr()),
+                                  ),
+                                );
+                        },
                       ),
                     ],
                   );

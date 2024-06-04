@@ -42,6 +42,7 @@ class AppStrings {
   static String pUpdateReservation = "/api/user/updateReservation";
   static String payByWallet = "/api/user/pay-by-wallet";
   static String walletBalance = "/api/user/getWallet";
+  static String deletePtReport="/api/user/deleteReport";
 
   //assets url
   static String appName = "Home Healers";

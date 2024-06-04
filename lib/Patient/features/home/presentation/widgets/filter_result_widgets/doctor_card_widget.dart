@@ -8,8 +8,7 @@ import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class DoctorCard extends StatefulWidget {
-  VoidCallback toggleVisibility;
-  bool isVisible, fromOfferScreen, fromfavorite;
+  bool fromOfferScreen, fromfavorite;
   int? status_id;
   Advertiser doctorInfo;
   bool fromOffer;
@@ -17,16 +16,13 @@ class DoctorCard extends StatefulWidget {
   bool fromPackages;
   var offer;
   var sessionCountForOffer;
-  var isFav;
   var fromFilter;
   var year;
   DoctorCard({
     super.key,
     this.sessionCountForOffer,
-    required this.isVisible,
     required this.doctorInfo,
     this.fromFilter = false,
-    this.isFav = false,
     this.fromPackages = false,
     this.fromFav = false,
     this.status_id,
@@ -35,7 +31,6 @@ class DoctorCard extends StatefulWidget {
     this.fromOfferScreen = false,
     this.offer,
     this.year,
-    required VoidCallback this.toggleVisibility,
   });
 
   @override
@@ -77,11 +72,9 @@ class _DoctorCardState extends State<DoctorCard> {
           child: Column(
             children: [
               HeaderForDoctorCard(
-                  isFav: widget.isFav,
-                  doctorInfo: widget.doctorInfo,
-                  fromfavorite: widget.fromfavorite,
-                  toggleVisibility: widget.toggleVisibility,
-                  isVisible: widget.isVisible),
+                doctorInfo: widget.doctorInfo,
+                fromfavorite: widget.fromfavorite,
+              ),
               10.ph,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,

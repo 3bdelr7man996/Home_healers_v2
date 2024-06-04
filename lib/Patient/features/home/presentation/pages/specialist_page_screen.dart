@@ -120,31 +120,52 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                                       fromFilter: widget.fromFilter,
                                       status_id: widget.status_id,
                                       fromOffer: widget.fromOffer)
-                                  : Container(
-                                      width: double.infinity,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            click = !click;
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              AppColors.primaryColor,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                  : widget.doctorInfo!.status == "on"
+                                      ? Container(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                click = !click;
+                                              });
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  AppColors.primaryColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(16.0),
+                                              child: Text(
+                                                'احجز الآن',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.grey,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(16.0),
+                                              child: Text(
+                                                ' غير متاح الحجز الان',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(16.0),
-                                          child: Text(
-                                            'احجز الآن',
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                         ],
                       ),
                     ),

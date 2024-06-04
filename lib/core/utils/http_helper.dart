@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dr/core/utils/app_strings.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import 'app_logger.dart';
@@ -65,9 +66,10 @@ class ApiBaseHelper {
     Map<String, dynamic>? responseJson;
     Uri urlRequest = Uri.parse("$baseUrl$url");
     try {
+      debugPrint(urlRequest.path);
       final http.Response response = await http.post(urlRequest,
           body: jsonEncode(body), headers: headers ?? baseHeaders);
-
+      debugPrint(response.toString());
       responseJson = _returnResponse(response,
           url: urlRequest.toString(), request: "POST");
     } on SocketException catch (e) {
@@ -135,7 +137,6 @@ class ApiBaseHelper {
         }
       }
       var result = await request.send();
-
       responseJson = _returnResponse(
           http.Response(
             await result.stream.bytesToString(),
@@ -169,6 +170,8 @@ class ApiBaseHelper {
 
   dynamic _returnResponse(http.Response response,
       {required String url, String? request}) {
+    print("$url\n${response}");
+
     ResponseFailure? error;
     switch (response.statusCode) {
       case 200:
@@ -184,6 +187,7 @@ class ApiBaseHelper {
             "=> REQUEST VALUES: $responseJson => HEADERS: ${response.headers}");
         return responseJson;
       case 400:
+        print(response.body.toString());
         var responseJson = json.decode(response.body.toString());
         error = handleError(responseJson);
         logger.i("RESPONSE[${response.statusCode}] => DATA: ${response.body}");

@@ -21,17 +21,15 @@ void main() async {
 
   Bloc.observer = MyBlocObserver();
 
-  
-
-  runApp(EasyLocalization(
-      supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
-      path: AppStrings.localizationPath,
-      fallbackLocale: const Locale('en', 'US'),
-      startLocale: const Locale('ar', 'EG'),
-      child: const MyApp()));
+  runApp(
+    EasyLocalization(
+        supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
+        path: AppStrings.localizationPath,
+        fallbackLocale: const Locale('en', 'US'),
+        startLocale: const Locale('ar', 'EG'),
+        child: const MyApp()),
+  );
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -52,7 +50,6 @@ class MyApp extends StatelessWidget {
         ],
         builder: BotToastInit(),
         home: SplashScreen(),
-       
       ),
     );
   }

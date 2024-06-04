@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/http_helper.dart';
 
 class AddReportDS {
@@ -17,6 +18,16 @@ class AddReportDS {
       body: body,
       fileKey: "rep_image",
       files: files,
+    );
+
+    return response;
+  }
+
+  Future<Map<String, dynamic>?> deleteReport({
+    required int repId,
+  }) async {
+    Map<String, dynamic>? response = await apiHelper.post(
+      AppStrings.deletePtReport + '/$repId',
     );
 
     return response;

@@ -161,7 +161,7 @@ class _SpecialOptionsState extends State<SpecialOptions> {
                           ),
                         ),
                         child: const Text(
-                          'الغاء الطلب',
+                          'إلغاء الطلب',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

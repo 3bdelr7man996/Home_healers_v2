@@ -59,7 +59,11 @@ class ErrorData {
   ErrorData({this.descAr});
 
   ErrorData.fromJson(Map<String, dynamic>? json) {
-    descAr = json?['desc_ar'].cast<String>();
+    descAr = json?['desc_ar'] != null
+        ? (json?['desc_ar'].cast<String>())
+        : json?['rep_image'] != null
+            ? (json?['rep_image'].cast<String>())
+            : [""];
   }
 
   Map<String, dynamic> toJson() {
@@ -112,6 +116,7 @@ class Errors {
 }
 
 ResponseFailure handleError(dynamic response) {
+  print(response);
   var error;
   List<Errors> errors = [Errors(code: "", message: "")];
 

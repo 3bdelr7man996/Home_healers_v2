@@ -6,20 +6,20 @@ import 'package:equatable/equatable.dart';
 class FavoriteState extends Equatable {
   FavoriteState({
     this.Loading = false,
-    this.data,
+    this.favList,
   });
   final bool Loading;
-  FavoriteModel? data;
+  List<FavoriteData>? favList;
   @override
   @override
-  List<Object?> get props => [Loading, data];
+  List<Object?> get props => [Loading, favList];
   FavoriteState copyWith({
     bool? Loading,
     var page,
-    FavoriteModel? data,
+    List<FavoriteData>? favList,
   }) =>
       FavoriteState(
         Loading: Loading ?? this.Loading,
-        data: data ?? this.data,
+        favList: favList ?? this.favList,
       );
 }

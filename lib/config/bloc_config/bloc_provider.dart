@@ -1,7 +1,6 @@
 import 'package:dr/Patient/features/auth/data/repositories/patient_signUp_repo.dart';
 import 'package:dr/Patient/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:dr/Patient/features/favorite/data/repositories/favorite_repo.dart';
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/addFavorite_cubit.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/data/repositories/get_all_ads_repo.dart';
 import 'package:dr/Patient/features/home/data/repositories/reservation_repo.dart';
@@ -62,9 +61,6 @@ MultiBlocProvider blocMultiProvider({required child}) {
       ),
       BlocProvider(
         create: (BuildContext context) => di.sl<NotificationCubit>(),
-      ),
-      BlocProvider(
-        create: (BuildContext context) => di.sl<AddFavoriteCubit>(),
       ),
       BlocProvider(
         create: (BuildContext context) => di.sl<LoginCubit>(),

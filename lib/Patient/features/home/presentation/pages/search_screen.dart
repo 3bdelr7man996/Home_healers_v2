@@ -5,7 +5,6 @@ import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/search_cu
 import 'package:dr/Patient/features/home/presentation/cubit/home_state/search_state.dart';
 import 'package:dr/Patient/features/home/presentation/pages/filter_screen.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
@@ -124,11 +123,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         // final result = searchResults![index];
                         // final firstName = result.firstnameAr;
                         return DoctorCard(
-                            fromFilter: true,
-                            doctorInfo: state.searchDataList![index],
-                            year: state.searchDataList![index].years,
-                            toggleVisibility: _toggleVisibility,
-                            isVisible: _isVisible);
+                          fromFilter: true,
+                          doctorInfo: state.searchDataList![index],
+                          year: state.searchDataList![index].years,
+                        );
                       },
                     ),
                   );
@@ -141,10 +139,6 @@ class _SearchScreenState extends State<SearchScreen> {
             )
           ]),
         ),
-        PopUpForAddToFavourite(
-          isVisible: _isVisible,
-          toggleVisibility: _toggleVisibility,
-        )
       ]),
     );
   }

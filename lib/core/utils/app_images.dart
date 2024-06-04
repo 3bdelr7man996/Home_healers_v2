@@ -20,6 +20,8 @@ class AppImages {
   static String sts_Post_rehab =
       "assets/images/Post_operative_rehabilitation.png";
   static String sts_women_health = "assets/images/women_health.png";
+  static String pdf_img = "assets/images/pdf.png";
+  static String gallery_img = "assets/images/gallery.png";
 
   //icons
   static String iconPath = "assets/icons/";

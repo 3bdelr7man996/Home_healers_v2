@@ -1,21 +1,21 @@
 part of 'filter_cubit.dart';
 
 class FilterState extends Equatable {
-  FilterState(
-      {this.Loading = false,
-      this.category_id,
-      this.status_id,
-      this.gender,
-      this.city_id,
-      this.specialistList,
-      this.area_id,
-      this.areaList,
-      this.showArea = false,
-      this.showCateg = false,
-      this.showCity = false,
-      this.showGender = false,
-      this.showStatus = false,
-      this.filterDataList});
+  FilterState({
+    this.Loading = false,
+    this.category_id,
+    this.status_id,
+    this.gender,
+    this.city_id,
+    this.specialistList,
+    this.area_id,
+    this.areaList,
+    this.showArea = false,
+    this.showCateg = false,
+    this.showCity = false,
+    this.showGender = false,
+    this.showStatus = false,
+  });
   final bool Loading;
   final Item? category_id;
   final Item? status_id;
@@ -28,9 +28,7 @@ class FilterState extends Equatable {
   final bool showCity;
   final bool showArea;
   final bool showGender;
-  final List<Advertiser>? filterDataList;
-
-  final Map<String, dynamic>? specialistList;
+  final List<Advertiser>? specialistList;
   @override
   @override
   List<Object?> get props => [
@@ -47,7 +45,6 @@ class FilterState extends Equatable {
         showCity,
         showArea,
         showGender,
-        filterDataList,
       ];
   FilterState copyWith({
     bool? Loading,
@@ -56,14 +53,13 @@ class FilterState extends Equatable {
     Item? Function()? gender,
     Item? Function()? status_id,
     Item? Function()? city_id,
-    Map<String, dynamic>? specialistList,
     List<Area>? areaList,
     bool? showCateg,
     bool? showStatus,
     bool? showCity,
     bool? showArea,
     bool? showGender,
-    List<Advertiser>? filterDataList,
+    List<Advertiser>? specialistList,
   }) =>
       FilterState(
         Loading: Loading ?? this.Loading,
@@ -72,14 +68,13 @@ class FilterState extends Equatable {
         area_id: area_id != null ? area_id() : this.area_id,
         category_id: category_id != null ? category_id() : this.category_id,
         status_id: status_id != null ? status_id() : this.status_id,
-        specialistList: specialistList ?? this.specialistList,
         areaList: areaList ?? this.areaList,
         showArea: showArea ?? this.showArea,
         showCateg: showCateg ?? this.showCateg,
         showCity: showCity ?? this.showCity,
         showGender: showGender ?? this.showGender,
         showStatus: showStatus ?? this.showStatus,
-        filterDataList: filterDataList ?? this.filterDataList,
+        specialistList: specialistList ?? this.specialistList,
       );
 }
 

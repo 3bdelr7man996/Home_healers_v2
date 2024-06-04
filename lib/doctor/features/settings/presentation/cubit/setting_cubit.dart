@@ -12,6 +12,7 @@ import 'package:dr/doctor/features/settings/data/models/status_model.dart';
 import 'package:dr/doctor/features/settings/data/repository/settings_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/widgets.dart';
 
 part 'setting_state.dart';
 
@@ -125,18 +126,25 @@ class SettingCubit extends Cubit<SettingState> {
 
   Future<void> changePassword(Function _toggleVisibility) async {
     try {
+      emit(state.copyWith(changePassLoad: true));
       fieldsValidation();
       var body = {
         "oldPassword": "${state.oldPasswordValue}",
         "newPassword": "${state.newPasswordValue}"
       };
       ChangePasswordModel response = await repository.changePassword(body);
-      emit(state.copyWith(changePasswordData: response));
-      emit(state.copyWith(oldPasswordValue: ""));
-      emit(state.copyWith(newPasswordValue: ""));
-      emit(state.copyWith(confirmPasswordValue: ""));
+      emit(state.copyWith(
+        changePasswordData: response,
+        oldPasswordValue: "",
+        newPasswordValue: "",
+        confirmPasswordValue: "",
+        changePassLoad: false,
+      ));
+
       _toggleVisibility();
     } catch (e) {
+      debugPrint(e.toString());
+      emit(state.copyWith(changePassLoad: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }
   }

@@ -41,9 +41,12 @@ class FilterCubit extends Cubit<FilterState> {
     emit(state.copyWith(areaList: areaList));
   }
 
+  List<Advertiser> specialistList = [];
+
   Future<void> GetFilterResult(BuildContext context) async {
     try {
       emit(state.copyWith(Loading: true));
+      specialistList = [];
       SectionModel response = await repositorie.GetFilter(
           areaId: state.area_id?.id,
           category_id: state.category_id?.id,
@@ -54,7 +57,8 @@ class FilterCubit extends Cubit<FilterState> {
               : "",
           sectionNumber: state.status_id?.id,
           cityId: state.city_id?.id);
-      emit(state.copyWith(Loading: false, specialistList: response.toJson()));
+      specialistList.addAll(response.advertisersList);
+      emit(state.copyWith(Loading: false, specialistList: specialistList));
       FirebaseAnalyticUtil.logSearchEvent(term: "Filter", param: {
         "area_id": "${state.area_id?.nameAr}",
         "category_id": "${state.category_id?.nameAr}",
@@ -84,7 +88,7 @@ class FilterCubit extends Cubit<FilterState> {
       showCity: false,
       showGender: false,
       showStatus: false,
-      specialistList: {},
+      specialistList: [],
     ));
     await context.read<AuthCubit>().getAllCities();
     await context.read<AuthCubit>().getAllDepartements();

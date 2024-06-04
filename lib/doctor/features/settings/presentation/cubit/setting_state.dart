@@ -17,6 +17,7 @@ class SettingState extends Equatable {
     this.newPasswordValue,
     this.confirmPasswordValue,
     this.userActive = false,
+    this.changePassLoad = false,
   });
 
   final List<File>? docFile;
@@ -34,6 +35,7 @@ class SettingState extends Equatable {
   final String? newPasswordValue;
   final String? confirmPasswordValue;
   final bool userActive;
+  final bool changePassLoad;
 
   @override
   List<Object?> get props => [
@@ -52,6 +54,7 @@ class SettingState extends Equatable {
         newPasswordValue,
         confirmPasswordValue,
         userActive,
+        changePassLoad,
       ];
   SettingState copyWith({
     List<File>? docFile,
@@ -69,6 +72,7 @@ class SettingState extends Equatable {
     String? newPasswordValue,
     String? confirmPasswordValue,
     bool? userActive,
+    bool? changePassLoad,
   }) =>
       SettingState(
         docFile: docFile ?? this.docFile,
@@ -86,5 +90,6 @@ class SettingState extends Equatable {
         newPasswordValue: newPasswordValue ?? this.newPasswordValue,
         confirmPasswordValue: confirmPasswordValue ?? this.confirmPasswordValue,
         userActive: userActive ?? this.userActive,
+        changePassLoad: changePassLoad ?? this.changePassLoad,
       );
 }

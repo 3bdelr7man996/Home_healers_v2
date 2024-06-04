@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dr/core/utils/app_strings.dart';
 import 'package:dr/core/utils/http_helper.dart';
 
@@ -10,6 +12,7 @@ class ForgetPasswordDs {
       {required Map<String, String> body}) async {
     Map<String, dynamic>? response =
         await apiHelper.post("/api/forgetPassword", body: body);
+    log(response.toString());
     return response;
   }
 

@@ -1,8 +1,10 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_font.dart';
+import 'package:dr/doctor/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'option_job_title.dart';
 import 'options_cities.dart';
@@ -16,23 +18,7 @@ class BottomSheetForSignUP extends StatefulWidget {
 }
 
 class _BottomSheetForSignUPState extends State<BottomSheetForSignUP> {
-  var jobTitle = "المسمى";
-  var section = "القسم";
-  var city = "المدينة";
-  changeTitle(var value, int number) {
-    if (number == 1)
-      setState(() {
-        jobTitle = value;
-      });
-    else if (number == 2)
-      setState(() {
-        section = value;
-      });
-    else
-      setState(() {
-        city = value;
-      });
-  }
+  // var jobTitle = "المسمى";
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +48,10 @@ class _BottomSheetForSignUPState extends State<BottomSheetForSignUP> {
                   context: context,
                   builder: (BuildContext context) {
                     return "job_title".tr().compareTo(widget.title) == 0
-                        ? OptionsForJobTitle(changeTitle: changeTitle)
+                        ? OptionsForJobTitle()
                         : "section".tr().compareTo(widget.title) == 0
-                            ? OptionsForsection(changeTitle: changeTitle)
-                            : OptionsForCities(changeTitle: changeTitle);
+                            ? OptionsForsection()
+                            : OptionsForCities();
                   },
                 );
               },
@@ -73,10 +59,13 @@ class _BottomSheetForSignUPState extends State<BottomSheetForSignUP> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   "job_title".tr().compareTo(widget.title) == 0
-                      ? Text(jobTitle)
+                      ? Text(
+                          context.select((AuthCubit cubit) => cubit.jobTitle))
                       : "section".tr().compareTo(widget.title) == 0
-                          ? Text(section)
-                          : Text(city),
+                          ? Text(context
+                              .select((AuthCubit cubit) => cubit.section))
+                          : Text(
+                              context.select((AuthCubit cubit) => cubit.city)),
                   const Icon(Icons.arrow_forward_ios_outlined),
                 ],
               ),

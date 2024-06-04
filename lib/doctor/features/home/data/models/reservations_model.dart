@@ -61,6 +61,7 @@ class ReservationData {
   DiagnoseForm? diagnoseForm;
   Advertiser? advertiser;
   UserReservation? user;
+  String? createdAt;
 
   ReservationData(
       {this.id,
@@ -84,6 +85,7 @@ class ReservationData {
       this.lang,
       this.statusId,
       this.canReview,
+      this.createdAt,
       this.qrCode,
       this.painPlace,
       this.reports,
@@ -113,6 +115,7 @@ class ReservationData {
     lang = json?['lang'];
     statusId = json?['status_id'];
     canReview = json?['can_review'];
+    createdAt = json?['created_at'];
     qrCode = json?['qr_code'];
     painPlace = json?['pain_place'];
     if (json?['reports'] != null) {

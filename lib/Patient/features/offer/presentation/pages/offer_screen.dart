@@ -13,14 +13,6 @@ class OfferScreen extends StatefulWidget {
 }
 
 class _OfferScreenState extends State<OfferScreen> {
-  bool _isVisible = false;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     List<Offers>? data = widget.Offers.offers;
@@ -29,13 +21,12 @@ class _OfferScreenState extends State<OfferScreen> {
         itemCount: data.length,
         itemBuilder: (context, index) {
           return DoctorCard(
-              sessionCountForOffer: data[index].sessionCount,
-              offer: data[index],
-              fromOffer: true,
-              doctorInfo: data[index].advertiser!,
-              year: widget.year,
-              toggleVisibility: _toggleVisibility,
-              isVisible: _isVisible);
+            sessionCountForOffer: data[index].sessionCount,
+            offer: data[index],
+            fromOffer: true,
+            doctorInfo: data[index].advertiser!,
+            year: widget.year,
+          );
         },
       ),
     );

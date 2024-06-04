@@ -79,6 +79,8 @@ class SignUpBody extends StatelessWidget {
                     30.ph,
                     IntlPhoneField(
                       textAlign: TextAlign.right,
+                      languageCode: 'ar',
+                      invalidNumberMessage: 'هذا الرقم غير صالح',
                       decoration: InputDecoration(
                         hintText: ' رقم الواتس اب',
                         suffixIcon: const Icon(Icons.phone),
@@ -124,8 +126,9 @@ class SignUpBody extends StatelessWidget {
                               if (value == null || value.isEmpty) {
                                 return "required".tr();
                               } else if (value.length < 8 ||
-                                  !RegExp(r'^[a-zA-Z0-9]').hasMatch(value)) {
-                                return 'لايقل عن 8 حروف وان يتكون من احرف كبيرة وصغيرة وارقام';
+                                  !RegExp(r'[A-Z]').hasMatch(value) ||
+                                  !RegExp(r'[a-z]').hasMatch(value)) {
+                                return 'لا يقل عن 8 أحرف ويتكون من أحرف كبيرة و صغيرة و أرقام';
                               } else {
                                 return null;
                               }
@@ -180,7 +183,7 @@ class SignUpBody extends StatelessWidget {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "required".tr();
-                        } else if (value.length != 10 || value.length != 14) {
+                        } else if (value.length != 10 && value.length != 14) {
                           return "تأكد من رقم الهوية";
                         } else {
                           return null;

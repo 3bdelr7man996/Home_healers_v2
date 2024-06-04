@@ -170,26 +170,32 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     if (state.gender == null || state.gender!.isEmpty) {
       throw ("gender_required".tr());
     }
-    if (state.password != state.confirmPassword &&
-        state.password != null &&
-        state.confirmPassword != null) {
-      throw ("لا يوجد مطابقة في كلمة السر");
-    }
-    if (state.term == false) {
-      throw ("accept_term".tr());
-    }
-    if (state.phone == false) {
-      throw ("ادخل رقم الموبايل");
-    }
-    if (state.firstName == null) {
-      throw ("ادخل الاسم الأول");
-    }
     if (state.password == null) {
       throw ("ادخل كلمة السر");
     }
     if (state.confirmPassword == null) {
       throw ("ادخل تأكيد كلمة السر ");
     }
+    if (state.password != null &&
+        state.confirmPassword != null &&
+        state.password != state.confirmPassword) {
+      throw ("لا يوجد مطابقة في كلمة السر");
+    }
+    if (state.password!.length < 8 ||
+        !RegExp(r'[A-Z]').hasMatch(state.password!) ||
+        !RegExp(r'[a-z]').hasMatch(state.password!)) {
+      throw 'يجب الا يقل الرقم السري عن 8 أحرف وان يتكون من أحرف كبيرة وصغيرة وأرقام';
+    }
+    if (state.term == false) {
+      throw ("accept_term".tr());
+    }
+    if (state.phone == null || state.phone!.isEmpty) {
+      throw ("ادخل رقم الموبايل");
+    }
+    if (state.firstName == null) {
+      throw ("ادخل الاسم الأول");
+    }
+
     if (state.lastName == null) {
       throw ("ادخل الاسم الثاني");
     }
@@ -199,9 +205,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     if ((!RegExp(r'^[\w-.]+@([\w-]+.)+[\w]{2,4}').hasMatch(state.email!))) {
       throw ("البريد الالكتروني غير صحيح");
     }
-    if (state.city_id == null) {
-      throw ("ادخل  رقم الهوية");
-    }
+
     if (state.cityId == null) {
       throw ("اختر مدينتك");
     }
@@ -214,7 +218,7 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     if (state.country_code == null) {
       throw ("حدد رمز مدينتك");
     }
-    if (state.identificationNum?.length != 10 ||
+    if (state.identificationNum?.length != 10 &&
         state.identificationNum?.length != 14) {
       throw ("تأكد من رقم الهوية ");
     }

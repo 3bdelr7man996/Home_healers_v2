@@ -1,11 +1,8 @@
-import 'package:dr/Patient/features/favorite/data/models/favoriteModel.dart';
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/cubit/home_state/section_state.dart';
 
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/doctor_card_widget.dart';
-import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/popUp_favourite_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/home_widgets/home_widgets.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/sections_details_widgets/sections_details_widgets.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
@@ -36,14 +33,6 @@ class SectionDetailsScreen extends StatefulWidget {
 }
 
 class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
-  bool _isVisible = false;
-
-  void _toggleVisibility() {
-    setState(() {
-      _isVisible = !_isVisible;
-    });
-  }
-
   var IsUserGuest;
   @override
   void initState() {
@@ -51,6 +40,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
     context.read<SectionCubit>().changeSectionNumber(widget.numberOfIcon!);
     context.read<SectionCubit>().GetSectionDetails(context);
     context.read<ReservationCubit>().onChangestatus_id(widget.numberOfIcon);
+
     IsUserGuest = IsGuest();
   }
 
@@ -61,8 +51,6 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    FavoriteModel? FavoriteList;
-    FavoriteList = context.select((FavoriteCubit cubit) => cubit.state.data);
     return Scaffold(
       appBar: customAppBar(
         context,
@@ -81,6 +69,8 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                 child: FilterForSectionDetails(),
               ),
               BlocBuilder<SectionCubit, SectionState>(
+                // buildWhen: (previous, current) =>
+                //     previous.sectionDoctorsList != current.sectionDoctorsList,
                 builder: (context, state) {
                   if (state.Loading == true) {
                     return CustomLoader();
@@ -98,21 +88,15 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                       child: ListView.builder(
                         itemCount: state.sectionDoctorsList?.length,
                         itemBuilder: (context, index) {
-                          bool isIdExist = false;
-                          if (FavoriteList != null)
-                            isIdExist = FavoriteList.data.any((item) =>
-                                item.advertiser!.id! ==
-                                state.sectionDoctorsList![index].id);
+                          print("${state.sectionDoctorsList![index].isFav!}");
                           return DoctorCard(
-                              fromPackages: widget.fromPackages,
-                              isFav: isIdExist,
-                              sessionCountForOffer: widget.sessionCountForOffer,
-                              fromOffer: widget.fromOffer,
-                              status_id: widget.status_id,
-                              doctorInfo: state.sectionDoctorsList![index],
-                              year: state.sectionDoctorsList![index].years,
-                              toggleVisibility: _toggleVisibility,
-                              isVisible: _isVisible);
+                            fromPackages: widget.fromPackages,
+                            sessionCountForOffer: widget.sessionCountForOffer,
+                            fromOffer: widget.fromOffer,
+                            status_id: widget.status_id,
+                            doctorInfo: state.sectionDoctorsList![index],
+                            year: state.sectionDoctorsList![index].years,
+                          );
                         },
                       ),
                     );
@@ -121,10 +105,6 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
               )
             ],
           ),
-          PopUpForAddToFavourite(
-            isVisible: _isVisible,
-            toggleVisibility: _toggleVisibility,
-          )
         ],
       ),
     );

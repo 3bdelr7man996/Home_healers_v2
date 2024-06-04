@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/addFavorite_cubit.dart';
+import 'dart:developer';
+
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
+import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_state/favorite_state.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/stars_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
@@ -11,16 +14,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HeaderForDoctorCard extends StatefulWidget {
-  VoidCallback toggleVisibility;
-  bool isVisible, fromfavorite;
+  bool fromfavorite;
   Advertiser doctorInfo;
-  bool isFav;
   HeaderForDoctorCard({
     super.key,
-    required this.isVisible,
     required this.doctorInfo,
-    required VoidCallback this.toggleVisibility,
-    this.isFav = false,
     this.fromfavorite = false,
   });
 
@@ -42,7 +40,6 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
     selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
-  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -67,32 +64,31 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
             Positioned(
               top: 5,
               right: 5,
-              child: InkWell(
-                onTap: () async {
-                  if (widget.fromfavorite == false && widget.isFav == false) {
-                    await context
-                        .read<AddFavoriteCubit>()
-                        .AddFavorite(context, widget.doctorInfo.id!);
-
-                    setState(() {
-                      isFavorite = !isFavorite;
-                    });
-
-                    widget.toggleVisibility();
-                  }
-                },
-                child: CircleAvatar(
-                  radius: 15,
-                  backgroundColor: Colors.white,
-                  child: Icon(
-                    isFavorite || widget.fromfavorite || widget.isFav
-                        ? Icons.favorite
-                        : Icons.favorite_border,
-                    size: 20,
-                    color: Colors.red,
-                  ),
-                ),
-              ),
+              child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                  buildWhen: (previous, current) =>
+                      previous.favList != current.favList,
+                  builder: (context, state) {
+                    log("Rebuild widget-------");
+                    bool isFv = state.favList!
+                        .any((e) => e.advertiserId == widget.doctorInfo.id);
+                    return InkWell(
+                      onTap: () async {
+                        await context.read<FavoriteCubit>().AddFavorite(context,
+                            advId: widget.doctorInfo.id, isFav: isFv);
+                      },
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: Colors.white,
+                        child: Icon(
+                          widget.fromfavorite || isFv
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          size: 20,
+                          color: Colors.red,
+                        ),
+                      ),
+                    );
+                  }),
             ),
           ],
         ),
@@ -118,9 +114,8 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                   ? Container(
                       child: DropdownButton<String>(
                         underline: Container(), // Hide the underline
-
                         icon: const SizedBox(), // Hide the arrow icon
-                        value: selectedName,
+                        value: "الاختصاص",
                         onChanged: (String? newValue) {
                           setState(() {
                             selectedName = newValue!;
@@ -130,7 +125,10 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                             names.map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(value),
+                            child: Text(
+                              value,
+                              //style: TextStyle(color: Colors.blue),
+                            ),
                           );
                         }).toList(),
                       ),

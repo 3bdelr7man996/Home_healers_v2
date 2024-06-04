@@ -430,8 +430,8 @@ class _OptionsForCitiesState extends State<OptionsForCities> {
                                       state.citiesList![index].nameAr);
                                   try {
                                     context.read<AuthCubit>().onSelectCity(
-                                          state.citiesList![index].id!,
-                                        );
+                                        state.citiesList![index].id!,
+                                        state.citiesList![index].nameAr ?? '');
                                     var id = state.citiesList![index].id!;
                                     context
                                         .read<AuthCubitForPatient>()

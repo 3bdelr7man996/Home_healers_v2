@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> initConfigData() async {
     await Future.wait([
       context.read<SettingCubit>().getAppInfo(),
-      // context.read<AuthCubit>().getAllDepartements(),
+      context.read<AuthCubit>().getAllDepartements(),
       context.read<AuthCubit>().getAllStatus(),
       context.read<AuthCubit>().getAllCities(),
     ]);

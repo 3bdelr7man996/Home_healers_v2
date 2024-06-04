@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_custom_exception.dart';
@@ -41,12 +43,15 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       );
       //ShowToastHelper.showToast(msg: user!.message, isError: false);
     } on UnauthorisedException catch (e) {
+      log(e.toString());
+      emit(state.copyWith(loading: false));
       if (e.toString().contains("Email not found")) {
         ShowToastHelper.showToast(msg: "هذا الحساب غير موجود", isError: true);
       } else {
         ShowToastHelper.showToast(msg: e.toString(), isError: true);
       }
     } catch (e) {
+      log(e.toString());
       emit(state.copyWith(loading: false));
       ShowToastHelper.showToast(msg: e.toString(), isError: true);
     }

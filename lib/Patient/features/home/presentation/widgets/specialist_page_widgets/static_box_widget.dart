@@ -2,7 +2,9 @@
 
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class statisticsBox extends StatelessWidget {
   String text1, text2;
@@ -22,6 +24,7 @@ class statisticsBox extends StatelessWidget {
         children: [
           Text(
             text1,
+            textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 16,

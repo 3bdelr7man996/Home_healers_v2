@@ -8,6 +8,7 @@ import 'package:dr/core/utils/cache_helper.dart';
 import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/section-model.dart';
 
@@ -27,7 +28,9 @@ class SectionCubit extends Cubit<SectionState> {
       emit(state.copyWith(Loading: true));
       SectionModel response =
           await sectionRepo.GetSection(sectionNumber: state.sectionNumber);
+      sectionDoctorsList = [];
       sectionDoctorsList.addAll(response.advertisersList);
+
       emit(state.copyWith(
         sectionDoctorsList: sectionDoctorsList,
         Loading: false,
