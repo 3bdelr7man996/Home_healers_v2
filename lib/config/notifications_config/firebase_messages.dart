@@ -14,7 +14,6 @@ import 'package:dr/features/auth/data/models/user_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +53,8 @@ class FirebaseMessagingService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (kDebugMode) {
         print('===Got a message whilst in the foreground!=====');
-        print("message data:  ${message.data}");
+        print(
+            "message data:  ${jsonDecode(message.data['data'])['sender_id']}");
 
         if (message.notification != null) {
           print('''Message also contained a notification:
@@ -73,33 +73,12 @@ class FirebaseMessagingService {
           }
         });
       }
-      if (message.notification?.title == 'رساله جديده') {
-        var body = jsonDecode(message.notification?.body ?? "{'content':''}");
-        String content = '';
-        if (body['path'] != null && body['path'] != '') {
-          if (body['type'] == null || body['type'] == '') {
-            content = body['content'];
-          } else if (body['type'] == "file") {
-            content = "ارفق اليك صورة";
-          } else {
-            content = "ارفق اليك تسجيل صوتي";
-          }
-        } else {
-          content = body['content'];
-        }
-        debugPrint("----- content = $content -------");
-        di.sl<LocalNotificationsService>().showLocalNotification(
-              title: " رسالة جديدة",
-              body: content,
-              payload: message.notification?.body ?? "",
-            );
-      } else {
-        di.sl<LocalNotificationsService>().showLocalNotification(
-              title: message.notification?.title ?? "",
-              body: message.notification?.body ?? "",
-              payload: message.notification?.body ?? "",
-            );
-      }
+
+      di.sl<LocalNotificationsService>().showLocalNotification(
+            title: message.notification?.title ?? "",
+            body: message.notification?.body ?? "",
+            payload: message.notification?.body ?? "",
+          );
     });
 
     //?========================[ HANDLE ON SELECT NOTIF ]=======================
@@ -132,7 +111,7 @@ class FirebaseMessagingService {
   }
 
   void handleRoute(BuildContext context, RemoteMessage message) {
-    log("Handle Routeee");
+    log("Handle Routee ${message.notification?.title}");
 
     if (message.notification?.title == 'ربحت نقاط جديدة') {
       AppConstants.pushRemoveNavigator(
@@ -141,23 +120,23 @@ class FirebaseMessagingService {
             ? MyPointScreen()
             : MyPointScreenForPatient(),
       );
-    } else if (message.notification?.title == 'رساله جديده') {
-      if (message.notification?.body != null) {
-        var body = jsonDecode(message.notification!.body!);
+    } else if (message.notification?.title == 'رسالة جديدة') {
+      var body = jsonDecode(message.data['data']);
 
-        AppConstants.customNavigation(
-            context,
-            OneChatScreen(
-                fromPatient: false,
-                recieverInfo: UserData(
-                  id: body['user_id'],
-                  image: '',
-                  name: '',
-                )),
-            0,
-            1);
+      if (body['sender_id'] != null) {
+        AppConstants.pushRemoveNavigator(
+          context,
+          screen: OneChatScreen(
+              fromPatient: false,
+              recieverInfo: UserData(
+                id: int.parse(body['sender_id'].toString()),
+                image: '',
+                name: body['sender_name'] ?? '',
+              )),
+        );
       }
     } else {
+      log("ooooooooooooooooooooooooooooooooooooooooooooooooo");
       AppConstants.pushRemoveNavigator(
         context,
         screen: CacheHelper.getData(key: AppStrings.isAdvertise)

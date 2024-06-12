@@ -202,7 +202,8 @@ class AuthCubitForPatient extends Cubit<AuthStateForPatient> {
     if (state.email == null) {
       throw ("ادخل  الايميل");
     }
-    if ((!RegExp(r'^[\w-.]+@([\w-]+.)+[\w]{2,4}').hasMatch(state.email!))) {
+    if ((!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+        .hasMatch(state.email!))) {
       throw ("البريد الالكتروني غير صحيح");
     }
 

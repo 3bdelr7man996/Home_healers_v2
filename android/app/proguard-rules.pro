@@ -1,7 +1,7 @@
 # Preserve SLF4J classes and interfaces
--keep class org.slf4j.** { *; }
--keep interface org.slf4j.** { *; }
-
+-dontwarn org.slf4j.impl.StaticLoggerBinder
+-dontwarn org.slf4j.impl.StaticMDCBinder
+-dontwarn org.slf4j.impl.StaticMarkerBinder
 # Don't warn about missing okhttp classes
 -dontwarn com.squareup.okhttp.CipherSuite
 -dontwarn com.squareup.okhttp.ConnectionSpec

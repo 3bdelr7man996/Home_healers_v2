@@ -65,7 +65,7 @@ class SignUpBody extends StatelessWidget {
                           context.read<AuthCubit>().onEmailChange(p0),
                       validator: (value) {
                         const pattern =
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
                         final regExp = RegExp(pattern);
                         if (value == null || value.isEmpty) {
                           return "required".tr();

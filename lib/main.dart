@@ -14,7 +14,9 @@ import 'core/utils/cache_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      // options: DefaultFirebaseOptions.currentPlatform,
+      );
   await di.serviceLocatorInit();
   await EasyLocalization.ensureInitialized();
   await CacheHelper.init();

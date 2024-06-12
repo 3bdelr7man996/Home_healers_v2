@@ -444,7 +444,7 @@ class AuthCubit extends Cubit<AuthState> {
           lng: double.parse(advertiser.lng ?? "0")),
       phone: advertiser.mobile,
       selectedCategories: () =>
-          advertiser.categories?.map((e) => e.id!).toList(),
+          advertiser.categories?.map((e) => e.id).toList(),
       selectedCity: () => advertiser.cityId,
       selectedStatus: () => advertiser.statusAdvisor?.map((e) => e.id).toList(),
     ));
