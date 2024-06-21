@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import '../../../../../core/utils/app_colors.dart';
 
 PreferredSizeWidget customAppBar(BuildContext context,
-    {String title = '', bool backButton = true, bool fromSetting = false,double? elevation=8,Color? backgroundColor=AppColors.backGroundColor,}) {
+    {String title = '',
+    bool backButton = true,
+    bool fromSetting = false,
+    double? elevation = 8,
+    Color? backgroundColor = AppColors.backGroundColor,
+    var actions}) {
   return AppBar(
     centerTitle: true,
+    actions: actions ?? [],
     leading: backButton
         ? Container(
             margin: const EdgeInsets.all(8.0),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dr/Patient/features/courses/presentation/pages/courses_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/get_point_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/cubit/setting_cubit/report_cubit.dart';
 import 'package:dr/Patient/features/setting/presentation/pages/edit_profile_screen.dart';
@@ -8,6 +9,7 @@ import 'package:dr/Patient/features/setting/presentation/pages/my_requests_scree
 import 'package:dr/Patient/features/setting/presentation/pages/reports_screen.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/settings_widget/one_option_for_patient_widget.dart';
 import 'package:dr/Patient/features/setting/presentation/widgets/settings_widget/sign_in_or_log_out_widget.dart';
+import 'package:dr/Patient/features/store/presentation/pages/store_screen.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/app_images.dart';
@@ -133,6 +135,24 @@ class _SettingsScreenForPatientState extends State<SettingsScreenForPatient> {
                             15.ph,
                           ],
                         ),
+                  const Text(
+                    "اكتشف جديدنا",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  15.ph,
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/store_icon.svg",
+                    title: "الذهاب إلى المتجر",
+                    routeScreen: StoreScreen(),
+                  ),
+                  15.ph,
+                  const OneOptionForPatient(
+                    iconPath: "assets/icons/course_icon.svg",
+                    title: "الدورات والمؤتمرات الطبية",
+                    routeScreen: coursesScreen(),
+                  ),
+                  const Divider(thickness: 0.5),
+                  15.ph,
                   const Text(
                     "عن التطبيق",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

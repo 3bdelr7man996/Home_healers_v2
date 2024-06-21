@@ -1,6 +1,5 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:bloc/bloc.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_custom_exception.dart';
 import 'package:dr/core/utils/http_helper.dart';
