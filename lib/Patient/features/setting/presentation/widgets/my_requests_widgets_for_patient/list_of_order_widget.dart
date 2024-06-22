@@ -50,49 +50,46 @@ class ListOfOrder extends StatelessWidget {
                 child: Center(child: CircularProgressIndicator()),
               )
             : listOfOrders!.length == 0
-                ? Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/images/noOrders.svg",
-                          width: 200,
-                          height: 200,
-                        ),
-                        10.ph,
-                        Text(
-                          "لا يوجد طلبات في الوقت الحالي",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/images/noOrders.svg",
+                        width: 200,
+                        height: 200,
+                      ),
+                      10.ph,
+                      Text(
+                        "لا يوجد طلبات في الوقت الحالي",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
                   )
                 : listOfOrders.isEmpty
                     ? SizedBox()
-                    : Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: listOfOrders.length,
-                          itemBuilder: (context, index) {
-                            List<String> names = [];
-                            String selectedName = "";
-                            names.add("الاختصاص");
-                            for (var item
-                                in listOfOrders![index].advertiser.categories ??
-                                    []) {
-                              names.add(item.nameAr ?? "");
-                            }
-                            selectedName = names.isNotEmpty
-                                ? names[0]
-                                : 'No names available';
-                            return CardsForRequests(
-                              listOfOrders: listOfOrders[index],
-                              categories: names,
-                              selectedName: selectedName,
-                              TabIndexClicked: TabIndexClicked,
-                            );
-                          },
-                        ),
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: listOfOrders.length,
+                        itemBuilder: (context, index) {
+                          List<String> names = [];
+                          String selectedName = "";
+                          names.add("الاختصاص");
+                          for (var item
+                              in listOfOrders![index].advertiser.categories ??
+                                  []) {
+                            names.add(item.nameAr ?? "");
+                          }
+                          selectedName = names.isNotEmpty
+                              ? names[0]
+                              : 'No names available';
+                          return CardsForRequests(
+                            listOfOrders: listOfOrders[index],
+                            categories: names,
+                            selectedName: selectedName,
+                            TabIndexClicked: TabIndexClicked,
+                          );
+                        },
                       );
       },
     );

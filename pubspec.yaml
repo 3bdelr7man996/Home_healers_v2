@@ -56,7 +56,7 @@ dependencies:
   flutter_verification_code: ^1.1.7
   flutter_native_splash: ^2.4.0
   record: ^5.1.1
-  just_audio: ^0.9.37
+  just_audio: ^0.9.30
   app_tracking_transparency: ^2.0.4
 
 

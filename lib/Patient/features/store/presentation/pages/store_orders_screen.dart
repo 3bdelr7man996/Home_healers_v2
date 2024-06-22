@@ -1,6 +1,5 @@
 import 'package:dr/Patient/features/store/presentation/widgets/store_orders_Widgets/one_store_order_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
-import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class StoreOrdersScreen extends StatefulWidget {
@@ -13,34 +12,28 @@ class StoreOrdersScreen extends StatefulWidget {
 class _StoreOrdersScreenState extends State<StoreOrdersScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBar(context, title: "طلباتي"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Text(
-                    "الطلبات الأخيرة",
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  )
-                ],
-              ),
-              10.ph,
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return OneStoreOrder();
-                },
+              Text(
+                "الطلبات الأخيرة",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               )
             ],
           ),
-        ),
+          10.ph,
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: 10,
+            itemBuilder: (context, index) {
+              return OneStoreOrder();
+            },
+          )
+        ],
       ),
     );
   }

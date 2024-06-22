@@ -21,7 +21,7 @@ class DeepLinkHandler {
   }
 
   Future<void> initUniLinks(BuildContext context) async {
-    try {
+    try  {
       Uri? initialLink = await getInitialUri();
       _handleLink(context, initialLink);
 
@@ -31,9 +31,9 @@ class DeepLinkHandler {
         print('Error receiving link: $error');
       });
     } on PlatformException {
-      print('Error initializing uni_links');
+    print('Error initializing uni_links');
     } on FormatException catch (err) {
-      print('malformed initial uri $err');
+    print('malformed initial uri $err');
     }
   }
 
