@@ -108,8 +108,9 @@ class Advertiser {
     mobile = json?['mobile'];
     email = json?['email'];
     image = json?['image'];
-    images =
-        json?['images'] != null ? json!['images'].toString().split(",") : null;
+    images = json?['images'] != null ? json!['images'].cast<String>() : [];
+    // images =
+    //     json?['images'] != null ? json!['images'].toString().split(",") : null;
     descAr = json?['desc_ar'];
     descEn = json?['desc_en'];
     addressAr = json?["address_ar"];

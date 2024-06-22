@@ -9,8 +9,11 @@ import 'package:flutter_svg/svg.dart';
 
 class specialistInfo extends StatefulWidget {
   Advertiser? doctorInfo;
-  var years;
-  specialistInfo({super.key, this.doctorInfo, required this.years});
+
+  specialistInfo({
+    super.key,
+    this.doctorInfo,
+  });
 
   @override
   State<specialistInfo> createState() => _specialistInfoState();
@@ -41,12 +44,10 @@ class _specialistInfoState extends State<specialistInfo> {
               text1: "جلسة طبية",
               text2: "${widget.doctorInfo!.rating}",
             ),
-            widget.years == null
-                ? SizedBox()
-                : statisticsBox(
-                    text1: "سنوات الخبرة",
-                    text2: "${widget.years} +",
-                  ),
+            statisticsBox(
+              text1: "سنوات الخبرة",
+              text2: "${widget.doctorInfo?.years ?? 5} +",
+            ),
             statisticsBox(
               text1: "تقييم",
               text2: "${widget.doctorInfo!.rating}",

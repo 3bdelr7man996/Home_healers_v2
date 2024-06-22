@@ -13,7 +13,7 @@ class AppImages {
   static String pointsDonaites = 'assets/images/Donations.png';
   static String sts_rehab_child = "assets/images/rehabilitation_children.png";
   static String sts_muscle_pain = "assets/images/muscle_pain.png";
-  static String sts_sports_injur = "assets/images/sports_injuries.png";
+  static String sts_sports_injur = "assets/images/sportsـinjuries.png";
   static String sts_nervous_injur = "assets/images/nervous_injuries.png";
   static String sts_card_rehab =
       "assets/images/cardiopulmonary_rehabilitation.png";
@@ -78,4 +78,6 @@ class AppImages {
   static String pdf_icon = 'assets/icons/pdf_icon.png';
   static String no_msg_icon = 'assets/icons/no_messages.png';
   static String no_fav_icon = 'assets/icons/no_favourites.png';
+  static String infoIcon = "assets/icons/info-package.svg";
+  static String counterIcon = "assets/icons/counter_icon.svg";
 }

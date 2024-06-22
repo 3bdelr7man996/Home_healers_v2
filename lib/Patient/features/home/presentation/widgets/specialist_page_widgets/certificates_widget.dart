@@ -33,13 +33,14 @@ class _CertificatesState extends State<Certificates> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
+                      print(pdfFiles[index]);
                       // AppConstants.customNavigation(
                       //     context, FullScreenImage(pathImage: imageList[index]), -1, 0);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => PhotoViewerRouteWrapper(
-                              filePath: "${pdfFiles[index]}"),
+                              filePath: pdfFiles[index]),
                         ),
                       );
                     },

@@ -1,20 +1,23 @@
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/button_for_doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/header_for_doctor_card_widget.dart';
+import 'package:dr/Patient/features/offer/data/models/get_offers_model.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class DoctorCard extends StatefulWidget {
-  bool fromOfferScreen, fromfavorite;
+  bool fromfavorite;
+  bool fromSingleOffer;
   int? status_id;
   Advertiser doctorInfo;
   bool fromOffer;
   bool fromFav;
   bool fromPackages;
-  var offer;
+  Offers? offer;
   var sessionCountForOffer;
   var fromFilter;
   var year;
@@ -28,8 +31,8 @@ class DoctorCard extends StatefulWidget {
     this.status_id,
     this.fromOffer = false,
     this.fromfavorite = false,
-    this.fromOfferScreen = false,
     this.offer,
+    this.fromSingleOffer=false,
     this.year,
   });
 
@@ -39,15 +42,16 @@ class DoctorCard extends StatefulWidget {
 
 class _DoctorCardState extends State<DoctorCard> {
   List<String> names = [];
-  String selectedName = "";
+  String statusName = "";
   @override
   void initState() {
     super.initState();
-    names.add("الأقسام :");
-    for (var item in widget.doctorInfo.statusAdvisor!) {
-      names.add(item.nameAr!);
+    if (widget.status_id != null) {
+      statusName = widget.doctorInfo.statusAdvisor
+              ?.firstWhere((e) => e.id == widget.status_id)
+              .nameAr ??
+          '';
     }
-    selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
   @override
@@ -94,6 +98,7 @@ class _DoctorCardState extends State<DoctorCard> {
                 ],
               ),
               10.ph,
+              if(statusName.isNotEmpty)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -103,28 +108,53 @@ class _DoctorCardState extends State<DoctorCard> {
                     height: 20,
                   ),
                   10.pw,
-                  names.isNotEmpty
-                      ? DropdownButton<String>(
-                          underline: Container(),
-                          value: selectedName,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedName = newValue!;
-                            });
-                          },
-                          items: names
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        )
-                      : Text('لا يوجد بيانات لعرضها')
+                 Text(statusName),
                 ],
               ),
               10.ph,
-              widget.fromOfferScreen
+              widget.fromSingleOffer
+                  ? Row(
+                      children: [
+                        SvgPicture.asset(
+                          AppImages.infoIcon,
+                          width: 20,
+                          height: 20,
+                        ),
+                        10.pw,
+                        const Text(
+                          "وصف العرض: ",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${widget.offer?.description ?? ''}",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+              widget.fromSingleOffer ? 10.ph : 0.ph,
+              widget.fromSingleOffer
+                  ? Row(
+                      children: [
+                        SvgPicture.asset(
+                          AppImages.counterIcon,
+                          width: 20,
+                          height: 20,
+                        ),
+                        10.pw,
+                        const Text(
+                          " عدد الجلسات: ",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "${widget.offer?.sessionCount ?? ''} جلسات",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+              widget.fromSingleOffer ? 10.ph : 0.ph,
+              widget.fromSingleOffer
                   ? Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -139,30 +169,29 @@ class _DoctorCardState extends State<DoctorCard> {
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "${widget.doctorInfo.sessionPrice} SAR",
+                          "${widget.offer?.price} SAR",
                           style: const TextStyle(
+                              fontSize: 16,
                               fontWeight: FontWeight.w500,
                               color: AppColors.secondryColor),
                         ),
+                        15.pw,
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: '${widget.offer?.oldPrice} SAR',
+                                style: const TextStyle(
+                                    color: Colors.grey,
+                                    decoration: TextDecoration.lineThrough,
+                                    decorationColor: Colors.grey,
+                                    decorationThickness: 2.0,
+                                    fontSize: 14),
+                              ),
+                            ],
+                          ),
+                        ),
                         10.pw,
-                        // Padding(
-                        //   padding: const EdgeInsets.only(bottom: 4),
-                        //   child: RichText(
-                        //     text: const TextSpan(
-                        //       children: <TextSpan>[
-                        //         TextSpan(
-                        //           text: '800 SAR',
-                        //           style: TextStyle(
-                        //               color: Colors.grey,
-                        //               decoration: TextDecoration.lineThrough,
-                        //               decorationColor: Colors.grey,
-                        //               decorationThickness: 2.0,
-                        //               fontSize: 14),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     )
                   : Row(

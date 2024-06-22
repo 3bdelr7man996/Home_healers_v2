@@ -2,7 +2,9 @@ import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
+import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/pages/add_report_screen.dart';
+import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
 import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,19 @@ class AddReportAndFinishButton extends StatelessWidget {
           width: context.width * 0.4,
           child: ElevatedButton(
             onPressed: () {
+              ReservationData? reserv= context.read<ReservationsCubit>().state.reservation;
+              bool uploadedReport=false;
+
+              reserv?.reports?.forEach((e) { 
+                if(e.reservationId==state.reservation?.id){
+                  uploadedReport=true;
+                }
+              });
+              if(!uploadedReport){
+                ShowToastHelper.showToast(msg: "لا يمكن انهاء الجلسة قبل رفع التقرير", isError: false);
+                return;
+              }
+              
               context
                   .read<ReservationsCubit>()
                   .onSelectedTab(ResevationStep.completed);

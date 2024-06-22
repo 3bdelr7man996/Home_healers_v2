@@ -51,7 +51,7 @@ class _PhotoViewerRouteWrapperState extends State<PhotoViewerRouteWrapper> {
 
   @override
   void initState() {
-    log("file path ${widget.filePath}");
+    log("file path ${widget.imgBaseUrl}${widget.filePath}");
     if (widget.filePath!.endsWith("pdf")) {
       log("load network ---------");
       loadNetwork();

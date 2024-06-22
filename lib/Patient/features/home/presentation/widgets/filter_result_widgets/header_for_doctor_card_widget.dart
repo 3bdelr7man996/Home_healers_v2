@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:developer';
 
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_state/favorite_state.dart';
@@ -33,7 +32,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
   @override
   void initState() {
     super.initState();
-    names.add("الاختصاص");
+   
     for (Categories item in widget.doctorInfo.categories!) {
       names.add(item.nameAr!);
     }
@@ -68,7 +67,6 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
                   buildWhen: (previous, current) =>
                       previous.favList != current.favList,
                   builder: (context, state) {
-                    log("Rebuild widget-------");
                     bool isFv = state.favList!
                         .any((e) => e.advertiserId == widget.doctorInfo.id);
                     return InkWell(
@@ -110,30 +108,7 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               5.ph,
               Stars(rating: widget.doctorInfo.rating!),
               5.ph,
-              names.isNotEmpty
-                  ? Container(
-                      child: DropdownButton<String>(
-                        underline: Container(), // Hide the underline
-                        icon: const SizedBox(), // Hide the arrow icon
-                        value: "الاختصاص",
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedName = newValue!;
-                          });
-                        },
-                        items:
-                            names.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              //style: TextStyle(color: Colors.blue),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    )
-                  : Text(''),
+               Text(selectedName),
               5.ph,
               widget.doctorInfo.status == "on"
                   ? Text(

@@ -35,12 +35,14 @@ class StatusData {
   late final String? nameAr;
   late final String? nameEn;
   late final String? status;
+  late final String? image;
 
   StatusData.fromJson(Map<String, dynamic>? json) {
     id = json?['id'];
     nameAr = json?['name_ar'];
     nameEn = json?['name_en'];
     status = json?['status'];
+    image = json?['image'];
   }
 
   Map<String, dynamic> toJson() {

@@ -1,10 +1,12 @@
 import 'package:dr/core/extensions/media_query_extension.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
+import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/core/utils/http_helper.dart';
 import 'package:dr/doctor/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:dr/doctor/features/diagnose_report/presentation/cubit/diagnose_form_cubit.dart';
 import 'package:dr/doctor/features/home/data/models/reservations_model.dart';
+import 'package:dr/doctor/features/home/presentation/cubit/resevations_cubit/reservations_cubit.dart';
 import 'package:dr/shared_widgets/custom_loader.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +52,11 @@ class _AddReportScreenState extends State<AddReportScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _ShopButton(globalKey: key),
+              _ShopButton(
+                globalKey: key,
+                statusId: widget.reservation.statusId,
+                reservationId: widget.reservation.id,
+              ),
               const SizedBox(
                 width: 10,
               ),
@@ -244,7 +250,10 @@ class _TreatmentTextInput extends StatelessWidget {
 
 class _ShopButton extends StatelessWidget {
   final GlobalKey<State<StatefulWidget>> globalKey;
-  const _ShopButton({required this.globalKey});
+  const _ShopButton(
+      {required this.globalKey, this.statusId, this.reservationId});
+  final int? statusId;
+  final int? reservationId;
 
   @override
   Widget build(BuildContext context) {
@@ -258,10 +267,21 @@ class _ShopButton extends StatelessWidget {
               width: context.width * 0.9,
               height: context.height * 0.06,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   context
                       .read<DiagnoseFormCubit>()
                       .generateReportFile(context, globalKey: globalKey);
+                  if (statusId != null) {
+                    await context.read<ReservationsCubit>().getReservations(
+                          statusId: statusId!,
+                          reservationStep: ResevationStep.confirmed,
+                        );
+                    context.read<ReservationsCubit>().onReservationChange(
+                        context
+                            .read<ReservationsCubit>()
+                            .reservationsList!
+                            .firstWhere((e) => e.id == reservationId));
+                  }
                   //.submitFormReport();
                 },
                 style: ButtonStyle(

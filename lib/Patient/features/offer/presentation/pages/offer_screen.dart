@@ -23,7 +23,7 @@ class _OfferScreenState extends State<OfferScreen> {
           return DoctorCard(
             sessionCountForOffer: data[index].sessionCount,
             offer: data[index],
-            fromOffer: true,
+            fromSingleOffer: true,
             doctorInfo: data[index].advertiser!,
             year: widget.year,
           );

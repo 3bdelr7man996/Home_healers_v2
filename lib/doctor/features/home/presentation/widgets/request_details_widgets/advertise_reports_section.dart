@@ -14,8 +14,8 @@ class AdvertiserReports extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReservationsCubit, ReservationsState>(
-      buildWhen: (previous, current) =>
-          current.reservation != previous.reservation,
+      // buildWhen: (previous, current) =>
+      //     current.reservation != previous.reservation,
       builder: (context, state) {
         if (state.reservation?.reports != null &&
             state.reservation!.reports!.isNotEmpty) {

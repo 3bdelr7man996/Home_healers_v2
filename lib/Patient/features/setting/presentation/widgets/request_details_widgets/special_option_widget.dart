@@ -113,7 +113,7 @@ class _SpecialOptionsState extends State<SpecialOptions> {
                         child: const Text('إظهار الفاتورة'),
                       ),
                       if (widget.oneOrder!.canReview == 1 &&
-                          widget.TabIndexClicked != 2)
+                          widget.TabIndexClicked == 3)
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               side: const BorderSide(

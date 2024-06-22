@@ -31,9 +31,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                   ),
                   itemCount: widget.Packages!.packages.length,
                   itemBuilder: (context, index) {
-                    return widget.Packages!.packages[index].status_id != null
-                        ? OfferCard(Package: widget.Packages!.packages[index])
-                        : SizedBox();
+                    return OfferCard(Package: widget.Packages!.packages[index]);
                   },
                 ),
               )

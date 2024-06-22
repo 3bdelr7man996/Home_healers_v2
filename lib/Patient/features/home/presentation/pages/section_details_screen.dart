@@ -75,7 +75,7 @@ class _SectionDetailsScreenState extends State<SectionDetailsScreen> {
                   if (state.Loading == true) {
                     return CustomLoader();
                   } else if (state.Loading == false &&
-                      state.sectionDoctorsList == null &&
+                      state.sectionDoctorsList == null ||
                       state.sectionDoctorsList!.isEmpty) {
                     return Center(
                       child: Text(

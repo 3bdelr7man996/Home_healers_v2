@@ -84,7 +84,6 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                         children: [
                           specialistInfo(
                             doctorInfo: widget.doctorInfo,
-                            years: widget.year,
                           ),
                           20.ph,
                           const Divider(
