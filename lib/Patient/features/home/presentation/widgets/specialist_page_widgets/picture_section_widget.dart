@@ -26,7 +26,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
   @override
   void initState() {
     super.initState();
-    names.add("الاختصاص");
+    
     for (Categories item in widget.doctorInfo!.categories!) {
       names.add(item.nameAr!);
     }
@@ -106,7 +106,7 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
                     height: 20,
                     child: DropdownButton<String>(
                       underline: Container(), // Hide the underline
-                      // icon: const SizedBox(), // Hide the arrow icon
+                      icon: const SizedBox(), // Hide the arrow icon
                       value: selectedName,
                       onChanged: (String? newValue) {
                         setState(() {

@@ -1,3 +1,4 @@
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/button_for_doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/header_for_doctor_card_widget.dart';
 import 'package:dr/Patient/features/offer/data/models/get_offers_model.dart';
@@ -6,6 +7,7 @@ import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_images.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
@@ -32,7 +34,7 @@ class DoctorCard extends StatefulWidget {
     this.fromOffer = false,
     this.fromfavorite = false,
     this.offer,
-    this.fromSingleOffer=false,
+    this.fromSingleOffer = false,
     this.year,
   });
 
@@ -80,37 +82,45 @@ class _DoctorCardState extends State<DoctorCard> {
                 fromfavorite: widget.fromfavorite,
               ),
               10.ph,
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Icon(
-                    Icons.location_on,
-                    color: AppColors.primaryColor,
-                  ),
-                  10.pw,
-                  if (widget.doctorInfo.addressAr != null)
-                    Expanded(
-                      child: Text(
-                        "${widget.doctorInfo.addressAr}",
-                        style: TextStyle(fontWeight: FontWeight.w500),
+              if (widget.doctorInfo.addressAr != null)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: AppColors.primaryColor,
+                    ),
+                    10.pw,
+                    FutureBuilder(
+                      future: context
+                          .read<SectionCubit>()
+                          .getAddressFromLocation(
+                              lat: widget.doctorInfo.lat,
+                              long: widget.doctorInfo.lng,
+                              address: widget.doctorInfo.addressAr??''),
+                      builder: (context, snapshot) => Expanded(
+                        child: Text(
+                          "${snapshot.data??''}",
+                          style: TextStyle(fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
-                ],
-              ),
+                  ],
+                ),
               10.ph,
-              if(statusName.isNotEmpty)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/hearing_aids_icon.svg",
-                    width: 20,
-                    height: 20,
-                  ),
-                  10.pw,
-                 Text(statusName),
-                ],
-              ),
+              if (statusName.isNotEmpty)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/hearing_aids_icon.svg",
+                      width: 20,
+                      height: 20,
+                    ),
+                    10.pw,
+                    Text(statusName),
+                  ],
+                ),
               10.ph,
               widget.fromSingleOffer
                   ? Row(

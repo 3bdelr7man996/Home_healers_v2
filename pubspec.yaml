@@ -58,6 +58,7 @@ dependencies:
   record: ^5.1.1
   just_audio: ^0.9.37
   app_tracking_transparency: ^2.0.4
+  geocoding: ^3.0.0
 
 
 dev_dependencies:

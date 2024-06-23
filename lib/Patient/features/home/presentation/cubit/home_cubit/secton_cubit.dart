@@ -9,6 +9,7 @@ import 'package:dr/core/utils/toast_helper.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../../../data/models/section-model.dart';
 
@@ -64,6 +65,47 @@ class SectionCubit extends Cubit<SectionState> {
         return doctor.nameAr!.toLowerCase().contains(query.toLowerCase());
       }).toList();
       emit(state.copyWith(Loading: false, sectionDoctorsList: searchResults));
+    }
+  }
+
+  //?====================[CONVERT LOCATION TO ADDRESS]===============================
+
+  String getAddress(String address) {
+    if (address.isNotEmpty) {
+      List splittedAdd = address.split(',');
+
+      if (splittedAdd.length >= 2) {
+        return "${splittedAdd[1]} - ${splittedAdd[2]}";
+      } else {
+        return address;
+      }
+    } else {
+      return address;
+    }
+  }
+
+  ///GET CITY NAME FROM LOCATION lat&long
+  Future<String> getAddressFromLocation({
+    String? lat ,
+    String? long,
+    required String address,
+  }) async {
+    try {
+      log(address.split(',').join('**'));
+      if (lat!=null&&long!=null&&
+        lat.isNotEmpty && long.isNotEmpty&&address.split(',').length >2) {
+        log("Lat $lat lng $long");
+        List<Placemark> placemarks = await placemarkFromCoordinates(
+            double.parse(lat), double.parse(long));
+        Placemark place = placemarks[0];
+
+        return "${place.subLocality}-${place.locality}";
+      } else {
+        return getAddress(address);
+      }
+    } catch (e) {
+      print(e);
+      return getAddress(address);
     }
   }
 }

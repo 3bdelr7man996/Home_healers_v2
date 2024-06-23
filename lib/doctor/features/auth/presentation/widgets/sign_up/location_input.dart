@@ -49,8 +49,29 @@ class LocationInput extends StatelessWidget {
                       onNext: (result) {
                         Future.delayed(Duration(seconds: 1), () {
                           if (result != null) {
+                          
+                            print(result.addressComponents.fold("",
+                                    (pValue, e) {
+                                  e.types.forEach((type) {
+                                    print(type);
+                                    if (type == "locality" ||
+                                        type == "sublocality") {
+                                      pValue += e.shortName + " ";
+                                    }
+                                  });
+                                  return pValue;
+                                }).trim());
                             context.read<AuthCubit>().onAddressChange(
-                                address: result.formattedAddress,
+                                address: result.addressComponents.fold("",
+                                    (pValue, e) {
+                                  e.types.forEach((type) {
+                                    if (type == "locality" ||
+                                        type == "sublocality") {
+                                      pValue += e.shortName + " ";
+                                    }
+                                  });
+                                  return pValue;
+                                }).trim(), // result.formattedAddress,
                                 location: result.geometry.location);
 
                             control.text = result.formattedAddress ?? "";

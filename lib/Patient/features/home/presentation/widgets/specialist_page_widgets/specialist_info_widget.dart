@@ -1,10 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/static_box_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class specialistInfo extends StatefulWidget {
@@ -21,16 +23,16 @@ class specialistInfo extends StatefulWidget {
 
 class _specialistInfoState extends State<specialistInfo> {
   List<String> names = [];
-  String selectedName = "";
-
+  // String selectedName = "";
+  bool selectCategories = false;
   @override
   void initState() {
     super.initState();
-    names.add("الأقسام :");
+
     for (var item in widget.doctorInfo!.statusAdvisor!) {
       names.add(item.nameAr!);
     }
-    selectedName = names.isNotEmpty ? names[0] : 'No names available';
+    // selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
   @override
@@ -55,38 +57,53 @@ class _specialistInfoState extends State<specialistInfo> {
           ],
         ),
         20.ph,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            SvgPicture.asset(
-              "assets/icons/hearing_aids_icon.svg",
-              width: 25,
-              height: 25,
-            ),
-            5.pw,
-            names.isNotEmpty
-                ? Container(
-                    height: 25,
-                    child: DropdownButton<String>(
-                      underline: Container(), // Hide the underline
-                      // icon: const SizedBox(), // Hide the arrow icon
-                      value: selectedName,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedName = newValue!;
-                        });
-                      },
-                      items:
-                          names.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  )
-                : Text('No Data available')
-          ],
+        InkWell(
+          onTap: () {
+            setState(() {
+              selectCategories = !selectCategories;
+            });
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/icons/hearing_aids_icon.svg",
+                width: 25,
+                height: 25,
+              ),
+              5.pw,
+              if (names.isNotEmpty)
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                        Text(selectCategories ? names.join("-") : names.first),
+                  ),
+                ),
+              // names.isNotEmpty
+              //     ? Container(
+              //         height: 25,
+              //         child: DropdownButton<String>(
+              //           underline: Container(), // Hide the underline
+              //           // icon: const SizedBox(), // Hide the arrow icon
+              //           value: selectedName,
+              //           onChanged: (String? newValue) {
+              //             setState(() {
+              //               selectedName = newValue!;
+              //             });
+              //           },
+              //           items:
+              //               names.map<DropdownMenuItem<String>>((String value) {
+              //             return DropdownMenuItem<String>(
+              //               value: value,
+              //               child: Text(value),
+              //             );
+              //           }).toList(),
+              //         ),
+              //       )
+              //     : Text('No Data available')
+            ],
+          ),
         ),
         5.ph,
         Row(
@@ -152,12 +169,24 @@ class _specialistInfoState extends State<specialistInfo> {
               color: AppColors.primaryColor,
             ),
             10.pw,
-            Expanded(
-              child: Text(
-                "${widget.doctorInfo!.addressAr}",
-                style: TextStyle(fontWeight: FontWeight.w500),
+            FutureBuilder(
+              future: context.read<SectionCubit>().getAddressFromLocation(
+                  lat: widget.doctorInfo?.lat,
+                  long: widget.doctorInfo?.lng,
+                  address: widget.doctorInfo?.addressAr ?? ''),
+              builder: (context, snapshot) => Expanded(
+                child: Text(
+                  "${snapshot.data ?? ''}",
+                  style: TextStyle(fontWeight: FontWeight.w500),
+                ),
               ),
             ),
+            // Expanded(
+            //   child: Text(
+            //     "${widget.doctorInfo!.addressAr}",
+            //     style: TextStyle(fontWeight: FontWeight.w500),
+            //   ),
+            // ),
           ],
         ),
       ],

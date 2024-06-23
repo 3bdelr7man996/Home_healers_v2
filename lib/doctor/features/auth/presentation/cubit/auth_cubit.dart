@@ -59,7 +59,7 @@ class AuthCubit extends Cubit<AuthState> {
   //?==================== formFields change ====================
   ///TO GET SELECTED ADDRESS
   void onAddressChange({
-    String? address,
+    String address="",
     Location? location,
   }) {
     log("current address $address");
