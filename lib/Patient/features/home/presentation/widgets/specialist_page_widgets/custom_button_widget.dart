@@ -76,7 +76,7 @@ class _ButtonWithCounterState extends State<ButtonWithCounter> {
               5.pw,
               Text(
                 widget.sessionCountForOffer != null
-                    ? '${widget.sessionCountForOffer}'
+                    ? ' جلسات ${widget.sessionCountForOffer}'
                     : '${number}',
                 style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
               ),
