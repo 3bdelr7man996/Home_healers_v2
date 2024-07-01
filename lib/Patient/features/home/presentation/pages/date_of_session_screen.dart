@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state/reservation_state.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets/dropDown_select_section_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/date_of_session_widgets/table_clender_widget.dart';
 import 'package:dr/core/extensions/padding_extension.dart';
@@ -86,24 +87,14 @@ class _DateOfSessionScreenState extends State<DateOfSessionScreen> {
                         hintStyle: TextStyle(fontSize: 12),
                       ),
                     ),
-              widget.fromFav!
-                  ? DropDownForSelectSection(
-                      doctorInfo: widget.doctorInfo,
-                      names: names,
-                      selectedName: selectedName,
-                    )
-                  : SizedBox(),
-              widget.fromPackages
-                  ? SizedBox()
-                  : widget.fromFilter! || widget.fromOffer
-                      ? names.isNotEmpty
-                          ? DropDownForSelectSection(
-                              doctorInfo: widget.doctorInfo,
-                              names: names,
-                              selectedName: selectedName,
-                            )
-                          : SizedBox()
-                      : SizedBox(),
+              BlocBuilder<ReservationCubit, ReservationState>(
+                  builder: (context, state) {
+                return state.status_id == null||state.status_id==-1
+                    ? DropDownForSelectSection(
+                        doctorInfo: widget.doctorInfo,
+                      )
+                    : const SizedBox.shrink();
+              }),
               10.ph,
               DoneButton(
                 fromOffer: widget.fromOffer,

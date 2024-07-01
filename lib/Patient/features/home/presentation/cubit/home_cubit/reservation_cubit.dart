@@ -33,7 +33,7 @@ class ReservationCubit extends Cubit<ReservationState> {
       {emit(state.copyWith(location: () => location))};
 
   onChangeadvertiserId(value) => {emit(state.copyWith(advertiser_id: value))};
-  onChangestatus_id(value) => {emit(state.copyWith(status_id: value))};
+  onChangestatus_id(value) => {emit(state.copyWith(status_id: ()=>value))};
   onChangeDays(value) => {emit(state.copyWith(days: () => value))};
   makesessions_countOne() => {emit(state.copyWith(sessions_count: 1))};
   onChangeNotes(value) => {emit(state.copyWith(notes: value))};
@@ -141,7 +141,7 @@ class ReservationCubit extends Cubit<ReservationState> {
         location: () => null,
         notes: "",
         address: () => null,
-        status_id: -1,
+        status_id:()=> -1,
       ));
 
       daysArray = [];

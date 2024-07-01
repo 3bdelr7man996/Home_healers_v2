@@ -25,6 +25,7 @@ class _OfferScreenState extends State<OfferScreen> {
             offer: data[index],
             fromSingleOffer: true,
             doctorInfo: data[index].advertiser!,
+            status_id: data[index].statusId,
             year: widget.year,
           );
         },

@@ -16,7 +16,7 @@ class ButtonForDoctorCard extends StatelessWidget {
   bool fromPackages;
   bool fromFav;
   var sessionCountForOffer;
-  bool? fromFilter;
+  bool fromFilter;
   var offer;
   var year;
   ButtonForDoctorCard(
@@ -44,6 +44,9 @@ class ButtonForDoctorCard extends StatelessWidget {
       width: context.width,
       child: ElevatedButton(
         onPressed: () {
+          if(fromFav||fromOffer||fromFilter){
+            context.read<ReservationCubit>().onChangestatus_id(status_id);
+          }
           if (offer != null)
             context.read<ReservationCubit>().OnOfferChange(offer);
           AppConstants.customNavigation(

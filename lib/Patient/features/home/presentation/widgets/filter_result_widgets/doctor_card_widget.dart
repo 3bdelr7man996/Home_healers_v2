@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/secton_cubit.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/button_for_doctor_card_widget.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/filter_result_widgets/header_for_doctor_card_widget.dart';
@@ -45,14 +47,18 @@ class DoctorCard extends StatefulWidget {
 class _DoctorCardState extends State<DoctorCard> {
   List<String> names = [];
   String statusName = "";
+  
   @override
   void initState() {
+    log("Status Advisor name ${widget.doctorInfo.statusAdvisor?.length}");
     super.initState();
     if (widget.status_id != null) {
       statusName = widget.doctorInfo.statusAdvisor
               ?.firstWhere((e) => e.id == widget.status_id)
               .nameAr ??
           '';
+    } else {
+      statusName = widget.doctorInfo.statusAdvisor?.first.nameAr ?? '';
     }
   }
 
@@ -97,10 +103,10 @@ class _DoctorCardState extends State<DoctorCard> {
                           .getAddressFromLocation(
                               lat: widget.doctorInfo.lat,
                               long: widget.doctorInfo.lng,
-                              address: widget.doctorInfo.addressAr??''),
+                              address: widget.doctorInfo.addressAr ?? ''),
                       builder: (context, snapshot) => Expanded(
                         child: Text(
-                          "${snapshot.data??''}",
+                          "${snapshot.data ?? ''}",
                           style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -236,7 +242,8 @@ class _DoctorCardState extends State<DoctorCard> {
                   doctorInfo: widget.doctorInfo,
                   year: widget.year,
                   fromPackages: widget.fromPackages,
-                  status_id: widget.status_id,
+                  status_id: widget.status_id, //??
+                  // widget.doctorInfo.statusAdvisor?.first.id,
                   fromOffer: widget.fromOffer)
             ],
           ),

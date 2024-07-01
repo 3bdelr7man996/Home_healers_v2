@@ -5,7 +5,6 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
-import 'package:dr/doctor/features/auth/data/model/departements_model.dart';
 import 'package:flutter/material.dart';
 
 class PictureForSpecialist extends StatefulWidget {
@@ -20,17 +19,11 @@ class PictureForSpecialist extends StatefulWidget {
 }
 
 class _PictureForSpecialistState extends State<PictureForSpecialist> {
-  List<String> names = [];
-  String selectedName = "";
+  bool isCategSelected = false;
 
   @override
   void initState() {
     super.initState();
-    
-    for (Categories item in widget.doctorInfo!.categories!) {
-      names.add(item.nameAr!);
-    }
-    selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
   @override
@@ -101,30 +94,18 @@ class _PictureForSpecialistState extends State<PictureForSpecialist> {
                       fontWeight: FontWeight.w500),
                 ),
                 5.ph,
-                if (names.isNotEmpty)
-                  Container(
-                    height: 20,
-                    child: DropdownButton<String>(
-                      underline: Container(), // Hide the underline
-                      icon: const SizedBox(), // Hide the arrow icon
-                      value: selectedName,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedName = newValue!;
-                        });
+                if (widget.doctorInfo?.categories != null)
+                  InkWell(
+                      onTap: () {
+                        isCategSelected = !isCategSelected;
+                        setState(() {});
                       },
-                      items:
-                          names.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(fontSize: 12.0),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                      child: Text(isCategSelected
+                          ? widget.doctorInfo!.categories!
+                              .map((e) => e.nameAr)
+                              .toList()
+                              .join(" - ")
+                          : widget.doctorInfo!.categories!.first.nameAr!)),
                 5.ph,
                 Stars(rating: widget.doctorInfo!.rating),
                 5.ph,

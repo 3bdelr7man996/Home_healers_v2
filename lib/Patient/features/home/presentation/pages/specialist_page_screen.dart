@@ -69,10 +69,10 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
     print(widget.doctorInfo);
 
     return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
               children: [
                 ApPBarForspecialistScreen(),
                 Container(
@@ -172,29 +172,29 @@ class _specialistpageScreenState extends State<specialistpageScreen> {
                 ),
               ],
             ),
-          ),
-          Positioned(
-            top: 140,
-            left: 25,
-            right: 25,
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.0),
+            Positioned(
+              top: 140,
+              left: 25,
+              right: 25,
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                height: 175,
+                child: PictureForSpecialist(doctorInfo: widget.doctorInfo),
               ),
-              height: 175,
-              child: PictureForSpecialist(doctorInfo: widget.doctorInfo),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

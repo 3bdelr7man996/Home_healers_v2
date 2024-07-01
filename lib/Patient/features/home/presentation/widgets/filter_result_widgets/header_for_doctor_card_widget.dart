@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_cubit/favorite_cubit.dart';
 import 'package:dr/Patient/features/favorite/presentation/cubit/favorite_state/favorite_state.dart';
 import 'package:dr/Patient/features/home/presentation/widgets/specialist_page_widgets/stars_widget.dart';
@@ -8,7 +7,6 @@ import 'package:dr/core/extensions/padding_extension.dart';
 import 'package:dr/core/utils/app_colors.dart';
 import 'package:dr/core/utils/app_contants.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
-import 'package:dr/doctor/features/auth/data/model/departements_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,17 +24,18 @@ class HeaderForDoctorCard extends StatefulWidget {
 }
 
 class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
-  List<String> names = [];
-  String selectedName = "";
+  // List<String> names = [];
+  // String selectedName = "";
+  bool categIsSelected = false;
 
   @override
   void initState() {
     super.initState();
-   
-    for (Categories item in widget.doctorInfo.categories!) {
-      names.add(item.nameAr!);
-    }
-    selectedName = names.isNotEmpty ? names[0] : 'No names available';
+
+    // for (Categories item in widget.doctorInfo.categories!) {
+    //   names.add(item.nameAr!);
+    // }
+    // selectedName = names.isNotEmpty ? names[0] : 'No names available';
   }
 
   @override
@@ -108,7 +107,18 @@ class _HeaderForDoctorCardState extends State<HeaderForDoctorCard> {
               5.ph,
               Stars(rating: widget.doctorInfo.rating!),
               5.ph,
-               Text(selectedName),
+              InkWell(
+                onTap: () {
+                  categIsSelected = !categIsSelected;
+                  setState(() {});
+                },
+                child: Text(categIsSelected
+                    ? widget.doctorInfo.categories!
+                        .map((e) => e.nameAr)
+                        .toList()
+                        .join(" - ")
+                    : "${widget.doctorInfo.categories?.first.nameAr}"),
+              ),
               5.ph,
               widget.doctorInfo.status == "on"
                   ? Text(

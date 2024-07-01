@@ -1,52 +1,43 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:dr/Patient/features/home/presentation/cubit/home_cubit/reservation_cubit.dart';
+import 'package:dr/Patient/features/home/presentation/cubit/home_state/reservation_state.dart';
 import 'package:dr/doctor/features/auth/data/model/advertiser_model.dart';
+import 'package:dr/doctor/features/auth/data/model/status_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DropDownForSelectSection extends StatefulWidget {
-  String selectedName;
+class DropDownForSelectSection extends StatelessWidget {
   Advertiser? doctorInfo;
-  List<String> names;
-  DropDownForSelectSection(
-      {super.key,
-      required this.selectedName,
-      required this.doctorInfo,
-      required this.names});
 
-  @override
-  State<DropDownForSelectSection> createState() =>
-      _DropDownForSelectSectionState();
-}
-
-late int id;
-
-class _DropDownForSelectSectionState extends State<DropDownForSelectSection> {
+  DropDownForSelectSection({
+    super.key,
+    required this.doctorInfo,
+  });
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      underline: Container(), // Hide the underline
-      // icon: const SizedBox(), // Hide the arrow icon
-      value: widget.selectedName,
-      onChanged: (String? newValue) async {
-        for (var category in widget.doctorInfo?.statusAdvisor ?? []) {
-          if (category.nameAr == newValue) {
-            id = category.id;
-            break;
-          }
-        }
-        await context.read<ReservationCubit>().onChangestatus_id(id);
-        setState(() {
-          widget.selectedName = newValue!;
-        });
-      },
-      items: widget.names.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
+    return BlocBuilder<ReservationCubit, ReservationState>(
+        builder: (context, state) {
+      return DropdownButton<StatusData>(
+        underline: Container(), // Hide the underline
+        // icon: const SizedBox(), // Hide the arrow icon
+        value: (state.status_id != null && state.status_id != -1)
+            ? doctorInfo?.statusAdvisor
+                ?.firstWhere((status) => status.id == state.status_id)
+            : doctorInfo?.statusAdvisor?.first,
+        onChanged: (StatusData? newValue) async {
+          await context
+              .read<ReservationCubit>()
+              .onChangestatus_id(newValue?.id);
+        },
+        items: doctorInfo?.statusAdvisor
+            ?.map<DropdownMenuItem<StatusData>>((StatusData value) {
+          return DropdownMenuItem<StatusData>(
+            value: value,
+            child: Text("${value.nameAr}"),
+          );
+        }).toList(),
+      );
+    });
   }
 }

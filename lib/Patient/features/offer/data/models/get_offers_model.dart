@@ -35,6 +35,7 @@ class Offers {
     required this.advertiserId,
     required this.type,
     this.description,
+    this.statusId,
     required this.oldPrice,
     required this.discount,
     required this.advertiser,
@@ -49,6 +50,7 @@ class Offers {
   late var description;
   late var oldPrice;
   late var discount;
+  int? statusId;
   late final Advertiser? advertiser;
 
   Offers.fromJson(Map<String, dynamic>? json) {
@@ -62,6 +64,7 @@ class Offers {
     description = json?['description'];
     oldPrice = json?['old_price'];
     discount = json?['discount'];
+    statusId = json?['status_id'];
     advertiser = json?['advertiser'] != null
         ? Advertiser.fromJson(json?['advertiser'])
         : null;

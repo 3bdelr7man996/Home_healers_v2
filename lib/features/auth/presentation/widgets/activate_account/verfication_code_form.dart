@@ -17,6 +17,8 @@ class VerficationForm extends StatelessWidget {
         keyboardType: TextInputType.number,
         fullBorder: true,
         length: 6,
+        clearAll:Container(padding: EdgeInsets.all(10.0),
+        child: Text("مسح الرمز",style: TextStyle(color: Colors.grey),)) ,
         cursorColor: AppColors.primaryColor,
         onCompleted: (String code) {
           context.read<ForgetPasswordCubit>().onCodeChange(code);
